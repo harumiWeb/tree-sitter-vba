@@ -18,6 +18,27 @@ Private Declare Function GetTickCount Lib "kernel32" () As Long
   (newline))
 
 ==================
+declare ptrsafe sub
+==================
+
+Private Declare PtrSafe Sub Sleep Lib "kernel32" (ByVal milliseconds As LongPtr)
+
+---
+
+(source_file
+  (newline)
+  (declare_statement
+    (visibility)
+    (identifier)
+    (string_literal)
+    (parameter_list
+      (parameter
+        (identifier)
+        (as_type_clause
+          (type_expression)))))
+  (newline))
+
+==================
 ptrsafe declare function
 ==================
 

@@ -141,7 +141,7 @@ module.exports = grammar({
           optional($.visibility),
           caseInsensitive("Declare"),
           optional(caseInsensitive("PtrSafe")),
-          caseInsensitive("Function"),
+          field("kind", choice(caseInsensitive("Function"), caseInsensitive("Sub"))),
           field("name", $.identifier),
           caseInsensitive("Lib"),
           field("library", $.string_literal),
@@ -258,6 +258,7 @@ module.exports = grammar({
         $.resume_statement,
         $.goto_statement,
         $.label_statement,
+        $.line_number_statement,
         $.exit_statement,
         $.redim_statement,
         $.preprocessor_const,
@@ -324,8 +325,16 @@ module.exports = grammar({
 
     as_type_clause: ($) =>
       prec.right(
-        seq(caseInsensitive("As"), field("type", $.type_expression), optional($.array_bounds)),
+        seq(
+          caseInsensitive("As"),
+          optional(caseInsensitive("New")),
+          field("type", $.type_expression),
+          optional($.fixed_string_length),
+          optional($.array_bounds),
+        ),
       ),
+
+    fixed_string_length: ($) => seq("*", field("length", $._expression)),
 
     array_bounds: ($) => seq("(", optional(commaSep1($.array_bound)), ")"),
 
@@ -527,13 +536,42 @@ module.exports = grammar({
       prec.right(
         seq(
           caseInsensitive("Resume"),
-          optional(choice(caseInsensitive("Next"), field("target", $.identifier))),
+          optional(
+            choice(
+              caseInsensitive("Next"),
+              field("target", choice($.identifier, $.number_literal)),
+            ),
+          ),
         ),
       ),
 
-    goto_statement: ($) => seq(caseInsensitive("GoTo"), field("target", $.identifier)),
+    goto_statement: ($) =>
+      seq(caseInsensitive("GoTo"), field("target", choice($.identifier, $.number_literal))),
 
-    label_statement: ($) => prec(5, seq(field("name", $.identifier), ":")),
+    label_statement: ($) =>
+      prec(5, seq(field("name", choice($.identifier, $.number_literal)), ":")),
+
+    line_number_statement: ($) =>
+      prec.right(
+        5,
+        seq(field("number", $.number_literal), field("statement", $._numbered_statement)),
+      ),
+
+    _numbered_statement: ($) =>
+      choice(
+        $.single_line_if_statement,
+        $.on_error_statement,
+        $.resume_statement,
+        $.goto_statement,
+        $.exit_statement,
+        $.redim_statement,
+        $.const_declaration,
+        $.variable_declaration,
+        $.set_statement,
+        $.assignment_statement,
+        $.call_statement,
+        $.expression_statement,
+      ),
 
     redim_statement: ($) =>
       seq(
@@ -689,6 +727,7 @@ module.exports = grammar({
         $.nothing_literal,
         $.null_literal,
         $.empty_literal,
+        $.date_literal,
       ),
 
     string_literal: (_) => token(seq('"', repeat(choice('""', /[^"]/)), '"')),
@@ -702,6 +741,8 @@ module.exports = grammar({
     null_literal: (_) => caseInsensitive("Null"),
 
     empty_literal: (_) => caseInsensitive("Empty"),
+
+    date_literal: (_) => token(/#[^#\r\n]+#/),
 
     guid_literal: (_) => token(/\{[0-9A-Fa-f-]+\}/),
 

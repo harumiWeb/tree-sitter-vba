@@ -668,8 +668,21 @@
             ]
           },
           {
-            "type": "PATTERN",
-            "value": "[fF][uU][nN][cC][tT][iI][oO][nN]"
+            "type": "FIELD",
+            "name": "kind",
+            "content": {
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "PATTERN",
+                  "value": "[fF][uU][nN][cC][tT][iI][oO][nN]"
+                },
+                {
+                  "type": "PATTERN",
+                  "value": "[sS][uU][bB]"
+                }
+              ]
+            }
           },
           {
             "type": "FIELD",
@@ -1293,6 +1306,10 @@
         },
         {
           "type": "SYMBOL",
+          "name": "line_number_statement"
+        },
+        {
+          "type": "SYMBOL",
           "name": "exit_statement"
         },
         {
@@ -1792,12 +1809,36 @@
             "value": "[aA][sS]"
           },
           {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "PATTERN",
+                "value": "[nN][eE][wW]"
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
+          },
+          {
             "type": "FIELD",
             "name": "type",
             "content": {
               "type": "SYMBOL",
               "name": "type_expression"
             }
+          },
+          {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "fixed_string_length"
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
           },
           {
             "type": "CHOICE",
@@ -1813,6 +1854,23 @@
           }
         ]
       }
+    },
+    "fixed_string_length": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "*"
+        },
+        {
+          "type": "FIELD",
+          "name": "length",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_expression"
+          }
+        }
+      ]
     },
     "array_bounds": {
       "type": "SEQ",
@@ -2876,8 +2934,17 @@
                     "type": "FIELD",
                     "name": "target",
                     "content": {
-                      "type": "SYMBOL",
-                      "name": "identifier"
+                      "type": "CHOICE",
+                      "members": [
+                        {
+                          "type": "SYMBOL",
+                          "name": "identifier"
+                        },
+                        {
+                          "type": "SYMBOL",
+                          "name": "number_literal"
+                        }
+                      ]
                     }
                   }
                 ]
@@ -2901,8 +2968,17 @@
           "type": "FIELD",
           "name": "target",
           "content": {
-            "type": "SYMBOL",
-            "name": "identifier"
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "identifier"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "number_literal"
+              }
+            ]
           }
         }
       ]
@@ -2917,8 +2993,17 @@
             "type": "FIELD",
             "name": "name",
             "content": {
-              "type": "SYMBOL",
-              "name": "identifier"
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "identifier"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "number_literal"
+                }
+              ]
             }
           },
           {
@@ -2927,6 +3012,84 @@
           }
         ]
       }
+    },
+    "line_number_statement": {
+      "type": "PREC_RIGHT",
+      "value": 5,
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "FIELD",
+            "name": "number",
+            "content": {
+              "type": "SYMBOL",
+              "name": "number_literal"
+            }
+          },
+          {
+            "type": "FIELD",
+            "name": "statement",
+            "content": {
+              "type": "SYMBOL",
+              "name": "_numbered_statement"
+            }
+          }
+        ]
+      }
+    },
+    "_numbered_statement": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "single_line_if_statement"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "on_error_statement"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "resume_statement"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "goto_statement"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "exit_statement"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "redim_statement"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "const_declaration"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "variable_declaration"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "set_statement"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "assignment_statement"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "call_statement"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "expression_statement"
+        }
+      ]
     },
     "redim_statement": {
       "type": "SEQ",
@@ -3766,6 +3929,10 @@
         {
           "type": "SYMBOL",
           "name": "empty_literal"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "date_literal"
         }
       ]
     },
@@ -3841,6 +4008,13 @@
     "empty_literal": {
       "type": "PATTERN",
       "value": "[eE][mM][pP][tT][yY]"
+    },
+    "date_literal": {
+      "type": "TOKEN",
+      "content": {
+        "type": "PATTERN",
+        "value": "#[^#\\r\\n]+#"
+      }
     },
     "guid_literal": {
       "type": "TOKEN",

@@ -1,0 +1,27 @@
+==================
+date literal assignments
+==================
+
+Sub Test()
+    startDate = #2026/01/01#
+    startTime = #12:30:00 PM#
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (assignment_statement
+        (identifier)
+        (date_literal))
+      (newline)
+      (assignment_statement
+        (identifier)
+        (date_literal))
+      (newline)))
+  (newline))

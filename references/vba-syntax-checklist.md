@@ -51,8 +51,8 @@ Status legend:
 - [x] `WithEvents`
 - [x] arrays
 - [x] `ReDim`
-- [ ] fixed-length strings
-- [ ] object declarations
+- [x] fixed-length strings
+- [x] object declarations with `As New`
 
 ## Statements
 
@@ -78,6 +78,7 @@ Status legend:
 - [x] `Exit Do`
 - [x] `Resume`
 - [x] labels
+- [x] numeric labels and numbered statements
 
 ## Expressions
 
@@ -93,7 +94,7 @@ Status legend:
 - [x] named arguments `:=`
 - [x] hex literals
 - [x] type-declaration characters on identifiers
-- [ ] date literals
+- [x] date literals
 - [~] binary operators
 - [x] unary operators
 - [~] comparison operators
@@ -121,6 +122,8 @@ Status legend:
 ## 64-bit VBA
 
 - [x] `Declare`
+- [x] `Declare Function`
+- [x] `Declare Sub`
 - [x] `PtrSafe`
 - [x] `Lib`
 - [x] `Alias`

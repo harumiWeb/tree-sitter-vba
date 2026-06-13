@@ -23,11 +23,14 @@ Currently supported:
 - `Sub`, `Function`, and `Property Get/Let/Set` procedures
 - `Dim`, `Static`, `WithEvents`, visibility-based variable declarations, arrays, `ReDim`, and `Const`
 - `Type`, `Enum`, `Declare PtrSafe`, `Lib`, and `Alias`
+- external `Declare Function` and `Declare Sub` declarations
 - simple assignments, `Set` assignments, calls, named arguments, member access, and leading-dot member access
-- `New` expressions
+- `New` expressions and `As New` declarations
+- fixed-length string declarations and date literals
 - `AddressOf` expressions
 - block `If`, single-line `If`, `Select Case`, `For`, `For Each`, `Do`, `While/Wend`, and `With`
 - `On Error`, `Resume`, `GoTo`, labels, and `Exit` statements
+- numeric line labels and numbered statements
 - conditional compilation with `#Const`, `#If`, `#ElseIf`, `#Else`, and `#End If`, including statement branches inside procedures
 - line continuations and colon-separated statements
 - minimal `.frm` / `.cls` export metadata such as `VERSION`, `Begin ... End`, GUID form blocks, and `.frx` blob references

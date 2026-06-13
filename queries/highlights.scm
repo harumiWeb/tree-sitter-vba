@@ -6,6 +6,7 @@
 (nothing_literal) @constant.builtin
 (null_literal) @constant.builtin
 (empty_literal) @constant.builtin
+(date_literal) @constant
 (guid_literal) @constant.builtin
 
 (attribute_statement) @keyword
@@ -38,6 +39,7 @@
 (on_error_statement) @keyword
 (resume_statement) @keyword
 (goto_statement) @keyword
+(line_number_statement) @keyword
 (redim_statement) @keyword
 (set_statement) @keyword
 (new_expression) @keyword
@@ -63,6 +65,12 @@
 
 (label_statement
   name: (identifier) @label)
+
+(label_statement
+  name: (number_literal) @label)
+
+(line_number_statement
+  number: (number_literal) @label)
 
 (named_argument
   name: (identifier) @variable.parameter)

@@ -1,0 +1,83 @@
+==================
+numbered statements
+==================
+
+Sub Test()
+10 On Error GoTo 100
+20 result = Foo()
+30 Exit Sub
+100 Debug.Print Erl
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (line_number_statement
+        (number_literal)
+        (on_error_statement
+          (number_literal)))
+      (newline)
+      (line_number_statement
+        (number_literal)
+        (assignment_statement
+          (identifier)
+          (call_expression
+            (identifier))))
+      (newline)
+      (line_number_statement
+        (number_literal)
+        (exit_statement))
+      (newline)
+      (line_number_statement
+        (number_literal)
+        (call_statement
+          (member_expression
+            (identifier)
+            (identifier))
+          (argument_list
+            (identifier))))
+      (newline)))
+  (newline))
+
+==================
+numeric labels and targets
+==================
+
+Sub Test()
+    GoTo 100
+100:
+    Resume 200
+200:
+    Exit Sub
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (goto_statement
+        (number_literal))
+      (newline)
+      (label_statement
+        (number_literal))
+      (newline)
+      (resume_statement
+        (number_literal))
+      (newline)
+      (label_statement
+        (number_literal))
+      (newline)
+      (exit_statement)
+      (newline)))
+  (newline))
