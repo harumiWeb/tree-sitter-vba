@@ -11,6 +11,21 @@ This grammar is designed as a parsing foundation for editor and tooling use
 cases, including syntax highlighting, folding, tags, outline extraction, symbol
 inspection, linting, formatting, and future LSP integrations.
 
+## Why another VBA grammar?
+
+Several tree-sitter grammars exist for Visual Basic-family languages, but VBA has its own syntax and practical edge cases, especially in code exported from the VBE.
+
+This project focuses on practical Excel/VBA source compatibility:
+
+- `.bas`, `.cls`, and `.frm` files exported from the VBE
+- real-world VBA fixtures
+- UserForm metadata
+- conditional compilation
+- error handling
+- Excel-style member access and procedure calls
+- editor queries for highlights, folds, and tags
+- permissive MIT licensing
+
 ## Status
 
 This is a `v0.x` initial public release.
