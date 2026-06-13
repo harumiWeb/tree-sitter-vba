@@ -17,7 +17,7 @@
   "bugs": {
     "url": "https://github.com/harumiWeb/tree-sitter-vba/issues"
   },
-    "files": [
+  "files": [
     "grammar.js",
     "tree-sitter.json",
     "binding.gyp",
@@ -41,9 +41,13 @@
     "fmt": "oxfmt",
     "check": "pnpm test && pnpm parse:examples"
   },
-  "dependencies": {},
+  "dependencies": {
+    "node-addon-api": "^8.8.0",
+    "node-gyp-build": "^4.8.4"
+  },
   "devDependencies": {
     "oxfmt": "^0.54.0",
+    "tree-sitter": "^0.25.0",
     "tree-sitter-cli": "^0.26.9"
   },
   "packageManager": "pnpm@10.28.1"
