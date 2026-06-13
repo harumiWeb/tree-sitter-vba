@@ -38,6 +38,7 @@ module.exports = grammar({
         $.preprocessor_if,
         $.attribute_statement,
         $.option_statement,
+        $.implements_statement,
         $.type_declaration,
         $.enum_declaration,
         $.declare_statement,
@@ -129,6 +130,9 @@ module.exports = grammar({
           seq(caseInsensitive("Base"), $.number_literal),
         ),
       ),
+
+    implements_statement: ($) =>
+      seq(caseInsensitive("Implements"), field("type", $.type_expression)),
 
     type_declaration: ($) =>
       seq(
@@ -283,6 +287,12 @@ module.exports = grammar({
         $.line_number_statement,
         $.exit_statement,
         $.redim_statement,
+        $.erase_statement,
+        $.open_statement,
+        $.input_statement,
+        $.line_input_statement,
+        $.print_statement,
+        $.close_statement,
         $.preprocessor_const,
         $.preprocessor_if,
         $.const_declaration,
@@ -426,6 +436,12 @@ module.exports = grammar({
         $.resume_statement,
         $.goto_statement,
         $.redim_statement,
+        $.erase_statement,
+        $.open_statement,
+        $.input_statement,
+        $.line_input_statement,
+        $.print_statement,
+        $.close_statement,
         $.set_statement,
         $.assignment_statement,
         $.call_statement,
@@ -625,6 +641,80 @@ module.exports = grammar({
 
     redim_declarator: ($) =>
       prec(4, seq(field("name", choice($.identifier, $.member_expression)), $.array_bounds)),
+
+    erase_statement: ($) =>
+      seq(caseInsensitive("Erase"), commaSep1(field("target", $._callable_expression))),
+
+    open_statement: ($) =>
+      seq(
+        caseInsensitive("Open"),
+        field("path", $._expression),
+        caseInsensitive("For"),
+        field("mode", $.file_mode),
+        optional(seq(caseInsensitive("Access"), field("access", $.file_access))),
+        optional(seq(caseInsensitive("Lock"), field("lock", $.file_lock))),
+        caseInsensitive("As"),
+        field("number", $.file_number),
+        optional(seq(caseInsensitive("Len"), "=", field("record_length", $._expression))),
+      ),
+
+    file_mode: (_) =>
+      choice(
+        caseInsensitive("Append"),
+        caseInsensitive("Binary"),
+        caseInsensitive("Input"),
+        caseInsensitive("Output"),
+        caseInsensitive("Random"),
+      ),
+
+    file_access: (_) =>
+      choice(
+        caseInsensitive("Read"),
+        caseInsensitive("Write"),
+        seq(caseInsensitive("Read"), caseInsensitive("Write")),
+      ),
+
+    file_lock: (_) =>
+      choice(
+        caseInsensitive("Read"),
+        caseInsensitive("Write"),
+        seq(caseInsensitive("Read"), caseInsensitive("Write")),
+        caseInsensitive("Shared"),
+      ),
+
+    file_number: ($) => seq(optional("#"), $._expression),
+
+    input_statement: ($) =>
+      seq(
+        caseInsensitive("Input"),
+        field("number", $.file_number),
+        ",",
+        commaSep1(field("target", $._callable_expression)),
+      ),
+
+    line_input_statement: ($) =>
+      seq(
+        caseInsensitive("Line"),
+        caseInsensitive("Input"),
+        field("number", $.file_number),
+        ",",
+        field("target", $._callable_expression),
+      ),
+
+    print_statement: ($) =>
+      prec.right(
+        seq(
+          caseInsensitive("Print"),
+          field("number", $.file_number),
+          optional(seq(",", optional($.print_argument_sequence))),
+        ),
+      ),
+
+    print_argument_sequence: ($) =>
+      seq($._expression, repeat(seq(choice(",", ";"), $._expression))),
+
+    close_statement: ($) =>
+      prec.right(seq(caseInsensitive("Close"), optional(commaSep1($.file_number)))),
 
     set_statement: ($) =>
       seq(

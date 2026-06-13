@@ -102,9 +102,10 @@ The grammar currently supports:
 - identifiers, simple type clauses, dotted type names, and array type suffixes
 - `Attribute` statements
 - `Option Explicit`, `Option Private Module`, `Option Compare`, and `Option Base`
+- `Implements` statements
 - `Sub`, `Function`, and `Property Get/Let/Set` procedures
 - `Dim`, `Static`, `WithEvents`, visibility-based variable declarations,
-  arrays, `ReDim`, and `Const`
+  arrays, `ReDim`, `Erase`, and `Const`
 - `Type` and `Enum` declarations
 - external `Declare Function` and `Declare Sub` declarations, including
   `PtrSafe`, `Lib`, and `Alias`
@@ -119,6 +120,8 @@ The grammar currently supports:
 - block `If`, single-line `If`, `Select Case`, `For`, `For Each`, `Do`,
   `While/Wend`, and `With`
 - `On Error`, `Resume`, `GoTo`, labels, and `Exit` statements
+- common file I/O statements: `Open`, `Input #`, `Line Input #`, `Print #`,
+  and `Close`
 - numeric line labels, numbered statements, and numbered control-flow delimiters
 - conditional compilation with `#Const`, `#If`, `#ElseIf`, `#Else`, and
   `#End If`, including statement branches inside procedures
@@ -194,6 +197,25 @@ pnpm parse:examples
 This recursively parses the checked-in VBA examples and fails if any parse tree
 contains an `ERROR` or `MISSING` node.
 
+Run queries against the example files:
+
+```bash
+pnpm query:examples
+```
+
+This validates that `highlights.scm`, `folds.scm`, and `tags.scm` can run
+against the checked-in examples.
+
+Run the coarse parser benchmark:
+
+```bash
+pnpm bench
+```
+
+This reports file counts, total bytes, parse time, node counts, and
+`ERROR`/`MISSING` counts for the checked-in examples. It is intended to catch
+large regressions, not to provide a strict microbenchmark.
+
 Run the full local check:
 
 ```bash
@@ -213,6 +235,16 @@ weaken existing expectations just to make a grammar change pass.
 
 The repository also includes real-world exported VBA examples. These examples
 are parsed in CI to catch regressions against practical Excel/VBA code.
+
+Broken or incomplete examples can be kept under:
+
+```text
+examples/broken/
+```
+
+These fixtures are intentionally excluded from `pnpm parse:examples`. Add
+focused recovery expectations under `test/corpus/recovery.txt` when the
+surrounding tree shape should remain stable.
 
 ## Design principles
 

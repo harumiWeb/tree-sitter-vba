@@ -44,8 +44,10 @@
     "test": "tree-sitter generate && tree-sitter test",
     "test:binding": "node --test bindings/node/*_test.js",
     "parse:examples": "node scripts/parse-examples.mjs",
+    "query:examples": "node scripts/query-examples.mjs",
+    "bench": "node scripts/bench.mjs",
     "fmt": "oxfmt",
-    "check": "pnpm test && pnpm test:binding && pnpm parse:examples"
+    "check": "pnpm test && pnpm test:binding && pnpm parse:examples && pnpm query:examples"
   },
   "dependencies": {
     "node-addon-api": "^8.8.0",

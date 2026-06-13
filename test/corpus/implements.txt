@@ -1,0 +1,22 @@
+==================
+implements statements
+==================
+Option Explicit
+Implements IFoo
+Implements Scripting.Dictionary
+
+---
+
+(source_file
+  (option_statement)
+  (newline)
+  (implements_statement
+    type: (type_expression
+      (identifier)))
+  (newline)
+  (implements_statement
+    type: (type_expression
+      (dotted_type_expression
+        (identifier)
+        (identifier))))
+  (newline))

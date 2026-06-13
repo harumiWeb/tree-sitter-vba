@@ -12,6 +12,7 @@
 
 (attribute_statement) @keyword
 (option_statement) @keyword
+(implements_statement) @keyword
 (type_declaration) @keyword
 (enum_declaration) @keyword
 (declare_statement) @keyword
@@ -43,6 +44,12 @@
 (goto_statement) @keyword
 (line_number_statement) @keyword
 (redim_statement) @keyword
+(erase_statement) @keyword
+(open_statement) @keyword
+(input_statement) @keyword
+(line_input_statement) @keyword
+(print_statement) @keyword
+(close_statement) @keyword
 (set_statement) @keyword
 (new_expression) @keyword
 (addressof_expression) @keyword
@@ -52,6 +59,9 @@
 
 (type_expression) @type
 (dotted_type_expression) @type
+(file_mode) @keyword
+(file_access) @keyword
+(file_lock) @keyword
 
 (type_declaration
   name: (identifier) @type)

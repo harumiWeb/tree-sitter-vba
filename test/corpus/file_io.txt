@@ -1,0 +1,63 @@
+==================
+file input output statements
+==================
+Sub Test()
+    Dim textLine As String
+    Open path For Input As #1
+    Line Input #1, textLine
+    Input #1, a, b
+    Print #1, textLine; ","; b
+    Close #1
+    Erase values, cache.Items
+End Sub
+
+---
+
+(source_file
+  (sub_declaration
+    name: (identifier)
+    (parameter_list)
+    (newline)
+    body: (block
+      (variable_declaration
+        (variable_declarator
+          name: (identifier)
+          (as_type_clause
+            type: (type_expression))))
+      (newline)
+      (open_statement
+        path: (identifier)
+        mode: (file_mode)
+        number: (file_number
+          (number_literal)))
+      (newline)
+      (line_input_statement
+        number: (file_number
+          (number_literal))
+        target: (identifier))
+      (newline)
+      (input_statement
+        number: (file_number
+          (number_literal))
+        target: (identifier)
+        target: (identifier))
+      (newline)
+      (print_statement
+        number: (file_number
+          (number_literal))
+        (print_argument_sequence
+          (identifier)
+          (string_literal)
+          (identifier)))
+      (newline)
+      (close_statement
+        (file_number
+          (number_literal)))
+      (newline)
+      (erase_statement
+        target: (identifier)
+        target: (member_expression
+          object: (identifier)
+          property: (identifier)))
+      (newline)))
+  (newline))

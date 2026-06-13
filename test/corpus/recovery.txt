@@ -1,0 +1,64 @@
+==================
+incomplete call keeps following statement
+==================
+Option Explicit
+
+Sub Test()
+    value = Foo(
+    nextValue = 1
+End Sub
+
+---
+
+(source_file
+  (option_statement)
+  (newline)
+  (newline)
+  (sub_declaration
+    name: (identifier)
+    (parameter_list)
+    (newline)
+    body: (block
+      (assignment_statement
+        left: (identifier)
+        right: (call_expression
+          function: (identifier)
+          (MISSING ")")))
+      (newline)
+      (assignment_statement
+        left: (identifier)
+        right: (number_literal))
+      (newline)))
+  (newline))
+
+==================
+unterminated string keeps procedure body
+==================
+Option Explicit
+
+Sub Test()
+    message = "unterminated
+    nextValue = 1
+End Sub
+
+---
+
+(source_file
+  (option_statement)
+  (newline)
+  (newline)
+  (sub_declaration
+    name: (identifier)
+    (parameter_list)
+    (newline)
+    body: (block
+      (assignment_statement
+        left: (identifier)
+        (ERROR
+          (frm_quoted_property_text)
+          (newline))
+        right: (comparison_expression
+          (identifier)
+          (number_literal)))
+      (newline)))
+  (newline))

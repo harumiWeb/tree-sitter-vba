@@ -5,7 +5,7 @@ import { createRequire } from "node:module";
 
 const root = "examples";
 const files = [];
-const ignoredSegments = new Set([".xlflow", "build"]);
+const ignoredSegments = new Set([".xlflow", "build", "broken"]);
 const require = createRequire(import.meta.url);
 const treeSitterCli = require.resolve("tree-sitter-cli/cli.js");
 
