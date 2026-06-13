@@ -24,7 +24,7 @@ Currently supported:
 - `Dim`, `Static`, `WithEvents`, visibility-based variable declarations, arrays, `ReDim`, and `Const`
 - `Type`, `Enum`, `Declare PtrSafe`, `Lib`, and `Alias`
 - external `Declare Function` and `Declare Sub` declarations
-- simple assignments, `Set` assignments, calls, named arguments, member access, and leading-dot member access
+- simple assignments, `Set` assignments, calls, named and omitted arguments, member access, and leading-dot member access
 - `New` expressions and `As New` declarations
 - fixed-length string declarations and date literals
 - `AddressOf` expressions
@@ -41,10 +41,11 @@ Known limitations:
 - no type checking or semantic analysis
 - no Excel Object Model or COM reference knowledge
 - no formatter or LSP server
-- expression precedence is intentionally incomplete
+- common VBA operator precedence is supported, including arithmetic, concatenation, comparison, and logical operators
 - `.frm` designer metadata is parsed syntactically, not interpreted semantically
 - context-sensitive statement validity is not checked; for example, invalid `Exit For` placement is left to downstream semantic validation
-- omitted arguments and full VBA expression precedence are still incomplete
+- general expression-level `=` comparison remains context-limited to avoid ambiguity with assignment
+- the expression grammar does not yet cover every VBA edge case
 
 ## Development
 

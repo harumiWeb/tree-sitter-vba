@@ -92,13 +92,15 @@ Status legend:
 - [x] `New`
 - [x] `AddressOf`
 - [x] named arguments `:=`
+- [x] omitted arguments
 - [x] hex literals
 - [x] type-declaration characters on identifiers
 - [x] date literals
 - [~] binary operators
+- [x] common operator precedence
 - [x] unary operators
 - [~] comparison operators
-- [~] logical operators
+- [x] logical operators
 - [x] string concatenation
 - [x] member access
 - [x] default member-like calls

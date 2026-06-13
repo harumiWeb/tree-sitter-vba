@@ -1,0 +1,74 @@
+==================
+implicit call with omitted argument
+==================
+
+Sub Test()
+    Foo 1, , 3
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (call_statement
+        (identifier)
+        (argument_list
+          (number_literal)
+          (number_literal)))
+      (newline)))
+  (newline))
+
+==================
+parenthesized call with omitted arguments
+==================
+
+Sub Test()
+    result = Foo(, 2, )
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (assignment_statement
+        (identifier)
+        (call_expression
+          (identifier)
+          (number_literal)))
+      (newline)))
+  (newline))
+
+==================
+multiple omitted arguments
+==================
+
+Sub Test()
+    Call Foo(1, , , 4)
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (call_statement
+        (identifier)
+        (argument_list
+          (number_literal)
+          (number_literal)))
+      (newline)))
+  (newline))

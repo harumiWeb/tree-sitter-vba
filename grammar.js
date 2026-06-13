@@ -17,6 +17,7 @@ module.exports = grammar({
   conflicts: ($) => [
     [$._expression, $._callable_expression],
     [$._argument, $.parenthesized_expression],
+    [$._argument_sequence],
   ],
 
   rules: {
@@ -616,7 +617,31 @@ module.exports = grammar({
     expression_statement: ($) => $._expression,
 
     argument_list: ($) =>
-      choice(seq("(", optional(commaSep1($._argument)), ")"), commaSep1($._argument)),
+      choice(seq("(", optional($._argument_sequence), ")"), $._unparenthesized_argument_sequence),
+
+    _argument_sequence: ($) =>
+      choice(
+        prec(1, commaSep1($._argument)),
+        prec.right(seq(optional($._argument), repeat1(seq(",", optional($._argument))))),
+      ),
+
+    _unparenthesized_argument_sequence: ($) =>
+      choice(prec(2, $._omitted_argument_sequence), commaSep1($._argument)),
+
+    _omitted_argument_sequence: ($) =>
+      prec.right(
+        choice(
+          seq(",", optional($._argument), repeat(seq(",", optional($._argument)))),
+          seq(
+            $._argument,
+            repeat(seq(",", $._argument)),
+            ",",
+            ",",
+            optional($._argument),
+            repeat(seq(",", optional($._argument))),
+          ),
+        ),
+      ),
 
     _argument: ($) => choice($.named_argument, $.comparison_expression, $._expression),
 
@@ -638,16 +663,12 @@ module.exports = grammar({
         $.unary_expression,
       ),
 
-    comparison_expression: ($) => prec.left(1, seq($._expression, "=", $._expression)),
+    comparison_expression: ($) => prec.left(7, seq($._expression, "=", $._expression)),
 
     condition_binary_expression: ($) =>
-      prec.left(
-        1,
-        seq(
-          $._condition_expression,
-          choice(caseInsensitive("And"), caseInsensitive("Or")),
-          $._condition_expression,
-        ),
+      choice(
+        prec.left(5, seq($._condition_expression, caseInsensitive("And"), $._condition_expression)),
+        prec.left(4, seq($._condition_expression, caseInsensitive("Or"), $._condition_expression)),
       ),
 
     _assignable_expression: ($) => choice($.identifier, $.member_expression, $.call_expression),
@@ -659,7 +680,7 @@ module.exports = grammar({
         2,
         seq(
           field("function", $._callable_expression),
-          seq("(", optional(commaSep1($._argument)), ")"),
+          seq("(", optional($._argument_sequence), ")"),
         ),
       ),
 
@@ -687,37 +708,33 @@ module.exports = grammar({
     parenthesized_expression: ($) => seq("(", choice($._expression, $.comparison_expression), ")"),
 
     binary_expression: ($) =>
-      prec.left(
-        1,
-        seq(
-          $._expression,
-          choice(
-            "+",
-            "-",
-            "*",
-            "/",
-            "\\",
-            "^",
-            "&",
-            "<>",
-            "<",
-            "<=",
-            ">",
-            ">=",
-            caseInsensitive("Is"),
-            caseInsensitive("Like"),
-            caseInsensitive("Mod"),
-            caseInsensitive("And"),
-            caseInsensitive("Or"),
-            caseInsensitive("Xor"),
-            caseInsensitive("Eqv"),
-            caseInsensitive("Imp"),
+      choice(
+        prec.right(14, seq($._expression, "^", $._expression)),
+        prec.left(12, seq($._expression, choice("*", "/"), $._expression)),
+        prec.left(11, seq($._expression, "\\", $._expression)),
+        prec.left(10, seq($._expression, caseInsensitive("Mod"), $._expression)),
+        prec.left(9, seq($._expression, choice("+", "-"), $._expression)),
+        prec.left(8, seq($._expression, "&", $._expression)),
+        prec.left(
+          7,
+          seq(
+            $._expression,
+            choice("<>", "<", "<=", ">", ">=", caseInsensitive("Is"), caseInsensitive("Like")),
+            $._expression,
           ),
-          $._expression,
         ),
+        prec.left(5, seq($._expression, caseInsensitive("And"), $._expression)),
+        prec.left(4, seq($._expression, caseInsensitive("Or"), $._expression)),
+        prec.left(3, seq($._expression, caseInsensitive("Xor"), $._expression)),
+        prec.left(2, seq($._expression, caseInsensitive("Eqv"), $._expression)),
+        prec.left(1, seq($._expression, caseInsensitive("Imp"), $._expression)),
       ),
 
-    unary_expression: ($) => prec(4, seq(choice("+", "-", caseInsensitive("Not")), $._expression)),
+    unary_expression: ($) =>
+      choice(
+        prec(13, seq(choice("+", "-"), $._expression)),
+        prec(6, seq(caseInsensitive("Not"), $._expression)),
+      ),
 
     _literal: ($) =>
       choice(
