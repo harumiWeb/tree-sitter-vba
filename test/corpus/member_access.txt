@@ -106,3 +106,74 @@ End Sub
         (identifier))
       (newline)))
   (newline))
+
+==================
+workbook worksheet range chain
+==================
+
+Sub Test()
+    ThisWorkbook.Worksheets("Sheet1").Range("A1").Value = 1
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (assignment_statement
+        (member_expression
+          (call_expression
+            (member_expression
+              (call_expression
+                (member_expression
+                  (identifier)
+                  (identifier))
+                (string_literal))
+              (identifier))
+            (string_literal))
+          (identifier))
+        (number_literal))
+      (newline)))
+  (newline))
+
+==================
+application workbook worksheet cells chain
+==================
+
+Sub Test()
+    Application.Workbooks(1).Worksheets(1).Cells(1, 1).Value = 1
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (assignment_statement
+        (member_expression
+          (call_expression
+            (member_expression
+              (call_expression
+                (member_expression
+                  (call_expression
+                    (member_expression
+                      (identifier)
+                      (identifier))
+                    (number_literal))
+                  (identifier))
+                (number_literal))
+              (identifier))
+            (number_literal)
+            (number_literal))
+          (identifier))
+        (number_literal))
+      (newline)))
+  (newline))

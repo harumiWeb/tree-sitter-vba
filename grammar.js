@@ -213,7 +213,7 @@ module.exports = grammar({
     if_statement: ($) =>
       seq(
         caseInsensitive("If"),
-        field("condition", $._expression),
+        field("condition", $._condition_expression),
         caseInsensitive("Then"),
         $.newline,
         field("consequence", optional($.block)),
@@ -226,7 +226,7 @@ module.exports = grammar({
     elseif_clause: ($) =>
       seq(
         caseInsensitive("ElseIf"),
-        field("condition", $._expression),
+        field("condition", $._condition_expression),
         caseInsensitive("Then"),
         $.newline,
         field("body", optional($.block)),
@@ -298,7 +298,7 @@ module.exports = grammar({
     do_condition: ($) =>
       seq(
         choice(caseInsensitive("While"), caseInsensitive("Until")),
-        field("condition", $._expression),
+        field("condition", $._condition_expression),
       ),
 
     with_statement: ($) =>
@@ -326,20 +326,23 @@ module.exports = grammar({
       prec.right(
         1,
         choice(
-        seq(
-          caseInsensitive("Call"),
+          seq(
+            caseInsensitive("Call"),
+            field("callee", $._callable_expression),
+            optional($.argument_list),
+          ),
           field("callee", $._callable_expression),
-          optional($.argument_list),
+          seq(field("callee", $._callable_expression), $.argument_list),
+          field("callee", $.call_expression),
         ),
-        seq(field("callee", $._callable_expression), $.argument_list),
-        field("callee", $.call_expression),
-      ),
       ),
 
     expression_statement: ($) => $._expression,
 
     argument_list: ($) =>
       choice(seq("(", optional(commaSep1($._expression)), ")"), commaSep1($._expression)),
+
+    _condition_expression: ($) => choice($._expression, $.comparison_expression),
 
     _expression: ($) =>
       choice(
@@ -351,6 +354,8 @@ module.exports = grammar({
         $.binary_expression,
         $.unary_expression,
       ),
+
+    comparison_expression: ($) => prec.left(1, seq($._expression, "=", $._expression)),
 
     _assignable_expression: ($) => choice($.identifier, $.member_expression, $.call_expression),
 

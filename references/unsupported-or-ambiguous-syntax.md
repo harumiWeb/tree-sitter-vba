@@ -32,6 +32,25 @@ Expected strategy:
 - Avoid breaking one call form when adding another.
 - Add focused corpus tests in `test/corpus/calls.txt`.
 
+## Whitespace-sensitive call syntax
+
+VBA has whitespace-sensitive call syntax, for example:
+
+```vb
+Foo (x)
+Foo(x)
+```
+
+Current status:
+
+- The grammar does not currently distinguish these forms syntactically.
+
+Expected strategy:
+
+- Tree-sitter grammars normally treat whitespace as `extras`, so whitespace is not represented in the parse tree.
+- Prioritize stable editor parsing over exact VBE semantic interpretation.
+- Downstream semantic layers may need access to the original source text if they need to distinguish these cases.
+
 ## Single-line If
 
 Example:

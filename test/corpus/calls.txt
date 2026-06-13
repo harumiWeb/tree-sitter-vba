@@ -1,4 +1,73 @@
 ==================
+bare implicit call
+==================
+
+Sub Test()
+    Foo
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (call_statement
+        (identifier))
+      (newline)))
+  (newline))
+
+==================
+empty parenthesized implicit call
+==================
+
+Sub Test()
+    Foo()
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (call_statement
+        (call_expression
+          (identifier)))
+      (newline)))
+  (newline))
+
+==================
+implicit call with one argument
+==================
+
+Sub Test()
+    Foo 1
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (call_statement
+        (identifier)
+        (argument_list
+          (number_literal)))
+      (newline)))
+  (newline))
+
+==================
 implicit call with arguments
 ==================
 
@@ -20,6 +89,29 @@ End Sub
         (argument_list
           (number_literal)
           (number_literal)))
+      (newline)))
+  (newline))
+
+==================
+explicit call with empty parentheses
+==================
+
+Sub Test()
+    Call Foo()
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (call_statement
+        (identifier)
+        (argument_list))
       (newline)))
   (newline))
 
@@ -73,6 +165,30 @@ End Sub
   (newline))
 
 ==================
+member call without arguments
+==================
+
+Sub Test()
+    Debug.Print
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (call_statement
+        (member_expression
+          (identifier)
+          (identifier)))
+      (newline)))
+  (newline))
+
+==================
 member call statement
 ==================
 
@@ -94,6 +210,33 @@ End Sub
           (identifier)
           (identifier))
         (argument_list
+          (identifier)))
+      (newline)))
+  (newline))
+
+==================
+member call with multiple arguments
+==================
+
+Sub Test()
+    Debug.Print x, y
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (call_statement
+        (member_expression
+          (identifier)
+          (identifier))
+        (argument_list
+          (identifier)
           (identifier)))
       (newline)))
   (newline))

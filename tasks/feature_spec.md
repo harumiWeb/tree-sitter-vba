@@ -389,10 +389,10 @@ parameters
 Use stable field names where appropriate:
 
 ```js
-field("name", $.identifier)
-field("parameters", $.parameter_list)
-field("type", $.type_expression)
-field("body", $.block)
+field("name", $.identifier);
+field("parameters", $.parameter_list);
+field("type", $.type_expression);
+field("body", $.block);
 ```
 
 Expected downstream extraction:

@@ -1,0 +1,132 @@
+==================
+identifier left hand side
+==================
+
+Sub Test()
+    x = value
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (assignment_statement
+        (identifier)
+        (identifier))
+      (newline)))
+  (newline))
+
+==================
+indexed left hand side
+==================
+
+Sub Test()
+    arr(i) = value
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (assignment_statement
+        (call_expression
+          (identifier)
+          (identifier))
+        (identifier))
+      (newline)))
+  (newline))
+
+==================
+member call left hand side
+==================
+
+Sub Test()
+    ws.Range("A1").Value = value
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (assignment_statement
+        (member_expression
+          (call_expression
+            (member_expression
+              (identifier)
+              (identifier))
+            (string_literal))
+          (identifier))
+        (identifier))
+      (newline)))
+  (newline))
+
+==================
+leading dot member left hand side
+==================
+
+Sub Test()
+    .Range("A1").Value = value
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (assignment_statement
+        (member_expression
+          (call_expression
+            (member_expression
+              (identifier))
+            (string_literal))
+          (identifier))
+        (identifier))
+      (newline)))
+  (newline))
+
+==================
+cells member left hand side
+==================
+
+Sub Test()
+    Cells(i, 1).Value = value
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (assignment_statement
+        (member_expression
+          (call_expression
+            (identifier)
+            (identifier)
+            (number_literal))
+          (identifier))
+        (identifier))
+      (newline)))
+  (newline))

@@ -1,0 +1,139 @@
+==================
+if equality comparison
+==================
+
+Sub Test()
+    If a = b Then
+        Debug.Print a
+    End If
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (if_statement
+        (comparison_expression
+          (identifier)
+          (identifier))
+        (newline)
+        (block
+          (call_statement
+            (member_expression
+              (identifier)
+              (identifier))
+            (argument_list
+              (identifier)))
+          (newline)))
+      (newline)))
+  (newline))
+
+==================
+if not equal comparison
+==================
+
+Sub Test()
+    If a <> b Then
+        Debug.Print a
+    End If
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (if_statement
+        (binary_expression
+          (identifier)
+          (identifier))
+        (newline)
+        (block
+          (call_statement
+            (member_expression
+              (identifier)
+              (identifier))
+            (argument_list
+              (identifier)))
+          (newline)))
+      (newline)))
+  (newline))
+
+==================
+if less than or equal comparison
+==================
+
+Sub Test()
+    If a <= b Then
+        Debug.Print a
+    End If
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (if_statement
+        (binary_expression
+          (identifier)
+          (identifier))
+        (newline)
+        (block
+          (call_statement
+            (member_expression
+              (identifier)
+              (identifier))
+            (argument_list
+              (identifier)))
+          (newline)))
+      (newline)))
+  (newline))
+
+==================
+if greater than or equal comparison
+==================
+
+Sub Test()
+    If a >= b Then
+        Debug.Print a
+    End If
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (if_statement
+        (binary_expression
+          (identifier)
+          (identifier))
+        (newline)
+        (block
+          (call_statement
+            (member_expression
+              (identifier)
+              (identifier))
+            (argument_list
+              (identifier)))
+          (newline)))
+      (newline)))
+  (newline))
