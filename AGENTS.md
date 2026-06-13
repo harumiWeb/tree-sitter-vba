@@ -12,7 +12,10 @@ root: .
 │   ├── specs/
 │   └── design.md
 ├── examples/
-│   └── basic.bas
+│   ├── realworld/
+│   ├── basic.bas
+│   ├── class.cls
+│   └── userform.frm
 ├── queries/
 │   ├── folds.scm
 │   ├── highlights.scm

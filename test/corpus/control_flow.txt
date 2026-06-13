@@ -1,0 +1,222 @@
+==================
+if block
+==================
+
+Sub Test()
+    If x Then
+        Debug.Print x
+    End If
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (if_statement
+        (identifier)
+        (newline)
+        (block
+          (call_statement
+            (member_expression
+              (identifier)
+              (identifier))
+            (argument_list
+              (identifier)))
+          (newline)))
+      (newline)))
+  (newline))
+
+==================
+select case block
+==================
+
+Sub Test()
+    Select Case x
+        Case 1
+            Debug.Print "one"
+        Case Else
+            Debug.Print "other"
+    End Select
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (select_statement
+        (identifier)
+        (newline)
+        (case_clause
+          (number_literal)
+          (newline)
+          (block
+            (call_statement
+              (member_expression
+                (identifier)
+                (identifier))
+              (argument_list
+                (string_literal)))
+            (newline)))
+        (case_clause
+          (newline)
+          (block
+            (call_statement
+              (member_expression
+                (identifier)
+                (identifier))
+              (argument_list
+                (string_literal)))
+            (newline))))
+      (newline)))
+  (newline))
+
+==================
+for block
+==================
+
+Sub Test()
+    For i = 1 To 10
+        Debug.Print i
+    Next i
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (for_statement
+        (identifier)
+        (number_literal)
+        (number_literal)
+        (newline)
+        (block
+          (call_statement
+            (member_expression
+              (identifier)
+              (identifier))
+            (argument_list
+              (identifier)))
+          (newline))
+        (identifier))
+      (newline)))
+  (newline))
+
+==================
+for each block
+==================
+
+Sub Test()
+    For Each item In items
+        Debug.Print item
+    Next item
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (for_each_statement
+        (identifier)
+        (identifier)
+        (newline)
+        (block
+          (call_statement
+            (member_expression
+              (identifier)
+              (identifier))
+            (argument_list
+              (identifier)))
+          (newline))
+        (identifier))
+      (newline)))
+  (newline))
+
+==================
+do while block
+==================
+
+Sub Test()
+    Do While x < 10
+        x = x + 1
+    Loop
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (do_statement
+        (do_condition
+          (binary_expression
+            (identifier)
+            (number_literal)))
+        (newline)
+        (block
+          (assignment_statement
+            (identifier)
+            (binary_expression
+              (identifier)
+              (number_literal)))
+          (newline)))
+      (newline)))
+  (newline))
+
+==================
+with block
+==================
+
+Sub Test()
+    With ws
+        .Range("A1").Value = 1
+    End With
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (with_statement
+        (identifier)
+        (newline)
+        (block
+          (assignment_statement
+            (member_expression
+              (call_expression
+                (member_expression
+                  (identifier))
+                (string_literal))
+              (identifier))
+            (number_literal))
+          (newline)))
+      (newline)))
+  (newline))

@@ -7,7 +7,9 @@ Option Explicit
 ---
 
 (source_file
-  (option_statement))
+  (newline)
+  (option_statement)
+  (newline))
 
 ==================
 option private module
@@ -18,7 +20,9 @@ Option Private Module
 ---
 
 (source_file
-  (option_statement))
+  (newline)
+  (option_statement)
+  (newline))
 
 ==================
 option compare text
@@ -29,7 +33,9 @@ Option Compare Text
 ---
 
 (source_file
-  (option_statement))
+  (newline)
+  (option_statement)
+  (newline))
 
 ==================
 option base
@@ -40,5 +46,7 @@ Option Base 1
 ---
 
 (source_file
+  (newline)
   (option_statement
-    (number_literal)))
+    (number_literal))
+  (newline))

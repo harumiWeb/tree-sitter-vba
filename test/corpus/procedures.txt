@@ -8,11 +8,14 @@ End Sub
 ---
 
 (source_file
+  (newline)
   (sub_declaration
-    (visibility)
+    (procedure_modifier
+      (visibility))
     name: (identifier)
     (parameter_list)
-    body: (block)))
+    (newline))
+  (newline))
 
 ==================
 private function with parameters
@@ -25,8 +28,10 @@ End Function
 ---
 
 (source_file
+  (newline)
   (function_declaration
-    (visibility)
+    (procedure_modifier
+      (visibility))
     name: (identifier)
     (parameter_list
       (parameter
@@ -39,12 +44,15 @@ End Function
           type: (type_expression))))
     (as_type_clause
       type: (type_expression))
+    (newline)
     body: (block
       (assignment_statement
         left: (identifier)
         right: (binary_expression
           (identifier)
-          (identifier))))))
+          (identifier)))
+      (newline)))
+  (newline))
 
 ==================
 property get
@@ -57,17 +65,21 @@ End Property
 ---
 
 (source_file
+  (newline)
   (property_declaration
-    (visibility)
-    accessor: (Get)
+    (procedure_modifier
+      (visibility))
     name: (identifier)
     (parameter_list)
     (as_type_clause
       type: (type_expression))
+    (newline)
     body: (block
       (assignment_statement
         left: (identifier)
-        right: (string_literal)))))
+        right: (string_literal))
+      (newline)))
+  (newline))
 
 ==================
 property let
@@ -79,13 +91,38 @@ End Property
 ---
 
 (source_file
+  (newline)
   (property_declaration
-    (visibility)
-    accessor: (Let)
+    (procedure_modifier
+      (visibility))
     name: (identifier)
     (parameter_list
       (parameter
         name: (identifier)
         (as_type_clause
           type: (type_expression))))
-    body: (block)))
+    (newline))
+  (newline))
+
+==================
+property set
+==================
+
+Public Property Set Item(ByVal value As Object)
+End Property
+
+---
+
+(source_file
+  (newline)
+  (property_declaration
+    (procedure_modifier
+      (visibility))
+    (identifier)
+    (parameter_list
+      (parameter
+        (identifier)
+        (as_type_clause
+          (type_expression))))
+    (newline))
+  (newline))

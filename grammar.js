@@ -14,7 +14,11 @@ module.exports = grammar({
 
   word: ($) => $.identifier,
 
-  conflicts: ($) => [],
+  conflicts: ($) => [
+    [$._expression, $._callable_expression],
+    [$._expression, $._assignable_expression],
+    [$.argument_list, $.parenthesized_expression],
+  ],
 
   rules: {
     source_file: ($) => repeat($._top_level_item),
@@ -22,18 +26,46 @@ module.exports = grammar({
     _top_level_item: ($) =>
       choice(
         $.newline,
+        $.frm_version_statement,
+        $.frm_begin_block,
+        $.frm_property_statement,
         $.attribute_statement,
         $.option_statement,
         $.sub_declaration,
         $.function_declaration,
         $.property_declaration,
-        $.variable_declaration,
         $.const_declaration,
+        $.variable_declaration,
       ),
 
     newline: (_) => /\r?\n/,
 
-    comment: (_) => token(choice(seq("'", /.*/), seq(choice("Rem", "rem", "REM"), /[ \t].*/))),
+    comment: (_) => token(choice(seq("'", /.*/), seq(caseInsensitive("Rem"), /([ \t].*)?/))),
+
+    frm_version_statement: ($) =>
+      prec.right(seq(caseInsensitive("VERSION"), $.number_literal, optional($.identifier))),
+
+    frm_begin_block: ($) =>
+      seq(
+        caseInsensitive("Begin"),
+        field("type", $.member_expression),
+        field("name", $.identifier),
+        $.newline,
+        repeat(choice($.newline, $.frm_property_statement, $.frm_begin_block)),
+        caseInsensitive("End"),
+      ),
+
+    frm_property_statement: ($) =>
+      seq(
+        field("name", choice($.identifier, $.member_expression)),
+        "=",
+        field("value", $._frm_property_value),
+      ),
+
+    _frm_property_value: ($) =>
+      choice($._literal, $.member_expression, $.identifier, $.frm_property_text),
+
+    frm_property_text: (_) => token(/[A-Za-z_][^\r\n']*/),
 
     attribute_statement: ($) =>
       seq(
@@ -41,7 +73,6 @@ module.exports = grammar({
         field("name", $.identifier),
         "=",
         field("value", $._literal),
-        optional($.newline),
       ),
 
     option_statement: ($) =>
@@ -56,39 +87,36 @@ module.exports = grammar({
           ),
           seq(caseInsensitive("Base"), $.number_literal),
         ),
-        optional($.newline),
       ),
 
     sub_declaration: ($) =>
       seq(
-        optional($.visibility),
+        optional($.procedure_modifier),
         caseInsensitive("Sub"),
         field("name", $.identifier),
         optional($.parameter_list),
-        optional($.newline),
-        field("body", $.block),
+        $.newline,
+        field("body", optional($.block)),
         caseInsensitive("End"),
         caseInsensitive("Sub"),
-        optional($.newline),
       ),
 
     function_declaration: ($) =>
       seq(
-        optional($.visibility),
+        optional($.procedure_modifier),
         caseInsensitive("Function"),
         field("name", $.identifier),
         optional($.parameter_list),
         optional($.as_type_clause),
-        optional($.newline),
-        field("body", $.block),
+        $.newline,
+        field("body", optional($.block)),
         caseInsensitive("End"),
         caseInsensitive("Function"),
-        optional($.newline),
       ),
 
     property_declaration: ($) =>
       seq(
-        optional($.visibility),
+        optional($.procedure_modifier),
         caseInsensitive("Property"),
         field(
           "accessor",
@@ -97,42 +125,46 @@ module.exports = grammar({
         field("name", $.identifier),
         optional($.parameter_list),
         optional($.as_type_clause),
-        optional($.newline),
-        field("body", $.block),
+        $.newline,
+        field("body", optional($.block)),
         caseInsensitive("End"),
         caseInsensitive("Property"),
-        optional($.newline),
       ),
 
-    block: ($) =>
-      repeat(
-        choice(
-          $.newline,
-          $.variable_declaration,
-          $.const_declaration,
-          $.assignment_statement,
-          $.call_statement,
-          $.expression_statement,
-        ),
+    procedure_modifier: ($) => choice($.visibility, caseInsensitive("Static")),
+
+    block: ($) => repeat1(choice($.newline, $._statement)),
+
+    _statement: ($) =>
+      choice(
+        $.if_statement,
+        $.select_statement,
+        $.for_statement,
+        $.for_each_statement,
+        $.do_statement,
+        $.with_statement,
+        $.const_declaration,
+        $.variable_declaration,
+        $.set_statement,
+        $.assignment_statement,
+        $.call_statement,
+        $.expression_statement,
       ),
 
     variable_declaration: ($) =>
       seq(
-        optional($.visibility),
-        choice(caseInsensitive("Dim"), caseInsensitive("Static")),
+        choice(
+          seq(optional($.visibility), choice(caseInsensitive("Dim"), caseInsensitive("Static"))),
+          $.visibility,
+        ),
         commaSep1($.variable_declarator),
-        optional($.newline),
       ),
 
     const_declaration: ($) =>
-      seq(
-        optional($.visibility),
-        caseInsensitive("Const"),
-        commaSep1($.const_declarator),
-        optional($.newline),
-      ),
+      seq(optional($.visibility), caseInsensitive("Const"), commaSep1($.const_declarator)),
 
-    variable_declarator: ($) => seq(field("name", $.identifier), optional($.as_type_clause)),
+    variable_declarator: ($) =>
+      seq(field("name", $.identifier), optional($.as_type_clause), optional($.initializer)),
 
     const_declarator: ($) =>
       seq(
@@ -141,20 +173,19 @@ module.exports = grammar({
         optional(seq("=", field("value", $._expression))),
       ),
 
+    initializer: ($) => seq("=", field("value", $._expression)),
+
     parameter_list: ($) => seq("(", optional(commaSep1($.parameter)), ")"),
 
     parameter: ($) =>
       seq(
-        optional(
-          choice(
-            caseInsensitive("ByVal"),
-            caseInsensitive("ByRef"),
-            caseInsensitive("Optional"),
-            caseInsensitive("ParamArray"),
-          ),
+        repeat(
+          choice(caseInsensitive("ByVal"), caseInsensitive("ByRef"), caseInsensitive("Optional")),
         ),
+        optional(caseInsensitive("ParamArray")),
         field("name", $.identifier),
         optional($.as_type_clause),
+        optional($.initializer),
       ),
 
     as_type_clause: ($) => seq(caseInsensitive("As"), field("type", $.type_expression)),
@@ -180,26 +211,198 @@ module.exports = grammar({
     visibility: (_) =>
       choice(caseInsensitive("Public"), caseInsensitive("Private"), caseInsensitive("Friend")),
 
-    assignment_statement: ($) =>
-      seq(field("left", $.identifier), "=", field("right", $._expression), optional($.newline)),
-
-    call_statement: ($) =>
+    if_statement: ($) =>
       seq(
-        optional(caseInsensitive("Call")),
-        field("callee", $.identifier),
-        optional($.argument_list),
-        optional($.newline),
+        caseInsensitive("If"),
+        field("condition", $._expression),
+        caseInsensitive("Then"),
+        $.newline,
+        field("consequence", optional($.block)),
+        repeat($.elseif_clause),
+        optional($.else_clause),
+        caseInsensitive("End"),
+        caseInsensitive("If"),
       ),
 
-    expression_statement: ($) => seq($._expression, optional($.newline)),
+    elseif_clause: ($) =>
+      seq(
+        caseInsensitive("ElseIf"),
+        field("condition", $._expression),
+        caseInsensitive("Then"),
+        $.newline,
+        field("body", optional($.block)),
+      ),
+
+    else_clause: ($) => seq(caseInsensitive("Else"), $.newline, field("body", optional($.block))),
+
+    select_statement: ($) =>
+      seq(
+        caseInsensitive("Select"),
+        caseInsensitive("Case"),
+        field("value", $._expression),
+        $.newline,
+        repeat($.case_clause),
+        caseInsensitive("End"),
+        caseInsensitive("Select"),
+      ),
+
+    case_clause: ($) =>
+      seq(
+        caseInsensitive("Case"),
+        choice(caseInsensitive("Else"), commaSep1($._expression)),
+        $.newline,
+        field("body", optional($.block)),
+      ),
+
+    for_statement: ($) =>
+      prec.right(
+        seq(
+          caseInsensitive("For"),
+          field("variable", $.identifier),
+          "=",
+          field("start", $._expression),
+          caseInsensitive("To"),
+          field("end", $._expression),
+          optional(seq(caseInsensitive("Step"), field("step", $._expression))),
+          $.newline,
+          field("body", optional($.block)),
+          caseInsensitive("Next"),
+          optional(field("next_variable", $.identifier)),
+        ),
+      ),
+
+    for_each_statement: ($) =>
+      prec.right(
+        seq(
+          caseInsensitive("For"),
+          caseInsensitive("Each"),
+          field("variable", $.identifier),
+          caseInsensitive("In"),
+          field("collection", $._expression),
+          $.newline,
+          field("body", optional($.block)),
+          caseInsensitive("Next"),
+          optional(field("next_variable", $.identifier)),
+        ),
+      ),
+
+    do_statement: ($) =>
+      seq(
+        caseInsensitive("Do"),
+        optional($.do_condition),
+        $.newline,
+        field("body", optional($.block)),
+        caseInsensitive("Loop"),
+        optional($.do_condition),
+      ),
+
+    do_condition: ($) =>
+      seq(
+        choice(caseInsensitive("While"), caseInsensitive("Until")),
+        field("condition", $._expression),
+      ),
+
+    with_statement: ($) =>
+      seq(
+        caseInsensitive("With"),
+        field("value", $._expression),
+        $.newline,
+        field("body", optional($.block)),
+        caseInsensitive("End"),
+        caseInsensitive("With"),
+      ),
+
+    set_statement: ($) =>
+      seq(
+        caseInsensitive("Set"),
+        field("left", $._assignable_expression),
+        "=",
+        field("right", $._expression),
+      ),
+
+    assignment_statement: ($) =>
+      seq(field("left", $._assignable_expression), "=", field("right", $._expression)),
+
+    call_statement: ($) =>
+      prec.right(
+        1,
+        seq(
+          optional(caseInsensitive("Call")),
+          field("callee", $._callable_expression),
+          optional($.argument_list),
+        ),
+      ),
+
+    expression_statement: ($) => $._expression,
 
     argument_list: ($) =>
       choice(seq("(", optional(commaSep1($._expression)), ")"), commaSep1($._expression)),
 
-    _expression: ($) => choice($._literal, $.identifier, $.binary_expression),
+    _expression: ($) =>
+      choice(
+        $._literal,
+        $.identifier,
+        $.member_expression,
+        $.call_expression,
+        $.parenthesized_expression,
+        $.binary_expression,
+        $.unary_expression,
+      ),
+
+    _assignable_expression: ($) => choice($.identifier, $.member_expression),
+
+    _callable_expression: ($) => choice($.identifier, $.member_expression),
+
+    call_expression: ($) =>
+      prec(
+        2,
+        seq(
+          field("function", $._callable_expression),
+          seq("(", optional(commaSep1($._expression)), ")"),
+        ),
+      ),
+
+    member_expression: ($) =>
+      prec.left(
+        3,
+        choice(
+          seq(
+            field("object", choice($.identifier, $.call_expression, $.member_expression)),
+            ".",
+            field("property", $.identifier),
+          ),
+          seq(".", field("property", $.identifier)),
+        ),
+      ),
+
+    parenthesized_expression: ($) => seq("(", $._expression, ")"),
 
     binary_expression: ($) =>
-      prec.left(1, seq($._expression, choice("+", "-", "*", "/", "&"), $._expression)),
+      prec.left(
+        1,
+        seq(
+          $._expression,
+          choice(
+            "+",
+            "-",
+            "*",
+            "/",
+            "\\",
+            "&",
+            "=",
+            "<>",
+            "<",
+            "<=",
+            ">",
+            ">=",
+            caseInsensitive("And"),
+            caseInsensitive("Or"),
+          ),
+          $._expression,
+        ),
+      ),
+
+    unary_expression: ($) => prec(4, seq(choice("+", "-", caseInsensitive("Not")), $._expression)),
 
     _literal: ($) => choice($.string_literal, $.number_literal, $.boolean_literal),
 

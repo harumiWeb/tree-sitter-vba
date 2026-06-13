@@ -7,9 +7,11 @@ Attribute VB_Name = "Module1"
 ---
 
 (source_file
+  (newline)
   (attribute_statement
     name: (identifier)
-    value: (string_literal)))
+    value: (string_literal))
+  (newline))
 
 ==================
 multiple attributes
@@ -22,12 +24,16 @@ Attribute VB_PredeclaredId = True
 ---
 
 (source_file
+  (newline)
   (attribute_statement
     name: (identifier)
     value: (string_literal))
+  (newline)
   (attribute_statement
     name: (identifier)
     value: (boolean_literal))
+  (newline)
   (attribute_statement
     name: (identifier)
-    value: (boolean_literal)))
+    value: (boolean_literal))
+  (newline))

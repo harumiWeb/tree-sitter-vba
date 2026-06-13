@@ -1,0 +1,71 @@
+==================
+variable declarations
+==================
+
+Dim x As Long
+Private count As Long
+Static cache As Object
+
+---
+
+(source_file
+  (newline)
+  (variable_declaration
+    (variable_declarator
+      (identifier)
+      (as_type_clause
+        (type_expression))))
+  (newline)
+  (variable_declaration
+    (visibility)
+    (variable_declarator
+      (identifier)
+      (as_type_clause
+        (type_expression))))
+  (newline)
+  (variable_declaration
+    (variable_declarator
+      (identifier)
+      (as_type_clause
+        (type_expression))))
+  (newline))
+
+==================
+constant declaration
+==================
+
+Public Const MaxCount As Long = 10
+
+---
+
+(source_file
+  (newline)
+  (const_declaration
+    (visibility)
+    (const_declarator
+      (identifier)
+      (as_type_clause
+        (type_expression))
+      (number_literal)))
+  (newline))
+
+==================
+multiple declarators
+==================
+
+Dim a As Long, b As String
+
+---
+
+(source_file
+  (newline)
+  (variable_declaration
+    (variable_declarator
+      (identifier)
+      (as_type_clause
+        (type_expression)))
+    (variable_declarator
+      (identifier)
+      (as_type_clause
+        (type_expression))))
+  (newline))

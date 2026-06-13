@@ -1,70 +1,27 @@
-[
-  "Attribute"
-  "Option"
-  "Explicit"
-  "Private"
-  "Public"
-  "Friend"
-  "Sub"
-  "Function"
-  "Property"
-  "Get"
-  "Let"
-  "Set"
-  "End"
-  "Dim"
-  "Static"
-  "Const"
-  "As"
-  "ByVal"
-  "ByRef"
-  "Optional"
-  "ParamArray"
-  "Call"
-] @keyword
-
-[
-  "String"
-  "Boolean"
-  "Byte"
-  "Integer"
-  "Long"
-  "LongLong"
-  "LongPtr"
-  "Single"
-  "Double"
-  "Currency"
-  "Date"
-  "Variant"
-  "Object"
-] @type.builtin
-
-(comment) @comment
-
-(string_literal) @string
-(number_literal) @number
-(boolean_literal) @constant.builtin
-
 (sub_declaration
-  name: (identifier) @function)
+  body: (block) @fold)
 
 (function_declaration
-  name: (identifier) @function)
+  body: (block) @fold)
 
 (property_declaration
-  name: (identifier) @function)
+  body: (block) @fold)
 
-(parameter
-  name: (identifier) @variable.parameter)
+(if_statement
+  consequence: (block) @fold)
 
-(variable_declarator
-  name: (identifier) @variable)
+(select_statement) @fold
 
-(const_declarator
-  name: (identifier) @constant)
+(for_statement
+  body: (block) @fold)
 
-(type_expression
-  (identifier) @type)
+(for_each_statement
+  body: (block) @fold)
 
-(attribute_statement
-  name: (identifier) @property)
+(do_statement
+  body: (block) @fold)
+
+(with_statement
+  body: (block) @fold)
+
+(frm_begin_block) @fold

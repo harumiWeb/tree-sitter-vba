@@ -2,46 +2,38 @@
 
 Tree-sitter grammar for Visual Basic for Applications (VBA).
 
-This project aims to provide a practical parsing foundation for editor integration, syntax highlighting, folding, symbol extraction, and future LSP support for exported VBA source files such as `.bas`, `.cls`, and `.frm`.
+This project provides a parsing foundation for exported VBA source files such as
+`.bas`, `.cls`, and `.frm`. The grammar is intended for editor-facing features
+such as highlighting, folding, tags, outline extraction, and future LSP work.
 
 ## Status
 
-This project is in an early bootstrap phase.
+This project is in an early MVP phase. It is useful for simple exported modules,
+but it is not a complete VBA grammar and is not production-ready.
 
-The grammar is not production-ready yet. The initial goal is to parse common exported VBA modules well enough for:
+Currently supported:
 
-- syntax highlighting
-- procedure-level folding
-- tags / outline extraction
-- basic symbol extraction
-- future integration with `xlflow-lsp`
-
-The grammar currently focuses on a small subset of VBA:
-
+- apostrophe comments and `Rem` comments
+- string, integer, floating-point, and boolean literals
+- identifiers and simple type clauses
 - `Attribute` statements
-- `Option` statements
-- `Sub`
-- `Function`
-- `Property Get/Let/Set`
-- basic `Dim`, `Static`, and `Const` declarations
-- simple assignments
-- simple calls
-- comments
-- string, number, and boolean literals
+- `Option Explicit`, `Option Private Module`, `Option Compare`, and `Option Base`
+- `Sub`, `Function`, and `Property Get/Let/Set` procedures
+- `Dim`, `Static`, visibility-based variable declarations, and `Const`
+- simple assignments, `Set` assignments, calls, member access, and leading-dot member access
+- block `If`, `Select Case`, `For`, `For Each`, `Do`, and `With`
+- minimal `.frm` / `.cls` export metadata such as `VERSION` and `Begin ... End`
+- initial `highlights.scm`, `folds.scm`, and `tags.scm` queries
 
-Unsupported or incomplete areas include:
+Known limitations:
 
-- full expression precedence
-- member access such as `ws.Range("A1").Value`
-- `Debug.Print`
-- `If`, `Select Case`, `For`, `Do`, `With`
-- `Type` and `Enum`
-- conditional compilation
-- `Declare PtrSafe`
-- exported `.frm` designer metadata
-- semantic analysis
-- type checking
-- Excel Object Model resolution
+- no type checking or semantic analysis
+- no Excel Object Model or COM reference knowledge
+- no formatter or LSP server
+- expression precedence is intentionally incomplete
+- `.frm` designer metadata is parsed syntactically, not interpreted semantically
+- no line continuation, colon-separated statements, conditional compilation, `Declare`, `Type`, or `Enum` support yet
+- single-line `If ... Then ... Else ...` is not supported yet
 
 ## Development
 
@@ -69,6 +61,12 @@ Parse example files:
 pnpm parse:examples
 ```
 
+Run the full local check:
+
+```bash
+pnpm check
+```
+
 ## Testing
 
 Tree-sitter grammar behavior is tested with corpus files under:
@@ -77,113 +75,15 @@ Tree-sitter grammar behavior is tested with corpus files under:
 test/corpus/
 ```
 
-Each corpus test contains a VBA snippet and the expected parse tree.
-
-Example:
-
-```txt
-==================
-public sub
-==================
-
-Public Sub Main()
-End Sub
-
----
-
-(source_file
-  (sub_declaration
-    (visibility)
-    name: (identifier)
-    (parameter_list)
-    body: (block)))
-```
-
-When changing `grammar.js`, always add or update corpus tests.
-
-Do not weaken existing corpus tests just to make a grammar change pass.
+When changing `grammar.js`, always add or update focused corpus tests. Do not
+weaken existing expectations just to make a grammar change pass.
 
 ## Design Principles
 
-This grammar handles syntax only.
+This repository parses VBA syntax only. It does not validate whether identifiers,
+types, members, procedures, workbook objects, or references are semantically
+valid. Those concerns belong in downstream tools such as `xlflow`,
+`xlflow-lsp`, or editor extensions.
 
-It does not perform:
-
-- type checking
-- Excel Object Model completion
-- COM Type Library indexing
-- VBE compile diagnostics
-- macro execution
-- formatting
-- LSP server behavior
-
-Those belong in downstream tools such as `xlflow`, `xlflow-lsp`, or editor extensions.
-
-## File Types
-
-The intended file types are:
-
-- `.bas`
-- `.cls`
-- `.frm`
-
-Support for `.frm` designer metadata is planned but not complete yet.
-
----
-
-## Background
-
-This project is a tree-sitter for VBA developed for the Excel VBA development tool xlflow (https://github.com/harumiWeb/xlflow). The goal is to provide a robust and accurate parser for VBA code that can be used for syntax highlighting, code analysis, and other editor features in xlflow and potentially other tools.
-
-## Status
-
-This project is in an early bootstrap phase.
-
-The grammar is not production-ready yet. The initial goal is to parse common exported `.bas`, `.cls`, and `.frm` files for syntax highlighting, folding, and symbol extraction.
-
-## Roadmap
-
-### Milestone 1: Basic module parsing
-
-- Attributes
-- Options
-- Procedures
-- Declarations
-- Basic control flow
-- Comments and strings
-
-### Milestone 2: Practical VBA parsing
-
-- Calls
-- Assignments
-- Member access
-- Line continuations
-- Colon-separated statements
-- Type and Enum blocks
-- Property Get/Let/Set
-
-### Milestone 3: Excel VBA compatibility
-
-- `.frm` UserForm exports
-- Conditional compilation
-- Declare PtrSafe
-- WithEvents
-- Event procedures
-- Common Excel VBA idioms
-
-### Milestone 4: Editor integration
-
-- highlights.scm
-- folds.scm
-- tags.scm
-- locals.scm
-- VSCode integration
-- Neovim/Helix/Zed compatibility where possible
-
-### Milestone 5: Downstream xlflow integration
-
-- Symbol extraction
-- LSP frontend
-- xlflow lint improvements
-- xlflow fmt support
-- Workbook/UserForm-aware completion via xlflow
+Node names should remain stable once introduced because downstream query files
+and integrations may depend on them.
