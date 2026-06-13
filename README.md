@@ -8,21 +8,28 @@ such as highlighting, folding, tags, outline extraction, and future LSP work.
 
 ## Status
 
-This project is in an early MVP phase. It is useful for simple exported modules,
-but it is not a complete VBA grammar and is not production-ready.
+This project is in an MVP phase. It can parse a useful subset of exported VBA
+modules and the real-world examples included in this repository, but it is not a
+complete VBA grammar and is not production-ready.
 
 Currently supported:
 
 - apostrophe comments and `Rem` comments
-- string, integer, floating-point, and boolean literals
-- identifiers and simple type clauses
+- string, integer, floating-point, boolean, `Nothing`, `Null`, and `Empty` literals
+- hex literals and identifiers with common VBA type-declaration characters
+- identifiers, simple type clauses, dotted type names, and array type suffixes
 - `Attribute` statements
 - `Option Explicit`, `Option Private Module`, `Option Compare`, and `Option Base`
 - `Sub`, `Function`, and `Property Get/Let/Set` procedures
-- `Dim`, `Static`, visibility-based variable declarations, and `Const`
-- simple assignments, `Set` assignments, calls, member access, and leading-dot member access
-- block `If`, `Select Case`, `For`, `For Each`, `Do`, and `With`
-- minimal `.frm` / `.cls` export metadata such as `VERSION` and `Begin ... End`
+- `Dim`, `Static`, `WithEvents`, visibility-based variable declarations, arrays, `ReDim`, and `Const`
+- `Type`, `Enum`, `Declare PtrSafe`, `Lib`, and `Alias`
+- simple assignments, `Set` assignments, calls, named arguments, member access, and leading-dot member access
+- `New` expressions
+- block `If`, single-line `If`, `Select Case`, `For`, `For Each`, `Do`, `While/Wend`, and `With`
+- `On Error`, `Resume`, `GoTo`, labels, and `Exit` statements
+- conditional compilation with `#Const`, `#If`, `#ElseIf`, `#Else`, and `#End If`
+- line continuations and colon-separated statements
+- minimal `.frm` / `.cls` export metadata such as `VERSION`, `Begin ... End`, GUID form blocks, and `.frx` blob references
 - initial `highlights.scm`, `folds.scm`, and `tags.scm` queries
 
 Known limitations:
@@ -32,8 +39,8 @@ Known limitations:
 - no formatter or LSP server
 - expression precedence is intentionally incomplete
 - `.frm` designer metadata is parsed syntactically, not interpreted semantically
-- no line continuation, colon-separated statements, conditional compilation, `Declare`, `Type`, or `Enum` support yet
-- single-line `If ... Then ... Else ...` is not supported yet
+- context-sensitive statement validity is not checked; for example, invalid `Exit For` placement is left to downstream semantic validation
+- omitted arguments and full VBA expression precedence are still incomplete
 
 ## Development
 

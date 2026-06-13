@@ -1,0 +1,95 @@
+==================
+on error goto label and resume next
+==================
+
+Sub Test()
+    On Error GoTo ErrHandler
+    Exit Sub
+
+ErrHandler:
+    Resume Next
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (on_error_statement
+        (identifier))
+      (newline)
+      (exit_statement)
+      (newline)
+      (newline)
+      (label_statement
+        (identifier))
+      (newline)
+      (resume_statement)
+      (newline)))
+  (newline))
+
+==================
+on error goto zero and resume label
+==================
+
+Sub Test()
+    On Error GoTo 0
+Cleanup:
+    On Error Resume Next
+    Resume Cleanup
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (on_error_statement
+        (number_literal))
+      (newline)
+      (label_statement
+        (identifier))
+      (newline)
+      (on_error_statement)
+      (newline)
+      (resume_statement
+        (identifier))
+      (newline)))
+  (newline))
+
+==================
+goto label
+==================
+
+Sub Test()
+    GoTo Done
+Done:
+    Exit Sub
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (goto_statement
+        (identifier))
+      (newline)
+      (label_statement
+        (identifier))
+      (newline)
+      (exit_statement)
+      (newline)))
+  (newline))

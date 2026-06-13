@@ -3,6 +3,10 @@
 (string_literal) @string
 (number_literal) @number
 (boolean_literal) @constant.builtin
+(nothing_literal) @constant.builtin
+(null_literal) @constant.builtin
+(empty_literal) @constant.builtin
+(guid_literal) @constant.builtin
 
 (attribute_statement) @keyword
 (option_statement) @keyword
@@ -31,9 +35,18 @@
 (while_statement) @keyword
 (with_statement) @keyword
 (exit_statement) @keyword
+(on_error_statement) @keyword
+(resume_statement) @keyword
+(goto_statement) @keyword
+(redim_statement) @keyword
 (set_statement) @keyword
+(new_expression) @keyword
+(condition_binary_expression) @operator
+(comparison_expression) @operator
+(case_expression) @keyword
 
 (type_expression) @type
+(dotted_type_expression) @type
 
 (type_declaration
   name: (identifier) @type)
@@ -46,6 +59,12 @@
 
 (enum_member
   name: (identifier) @constant)
+
+(label_statement
+  name: (identifier) @label)
+
+(named_argument
+  name: (identifier) @variable.parameter)
 
 (declare_statement
   name: (identifier) @function)

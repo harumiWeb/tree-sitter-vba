@@ -1,0 +1,95 @@
+==================
+comparison argument
+==================
+
+Sub Test()
+    value = GetColumnColor(columnIndex, Month(currentDate) = Month(mDisplayMonth))
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (assignment_statement
+        (identifier)
+        (call_expression
+          (identifier)
+          (identifier)
+          (comparison_expression
+            (call_expression
+              (identifier)
+              (identifier))
+            (call_expression
+              (identifier)
+              (identifier)))))
+      (newline)))
+  (newline))
+
+==================
+condition binary comparisons
+==================
+
+Sub Test()
+    If PeekChar() = "e" Or PeekChar() = "E" Then
+        value = True
+    End If
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (if_statement
+        (condition_binary_expression
+          (comparison_expression
+            (call_expression
+              (identifier))
+            (string_literal))
+          (comparison_expression
+            (call_expression
+              (identifier))
+            (string_literal)))
+        (newline)
+        (block
+          (assignment_statement
+            (identifier)
+            (boolean_literal))
+          (newline)))
+      (newline)))
+  (newline))
+
+==================
+array return type
+==================
+
+Private Function Utf8Bytes(ByVal text As String) As Byte()
+End Function
+
+---
+
+(source_file
+  (newline)
+  (function_declaration
+    (procedure_modifier
+      (visibility))
+    (identifier)
+    (parameter_list
+      (parameter
+        (identifier)
+        (as_type_clause
+          (type_expression))))
+    (as_type_clause
+      (type_expression)
+      (array_bounds))
+    (newline))
+  (newline))

@@ -1,0 +1,56 @@
+==================
+guid begin block with blob reference
+==================
+
+VERSION 5.00
+Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} frmInvader
+   Caption         =   "Space Invader"
+   OleObjectBlob   =   "frmInvader.frx":0000
+End
+
+---
+
+(source_file
+  (newline)
+  (frm_version_statement
+    (number_literal))
+  (newline)
+  (frm_begin_block
+    (guid_literal)
+    (identifier)
+    (newline)
+    (frm_property_statement
+      (identifier)
+      (frm_quoted_property_text))
+    (newline)
+    (frm_property_statement
+      (identifier)
+      (frm_quoted_property_text))
+    (newline))
+  (newline))
+
+==================
+class begin block
+==================
+
+VERSION 1.0 CLASS
+BEGIN
+  MultiUse = -1  'True
+END
+
+---
+
+(source_file
+  (newline)
+  (frm_version_statement
+    (number_literal)
+    (identifier))
+  (newline)
+  (frm_begin_block
+    (newline)
+    (frm_property_statement
+      (identifier)
+      (number_literal))
+    (comment)
+    (newline))
+  (newline))

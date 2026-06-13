@@ -26,6 +26,8 @@ root: .
 │   ├── sources.json
 │   ├── unsupported-or-ambiguous-syntax.md
 │   └── vba-syntax-checklist.md
+├── scripts/
+│   └── parse-examples.mjs
 ├── tasks/
 │   ├── feature_spec.md
 │   ├── lessons.md

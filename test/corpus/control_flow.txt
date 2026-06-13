@@ -57,7 +57,8 @@ End Sub
         (identifier)
         (newline)
         (case_clause
-          (number_literal)
+          (case_expression
+            (number_literal))
           (newline)
           (block
             (call_statement

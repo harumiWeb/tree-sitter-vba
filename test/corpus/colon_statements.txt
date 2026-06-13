@@ -1,0 +1,145 @@
+==================
+single line function with colon separators
+==================
+
+Public Function UfoWidth() As Long: UfoWidth = P_UFO_WIDTH: End Function
+
+---
+
+(source_file
+  (newline)
+  (function_declaration
+    (procedure_modifier
+      (visibility))
+    (identifier)
+    (parameter_list)
+    (as_type_clause
+      (type_expression))
+    (block
+      (assignment_statement
+        (identifier)
+        (identifier))))
+  (newline))
+
+==================
+select case with colon statements
+==================
+
+Sub Test()
+    Select Case rowIndex
+      Case 1: pattern = GetEnemySquidPattern(): enemyColor = RGB(80, 255, 80)
+      Case Else: pattern = GetEnemyOctopusPattern()
+    End Select
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (select_statement
+        (identifier)
+        (newline)
+        (case_clause
+          (case_expression
+            (number_literal))
+          (block
+            (assignment_statement
+              (identifier)
+              (call_expression
+                (identifier)))
+            (assignment_statement
+              (identifier)
+              (call_expression
+                (identifier)
+                (number_literal)
+                (number_literal)
+                (number_literal)))
+            (newline)))
+        (case_clause
+          (block
+            (assignment_statement
+              (identifier)
+              (call_expression
+                (identifier)))
+            (newline))))
+      (newline)))
+  (newline))
+
+==================
+assignment right comparison
+==================
+
+Private Function QuoteIsOpen(ByVal quoteTable As Variant) As Boolean
+  QuoteIsOpen = StrComp(QuoteTextOrDefault(quoteTable, "is_market_open", "false"), "true", vbTextCompare) = 0
+End Function
+
+---
+
+(source_file
+  (newline)
+  (function_declaration
+    (procedure_modifier
+      (visibility))
+    (identifier)
+    (parameter_list
+      (parameter
+        (identifier)
+        (as_type_clause
+          (type_expression))))
+    (as_type_clause
+      (type_expression))
+    (newline)
+    (block
+      (assignment_statement
+        (identifier)
+        (comparison_expression
+          (call_expression
+            (identifier)
+            (call_expression
+              (identifier)
+              (identifier)
+              (string_literal)
+              (string_literal))
+            (string_literal)
+            (identifier))
+          (number_literal)))
+      (newline)))
+  (newline))
+
+==================
+power operator
+==================
+
+Sub Test()
+    BitAt = (codewords(byteIndex) \ (2 ^ shiftCount)) And 1
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (assignment_statement
+        (identifier)
+        (binary_expression
+          (parenthesized_expression
+            (binary_expression
+              (call_expression
+                (identifier)
+                (identifier))
+              (parenthesized_expression
+                (binary_expression
+                  (number_literal)
+                  (identifier)))))
+          (number_literal)))
+      (newline)))
+  (newline))

@@ -1,0 +1,64 @@
+==================
+named argument in call expression
+==================
+
+Sub Test()
+    Set ws = wb.Worksheets.Add(After:=wb.Worksheets(wb.Worksheets.Count))
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (set_statement
+        (identifier)
+        (call_expression
+          (member_expression
+            (member_expression
+              (identifier)
+              (identifier))
+            (identifier))
+          (named_argument
+            (identifier)
+            (call_expression
+              (member_expression
+                (identifier)
+                (identifier))
+              (member_expression
+                (member_expression
+                  (identifier)
+                  (identifier))
+                (identifier))))))
+      (newline)))
+  (newline))
+
+==================
+named argument in call statement
+==================
+
+Sub Test()
+    Foo Name:=value
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (call_statement
+        (identifier)
+        (argument_list
+          (named_argument
+            (identifier)
+            (identifier))))
+      (newline)))
+  (newline))

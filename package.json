@@ -9,7 +9,7 @@
   "scripts": {
     "generate": "tree-sitter generate",
     "test": "tree-sitter generate && tree-sitter test",
-    "parse:examples": "tree-sitter parse examples/*.bas examples/*.cls examples/*.frm",
+    "parse:examples": "node scripts/parse-examples.mjs",
     "fmt": "oxfmt",
     "check": "pnpm test && pnpm parse:examples"
   },

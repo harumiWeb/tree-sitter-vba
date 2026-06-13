@@ -10,55 +10,56 @@ Status legend:
 
 ## Module-level syntax
 
-- [ ] `Attribute VB_Name = "..."`
-- [ ] `Attribute VB_GlobalNameSpace = False`
-- [ ] `Attribute VB_PredeclaredId = True`
-- [ ] `Option Explicit`
-- [ ] `Option Private Module`
-- [ ] `Option Compare Binary`
-- [ ] `Option Compare Text`
-- [ ] `Option Compare Database`
-- [ ] `Option Base 0`
-- [ ] `Option Base 1`
+- [x] `Attribute VB_Name = "..."`
+- [x] `Attribute VB_GlobalNameSpace = False`
+- [x] `Attribute VB_PredeclaredId = True`
+- [x] `Option Explicit`
+- [x] `Option Private Module`
+- [x] `Option Compare Binary`
+- [x] `Option Compare Text`
+- [x] `Option Compare Database`
+- [x] `Option Base 0`
+- [x] `Option Base 1`
 
 ## Procedures
 
-- [ ] `Sub ... End Sub`
-- [ ] `Function ... End Function`
-- [ ] `Property Get ... End Property`
-- [ ] `Property Let ... End Property`
-- [ ] `Property Set ... End Property`
-- [ ] `Public`
-- [ ] `Private`
-- [ ] `Friend`
-- [ ] `Static`
-- [ ] parameter list
-- [ ] `ByVal`
-- [ ] `ByRef`
-- [ ] `Optional`
-- [ ] `ParamArray`
-- [ ] return type clause
+- [x] `Sub ... End Sub`
+- [x] `Function ... End Function`
+- [x] `Property Get ... End Property`
+- [x] `Property Let ... End Property`
+- [x] `Property Set ... End Property`
+- [x] `Public`
+- [x] `Private`
+- [x] `Friend`
+- [x] `Static`
+- [x] parameter list
+- [x] `ByVal`
+- [x] `ByRef`
+- [x] `Optional`
+- [x] `ParamArray`
+- [x] return type clause
 
 ## Declarations
 
-- [ ] `Dim`
-- [ ] `Static`
-- [ ] `Private`
-- [ ] `Public`
-- [ ] `Const`
+- [x] `Dim`
+- [x] `Static`
+- [x] `Private`
+- [x] `Public`
+- [x] `Const`
 - [x] `Type ... End Type`
 - [x] `Enum ... End Enum`
-- [ ] `WithEvents`
-- [ ] arrays
+- [x] `WithEvents`
+- [x] arrays
+- [x] `ReDim`
 - [ ] fixed-length strings
 - [ ] object declarations
 
 ## Statements
 
-- [ ] assignment
-- [ ] `Set`
-- [ ] call statement without `Call`
-- [ ] call statement with `Call`
+- [x] assignment
+- [x] `Set`
+- [x] call statement without `Call`
+- [x] call statement with `Call`
 - [x] `If ... Then ... End If`
 - [x] single-line `If ... Then ... Else ...`
 - [x] `Select Case ... End Select`
@@ -67,38 +68,47 @@ Status legend:
 - [x] `Do ... Loop`
 - [x] `While ... Wend`
 - [x] `With ... End With`
-- [ ] `On Error GoTo`
-- [ ] `On Error Resume Next`
-- [ ] `GoTo`
+- [x] `On Error GoTo`
+- [x] `On Error Resume Next`
+- [x] `GoTo`
 - [x] `Exit Sub`
 - [x] `Exit Function`
 - [x] `Exit Property`
 - [x] `Exit For`
 - [x] `Exit Do`
+- [x] `Resume`
+- [x] labels
 
 ## Expressions
 
-- [ ] identifiers
-- [ ] numbers
-- [ ] strings
-- [ ] booleans
+- [x] identifiers
+- [x] numbers
+- [x] strings
+- [x] booleans
+- [x] `Nothing`
+- [x] `Null`
+- [x] `Empty`
+- [x] `New`
+- [x] named arguments `:=`
+- [x] hex literals
+- [x] type-declaration characters on identifiers
 - [ ] date literals
-- [ ] binary operators
-- [ ] unary operators
-- [ ] comparison operators
-- [ ] logical operators
-- [ ] string concatenation
-- [ ] member access
-- [ ] default member-like calls
-- [ ] array access
-- [ ] parenthesized expressions
+- [~] binary operators
+- [x] unary operators
+- [~] comparison operators
+- [~] logical operators
+- [x] string concatenation
+- [x] member access
+- [x] default member-like calls
+- [x] array access
+- [x] parenthesized expressions
 
 ## VBA-specific source forms
 
 - [~] line continuation `_`
-- [ ] colon-separated statements
-- [ ] apostrophe comments
-- [ ] `Rem` comments
+- [x] colon-separated statements
+- [x] apostrophe comments
+- [x] `Rem` comments
 - [x] conditional compilation
 - [x] `#Const`
 - [x] `#If`
@@ -117,9 +127,11 @@ Status legend:
 
 ## UserForm / `.frm`
 
-- [ ] `VERSION 5.00`
-- [ ] `Begin VB.Form ...`
-- [ ] nested `Begin ... End`
-- [ ] form properties
-- [ ] embedded attributes
-- [ ] embedded VBA procedures
+- [x] `VERSION 5.00`
+- [x] `Begin VB.Form ...`
+- [x] nested `Begin ... End`
+- [x] form properties
+- [x] embedded attributes
+- [x] embedded VBA procedures
+- [x] GUID `Begin {C62...} ...`
+- [x] `.frx` blob references such as `"Form.frx":0000`

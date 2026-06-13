@@ -16,7 +16,7 @@ module.exports = grammar({
 
   conflicts: ($) => [
     [$._expression, $._callable_expression],
-    [$.argument_list, $.parenthesized_expression],
+    [$._argument, $.parenthesized_expression],
   ],
 
   rules: {
@@ -44,6 +44,8 @@ module.exports = grammar({
 
     newline: (_) => /\r?\n/,
 
+    _statement_separator: ($) => choice($.newline, ":"),
+
     line_continuation: (_) => token(seq("_", /\r?\n/)),
 
     comment: (_) => token(choice(seq("'", /.*/), seq(caseInsensitive("Rem"), /([ \t].*)?/))),
@@ -54,9 +56,9 @@ module.exports = grammar({
     frm_begin_block: ($) =>
       seq(
         caseInsensitive("Begin"),
-        field("type", $.member_expression),
-        field("name", $.identifier),
-        $.newline,
+        optional(field("type", choice($.member_expression, $.guid_literal))),
+        optional(field("name", $.identifier)),
+        $._statement_separator,
         repeat(choice($.newline, $.frm_property_statement, $.frm_begin_block)),
         caseInsensitive("End"),
       ),
@@ -69,14 +71,25 @@ module.exports = grammar({
       ),
 
     _frm_property_value: ($) =>
-      choice($._literal, $.member_expression, $.identifier, $.frm_property_text),
+      choice(
+        $.frm_blob_reference,
+        $.frm_quoted_property_text,
+        $._literal,
+        $.member_expression,
+        $.identifier,
+        $.frm_property_text,
+      ),
 
     frm_property_text: (_) => token(/[A-Za-z_][^\r\n']*/),
+
+    frm_quoted_property_text: (_) => token(seq('"', /[^\r\n]*/)),
+
+    frm_blob_reference: ($) => seq($.string_literal, ":", $.number_literal),
 
     attribute_statement: ($) =>
       seq(
         caseInsensitive("Attribute"),
-        field("name", $.identifier),
+        field("name", choice($.identifier, $.member_expression)),
         "=",
         field("value", $._literal),
       ),
@@ -100,21 +113,20 @@ module.exports = grammar({
         optional($.visibility),
         caseInsensitive("Type"),
         field("name", $.identifier),
-        $.newline,
+        $._statement_separator,
         repeat(choice($.newline, $.type_member)),
         caseInsensitive("End"),
         caseInsensitive("Type"),
       ),
 
-    type_member: ($) =>
-      seq(field("name", $.identifier), $.as_type_clause),
+    type_member: ($) => seq(field("name", $.identifier), $.as_type_clause),
 
     enum_declaration: ($) =>
       seq(
         optional($.visibility),
         caseInsensitive("Enum"),
         field("name", $.identifier),
-        $.newline,
+        $._statement_separator,
         repeat(choice($.newline, $.enum_member)),
         caseInsensitive("End"),
         caseInsensitive("Enum"),
@@ -191,7 +203,7 @@ module.exports = grammar({
         caseInsensitive("Sub"),
         field("name", $.identifier),
         optional($.parameter_list),
-        $.newline,
+        $._statement_separator,
         field("body", optional($.block)),
         caseInsensitive("End"),
         caseInsensitive("Sub"),
@@ -204,7 +216,7 @@ module.exports = grammar({
         field("name", $.identifier),
         optional($.parameter_list),
         optional($.as_type_clause),
-        $.newline,
+        $._statement_separator,
         field("body", optional($.block)),
         caseInsensitive("End"),
         caseInsensitive("Function"),
@@ -221,7 +233,7 @@ module.exports = grammar({
         field("name", $.identifier),
         optional($.parameter_list),
         optional($.as_type_clause),
-        $.newline,
+        $._statement_separator,
         field("body", optional($.block)),
         caseInsensitive("End"),
         caseInsensitive("Property"),
@@ -229,7 +241,7 @@ module.exports = grammar({
 
     procedure_modifier: ($) => choice($.visibility, caseInsensitive("Static")),
 
-    block: ($) => repeat1(choice($.newline, $._statement)),
+    block: ($) => repeat1(choice($._statement_separator, $._statement)),
 
     _statement: ($) =>
       choice(
@@ -241,7 +253,14 @@ module.exports = grammar({
         $.do_statement,
         $.while_statement,
         $.with_statement,
+        $.on_error_statement,
+        $.resume_statement,
+        $.goto_statement,
+        $.label_statement,
         $.exit_statement,
+        $.redim_statement,
+        $.preprocessor_const,
+        $.preprocessor_if,
         $.const_declaration,
         $.variable_declaration,
         $.set_statement,
@@ -251,19 +270,33 @@ module.exports = grammar({
       ),
 
     variable_declaration: ($) =>
-      seq(
-        choice(
-          seq(optional($.visibility), choice(caseInsensitive("Dim"), caseInsensitive("Static"))),
-          $.visibility,
+      choice(
+        seq($.visibility, caseInsensitive("WithEvents"), commaSep1($.variable_declarator)),
+        seq(
+          choice(
+            seq(optional($.visibility), choice(caseInsensitive("Dim"), caseInsensitive("Static"))),
+            $.visibility,
+          ),
+          commaSep1($.variable_declarator),
         ),
-        commaSep1($.variable_declarator),
       ),
 
     const_declaration: ($) =>
       seq(optional($.visibility), caseInsensitive("Const"), commaSep1($.const_declarator)),
 
     variable_declarator: ($) =>
-      seq(field("name", $.identifier), optional($.as_type_clause), optional($.initializer)),
+      choice(
+        prec.right(
+          1,
+          seq(
+            field("name", $.identifier),
+            $.array_bounds,
+            optional($.as_type_clause),
+            optional($.initializer),
+          ),
+        ),
+        seq(field("name", $.identifier), optional($.as_type_clause), optional($.initializer)),
+      ),
 
     const_declarator: ($) =>
       seq(
@@ -272,7 +305,7 @@ module.exports = grammar({
         optional(seq("=", field("value", $._expression))),
       ),
 
-    initializer: ($) => seq("=", field("value", $._expression)),
+    initializer: ($) => seq("=", field("value", choice($.comparison_expression, $._expression))),
 
     parameter_list: ($) => seq("(", optional(commaSep1($.parameter)), ")"),
 
@@ -283,29 +316,47 @@ module.exports = grammar({
         ),
         optional(caseInsensitive("ParamArray")),
         field("name", $.identifier),
+        optional($.array_bounds),
         optional($.as_type_clause),
         optional($.initializer),
       ),
 
-    as_type_clause: ($) => seq(caseInsensitive("As"), field("type", $.type_expression)),
+    as_type_clause: ($) =>
+      prec.right(
+        seq(caseInsensitive("As"), field("type", $.type_expression), optional($.array_bounds)),
+      ),
+
+    array_bounds: ($) => seq("(", optional(commaSep1($.array_bound)), ")"),
+
+    array_bound: ($) =>
+      choice(
+        seq(field("lower", $._expression), caseInsensitive("To"), field("upper", $._expression)),
+        $._expression,
+      ),
 
     type_expression: ($) =>
-      choice(
-        $.identifier,
-        caseInsensitive("String"),
-        caseInsensitive("Boolean"),
-        caseInsensitive("Byte"),
-        caseInsensitive("Integer"),
-        caseInsensitive("Long"),
-        caseInsensitive("LongLong"),
-        caseInsensitive("LongPtr"),
-        caseInsensitive("Single"),
-        caseInsensitive("Double"),
-        caseInsensitive("Currency"),
-        caseInsensitive("Date"),
-        caseInsensitive("Variant"),
-        caseInsensitive("Object"),
+      prec(
+        4,
+        choice(
+          $.dotted_type_expression,
+          $.identifier,
+          caseInsensitive("String"),
+          caseInsensitive("Boolean"),
+          caseInsensitive("Byte"),
+          caseInsensitive("Integer"),
+          caseInsensitive("Long"),
+          caseInsensitive("LongLong"),
+          caseInsensitive("LongPtr"),
+          caseInsensitive("Single"),
+          caseInsensitive("Double"),
+          caseInsensitive("Currency"),
+          caseInsensitive("Date"),
+          caseInsensitive("Variant"),
+          caseInsensitive("Object"),
+        ),
       ),
+
+    dotted_type_expression: ($) => prec(5, seq($.identifier, repeat1(seq(".", $.identifier)))),
 
     visibility: (_) =>
       choice(caseInsensitive("Public"), caseInsensitive("Private"), caseInsensitive("Friend")),
@@ -368,9 +419,16 @@ module.exports = grammar({
     case_clause: ($) =>
       seq(
         caseInsensitive("Case"),
-        choice(caseInsensitive("Else"), commaSep1($._expression)),
-        $.newline,
+        choice(caseInsensitive("Else"), commaSep1($.case_expression)),
+        $._statement_separator,
         field("body", optional($.block)),
+      ),
+
+    case_expression: ($) =>
+      choice(
+        seq(caseInsensitive("Is"), choice("<", "<=", ">", ">=", "=", "<>"), $._expression),
+        seq($._expression, caseInsensitive("To"), $._expression),
+        $._expression,
       ),
 
     for_statement: ($) =>
@@ -454,16 +512,52 @@ module.exports = grammar({
         ),
       ),
 
+    on_error_statement: ($) =>
+      seq(
+        caseInsensitive("On"),
+        caseInsensitive("Error"),
+        choice(
+          seq(caseInsensitive("GoTo"), field("target", choice($.identifier, $.number_literal))),
+          seq(caseInsensitive("Resume"), caseInsensitive("Next")),
+        ),
+      ),
+
+    resume_statement: ($) =>
+      prec.right(
+        seq(
+          caseInsensitive("Resume"),
+          optional(choice(caseInsensitive("Next"), field("target", $.identifier))),
+        ),
+      ),
+
+    goto_statement: ($) => seq(caseInsensitive("GoTo"), field("target", $.identifier)),
+
+    label_statement: ($) => prec(5, seq(field("name", $.identifier), ":")),
+
+    redim_statement: ($) =>
+      seq(
+        caseInsensitive("ReDim"),
+        optional(caseInsensitive("Preserve")),
+        commaSep1($.redim_declarator),
+      ),
+
+    redim_declarator: ($) =>
+      prec(4, seq(field("name", choice($.identifier, $.member_expression)), $.array_bounds)),
+
     set_statement: ($) =>
       seq(
         caseInsensitive("Set"),
         field("left", $._assignable_expression),
         "=",
-        field("right", $._expression),
+        field("right", choice($.comparison_expression, $._expression)),
       ),
 
     assignment_statement: ($) =>
-      seq(field("left", $._assignable_expression), "=", field("right", $._expression)),
+      seq(
+        field("left", $._assignable_expression),
+        "=",
+        field("right", choice($.comparison_expression, $._expression)),
+      ),
 
     call_statement: ($) =>
       prec.right(
@@ -483,9 +577,14 @@ module.exports = grammar({
     expression_statement: ($) => $._expression,
 
     argument_list: ($) =>
-      choice(seq("(", optional(commaSep1($._expression)), ")"), commaSep1($._expression)),
+      choice(seq("(", optional(commaSep1($._argument)), ")"), commaSep1($._argument)),
 
-    _condition_expression: ($) => choice($._expression, $.comparison_expression),
+    _argument: ($) => choice($.named_argument, $.comparison_expression, $._expression),
+
+    named_argument: ($) => seq(field("name", $.identifier), ":=", field("value", $._expression)),
+
+    _condition_expression: ($) =>
+      choice($.condition_binary_expression, $.comparison_expression, $._expression),
 
     _expression: ($) =>
       choice(
@@ -493,12 +592,23 @@ module.exports = grammar({
         $.identifier,
         $.member_expression,
         $.call_expression,
+        $.new_expression,
         $.parenthesized_expression,
         $.binary_expression,
         $.unary_expression,
       ),
 
     comparison_expression: ($) => prec.left(1, seq($._expression, "=", $._expression)),
+
+    condition_binary_expression: ($) =>
+      prec.left(
+        1,
+        seq(
+          $._condition_expression,
+          choice(caseInsensitive("And"), caseInsensitive("Or")),
+          $._condition_expression,
+        ),
+      ),
 
     _assignable_expression: ($) => choice($.identifier, $.member_expression, $.call_expression),
 
@@ -509,8 +619,14 @@ module.exports = grammar({
         2,
         seq(
           field("function", $._callable_expression),
-          seq("(", optional(commaSep1($._expression)), ")"),
+          seq("(", optional(commaSep1($._argument)), ")"),
         ),
+      ),
+
+    new_expression: ($) =>
+      prec(
+        4,
+        seq(caseInsensitive("New"), field("type", choice($.member_expression, $.identifier))),
       ),
 
     member_expression: ($) =>
@@ -526,7 +642,7 @@ module.exports = grammar({
         ),
       ),
 
-    parenthesized_expression: ($) => seq("(", $._expression, ")"),
+    parenthesized_expression: ($) => seq("(", choice($._expression, $.comparison_expression), ")"),
 
     binary_expression: ($) =>
       prec.left(
@@ -539,14 +655,21 @@ module.exports = grammar({
             "*",
             "/",
             "\\",
+            "^",
             "&",
             "<>",
             "<",
             "<=",
             ">",
             ">=",
+            caseInsensitive("Is"),
+            caseInsensitive("Like"),
+            caseInsensitive("Mod"),
             caseInsensitive("And"),
             caseInsensitive("Or"),
+            caseInsensitive("Xor"),
+            caseInsensitive("Eqv"),
+            caseInsensitive("Imp"),
           ),
           $._expression,
         ),
@@ -554,15 +677,31 @@ module.exports = grammar({
 
     unary_expression: ($) => prec(4, seq(choice("+", "-", caseInsensitive("Not")), $._expression)),
 
-    _literal: ($) => choice($.string_literal, $.number_literal, $.boolean_literal),
+    _literal: ($) =>
+      choice(
+        $.string_literal,
+        $.number_literal,
+        $.boolean_literal,
+        $.nothing_literal,
+        $.null_literal,
+        $.empty_literal,
+      ),
 
     string_literal: (_) => token(seq('"', repeat(choice('""', /[^"]/)), '"')),
 
-    number_literal: (_) => token(/\d+(\.\d+)?/),
+    number_literal: (_) => token(choice(/-?&[Hh][0-9A-Fa-f]+[&]?/, /-?\d+(\.\d+)?[#]?/)),
 
     boolean_literal: (_) => choice(caseInsensitive("True"), caseInsensitive("False")),
 
-    identifier: (_) => /[A-Za-z_][A-Za-z0-9_]*/,
+    nothing_literal: (_) => caseInsensitive("Nothing"),
+
+    null_literal: (_) => caseInsensitive("Null"),
+
+    empty_literal: (_) => caseInsensitive("Empty"),
+
+    guid_literal: (_) => token(/\{[0-9A-Fa-f-]+\}/),
+
+    identifier: (_) => /[A-Za-z_][A-Za-z0-9_]*[$%&!#]?/,
   },
 });
 

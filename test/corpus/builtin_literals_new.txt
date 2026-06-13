@@ -1,0 +1,56 @@
+==================
+builtin literals
+==================
+
+Sub Test()
+    Set ws = Nothing
+    value = Null
+    value = Empty
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (set_statement
+        (identifier)
+        (nothing_literal))
+      (newline)
+      (assignment_statement
+        (identifier)
+        (null_literal))
+      (newline)
+      (assignment_statement
+        (identifier)
+        (empty_literal))
+      (newline)))
+  (newline))
+
+==================
+new expression
+==================
+
+Sub Test()
+    Set items = New Collection
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (set_statement
+        (identifier)
+        (new_expression
+          (identifier)))
+      (newline)))
+  (newline))

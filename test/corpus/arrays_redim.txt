@@ -1,0 +1,71 @@
+==================
+array declarations
+==================
+
+Private gBoard(1 To BOARD_ROWS, 1 To BOARD_COLUMNS) As Long
+Dim fields() As String
+
+---
+
+(source_file
+  (newline)
+  (variable_declaration
+    (visibility)
+    (variable_declarator
+      (identifier)
+      (array_bounds
+        (array_bound
+          (number_literal)
+          (identifier))
+        (array_bound
+          (number_literal)
+          (identifier)))
+      (as_type_clause
+        (type_expression))))
+  (newline)
+  (variable_declaration
+    (variable_declarator
+      (identifier)
+      (array_bounds)
+      (as_type_clause
+        (type_expression))))
+  (newline))
+
+==================
+redim statements
+==================
+
+Sub Test()
+    ReDim output(1 To rowCount, 1 To columnCount)
+    ReDim Preserve items(0 To count)
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (redim_statement
+        (redim_declarator
+          (identifier)
+          (array_bounds
+            (array_bound
+              (number_literal)
+              (identifier))
+            (array_bound
+              (number_literal)
+              (identifier)))))
+      (newline)
+      (redim_statement
+        (redim_declarator
+          (identifier)
+          (array_bounds
+            (array_bound
+              (number_literal)
+              (identifier)))))
+      (newline)))
+  (newline))

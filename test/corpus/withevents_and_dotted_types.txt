@@ -1,0 +1,84 @@
+==================
+withevents declaration
+==================
+
+Private WithEvents Button As MSForms.CommandButton
+Attribute Button.VB_VarHelpID = -1
+
+---
+
+(source_file
+  (newline)
+  (variable_declaration
+    (visibility)
+    (variable_declarator
+      (identifier)
+      (as_type_clause
+        (type_expression
+          (dotted_type_expression
+            (identifier)
+            (identifier))))))
+  (newline)
+  (attribute_statement
+    (member_expression
+      (identifier)
+      (identifier))
+    (number_literal))
+  (newline))
+
+==================
+dotted parameter type
+==================
+
+Public Sub Bind(ByVal sourceButton As MSForms.CommandButton)
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (procedure_modifier
+      (visibility))
+    (identifier)
+    (parameter_list
+      (parameter
+        (identifier)
+        (as_type_clause
+          (type_expression
+            (dotted_type_expression
+              (identifier)
+              (identifier))))))
+    (newline))
+  (newline))
+
+==================
+parenthesized equality expression
+==================
+
+Public Function IsInteractive() As Boolean
+    IsInteractive = (Mode() = xlflowInteractive)
+End Function
+
+---
+
+(source_file
+  (newline)
+  (function_declaration
+    (procedure_modifier
+      (visibility))
+    (identifier)
+    (parameter_list)
+    (as_type_clause
+      (type_expression))
+    (newline)
+    (block
+      (assignment_statement
+        (identifier)
+        (parenthesized_expression
+          (comparison_expression
+            (call_expression
+              (identifier))
+            (identifier))))
+      (newline)))
+  (newline))

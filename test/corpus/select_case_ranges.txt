@@ -1,0 +1,89 @@
+==================
+case range list
+==================
+
+Sub Test()
+    Select Case codePoint
+      Case 45, 46, 95, 126, 48 To 57, 65 To 90, 97 To 122
+        encoded = encoded & currentChar
+    End Select
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (select_statement
+        (identifier)
+        (newline)
+        (case_clause
+          (case_expression
+            (number_literal))
+          (case_expression
+            (number_literal))
+          (case_expression
+            (number_literal))
+          (case_expression
+            (number_literal))
+          (case_expression
+            (number_literal)
+            (number_literal))
+          (case_expression
+            (number_literal)
+            (number_literal))
+          (case_expression
+            (number_literal)
+            (number_literal))
+          (newline)
+          (block
+            (assignment_statement
+              (identifier)
+              (binary_expression
+                (identifier)
+                (identifier)))
+            (newline))))
+      (newline)))
+  (newline))
+
+==================
+case is comparison
+==================
+
+Sub Test()
+    Select Case value
+      Case Is <= 0
+        Debug.Print value
+    End Select
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (select_statement
+        (identifier)
+        (newline)
+        (case_clause
+          (case_expression
+            (number_literal))
+          (newline)
+          (block
+            (call_statement
+              (member_expression
+                (identifier)
+                (identifier))
+              (argument_list
+                (identifier)))
+            (newline))))
+      (newline)))
+  (newline))
