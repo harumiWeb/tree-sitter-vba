@@ -1,0 +1,22 @@
+{
+  "sources": [
+    {
+      "name": "VBA language reference",
+      "url": "https://learn.microsoft.com/en-us/office/vba/api/overview/language-reference",
+      "category": "official",
+      "used_for": ["language overview", "forms", "concepts"]
+    },
+    {
+      "name": "Visual Basic language reference",
+      "url": "https://learn.microsoft.com/en-us/office/vba/language/reference/user-interface-help/visual-basic-language-reference",
+      "category": "official",
+      "used_for": ["statements", "functions", "operators", "data types", "directives", "keywords"]
+    },
+    {
+      "name": "64-bit Visual Basic for Applications overview",
+      "url": "https://learn.microsoft.com/en-us/office/vba/language/concepts/getting-started/64-bit-visual-basic-for-applications-overview",
+      "category": "official",
+      "used_for": ["PtrSafe", "LongPtr", "LongLong", "Declare"]
+    }
+  ]
+}

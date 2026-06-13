@@ -1,0 +1,91 @@
+==================
+public sub
+==================
+
+Public Sub Main()
+End Sub
+
+---
+
+(source_file
+  (sub_declaration
+    (visibility)
+    name: (identifier)
+    (parameter_list)
+    body: (block)))
+
+==================
+private function with parameters
+==================
+
+Private Function Add(ByVal a As Long, ByVal b As Long) As Long
+    Add = a + b
+End Function
+
+---
+
+(source_file
+  (function_declaration
+    (visibility)
+    name: (identifier)
+    (parameter_list
+      (parameter
+        name: (identifier)
+        (as_type_clause
+          type: (type_expression)))
+      (parameter
+        name: (identifier)
+        (as_type_clause
+          type: (type_expression))))
+    (as_type_clause
+      type: (type_expression))
+    body: (block
+      (assignment_statement
+        left: (identifier)
+        right: (binary_expression
+          (identifier)
+          (identifier))))))
+
+==================
+property get
+==================
+
+Public Property Get Name() As String
+    Name = "test"
+End Property
+
+---
+
+(source_file
+  (property_declaration
+    (visibility)
+    accessor: (Get)
+    name: (identifier)
+    (parameter_list)
+    (as_type_clause
+      type: (type_expression))
+    body: (block
+      (assignment_statement
+        left: (identifier)
+        right: (string_literal)))))
+
+==================
+property let
+==================
+
+Public Property Let Name(ByVal value As String)
+End Property
+
+---
+
+(source_file
+  (property_declaration
+    (visibility)
+    accessor: (Let)
+    name: (identifier)
+    (parameter_list
+      (parameter
+        name: (identifier)
+        (as_type_clause
+          type: (type_expression))))
+    body: (block)))

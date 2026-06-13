@@ -1,0 +1,44 @@
+==================
+option explicit
+==================
+
+Option Explicit
+
+---
+
+(source_file
+  (option_statement))
+
+==================
+option private module
+==================
+
+Option Private Module
+
+---
+
+(source_file
+  (option_statement))
+
+==================
+option compare text
+==================
+
+Option Compare Text
+
+---
+
+(source_file
+  (option_statement))
+
+==================
+option base
+==================
+
+Option Base 1
+
+---
+
+(source_file
+  (option_statement
+    (number_literal)))

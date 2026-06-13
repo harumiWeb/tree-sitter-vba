@@ -1,0 +1,22 @@
+{
+  "name": "tree-sitter-vba",
+  "version": "0.1.0",
+  "description": "",
+  "keywords": [],
+  "license": "MIT",
+  "author": "",
+  "main": "index.js",
+  "scripts": {
+    "generate": "tree-sitter generate",
+    "test": "tree-sitter generate && tree-sitter test",
+    "parse:examples": "tree-sitter parse examples/*.bas examples/*.cls examples/*.frm",
+    "fmt": "oxfmt",
+    "check": "pnpm test && pnpm parse:examples"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "oxfmt": "^0.54.0",
+    "tree-sitter-cli": "^0.26.9"
+  },
+  "packageManager": "pnpm@10.28.1"
+}

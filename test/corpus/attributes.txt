@@ -1,0 +1,33 @@
+==================
+attribute vb name
+==================
+
+Attribute VB_Name = "Module1"
+
+---
+
+(source_file
+  (attribute_statement
+    name: (identifier)
+    value: (string_literal)))
+
+==================
+multiple attributes
+==================
+
+Attribute VB_Name = "Class1"
+Attribute VB_GlobalNameSpace = False
+Attribute VB_PredeclaredId = True
+
+---
+
+(source_file
+  (attribute_statement
+    name: (identifier)
+    value: (string_literal))
+  (attribute_statement
+    name: (identifier)
+    value: (boolean_literal))
+  (attribute_statement
+    name: (identifier)
+    value: (boolean_literal)))

@@ -1,0 +1,21 @@
+node_modules/
+dist/
+build/
+.env
+realworld/
+
+# Tree-sitter generated artifacts
+src/parser.c
+src/tree_sitter/
+bindings/
+*.wasm
+
+# Logs
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+
+# OS / editor
+.DS_Store
+.vscode/
+.idea/

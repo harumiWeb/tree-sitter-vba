@@ -1,0 +1,34 @@
+{
+  "grammars": [
+    {
+      "name": "vba",
+      "camelcase": "Vba",
+      "scope": "source.vba",
+      "path": ".",
+      "file-types": ["bas", "cls", "frm"],
+      "injection-regex": "^vba$"
+    }
+  ],
+  "metadata": {
+    "version": "0.1.0",
+    "license": "MIT",
+    "description": "Tree-sitter grammar for Visual Basic for Applications",
+    "authors": [
+      {
+        "name": "harumiWeb"
+      }
+    ],
+    "links": {
+      "repository": "https://github.com/harumiWeb/tree-sitter-vba"
+    }
+  },
+  "bindings": {
+    "c": true,
+    "node": true,
+    "rust": false,
+    "go": false,
+    "python": false,
+    "swift": false,
+    "zig": false
+  }
+}
