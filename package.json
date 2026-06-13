@@ -17,29 +17,32 @@
   "bugs": {
     "url": "https://github.com/harumiWeb/tree-sitter-vba/issues"
   },
-  "files": [
-    "grammar.js",
-    "tree-sitter.json",
-    "binding.gyp",
-    "bindings",
-    "src",
-    "queries",
-    "README.md",
-    "LICENSE"
-  ],
   "license": "MIT",
   "author": "harumiWeb",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/harumiWeb/tree-sitter-vba.git"
   },
-  "main": "index.js",
+  "files": [
+    "grammar.js",
+    "tree-sitter.json",
+    "binding.gyp",
+    "bindings/node/*",
+    "src/**",
+    "queries/*",
+    "README.md",
+    "LICENSE"
+  ],
+  "main": "bindings/node",
+  "types": "bindings/node",
   "scripts": {
+    "install": "node-gyp-build",
     "generate": "tree-sitter generate",
     "test": "tree-sitter generate && tree-sitter test",
+    "test:binding": "node --test bindings/node/*_test.js",
     "parse:examples": "node scripts/parse-examples.mjs",
     "fmt": "oxfmt",
-    "check": "pnpm test && pnpm parse:examples"
+    "check": "pnpm test && pnpm test:binding && pnpm parse:examples"
   },
   "dependencies": {
     "node-addon-api": "^8.8.0",
@@ -49,6 +52,14 @@
     "oxfmt": "^0.54.0",
     "tree-sitter": "^0.25.0",
     "tree-sitter-cli": "^0.26.9"
+  },
+  "peerDependencies": {
+    "tree-sitter": "^0.25.0"
+  },
+  "peerDependenciesMeta": {
+    "tree-sitter": {
+      "optional": true
+    }
   },
   "packageManager": "pnpm@10.28.1"
 }

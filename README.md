@@ -105,3 +105,34 @@ valid. Those concerns belong in downstream tools such as `xlflow`,
 
 Node names should remain stable once introduced because downstream query files
 and integrations may depend on them.
+
+## Node.js
+
+Install the parser runtime and this grammar:
+
+```bash
+npm install tree-sitter tree-sitter-vba
+```
+
+Use the grammar with `tree-sitter`:
+
+```js
+const Parser = require("tree-sitter");
+const VBA = require("tree-sitter-vba");
+
+const parser = new Parser();
+parser.setLanguage(VBA);
+
+const tree = parser.parse(`
+Sub Hello()
+    Debug.Print "Hello"
+End Sub
+`);
+
+console.log(tree.rootNode.toString());
+```
+
+The npm package currently builds its native addon from source during
+installation. A supported Python installation, a C/C++ toolchain, and the
+platform requirements documented by `node-gyp` are therefore required.
+Prebuilt native binaries may be added in a future release.

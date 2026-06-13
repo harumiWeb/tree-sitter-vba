@@ -4,9 +4,6 @@ build/
 .env
 
 # Tree-sitter generated artifacts
-src/parser.c
-src/tree_sitter/
-bindings/
 *.wasm
 
 # Logs
