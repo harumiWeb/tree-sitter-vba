@@ -1,0 +1,235 @@
+==================
+do while loop
+==================
+
+Sub Test()
+    Do While x < 10
+        x = x + 1
+    Loop
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (do_statement
+        (do_condition
+          (binary_expression
+            (identifier)
+            (number_literal)))
+        (newline)
+        (block
+          (assignment_statement
+            (identifier)
+            (binary_expression
+              (identifier)
+              (number_literal)))
+          (newline)))
+      (newline)))
+  (newline))
+
+==================
+do until loop
+==================
+
+Sub Test()
+    Do Until x > 10
+        x = x + 1
+    Loop
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (do_statement
+        (do_condition
+          (binary_expression
+            (identifier)
+            (number_literal)))
+        (newline)
+        (block
+          (assignment_statement
+            (identifier)
+            (binary_expression
+              (identifier)
+              (number_literal)))
+          (newline)))
+      (newline)))
+  (newline))
+
+==================
+do loop while
+==================
+
+Sub Test()
+    Do
+        x = x + 1
+    Loop While x < 10
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (do_statement
+        (newline)
+        (block
+          (assignment_statement
+            (identifier)
+            (binary_expression
+              (identifier)
+              (number_literal)))
+          (newline))
+        (do_condition
+          (binary_expression
+            (identifier)
+            (number_literal))))
+      (newline)))
+  (newline))
+
+==================
+while wend loop
+==================
+
+Sub Test()
+    While x < 10
+        x = x + 1
+    Wend
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (while_statement
+        (binary_expression
+          (identifier)
+          (number_literal))
+        (newline)
+        (block
+          (assignment_statement
+            (identifier)
+            (binary_expression
+              (identifier)
+              (number_literal)))
+          (newline)))
+      (newline)))
+  (newline))
+
+==================
+exit loop statements
+==================
+
+Sub Test()
+    For i = 1 To 10
+        Exit For
+    Next i
+
+    Do While x < 10
+        Exit Do
+    Loop
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (for_statement
+        (identifier)
+        (number_literal)
+        (number_literal)
+        (newline)
+        (block
+          (exit_statement)
+          (newline))
+        (identifier))
+      (newline)
+      (newline)
+      (do_statement
+        (do_condition
+          (binary_expression
+            (identifier)
+            (number_literal)))
+        (newline)
+        (block
+          (exit_statement)
+          (newline)))
+      (newline)))
+  (newline))
+
+==================
+exit procedure statements
+==================
+
+Sub TestSub()
+    Exit Sub
+End Sub
+
+Function TestFunction() As Long
+    Exit Function
+End Function
+
+Property Get TestProperty() As String
+    Exit Property
+End Property
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (exit_statement)
+      (newline)))
+  (newline)
+  (newline)
+  (function_declaration
+    (identifier)
+    (parameter_list)
+    (as_type_clause
+      (type_expression))
+    (newline)
+    (block
+      (exit_statement)
+      (newline)))
+  (newline)
+  (newline)
+  (property_declaration
+    (identifier)
+    (parameter_list)
+    (as_type_clause
+      (type_expression))
+    (newline)
+    (block
+      (exit_statement)
+      (newline)))
+  (newline))

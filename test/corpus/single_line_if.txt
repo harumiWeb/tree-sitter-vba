@@ -1,0 +1,59 @@
+==================
+single line if call
+==================
+
+Sub Test()
+    If a = b Then Debug.Print a
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (single_line_if_statement
+        (comparison_expression
+          (identifier)
+          (identifier))
+        (call_statement
+          (member_expression
+            (identifier)
+            (identifier))
+          (argument_list
+            (identifier))))
+      (newline)))
+  (newline))
+
+==================
+single line if else assignment
+==================
+
+Sub Test()
+    If a = b Then x = 1 Else x = 2
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (single_line_if_statement
+        (comparison_expression
+          (identifier)
+          (identifier))
+        (assignment_statement
+          (identifier)
+          (number_literal))
+        (assignment_statement
+          (identifier)
+          (number_literal)))
+      (newline)))
+  (newline))

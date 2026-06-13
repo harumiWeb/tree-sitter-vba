@@ -136,12 +136,15 @@ module.exports = grammar({
 
     _statement: ($) =>
       choice(
+        $.single_line_if_statement,
         $.if_statement,
         $.select_statement,
         $.for_statement,
         $.for_each_statement,
         $.do_statement,
+        $.while_statement,
         $.with_statement,
+        $.exit_statement,
         $.const_declaration,
         $.variable_declaration,
         $.set_statement,
@@ -223,6 +226,26 @@ module.exports = grammar({
         caseInsensitive("If"),
       ),
 
+    single_line_if_statement: ($) =>
+      prec.right(
+        seq(
+          caseInsensitive("If"),
+          field("condition", $._condition_expression),
+          caseInsensitive("Then"),
+          field("consequence", $._single_line_statement),
+          optional(seq(caseInsensitive("Else"), field("alternative", $._single_line_statement))),
+        ),
+      ),
+
+    _single_line_statement: ($) =>
+      choice(
+        $.exit_statement,
+        $.set_statement,
+        $.assignment_statement,
+        $.call_statement,
+        $.expression_statement,
+      ),
+
     elseif_clause: ($) =>
       seq(
         caseInsensitive("ElseIf"),
@@ -286,19 +309,30 @@ module.exports = grammar({
       ),
 
     do_statement: ($) =>
-      seq(
-        caseInsensitive("Do"),
-        optional($.do_condition),
-        $.newline,
-        field("body", optional($.block)),
-        caseInsensitive("Loop"),
-        optional($.do_condition),
+      prec.right(
+        seq(
+          caseInsensitive("Do"),
+          optional($.do_condition),
+          $.newline,
+          field("body", optional($.block)),
+          caseInsensitive("Loop"),
+          optional($.do_condition),
+        ),
       ),
 
     do_condition: ($) =>
       seq(
         choice(caseInsensitive("While"), caseInsensitive("Until")),
         field("condition", $._condition_expression),
+      ),
+
+    while_statement: ($) =>
+      seq(
+        caseInsensitive("While"),
+        field("condition", $._condition_expression),
+        $.newline,
+        field("body", optional($.block)),
+        caseInsensitive("Wend"),
       ),
 
     with_statement: ($) =>
@@ -309,6 +343,18 @@ module.exports = grammar({
         field("body", optional($.block)),
         caseInsensitive("End"),
         caseInsensitive("With"),
+      ),
+
+    exit_statement: ($) =>
+      seq(
+        caseInsensitive("Exit"),
+        choice(
+          caseInsensitive("Sub"),
+          caseInsensitive("Function"),
+          caseInsensitive("Property"),
+          caseInsensitive("For"),
+          caseInsensitive("Do"),
+        ),
       ),
 
     set_statement: ($) =>

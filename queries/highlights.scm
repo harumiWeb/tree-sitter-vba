@@ -11,6 +11,7 @@
 (as_type_clause) @keyword
 
 (if_statement) @keyword
+(single_line_if_statement) @keyword
 (elseif_clause) @keyword
 (else_clause) @keyword
 (select_statement) @keyword
@@ -19,7 +20,9 @@
 (for_each_statement) @keyword
 (do_statement) @keyword
 (do_condition) @keyword
+(while_statement) @keyword
 (with_statement) @keyword
+(exit_statement) @keyword
 (set_statement) @keyword
 
 (type_expression) @type

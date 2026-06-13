@@ -1,0 +1,79 @@
+==================
+with leading dot assignment
+==================
+
+Sub Test()
+    With ws
+        .Range("A1").Value = 1
+    End With
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (with_statement
+        (identifier)
+        (newline)
+        (block
+          (assignment_statement
+            (member_expression
+              (call_expression
+                (member_expression
+                  (identifier))
+                (string_literal))
+              (identifier))
+            (number_literal))
+          (newline)))
+      (newline)))
+  (newline))
+
+==================
+with multiple statements
+==================
+
+Sub Test()
+    With ws
+        .Range("A1").Value = 1
+        .Range("A2").Value = 2
+    End With
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (with_statement
+        (identifier)
+        (newline)
+        (block
+          (assignment_statement
+            (member_expression
+              (call_expression
+                (member_expression
+                  (identifier))
+                (string_literal))
+              (identifier))
+            (number_literal))
+          (newline)
+          (assignment_statement
+            (member_expression
+              (call_expression
+                (member_expression
+                  (identifier))
+                (string_literal))
+              (identifier))
+            (number_literal))
+          (newline)))
+      (newline)))
+  (newline))

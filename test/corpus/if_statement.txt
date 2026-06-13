@@ -1,0 +1,61 @@
+==================
+if elseif else block
+==================
+
+Sub Test()
+    If a = b Then
+        Debug.Print a
+    ElseIf a <> b Then
+        Debug.Print b
+    Else
+        Debug.Print "other"
+    End If
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (if_statement
+        (comparison_expression
+          (identifier)
+          (identifier))
+        (newline)
+        (block
+          (call_statement
+            (member_expression
+              (identifier)
+              (identifier))
+            (argument_list
+              (identifier)))
+          (newline))
+        (elseif_clause
+          (binary_expression
+            (identifier)
+            (identifier))
+          (newline)
+          (block
+            (call_statement
+              (member_expression
+                (identifier)
+                (identifier))
+              (argument_list
+                (identifier)))
+            (newline)))
+        (else_clause
+          (newline)
+          (block
+            (call_statement
+              (member_expression
+                (identifier)
+                (identifier))
+              (argument_list
+                (string_literal)))
+            (newline))))
+      (newline)))
+  (newline))
