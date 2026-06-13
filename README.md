@@ -15,7 +15,7 @@ inspection, linting, formatting, and future LSP integrations.
 
 This is a `v0.x` initial public release.
 
-The grammar is already usable for syntax-aware tooling such as highlighting, folding, tags, outline extraction, and initial symbol analysis. It parses the checked-in corpus and all 77 checked-in real-world VBA examples without `ERROR` or `MISSING` recovery nodes.
+The grammar is already usable for syntax-aware tooling such as highlighting, folding, tags, outline extraction, and initial symbol analysis. It parses the checked-in corpus and all 100 checked-in real-world VBA examples without `ERROR` or `MISSING` recovery nodes.
 
 It is not yet a complete VBA grammar. Node names and tree shapes may still change before `v1.0.0`.
 

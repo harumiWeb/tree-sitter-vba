@@ -29,22 +29,26 @@ End Sub
         path: (identifier)
         mode: (file_mode)
         number: (file_number
-          (number_literal)))
+          (file_number_literal
+            number: (number_literal))))
       (newline)
       (line_input_statement
         number: (file_number
-          (number_literal))
+          (file_number_literal
+            number: (number_literal)))
         target: (identifier))
       (newline)
       (input_statement
         number: (file_number
-          (number_literal))
+          (file_number_literal
+            number: (number_literal)))
         target: (identifier)
         target: (identifier))
       (newline)
       (print_statement
         number: (file_number
-          (number_literal))
+          (file_number_literal
+            number: (number_literal)))
         (print_argument_sequence
           (identifier)
           (string_literal)
@@ -52,12 +56,42 @@ End Sub
       (newline)
       (close_statement
         (file_number
-          (number_literal)))
+          (file_number_literal
+            number: (number_literal))))
       (newline)
       (erase_statement
         target: (identifier)
         target: (member_expression
           object: (identifier)
           property: (identifier)))
+      (newline)))
+  (newline))
+
+==================
+file number literal in expression
+==================
+
+Sub Test()
+    fileContent = Input$(LOF(1), #1)
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    name: (identifier)
+    (parameter_list)
+    (newline)
+    body: (block
+      (assignment_statement
+        left: (identifier)
+        right: (call_expression
+          function: (identifier)
+          (call_expression
+            function: (identifier)
+            (number_literal))
+          (file_number_literal
+            number: (number_literal))))
       (newline)))
   (newline))

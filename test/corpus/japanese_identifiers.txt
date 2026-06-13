@@ -1,0 +1,33 @@
+==================
+japanese procedure and function names
+==================
+
+Sub フォルダ作成()
+End Sub
+
+Function カスタムSUM() As Double
+    カスタムSUM = 1
+End Function
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    name: (identifier)
+    (parameter_list)
+    (newline))
+  (newline)
+  (newline)
+  (function_declaration
+    name: (identifier)
+    (parameter_list)
+    (as_type_clause
+      type: (type_expression))
+    (newline)
+    body: (block
+      (assignment_statement
+        left: (identifier)
+        right: (number_literal))
+      (newline)))
+  (newline))

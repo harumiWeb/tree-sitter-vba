@@ -682,7 +682,7 @@ module.exports = grammar({
         caseInsensitive("Shared"),
       ),
 
-    file_number: ($) => seq(optional("#"), $._expression),
+    file_number: ($) => prec(1, choice($.file_number_literal, $._expression)),
 
     input_statement: ($) =>
       seq(
@@ -785,6 +785,7 @@ module.exports = grammar({
     _expression: ($) =>
       choice(
         $._literal,
+        $.file_number_literal,
         $.identifier,
         $.member_expression,
         $.call_expression,
@@ -895,7 +896,9 @@ module.exports = grammar({
 
     guid_literal: (_) => token(/\{[0-9A-Fa-f-]+\}/),
 
-    identifier: (_) => /[A-Za-z_][A-Za-z0-9_]*[$%&!#]?/,
+    file_number_literal: ($) => seq("#", field("number", $._expression)),
+
+    identifier: (_) => /[A-Za-z_\u00C0-\u{10FFFF}][A-Za-z0-9_\u00C0-\u{10FFFF}]*[$%&!#]?/u,
   },
 });
 

@@ -46,7 +46,7 @@
     "test:binding": "node scripts/ensure-binding.mjs && node --test bindings/node/*_test.js",
     "parse:examples": "node scripts/parse-examples.mjs",
     "query:examples": "node scripts/query-examples.mjs",
-    "bench": "pnpm generate && node scripts/ensure-binding.mjs && node scripts/bench.mjs",
+    "bench": "node scripts/ensure-binding.mjs && node scripts/bench.mjs",
     "fmt": "oxfmt",
     "check": "pnpm test && pnpm test:binding && pnpm parse:examples && pnpm query:examples"
   },
