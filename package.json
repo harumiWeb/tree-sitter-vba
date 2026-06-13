@@ -17,6 +17,16 @@
   "bugs": {
     "url": "https://github.com/harumiWeb/tree-sitter-vba/issues"
   },
+    "files": [
+    "grammar.js",
+    "tree-sitter.json",
+    "binding.gyp",
+    "bindings",
+    "src",
+    "queries",
+    "README.md",
+    "LICENSE"
+  ],
   "license": "MIT",
   "author": "harumiWeb",
   "repository": {

@@ -4881,13 +4881,29 @@
     }
   ],
   "conflicts": [
-    ["_expression", "_callable_expression"],
-    ["_argument", "parenthesized_expression"],
-    ["_argument_sequence"],
-    ["block"],
-    ["elseif_clause"],
-    ["else_clause"],
-    ["case_clause"]
+    [
+      "_expression",
+      "_callable_expression"
+    ],
+    [
+      "_argument",
+      "parenthesized_expression"
+    ],
+    [
+      "_argument_sequence"
+    ],
+    [
+      "block"
+    ],
+    [
+      "elseif_clause"
+    ],
+    [
+      "else_clause"
+    ],
+    [
+      "case_clause"
+    ]
   ],
   "precedences": [],
   "externals": [],
