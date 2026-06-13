@@ -28,9 +28,12 @@ This project focuses on practical Excel/VBA source compatibility:
 
 ## Status
 
-This is a `v0.x` initial public release.
+This is a `v0.x` public release.
 
-The grammar is already usable for syntax-aware tooling such as highlighting, folding, tags, outline extraction, and initial symbol analysis. It parses the checked-in corpus and all 100 checked-in real-world VBA examples without `ERROR` or `MISSING` recovery nodes.
+The grammar is already usable for syntax-aware tooling such as highlighting,
+folding, tags, outline extraction, and initial symbol analysis. The current test
+suite covers 156 focused corpus cases and 262 checked-in VBA example files
+without `ERROR` or `MISSING` recovery nodes.
 
 It is not yet a complete VBA grammar. Node names and tree shapes may still change before `v1.0.0`.
 
@@ -112,21 +115,23 @@ The grammar currently supports:
 - apostrophe comments and `Rem` comments
 - string, integer, floating-point, boolean, date, `Nothing`, `Null`, and `Empty`
   literals
-- hex literals
+- decimal and hexadecimal literals with common VBA type characters, including
+  Currency (`@`) and LongLong (`^`)
 - identifiers with common VBA type-declaration characters
 - identifiers, simple type clauses, dotted type names, and array type suffixes
 - `Attribute` statements
 - `Option Explicit`, `Option Private Module`, `Option Compare`, and `Option Base`
 - `Implements` statements
 - `Sub`, `Function`, and `Property Get/Let/Set` procedures
+- `Event` declarations
 - `Dim`, `Static`, `WithEvents`, visibility-based variable declarations,
   arrays, `ReDim`, `Erase`, and `Const`
 - `Type` and `Enum` declarations
 - external `Declare Function` and `Declare Sub` declarations, including
   `PtrSafe`, `Lib`, and `Alias`
 - simple assignments and `Set` assignments
-- calls, named arguments, omitted arguments, member access, and leading-dot
-  member access
+- calls, named arguments, omitted arguments, call-site `ByVal`, member access,
+  and leading-dot member access
 - `New` expressions and `As New` declarations
 - fixed-length string declarations
 - `AddressOf` expressions
@@ -134,13 +139,16 @@ The grammar currently supports:
   logical operators
 - block `If`, single-line `If`, `Select Case`, `For`, `For Each`, `Do`,
   `While/Wend`, and `With`
-- `On Error`, `Resume`, `GoTo`, labels, and `Exit` statements
+- `On Error`, computed `On ... GoTo`/`GoSub`, `Resume`, `GoTo`, labels,
+  standalone `End`, and `Exit` statements
 - common file I/O statements: `Open`, `Input #`, `Line Input #`, `Print #`,
   and `Close`
 - numeric line labels, numbered statements, and numbered control-flow delimiters
 - conditional compilation with `#Const`, `#If`, `#ElseIf`, `#Else`, and
-  `#End If`, including statement branches inside procedures
-- line continuations and colon-separated statements
+  `#End If`, including statement branches inside procedures, members inside
+  `Type` and `Enum` declarations, and alternative procedure headers
+- line continuations, including trailing whitespace, and colon-separated
+  statements and `Enum` members
 - minimal `.frm` and `.cls` export metadata, including `VERSION`,
   `Begin ... End`, `BeginProperty ... EndProperty`, GUID form blocks, and
   `.frx` blob references
@@ -279,6 +287,7 @@ node names and tree shapes may still change before `v1.0.0`.
 Recommended interpretation of the current release line:
 
 - `0.1.x`: parser coverage fixes, query fixes, and non-breaking improvements
+- `0.2.x`: expanded real-world VBA coverage; tree shapes may still evolve
 - `0.x.0`: notable grammar expansion or tree-shape changes
 - `1.0.0`: node names and tree shapes are considered stable for downstream use
 
