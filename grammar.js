@@ -82,7 +82,7 @@ module.exports = grammar({
 
     frm_property_text: (_) => token(/[A-Za-z_][^\r\n']*/),
 
-    frm_quoted_property_text: (_) => token(seq('"', /[^\r\n]*/)),
+    frm_quoted_property_text: (_) => token(seq('"', /[^"\r\n]+/)),
 
     frm_blob_reference: ($) => seq($.string_literal, ":", $.number_literal),
 
@@ -136,17 +136,19 @@ module.exports = grammar({
       seq(field("name", $.identifier), optional(seq("=", field("value", $._expression)))),
 
     declare_statement: ($) =>
-      seq(
-        optional($.visibility),
-        caseInsensitive("Declare"),
-        optional(caseInsensitive("PtrSafe")),
-        caseInsensitive("Function"),
-        field("name", $.identifier),
-        caseInsensitive("Lib"),
-        field("library", $.string_literal),
-        optional(seq(caseInsensitive("Alias"), field("alias", $.string_literal))),
-        optional($.parameter_list),
-        optional($.as_type_clause),
+      prec.right(
+        seq(
+          optional($.visibility),
+          caseInsensitive("Declare"),
+          optional(caseInsensitive("PtrSafe")),
+          caseInsensitive("Function"),
+          field("name", $.identifier),
+          caseInsensitive("Lib"),
+          field("library", $.string_literal),
+          optional(seq(caseInsensitive("Alias"), field("alias", $.string_literal))),
+          optional($.parameter_list),
+          optional($.as_type_clause),
+        ),
       ),
 
     preprocessor_const: ($) =>
@@ -175,11 +177,10 @@ module.exports = grammar({
     _preprocessor_item: ($) =>
       choice(
         $.newline,
+        $._statement,
         $.declare_statement,
         $.type_declaration,
         $.enum_declaration,
-        $.const_declaration,
-        $.variable_declaration,
         $.sub_declaration,
         $.function_declaration,
         $.property_declaration,
@@ -593,6 +594,7 @@ module.exports = grammar({
         $.member_expression,
         $.call_expression,
         $.new_expression,
+        $.addressof_expression,
         $.parenthesized_expression,
         $.binary_expression,
         $.unary_expression,
@@ -628,6 +630,8 @@ module.exports = grammar({
         4,
         seq(caseInsensitive("New"), field("type", choice($.member_expression, $.identifier))),
       ),
+
+    addressof_expression: ($) => seq(caseInsensitive("AddressOf"), field("target", $.identifier)),
 
     member_expression: ($) =>
       prec.left(

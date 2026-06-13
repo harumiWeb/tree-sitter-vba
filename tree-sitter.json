@@ -6,7 +6,9 @@
       "scope": "source.vba",
       "path": ".",
       "file-types": ["bas", "cls", "frm"],
-      "injection-regex": "^vba$"
+      "injection-regex": "^vba$",
+      "highlights": "queries/highlights.scm",
+      "tags": "queries/tags.scm"
     }
   ],
   "metadata": {

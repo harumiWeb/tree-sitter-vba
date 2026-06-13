@@ -21,11 +21,13 @@ End
     (newline)
     (frm_property_statement
       (identifier)
-      (frm_quoted_property_text))
+      (string_literal))
     (newline)
     (frm_property_statement
       (identifier)
-      (frm_quoted_property_text))
+      (frm_blob_reference
+        (string_literal)
+        (number_literal)))
     (newline))
   (newline))
 

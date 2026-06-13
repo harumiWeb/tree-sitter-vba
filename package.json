@@ -3,26 +3,26 @@
   "version": "0.1.0",
   "description": "Tree-sitter grammar for Visual Basic for Applications (VBA).",
   "keywords": [
-    "tree-sitter",
-    "tree-sitter-grammar",
-    "parser",
-    "grammar",
-    "vba",
-    "visual-basic-for-applications",
     "excel",
     "excel-vba",
-    "visual-basic"
+    "grammar",
+    "parser",
+    "tree-sitter",
+    "tree-sitter-grammar",
+    "vba",
+    "visual-basic",
+    "visual-basic-for-applications"
   ],
+  "homepage": "https://github.com/harumiWeb/tree-sitter-vba#readme",
+  "bugs": {
+    "url": "https://github.com/harumiWeb/tree-sitter-vba/issues"
+  },
   "license": "MIT",
   "author": "harumiWeb",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/harumiWeb/tree-sitter-vba.git"
   },
-  "bugs": {
-    "url": "https://github.com/harumiWeb/tree-sitter-vba/issues"
-  },
-  "homepage": "https://github.com/harumiWeb/tree-sitter-vba#readme",
   "main": "index.js",
   "scripts": {
     "generate": "tree-sitter generate",

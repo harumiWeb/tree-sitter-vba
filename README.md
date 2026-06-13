@@ -25,9 +25,10 @@ Currently supported:
 - `Type`, `Enum`, `Declare PtrSafe`, `Lib`, and `Alias`
 - simple assignments, `Set` assignments, calls, named arguments, member access, and leading-dot member access
 - `New` expressions
+- `AddressOf` expressions
 - block `If`, single-line `If`, `Select Case`, `For`, `For Each`, `Do`, `While/Wend`, and `With`
 - `On Error`, `Resume`, `GoTo`, labels, and `Exit` statements
-- conditional compilation with `#Const`, `#If`, `#ElseIf`, `#Else`, and `#End If`
+- conditional compilation with `#Const`, `#If`, `#ElseIf`, `#Else`, and `#End If`, including statement branches inside procedures
 - line continuations and colon-separated statements
 - minimal `.frm` / `.cls` export metadata such as `VERSION`, `Begin ... End`, GUID form blocks, and `.frx` blob references
 - initial `highlights.scm`, `folds.scm`, and `tags.scm` queries
@@ -67,6 +68,9 @@ Parse example files:
 ```bash
 pnpm parse:examples
 ```
+
+This recursively parses the checked-in VBA examples and fails if any parse tree
+contains an `ERROR` or `MISSING` node.
 
 Run the full local check:
 

@@ -53,6 +53,51 @@ preprocessor if declare
   (newline))
 
 ==================
+preprocessor statements in procedure
+==================
+
+Sub Test()
+    #If VBA7 Then
+    result = PtrSafeCall(AddressOf TimerProc)
+    #Else
+    result = LegacyCall(AddressOf TimerProc)
+    #End If
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (preprocessor_if
+        (identifier)
+        (newline)
+        (preprocessor_block
+          (assignment_statement
+            (identifier)
+            (call_expression
+              (identifier)
+              (addressof_expression
+                (identifier))))
+          (newline))
+        (preprocessor_else
+          (newline)
+          (preprocessor_block
+            (assignment_statement
+              (identifier)
+              (call_expression
+                (identifier)
+                (addressof_expression
+                  (identifier))))
+            (newline))))
+      (newline)))
+  (newline))
+
+==================
 preprocessor elseif declare
 ==================
 

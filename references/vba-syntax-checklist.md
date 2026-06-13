@@ -89,6 +89,7 @@ Status legend:
 - [x] `Null`
 - [x] `Empty`
 - [x] `New`
+- [x] `AddressOf`
 - [x] named arguments `:=`
 - [x] hex literals
 - [x] type-declaration characters on identifiers
@@ -115,6 +116,7 @@ Status legend:
 - [x] `#ElseIf`
 - [x] `#Else`
 - [x] `#End If`
+- [x] conditional compilation inside procedures
 
 ## 64-bit VBA
 

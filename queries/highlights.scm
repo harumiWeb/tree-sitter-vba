@@ -41,6 +41,7 @@
 (redim_statement) @keyword
 (set_statement) @keyword
 (new_expression) @keyword
+(addressof_expression) @keyword
 (condition_binary_expression) @operator
 (comparison_expression) @operator
 (case_expression) @keyword
@@ -65,6 +66,9 @@
 
 (named_argument
   name: (identifier) @variable.parameter)
+
+(addressof_expression
+  target: (identifier) @function)
 
 (declare_statement
   name: (identifier) @function)

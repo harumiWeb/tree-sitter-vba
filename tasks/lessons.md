@@ -7,3 +7,4 @@
 
 - `parse:examples` must walk real-world example trees, not only top-level `examples/*.bas|*.cls|*.frm`; otherwise CI can miss syntax regressions in practical VBA assets.
 - Keep generated or backup-heavy directories such as `.xlflow` and `build` out of example parsing to avoid noisy, duplicate coverage.
+- Do not treat `tree-sitter parse --quiet` exit status or `--json-summary` `successful: true` as proof that a tree has no recovery nodes; inspect the CST output for explicit `ERROR` and `MISSING` nodes.
