@@ -1,5 +1,9 @@
 # tree-sitter-vba
 
+[![npm version](https://img.shields.io/npm/v/tree-sitter-vba.svg)](https://www.npmjs.com/package/tree-sitter-vba)
+[![npm downloads](https://img.shields.io/npm/dm/tree-sitter-vba.svg)](https://www.npmjs.com/package/tree-sitter-vba)
+[![CI](https://github.com/harumiWeb/tree-sitter-vba/actions/workflows/ci.yml/badge.svg)](https://github.com/harumiWeb/tree-sitter-vba/actions/workflows/ci.yml)
+
 A Tree-sitter grammar for Visual Basic for Applications (VBA), targeting
 exported Excel/VBA source files such as `.bas`, `.cls`, and `.frm`.
 
