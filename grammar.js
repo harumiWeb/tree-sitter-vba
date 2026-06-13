@@ -28,6 +28,7 @@ module.exports = grammar({
         $.newline,
         $.frm_version_statement,
         $.frm_begin_block,
+        $.frm_begin_property_block,
         $.frm_property_statement,
         $.preprocessor_const,
         $.preprocessor_if,
@@ -60,8 +61,24 @@ module.exports = grammar({
         optional(field("type", choice($.member_expression, $.guid_literal))),
         optional(field("name", $.identifier)),
         $._statement_separator,
-        repeat(choice($.newline, $.frm_property_statement, $.frm_begin_block)),
+        repeat(
+          choice(
+            $.newline,
+            $.frm_property_statement,
+            $.frm_begin_block,
+            $.frm_begin_property_block,
+          ),
+        ),
         caseInsensitive("End"),
+      ),
+
+    frm_begin_property_block: ($) =>
+      seq(
+        caseInsensitive("BeginProperty"),
+        field("name", $.identifier),
+        $._statement_separator,
+        repeat(choice($.newline, $.frm_property_statement, $.frm_begin_property_block)),
+        caseInsensitive("EndProperty"),
       ),
 
     frm_property_statement: ($) =>
@@ -399,6 +416,10 @@ module.exports = grammar({
     _single_line_statement: ($) =>
       choice(
         $.exit_statement,
+        $.on_error_statement,
+        $.resume_statement,
+        $.goto_statement,
+        $.redim_statement,
         $.set_statement,
         $.assignment_statement,
         $.call_statement,
@@ -528,7 +549,7 @@ module.exports = grammar({
         caseInsensitive("On"),
         caseInsensitive("Error"),
         choice(
-          seq(caseInsensitive("GoTo"), field("target", choice($.identifier, $.number_literal))),
+          seq(caseInsensitive("GoTo"), field("target", choice($.identifier, lineNumber($)))),
           seq(caseInsensitive("Resume"), caseInsensitive("Next")),
         ),
       ),
@@ -538,25 +559,18 @@ module.exports = grammar({
         seq(
           caseInsensitive("Resume"),
           optional(
-            choice(
-              caseInsensitive("Next"),
-              field("target", choice($.identifier, $.number_literal)),
-            ),
+            choice(caseInsensitive("Next"), field("target", choice($.identifier, lineNumber($)))),
           ),
         ),
       ),
 
     goto_statement: ($) =>
-      seq(caseInsensitive("GoTo"), field("target", choice($.identifier, $.number_literal))),
+      seq(caseInsensitive("GoTo"), field("target", choice($.identifier, lineNumber($)))),
 
-    label_statement: ($) =>
-      prec(5, seq(field("name", choice($.identifier, $.number_literal)), ":")),
+    label_statement: ($) => prec(5, seq(field("name", choice($.identifier, lineNumber($))), ":")),
 
     line_number_statement: ($) =>
-      prec.right(
-        5,
-        seq(field("number", $.number_literal), field("statement", $._numbered_statement)),
-      ),
+      prec.right(5, seq(field("number", lineNumber($)), field("statement", $._numbered_statement))),
 
     _numbered_statement: ($) =>
       choice(
@@ -747,7 +761,7 @@ module.exports = grammar({
         $.date_literal,
       ),
 
-    string_literal: (_) => token(seq('"', repeat(choice('""', /[^"]/)), '"')),
+    string_literal: (_) => token(seq('"', repeat(choice('""', /[^"\r\n]/)), '"')),
 
     number_literal: (_) => token(choice(/-?&[Hh][0-9A-Fa-f]+[&]?/, /-?\d+(\.\d+)?[#]?/)),
 
@@ -769,6 +783,10 @@ module.exports = grammar({
 
 function commaSep1(rule) {
   return seq(rule, repeat(seq(",", rule)));
+}
+
+function lineNumber($) {
+  return prec(1, alias($.number_literal, $.line_number_literal));
 }
 
 function caseInsensitive(keyword) {

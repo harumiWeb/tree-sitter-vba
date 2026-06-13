@@ -32,6 +32,45 @@ End
   (newline))
 
 ==================
+begin property block
+==================
+
+VERSION 5.00
+Begin VB.Form UserForm1
+   BeginProperty Font
+      Name            =   "MS UI Gothic"
+      Size            =   9.75
+   EndProperty
+End
+
+---
+
+(source_file
+  (newline)
+  (frm_version_statement
+    (number_literal))
+  (newline)
+  (frm_begin_block
+    (member_expression
+      (identifier)
+      (identifier))
+    (identifier)
+    (newline)
+    (frm_begin_property_block
+      (identifier)
+      (newline)
+      (frm_property_statement
+        (identifier)
+        (string_literal))
+      (newline)
+      (frm_property_statement
+        (identifier)
+        (number_literal))
+      (newline))
+    (newline))
+  (newline))
+
+==================
 class begin block
 ==================
 

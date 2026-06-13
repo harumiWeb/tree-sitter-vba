@@ -8,3 +8,12 @@
 - `parse:examples` must walk real-world example trees, not only top-level `examples/*.bas|*.cls|*.frm`; otherwise CI can miss syntax regressions in practical VBA assets.
 - Keep generated or backup-heavy directories such as `.xlflow` and `build` out of example parsing to avoid noisy, duplicate coverage.
 - Do not treat `tree-sitter parse --quiet` exit status or `--json-summary` `successful: true` as proof that a tree has no recovery nodes; inspect the CST output for explicit `ERROR` and `MISSING` nodes.
+
+## Overlapping numeric tokens
+
+- Do not give a dedicated line-number token higher lexical precedence than `number_literal`; the contextual lexer may then reinterpret numeric call arguments such as `Foo 1` as line numbers.
+- Reuse `number_literal` and alias it at line-number grammar sites when a distinct CST node is required.
+
+## String literals
+
+- VBA string tokens must exclude `\r` and `\n`; otherwise an unterminated quote can consume later source lines and hide malformed input.

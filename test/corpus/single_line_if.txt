@@ -29,6 +29,113 @@ End Sub
   (newline))
 
 ==================
+single line if goto
+==================
+
+Sub Test()
+    If failed Then GoTo ErrHandler
+ErrHandler:
+    Exit Sub
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (single_line_if_statement
+        (identifier)
+        (goto_statement
+          (identifier)))
+      (newline)
+      (label_statement
+        (identifier))
+      (newline)
+      (exit_statement)
+      (newline)))
+  (newline))
+
+==================
+single line if resume next
+==================
+
+Sub Test()
+    If failed Then Resume Next
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (single_line_if_statement
+        (identifier)
+        (resume_statement))
+      (newline)))
+  (newline))
+
+==================
+single line if redim preserve
+==================
+
+Sub Test()
+    If needsResize Then ReDim Preserve items(1 To n)
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (single_line_if_statement
+        (identifier)
+        (redim_statement
+          (redim_declarator
+            (identifier)
+            (array_bounds
+                (array_bound
+                  (number_literal)
+                  (identifier))))))
+      (newline)))
+  (newline))
+
+==================
+single line if on error
+==================
+
+Sub Test()
+    If resetHandler Then On Error GoTo 0
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (single_line_if_statement
+        (identifier)
+        (on_error_statement
+          (line_number_literal)))
+      (newline)))
+  (newline))
+
+==================
 single line if else assignment
 ==================
 

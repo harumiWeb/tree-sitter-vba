@@ -53,7 +53,7 @@ End Sub
     (newline)
     (block
       (on_error_statement
-        (number_literal))
+        (line_number_literal))
       (newline)
       (label_statement
         (identifier))

@@ -40,3 +40,5 @@
   body: (block) @fold)
 
 (frm_begin_block) @fold
+
+(frm_begin_property_block) @fold

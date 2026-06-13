@@ -1,0 +1,56 @@
+==================
+escaped quotes stay within one line
+==================
+
+Sub Test()
+    message = "He said ""Hello""."
+    nextValue = "second line"
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (assignment_statement
+        (identifier)
+        (string_literal))
+      (newline)
+      (assignment_statement
+        (identifier)
+        (string_literal))
+      (newline)))
+  (newline))
+
+==================
+unterminated string is rejected at line boundary
+==================
+
+Sub Test()
+    message = "unterminated
+    nextValue = 1
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (assignment_statement
+        (identifier)
+        (ERROR
+          (frm_quoted_property_text)
+          (newline))
+        (comparison_expression
+          (identifier)
+          (number_literal)))
+      (newline)))
+  (newline))

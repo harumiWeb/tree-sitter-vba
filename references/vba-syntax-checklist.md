@@ -79,6 +79,7 @@ Status legend:
 - [x] `Resume`
 - [x] labels
 - [x] numeric labels and numbered statements
+- [~] numbered block statements and delimiters
 
 ## Expressions
 
@@ -142,3 +143,4 @@ Status legend:
 - [x] embedded VBA procedures
 - [x] GUID `Begin {C62...} ...`
 - [x] `.frx` blob references such as `"Form.frx":0000`
+- [x] `BeginProperty ... EndProperty`

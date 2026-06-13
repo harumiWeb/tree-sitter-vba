@@ -19,23 +19,23 @@ End Sub
     (newline)
     (block
       (line_number_statement
-        (number_literal)
+        (line_number_literal)
         (on_error_statement
-          (number_literal)))
+          (line_number_literal)))
       (newline)
       (line_number_statement
-        (number_literal)
+        (line_number_literal)
         (assignment_statement
           (identifier)
           (call_expression
             (identifier))))
       (newline)
       (line_number_statement
-        (number_literal)
+        (line_number_literal)
         (exit_statement))
       (newline)
       (line_number_statement
-        (number_literal)
+        (line_number_literal)
         (call_statement
           (member_expression
             (identifier)
@@ -67,16 +67,16 @@ End Sub
     (newline)
     (block
       (goto_statement
-        (number_literal))
+        (line_number_literal))
       (newline)
       (label_statement
-        (number_literal))
+        (line_number_literal))
       (newline)
       (resume_statement
-        (number_literal))
+        (line_number_literal))
       (newline)
       (label_statement
-        (number_literal))
+        (line_number_literal))
       (newline)
       (exit_statement)
       (newline)))

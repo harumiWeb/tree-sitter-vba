@@ -71,6 +71,15 @@ Expected strategy:
 - Broaden equality comparison only after adding neighboring corpus tests that prove assignment parsing does not regress.
 - Keep semantic validity out of the grammar; downstream layers can decide whether a parsed expression is meaningful VBA.
 
+## Numbered block statements
+
+Simple numbered statements and numeric labels are supported. Fully numbered
+control-flow blocks are not yet supported when line numbers precede structural
+delimiters such as `Else`, `Case`, `Next`, `Loop`, or `End If`.
+
+Supporting those forms requires a consistent CST representation for numbered
+block delimiters rather than widening `line_number_statement` alone.
+
 ## Context-sensitive statement validity
 
 Some VBA statements are only valid in specific semantic contexts.

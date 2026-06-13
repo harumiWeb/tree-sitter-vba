@@ -12,6 +12,9 @@ This project is in an MVP phase. It can parse a useful subset of exported VBA
 modules and the real-world examples included in this repository, but it is not a
 complete VBA grammar and is not production-ready.
 
+The grammar currently parses all 77 checked-in real-world VBA examples without
+`ERROR` or `MISSING` recovery nodes.
+
 Currently supported:
 
 - apostrophe comments and `Rem` comments
@@ -33,7 +36,7 @@ Currently supported:
 - numeric line labels and numbered statements
 - conditional compilation with `#Const`, `#If`, `#ElseIf`, `#Else`, and `#End If`, including statement branches inside procedures
 - line continuations and colon-separated statements
-- minimal `.frm` / `.cls` export metadata such as `VERSION`, `Begin ... End`, GUID form blocks, and `.frx` blob references
+- minimal `.frm` / `.cls` export metadata such as `VERSION`, `Begin ... End`, `BeginProperty ... EndProperty`, GUID form blocks, and `.frx` blob references
 - initial `highlights.scm`, `folds.scm`, and `tags.scm` queries
 
 Known limitations:
@@ -46,6 +49,7 @@ Known limitations:
 - context-sensitive statement validity is not checked; for example, invalid `Exit For` placement is left to downstream semantic validation
 - general expression-level `=` comparison remains context-limited to avoid ambiguity with assignment
 - the expression grammar does not yet cover every VBA edge case
+- line numbers are supported on simple statements and labels, but not yet on block delimiters such as `Else`, `Next`, or `End If`
 
 ## Development
 

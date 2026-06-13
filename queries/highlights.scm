@@ -2,6 +2,7 @@
 
 (string_literal) @string
 (number_literal) @number
+(line_number_literal) @label
 (boolean_literal) @constant.builtin
 (nothing_literal) @constant.builtin
 (null_literal) @constant.builtin
@@ -18,6 +19,7 @@
 (preprocessor_if) @keyword
 (preprocessor_elseif) @keyword
 (preprocessor_else) @keyword
+(frm_begin_property_block) @keyword
 (visibility) @keyword
 (procedure_modifier) @keyword
 (as_type_clause) @keyword
@@ -67,10 +69,10 @@
   name: (identifier) @label)
 
 (label_statement
-  name: (number_literal) @label)
+  name: (line_number_literal) @label)
 
 (line_number_statement
-  number: (number_literal) @label)
+  number: (line_number_literal) @label)
 
 (named_argument
   name: (identifier) @variable.parameter)
@@ -121,6 +123,9 @@
 
 (frm_begin_block
   name: (identifier) @type)
+
+(frm_begin_property_block
+  name: (identifier) @property)
 
 (frm_property_statement
   name: (_) @property)
