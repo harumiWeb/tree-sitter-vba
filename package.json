@@ -40,12 +40,13 @@
   },
   "scripts": {
     "install": "node-gyp-build",
-    "generate": "tree-sitter generate",
-    "test": "tree-sitter generate && tree-sitter test",
-    "test:binding": "node --test bindings/node/*_test.js",
+    "generate": "tree-sitter generate --abi 14",
+    "build:binding": "node-gyp rebuild",
+    "test": "pnpm generate && tree-sitter test",
+    "test:binding": "node scripts/ensure-binding.mjs && node --test bindings/node/*_test.js",
     "parse:examples": "node scripts/parse-examples.mjs",
     "query:examples": "node scripts/query-examples.mjs",
-    "bench": "node scripts/bench.mjs",
+    "bench": "pnpm generate && node scripts/ensure-binding.mjs && node scripts/bench.mjs",
     "fmt": "oxfmt",
     "check": "pnpm test && pnpm test:binding && pnpm parse:examples && pnpm query:examples"
   },

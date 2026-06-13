@@ -17,3 +17,20 @@ End Sub
   assert.equal(tree.rootNode.type, "source_file");
   assert.equal(tree.rootNode.hasError, false);
 });
+
+test("binding parses file io statements", () => {
+  const parser = new Parser();
+  const VBA = require(".");
+
+  parser.setLanguage(VBA);
+
+  const tree = parser.parse(`
+Sub Test()
+    Open path For Input As #fileNumber
+    Print #fileNumber, "value"
+    Close #fileNumber
+End Sub
+`);
+
+  assert.equal(tree.rootNode.hasError, false);
+});
