@@ -4,6 +4,37 @@ All notable changes to tree-sitter-vba will be documented in this file.
 
 ## Unreleased
 
+## [0.3.0] - 2026-06-13
+
+### Added
+
+- Add parser support for Access bang member access such as `rst!Field` and
+  mixed dot/bang member chains.
+- Add parser support for `Debug.Print`-style semicolon-separated implicit call
+  arguments.
+- Add parser support for Access report `Line` drawing statements that use
+  coordinate ranges such as `Me.Line (x, y)-(x2, y2)`.
+- Add support for bare `Shared` file locks in `Open ... For ... Access ...
+Shared As ...` statements.
+- Add support for dotted `TypeOf ... Is ...` type names whose final segment is
+  `Line`, such as `TypeOf ctl Is Access.Line`.
+- Add Access-examples, better-access-charts, IguanaTex, PhotoDemon, and related
+  newly bundled third-party parser fixtures with source and license
+  attribution.
+
+### Changed
+
+- Expand real-world validation from 262 examples to 343 VBA files.
+- Treat `Line` as a valid member/property name in expression chains while
+  preserving existing `Line Input #` parsing.
+
+### Fixed
+
+- Fix parse errors in Access and Excel real-world fixtures involving `.Line`
+  member chains, bang access, shared file locks, and report drawing syntax.
+- Fix an obvious damaged whitespace byte in a non-error third-party fixture
+  instead of making the grammar accept invalid source encoding artifacts.
+
 ## [0.2.0] - 2026-06-13
 
 ### Added

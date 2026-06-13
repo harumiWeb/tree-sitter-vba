@@ -32,7 +32,7 @@ This is a `v0.x` public release.
 
 The grammar is already usable for syntax-aware tooling such as highlighting,
 folding, tags, outline extraction, and initial symbol analysis. The current test
-suite covers 156 focused corpus cases and 262 checked-in VBA example files
+suite covers 159 focused corpus cases and 343 checked-in VBA example files
 without `ERROR` or `MISSING` recovery nodes.
 
 It is not yet a complete VBA grammar. Node names and tree shapes may still change before `v1.0.0`.
@@ -131,7 +131,7 @@ The grammar currently supports:
   `PtrSafe`, `Lib`, and `Alias`
 - simple assignments and `Set` assignments
 - calls, named arguments, omitted arguments, call-site `ByVal`, member access,
-  and leading-dot member access
+  bang member access, and leading-dot member access
 - `New` expressions and `As New` declarations
 - fixed-length string declarations
 - `AddressOf` expressions
@@ -142,7 +142,10 @@ The grammar currently supports:
 - `On Error`, computed `On ... GoTo`/`GoSub`, `Resume`, `GoTo`, labels,
   standalone `End`, and `Exit` statements
 - common file I/O statements: `Open`, `Input #`, `Line Input #`, `Print #`,
-  and `Close`
+  and `Close`, including common `Access ... Shared` locking clauses
+- Access report `Line` drawing calls that use coordinate ranges such as
+  `Me.Line (x, y)-(x2, y2)`
+- `TypeOf ... Is ...` checks, including dotted type names such as `Access.Line`
 - numeric line labels, numbered statements, and numbered control-flow delimiters
 - conditional compilation with `#Const`, `#If`, `#ElseIf`, `#Else`, and
   `#End If`, including statement branches inside procedures, members inside
