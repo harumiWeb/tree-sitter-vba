@@ -38,7 +38,7 @@ Public Function Create(optional ByVal Obj as object = nothing) as stdJSONLogic
   Call oObj.Init(obj)
   set Create = oObj
 End Function
-Friend Sub Init(ByVal Obj as object) as stdJSONLogic
+Friend Sub Init(ByVal Obj as object)
   set pState = Obj
 End Sub
 

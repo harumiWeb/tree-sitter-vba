@@ -18,3 +18,8 @@
 ## String literals
 
 - VBA string tokens must exclude `\r` and `\n`; otherwise an unterminated quote can consume later source lines and hide malformed input.
+
+## Third-party fixtures
+
+- When a third-party example contains an obvious source typo or incomplete construct and is not intentionally an error fixture, fix the vendored example instead of weakening the grammar to accept invalid VBA.
+- Before adding permissive grammar for a real-world parse failure, check the surrounding source for misspelled keywords, mismatched procedure terminators, invalid return clauses, and missing block delimiters.

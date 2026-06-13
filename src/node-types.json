@@ -5145,10 +5145,6 @@
       "required": false,
       "types": [
         {
-          "type": "as_type_clause",
-          "named": true
-        },
-        {
           "type": "newline",
           "named": true
         },

@@ -65,7 +65,7 @@ Public Property Get Size(Optional piType as iTypeEnum = iTypeEnum.Unknown) as In
     case else
       '--> Raise Error
   end select
-End Function
+End Property
 
 
 Public Function From(ByRef x as variant) as stdPointer
@@ -89,8 +89,8 @@ Public Sub init(ByVal piPtrVal as LongPtr, piType as iTypeEnum)
   end if
 End Sub
 
-Public Funcion DeRef() as variant
-  if iType = iTypeEnum.Object
+Public Function DeRef() as variant
+  if iType = iTypeEnum.Object Then
     set DeRef = DeRefAsObject()
   else
     '--> Raise error

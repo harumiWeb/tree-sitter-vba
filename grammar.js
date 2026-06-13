@@ -25,7 +25,6 @@ module.exports = grammar({
     [$.elseif_clause],
     [$.else_clause],
     [$.case_clause],
-    [$.if_statement],
   ],
 
   rules: {
@@ -235,7 +234,6 @@ module.exports = grammar({
         caseInsensitive("Sub"),
         field("name", $.identifier),
         optional($.parameter_list),
-        optional($.as_type_clause),
         $._statement_separator,
         field("body", optional($.block)),
         caseInsensitive("End"),
@@ -245,7 +243,7 @@ module.exports = grammar({
     function_declaration: ($) =>
       seq(
         optional($.procedure_modifier),
-        choice(caseInsensitive("Function"), caseInsensitive("Funcion")),
+        caseInsensitive("Function"),
         field("name", $.identifier),
         optional($.parameter_list),
         optional($.as_type_clause),
@@ -269,7 +267,7 @@ module.exports = grammar({
         $._statement_separator,
         field("body", optional($.block)),
         caseInsensitive("End"),
-        choice(caseInsensitive("Property"), caseInsensitive("Function")),
+        caseInsensitive("Property"),
       ),
 
     procedure_modifier: ($) => choice($.visibility, caseInsensitive("Static")),
@@ -410,29 +408,18 @@ module.exports = grammar({
       choice(caseInsensitive("Public"), caseInsensitive("Private"), caseInsensitive("Friend")),
 
     if_statement: ($) =>
-      choice(
-        prec.right(
-          seq(
-            optional(field("start_line", $.line_number_prefix)),
-            caseInsensitive("If"),
-            field("condition", $._condition_expression),
-            optional(caseInsensitive("Then")),
-            $.newline,
-            field("consequence", optional($.block)),
-            repeat($.elseif_clause),
-            optional($.else_clause),
-            optional(field("end_line", $.line_number_prefix)),
-            caseInsensitive("End"),
-            caseInsensitive("If"),
-          ),
-        ),
-        seq(
-          optional(field("start_line", $.line_number_prefix)),
-          caseInsensitive("If"),
-          field("condition", $._condition_expression),
-          optional(caseInsensitive("Then")),
-          $.newline,
-        ),
+      seq(
+        optional(field("start_line", $.line_number_prefix)),
+        caseInsensitive("If"),
+        field("condition", $._condition_expression),
+        caseInsensitive("Then"),
+        $.newline,
+        field("consequence", optional($.block)),
+        repeat($.elseif_clause),
+        optional($.else_clause),
+        optional(field("end_line", $.line_number_prefix)),
+        caseInsensitive("End"),
+        caseInsensitive("If"),
       ),
 
     single_line_if_statement: ($) =>
