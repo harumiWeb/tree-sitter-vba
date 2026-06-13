@@ -33,6 +33,20 @@
 (property_declaration
   name: (identifier) @function)
 
+(call_statement
+  callee: (identifier) @function.call)
+
+(call_statement
+  callee: (member_expression
+    property: (identifier) @function.method.call))
+
+(call_expression
+  function: (identifier) @function.call)
+
+(call_expression
+  function: (member_expression
+    property: (identifier) @function.method.call))
+
 (parameter
   name: (identifier) @variable.parameter)
 

@@ -1,0 +1,99 @@
+==================
+implicit call with arguments
+==================
+
+Sub Test()
+    Foo 1, 2
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (call_statement
+        (identifier)
+        (argument_list
+          (number_literal)
+          (number_literal)))
+      (newline)))
+  (newline))
+
+==================
+explicit call with parentheses
+==================
+
+Sub Test()
+    Call Foo(1, 2)
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (call_statement
+        (identifier)
+        (argument_list
+          (number_literal)
+          (number_literal)))
+      (newline)))
+  (newline))
+
+==================
+implicit call with parenthesized argument
+==================
+
+Sub Test()
+    Foo (x)
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (call_statement
+        (call_expression
+          (identifier)
+          (identifier)))
+      (newline)))
+  (newline))
+
+==================
+member call statement
+==================
+
+Sub Test()
+    Debug.Print x
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (call_statement
+        (member_expression
+          (identifier)
+          (identifier))
+        (argument_list
+          (identifier)))
+      (newline)))
+  (newline))

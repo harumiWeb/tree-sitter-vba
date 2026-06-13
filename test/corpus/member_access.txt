@@ -1,0 +1,108 @@
+==================
+set from member call
+==================
+
+Sub Test()
+    Set ws = ThisWorkbook.Worksheets("Sheet1")
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (set_statement
+        (identifier)
+        (call_expression
+          (member_expression
+            (identifier)
+            (identifier))
+          (string_literal)))
+      (newline)))
+  (newline))
+
+==================
+member assignment
+==================
+
+Sub Test()
+    ws.Range("A1").Value = 123
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (assignment_statement
+        (member_expression
+          (call_expression
+            (member_expression
+              (identifier)
+              (identifier))
+            (string_literal))
+          (identifier))
+        (number_literal))
+      (newline)))
+  (newline))
+
+==================
+leading dot member assignment
+==================
+
+Sub Test()
+    .Range("A1").Value = 123
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (assignment_statement
+        (member_expression
+          (call_expression
+            (member_expression
+              (identifier))
+            (string_literal))
+          (identifier))
+        (number_literal))
+      (newline)))
+  (newline))
+
+==================
+indexed assignment
+==================
+
+Sub Test()
+    arr(i) = value
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (assignment_statement
+        (call_expression
+          (identifier)
+          (identifier))
+        (identifier))
+      (newline)))
+  (newline))

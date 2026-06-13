@@ -16,7 +16,6 @@ module.exports = grammar({
 
   conflicts: ($) => [
     [$._expression, $._callable_expression],
-    [$._expression, $._assignable_expression],
     [$.argument_list, $.parenthesized_expression],
   ],
 
@@ -326,11 +325,15 @@ module.exports = grammar({
     call_statement: ($) =>
       prec.right(
         1,
+        choice(
         seq(
-          optional(caseInsensitive("Call")),
+          caseInsensitive("Call"),
           field("callee", $._callable_expression),
           optional($.argument_list),
         ),
+        seq(field("callee", $._callable_expression), $.argument_list),
+        field("callee", $.call_expression),
+      ),
       ),
 
     expression_statement: ($) => $._expression,
@@ -349,7 +352,7 @@ module.exports = grammar({
         $.unary_expression,
       ),
 
-    _assignable_expression: ($) => choice($.identifier, $.member_expression),
+    _assignable_expression: ($) => choice($.identifier, $.member_expression, $.call_expression),
 
     _callable_expression: ($) => choice($.identifier, $.member_expression),
 
@@ -389,7 +392,6 @@ module.exports = grammar({
             "/",
             "\\",
             "&",
-            "=",
             "<>",
             "<",
             "<=",

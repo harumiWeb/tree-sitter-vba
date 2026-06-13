@@ -1717,17 +1717,51 @@
       "type": "PREC_RIGHT",
       "value": 1,
       "content": {
-        "type": "SEQ",
+        "type": "CHOICE",
         "members": [
           {
-            "type": "CHOICE",
+            "type": "SEQ",
             "members": [
               {
                 "type": "PATTERN",
                 "value": "[cC][aA][lL][lL]"
               },
               {
-                "type": "BLANK"
+                "type": "FIELD",
+                "name": "callee",
+                "content": {
+                  "type": "SYMBOL",
+                  "name": "_callable_expression"
+                }
+              },
+              {
+                "type": "CHOICE",
+                "members": [
+                  {
+                    "type": "SYMBOL",
+                    "name": "argument_list"
+                  },
+                  {
+                    "type": "BLANK"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "FIELD",
+                "name": "callee",
+                "content": {
+                  "type": "SYMBOL",
+                  "name": "_callable_expression"
+                }
+              },
+              {
+                "type": "SYMBOL",
+                "name": "argument_list"
               }
             ]
           },
@@ -1736,20 +1770,8 @@
             "name": "callee",
             "content": {
               "type": "SYMBOL",
-              "name": "_callable_expression"
+              "name": "call_expression"
             }
-          },
-          {
-            "type": "CHOICE",
-            "members": [
-              {
-                "type": "SYMBOL",
-                "name": "argument_list"
-              },
-              {
-                "type": "BLANK"
-              }
-            ]
           }
         ]
       }
@@ -1877,6 +1899,10 @@
         {
           "type": "SYMBOL",
           "name": "member_expression"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "call_expression"
         }
       ]
     },
@@ -2076,10 +2102,6 @@
               },
               {
                 "type": "STRING",
-                "value": "="
-              },
-              {
-                "type": "STRING",
                 "value": "<>"
               },
               {
@@ -2230,9 +2252,14 @@
     }
   ],
   "conflicts": [
-    ["_expression", "_callable_expression"],
-    ["_expression", "_assignable_expression"],
-    ["argument_list", "parenthesized_expression"]
+    [
+      "_expression",
+      "_callable_expression"
+    ],
+    [
+      "argument_list",
+      "parenthesized_expression"
+    ]
   ],
   "precedences": [],
   "externals": [],

@@ -1,0 +1,77 @@
+==================
+simple addition
+==================
+
+Sub Test()
+    x = 1 + 2
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (assignment_statement
+        (identifier)
+        (binary_expression
+          (number_literal)
+          (number_literal)))
+      (newline)))
+  (newline))
+
+==================
+mixed arithmetic
+==================
+
+Sub Test()
+    x = a * b + c
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (assignment_statement
+        (identifier)
+        (binary_expression
+          (binary_expression
+            (identifier)
+            (identifier))
+          (identifier)))
+      (newline)))
+  (newline))
+
+==================
+call expression assignment
+==================
+
+Sub Test()
+    x = Foo(1, 2)
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (assignment_statement
+        (identifier)
+        (call_expression
+          (identifier)
+          (number_literal)
+          (number_literal)))
+      (newline)))
+  (newline))
