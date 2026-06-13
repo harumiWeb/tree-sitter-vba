@@ -184,8 +184,8 @@ End Sub
                   (identifier)
                   (identifier))
                 (argument_list
-                  (string_literal))))
-            (newline)))
+                  (string_literal))))))
+        (newline)
         (line_number_prefix
           (line_number_literal)))
       (newline)))

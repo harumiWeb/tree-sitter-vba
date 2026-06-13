@@ -51,6 +51,54 @@ End Sub
   (newline))
 
 ==================
+case after comment only line
+==================
+
+Sub Test()
+    Select Case codePoint
+        ' Look for digits
+        Case 48 To 57
+            matched = True
+        Case Else
+            matched = False
+    End Select
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (select_statement
+        (identifier)
+        (newline)
+        (comment)
+        (newline)
+        (case_clause
+          (case_expression
+            (number_literal)
+            (number_literal))
+          (newline)
+          (block
+            (assignment_statement
+              (identifier)
+              (boolean_literal))
+            (newline)))
+        (case_clause
+          (newline)
+          (block
+            (assignment_statement
+              (identifier)
+              (boolean_literal))
+            (newline))))
+      (newline)))
+  (newline))
+
+==================
 case is comparison
 ==================
 

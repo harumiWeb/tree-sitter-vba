@@ -92,6 +92,10 @@
           "named": true
         },
         {
+          "type": "type_of_expression",
+          "named": true
+        },
+        {
           "type": "unary_expression",
           "named": true
         }
@@ -167,6 +171,10 @@
             "named": true
           },
           {
+            "type": "type_of_expression",
+            "named": true
+          },
+          {
             "type": "unary_expression",
             "named": true
           }
@@ -234,6 +242,10 @@
           },
           {
             "type": "string_literal",
+            "named": true
+          },
+          {
+            "type": "type_of_expression",
             "named": true
           },
           {
@@ -305,6 +317,10 @@
         },
         {
           "type": "string_literal",
+          "named": true
+        },
+        {
+          "type": "type_of_expression",
           "named": true
         },
         {
@@ -450,6 +466,10 @@
             "named": true
           },
           {
+            "type": "type_of_expression",
+            "named": true
+          },
+          {
             "type": "unary_expression",
             "named": true
           }
@@ -577,6 +597,10 @@
         },
         {
           "type": "string_literal",
+          "named": true
+        },
+        {
+          "type": "type_of_expression",
           "named": true
         },
         {
@@ -818,6 +842,10 @@
           "named": true
         },
         {
+          "type": "type_of_expression",
+          "named": true
+        },
+        {
           "type": "unary_expression",
           "named": true
         }
@@ -967,6 +995,10 @@
           "named": true
         },
         {
+          "type": "type_of_expression",
+          "named": true
+        },
+        {
           "type": "unary_expression",
           "named": true
         }
@@ -1057,6 +1089,10 @@
           "named": true
         },
         {
+          "type": "type_of_expression",
+          "named": true
+        },
+        {
           "type": "unary_expression",
           "named": true
         }
@@ -1132,11 +1168,19 @@
           "named": true
         },
         {
+          "type": "parenthesized_condition_expression",
+          "named": true
+        },
+        {
           "type": "parenthesized_expression",
           "named": true
         },
         {
           "type": "string_literal",
+          "named": true
+        },
+        {
+          "type": "type_of_expression",
           "named": true
         },
         {
@@ -1241,6 +1285,10 @@
           },
           {
             "type": "string_literal",
+            "named": true
+          },
+          {
+            "type": "type_of_expression",
             "named": true
           },
           {
@@ -1384,11 +1432,19 @@
             "named": true
           },
           {
+            "type": "parenthesized_condition_expression",
+            "named": true
+          },
+          {
             "type": "parenthesized_expression",
             "named": true
           },
           {
             "type": "string_literal",
+            "named": true
+          },
+          {
+            "type": "type_of_expression",
             "named": true
           },
           {
@@ -1579,11 +1635,19 @@
             "named": true
           },
           {
+            "type": "parenthesized_condition_expression",
+            "named": true
+          },
+          {
             "type": "parenthesized_expression",
             "named": true
           },
           {
             "type": "string_literal",
+            "named": true
+          },
+          {
+            "type": "type_of_expression",
             "named": true
           },
           {
@@ -1727,6 +1791,10 @@
             "named": true
           },
           {
+            "type": "type_of_expression",
+            "named": true
+          },
+          {
             "type": "unary_expression",
             "named": true
           }
@@ -1828,6 +1896,10 @@
           "named": true
         },
         {
+          "type": "type_of_expression",
+          "named": true
+        },
+        {
           "type": "unary_expression",
           "named": true
         }
@@ -1918,6 +1990,10 @@
           "named": true
         },
         {
+          "type": "type_of_expression",
+          "named": true
+        },
+        {
           "type": "unary_expression",
           "named": true
         }
@@ -1990,6 +2066,10 @@
           },
           {
             "type": "string_literal",
+            "named": true
+          },
+          {
+            "type": "type_of_expression",
             "named": true
           },
           {
@@ -2066,6 +2146,10 @@
           },
           {
             "type": "string_literal",
+            "named": true
+          },
+          {
+            "type": "type_of_expression",
             "named": true
           },
           {
@@ -2152,6 +2236,10 @@
           },
           {
             "type": "string_literal",
+            "named": true
+          },
+          {
+            "type": "type_of_expression",
             "named": true
           },
           {
@@ -2291,6 +2379,10 @@
             "named": true
           },
           {
+            "type": "type_of_expression",
+            "named": true
+          },
+          {
             "type": "unary_expression",
             "named": true
           }
@@ -2381,6 +2473,10 @@
             "named": true
           },
           {
+            "type": "type_of_expression",
+            "named": true
+          },
+          {
             "type": "unary_expression",
             "named": true
           }
@@ -2458,6 +2554,10 @@
           },
           {
             "type": "string_literal",
+            "named": true
+          },
+          {
+            "type": "type_of_expression",
             "named": true
           },
           {
@@ -2823,11 +2923,19 @@
             "named": true
           },
           {
+            "type": "parenthesized_condition_expression",
+            "named": true
+          },
+          {
             "type": "parenthesized_expression",
             "named": true
           },
           {
             "type": "string_literal",
+            "named": true
+          },
+          {
+            "type": "type_of_expression",
             "named": true
           },
           {
@@ -2972,6 +3080,10 @@
           },
           {
             "type": "string_literal",
+            "named": true
+          },
+          {
+            "type": "type_of_expression",
             "named": true
           },
           {
@@ -3260,6 +3372,10 @@
             "named": true
           },
           {
+            "type": "type_of_expression",
+            "named": true
+          },
+          {
             "type": "unary_expression",
             "named": true
           }
@@ -3416,6 +3532,10 @@
             "named": true
           },
           {
+            "type": "type_of_expression",
+            "named": true
+          },
+          {
             "type": "unary_expression",
             "named": true
           }
@@ -3483,6 +3603,10 @@
           },
           {
             "type": "string_literal",
+            "named": true
+          },
+          {
+            "type": "type_of_expression",
             "named": true
           },
           {
@@ -3558,6 +3682,97 @@
     }
   },
   {
+    "type": "parenthesized_condition_expression",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "addressof_expression",
+          "named": true
+        },
+        {
+          "type": "binary_expression",
+          "named": true
+        },
+        {
+          "type": "boolean_literal",
+          "named": true
+        },
+        {
+          "type": "call_expression",
+          "named": true
+        },
+        {
+          "type": "comparison_expression",
+          "named": true
+        },
+        {
+          "type": "condition_binary_expression",
+          "named": true
+        },
+        {
+          "type": "date_literal",
+          "named": true
+        },
+        {
+          "type": "empty_literal",
+          "named": true
+        },
+        {
+          "type": "file_number_literal",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "member_expression",
+          "named": true
+        },
+        {
+          "type": "new_expression",
+          "named": true
+        },
+        {
+          "type": "nothing_literal",
+          "named": true
+        },
+        {
+          "type": "null_literal",
+          "named": true
+        },
+        {
+          "type": "number_literal",
+          "named": true
+        },
+        {
+          "type": "parenthesized_condition_expression",
+          "named": true
+        },
+        {
+          "type": "parenthesized_expression",
+          "named": true
+        },
+        {
+          "type": "string_literal",
+          "named": true
+        },
+        {
+          "type": "type_of_expression",
+          "named": true
+        },
+        {
+          "type": "unary_expression",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "parenthesized_expression",
     "named": true,
     "fields": {},
@@ -3627,6 +3842,10 @@
         },
         {
           "type": "string_literal",
+          "named": true
+        },
+        {
+          "type": "type_of_expression",
           "named": true
         },
         {
@@ -3870,6 +4089,10 @@
             "named": true
           },
           {
+            "type": "type_of_expression",
+            "named": true
+          },
+          {
             "type": "unary_expression",
             "named": true
           }
@@ -3982,11 +4205,19 @@
             "named": true
           },
           {
+            "type": "parenthesized_condition_expression",
+            "named": true
+          },
+          {
             "type": "parenthesized_expression",
             "named": true
           },
           {
             "type": "string_literal",
+            "named": true
+          },
+          {
+            "type": "type_of_expression",
             "named": true
           },
           {
@@ -4086,11 +4317,19 @@
             "named": true
           },
           {
+            "type": "parenthesized_condition_expression",
+            "named": true
+          },
+          {
             "type": "parenthesized_expression",
             "named": true
           },
           {
             "type": "string_literal",
+            "named": true
+          },
+          {
+            "type": "type_of_expression",
             "named": true
           },
           {
@@ -4185,6 +4424,10 @@
         },
         {
           "type": "string_literal",
+          "named": true
+        },
+        {
+          "type": "type_of_expression",
           "named": true
         },
         {
@@ -4437,6 +4680,10 @@
             "named": true
           },
           {
+            "type": "type_of_expression",
+            "named": true
+          },
+          {
             "type": "unary_expression",
             "named": true
           }
@@ -4546,6 +4793,10 @@
           },
           {
             "type": "string_literal",
+            "named": true
+          },
+          {
+            "type": "type_of_expression",
             "named": true
           },
           {
@@ -4691,11 +4942,19 @@
             "named": true
           },
           {
+            "type": "parenthesized_condition_expression",
+            "named": true
+          },
+          {
             "type": "parenthesized_expression",
             "named": true
           },
           {
             "type": "string_literal",
+            "named": true
+          },
+          {
+            "type": "type_of_expression",
             "named": true
           },
           {
@@ -4886,6 +5145,10 @@
       "required": false,
       "types": [
         {
+          "type": "as_type_clause",
+          "named": true
+        },
+        {
           "type": "newline",
           "named": true
         },
@@ -4984,6 +5247,96 @@
     }
   },
   {
+    "type": "type_of_expression",
+    "named": true,
+    "fields": {
+      "type": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "type_expression",
+            "named": true
+          }
+        ]
+      },
+      "value": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "addressof_expression",
+            "named": true
+          },
+          {
+            "type": "binary_expression",
+            "named": true
+          },
+          {
+            "type": "boolean_literal",
+            "named": true
+          },
+          {
+            "type": "call_expression",
+            "named": true
+          },
+          {
+            "type": "date_literal",
+            "named": true
+          },
+          {
+            "type": "empty_literal",
+            "named": true
+          },
+          {
+            "type": "file_number_literal",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "member_expression",
+            "named": true
+          },
+          {
+            "type": "new_expression",
+            "named": true
+          },
+          {
+            "type": "nothing_literal",
+            "named": true
+          },
+          {
+            "type": "null_literal",
+            "named": true
+          },
+          {
+            "type": "number_literal",
+            "named": true
+          },
+          {
+            "type": "parenthesized_expression",
+            "named": true
+          },
+          {
+            "type": "string_literal",
+            "named": true
+          },
+          {
+            "type": "type_of_expression",
+            "named": true
+          },
+          {
+            "type": "unary_expression",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "unary_expression",
     "named": true,
     "fields": {},
@@ -5049,6 +5402,10 @@
         },
         {
           "type": "string_literal",
+          "named": true
+        },
+        {
+          "type": "type_of_expression",
           "named": true
         },
         {
@@ -5195,11 +5552,19 @@
             "named": true
           },
           {
+            "type": "parenthesized_condition_expression",
+            "named": true
+          },
+          {
             "type": "parenthesized_expression",
             "named": true
           },
           {
             "type": "string_literal",
+            "named": true
+          },
+          {
+            "type": "type_of_expression",
             "named": true
           },
           {
@@ -5336,6 +5701,10 @@
           },
           {
             "type": "string_literal",
+            "named": true
+          },
+          {
+            "type": "type_of_expression",
             "named": true
           },
           {

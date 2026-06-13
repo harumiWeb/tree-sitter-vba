@@ -6,6 +6,7 @@ Sub Test()
     text = ChrW$(&H2581)
     value = Format$(amount, "0.00")
     count& = &HFEEF
+    zero = 0&
 End Sub
 
 ---
@@ -29,6 +30,10 @@ End Sub
           (identifier)
           (identifier)
           (string_literal)))
+      (newline)
+      (assignment_statement
+        (identifier)
+        (number_literal))
       (newline)
       (assignment_statement
         (identifier)

@@ -31,6 +31,59 @@ End Sub
   (newline))
 
 ==================
+parenthesized condition binary
+==================
+
+Sub Test()
+    If web_Temp = "+" And _
+        (PlusAsSpace _
+         Or EncodingMode = UrlEncodingMode.FormUrlEncoding _
+         Or EncodingMode = UrlEncodingMode.QueryUrlEncoding) Then
+        matched = True
+    End If
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (if_statement
+        (condition_binary_expression
+          (comparison_expression
+            (identifier)
+            (string_literal))
+          (line_continuation)
+          (parenthesized_condition_expression
+            (condition_binary_expression
+              (comparison_expression
+                (binary_expression
+                  (identifier)
+                  (line_continuation)
+                  (identifier))
+                (member_expression
+                  (identifier)
+                  (identifier)))
+              (line_continuation)
+              (comparison_expression
+                (identifier)
+                (member_expression
+                  (identifier)
+                  (identifier))))))
+        (newline)
+        (block
+          (assignment_statement
+            (identifier)
+            (boolean_literal))
+          (newline)))
+      (newline)))
+  (newline))
+
+==================
 condition binary comparisons
 ==================
 
@@ -92,4 +145,37 @@ End Function
       (type_expression)
       (array_bounds))
     (newline))
+  (newline))
+
+==================
+typeof condition
+==================
+
+Sub Test()
+    If TypeOf Obj Is Collection Then
+        matched = True
+    End If
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (if_statement
+        (type_of_expression
+          (identifier)
+          (type_expression
+            (identifier)))
+        (newline)
+        (block
+          (assignment_statement
+            (identifier)
+            (boolean_literal))
+          (newline)))
+      (newline)))
   (newline))

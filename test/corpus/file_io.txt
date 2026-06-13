@@ -95,3 +95,39 @@ End Sub
             number: (number_literal))))
       (newline)))
   (newline))
+
+==================
+line input into variable named line
+==================
+
+Sub Test()
+    Line Input #1, Line
+    Line = VBA.Replace(Line, vbNewLine, "")
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    name: (identifier)
+    (parameter_list)
+    (newline)
+    body: (block
+      (line_input_statement
+        number: (file_number
+          (file_number_literal
+            number: (number_literal)))
+        target: (identifier))
+      (newline)
+      (assignment_statement
+        left: (identifier)
+        right: (call_expression
+          function: (member_expression
+            object: (identifier)
+            property: (identifier))
+          (identifier)
+          (identifier)
+          (string_literal)))
+      (newline)))
+  (newline))

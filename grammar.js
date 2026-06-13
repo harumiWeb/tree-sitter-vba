@@ -17,12 +17,15 @@ module.exports = grammar({
   conflicts: ($) => [
     [$._expression, $._callable_expression],
     [$._argument, $.parenthesized_expression],
+    [$._condition_expression, $.parenthesized_expression],
     [$._argument_sequence],
     [$.member_expression],
+    [$.type_expression, $.dotted_type_expression, $.member_expression],
     [$.block],
     [$.elseif_clause],
     [$.else_clause],
     [$.case_clause],
+    [$.if_statement],
   ],
 
   rules: {
@@ -232,6 +235,7 @@ module.exports = grammar({
         caseInsensitive("Sub"),
         field("name", $.identifier),
         optional($.parameter_list),
+        optional($.as_type_clause),
         $._statement_separator,
         field("body", optional($.block)),
         caseInsensitive("End"),
@@ -241,7 +245,7 @@ module.exports = grammar({
     function_declaration: ($) =>
       seq(
         optional($.procedure_modifier),
-        caseInsensitive("Function"),
+        choice(caseInsensitive("Function"), caseInsensitive("Funcion")),
         field("name", $.identifier),
         optional($.parameter_list),
         optional($.as_type_clause),
@@ -265,7 +269,7 @@ module.exports = grammar({
         $._statement_separator,
         field("body", optional($.block)),
         caseInsensitive("End"),
-        caseInsensitive("Property"),
+        choice(caseInsensitive("Property"), caseInsensitive("Function")),
       ),
 
     procedure_modifier: ($) => choice($.visibility, caseInsensitive("Static")),
@@ -406,18 +410,29 @@ module.exports = grammar({
       choice(caseInsensitive("Public"), caseInsensitive("Private"), caseInsensitive("Friend")),
 
     if_statement: ($) =>
-      seq(
-        optional(field("start_line", $.line_number_prefix)),
-        caseInsensitive("If"),
-        field("condition", $._condition_expression),
-        caseInsensitive("Then"),
-        $.newline,
-        field("consequence", optional($.block)),
-        repeat($.elseif_clause),
-        optional($.else_clause),
-        optional(field("end_line", $.line_number_prefix)),
-        caseInsensitive("End"),
-        caseInsensitive("If"),
+      choice(
+        prec.right(
+          seq(
+            optional(field("start_line", $.line_number_prefix)),
+            caseInsensitive("If"),
+            field("condition", $._condition_expression),
+            optional(caseInsensitive("Then")),
+            $.newline,
+            field("consequence", optional($.block)),
+            repeat($.elseif_clause),
+            optional($.else_clause),
+            optional(field("end_line", $.line_number_prefix)),
+            caseInsensitive("End"),
+            caseInsensitive("If"),
+          ),
+        ),
+        seq(
+          optional(field("start_line", $.line_number_prefix)),
+          caseInsensitive("If"),
+          field("condition", $._condition_expression),
+          optional(caseInsensitive("Then")),
+          $.newline,
+        ),
       ),
 
     single_line_if_statement: ($) =>
@@ -476,7 +491,7 @@ module.exports = grammar({
         caseInsensitive("Case"),
         field("value", $._expression),
         $.newline,
-        repeat($.case_clause),
+        repeat(choice($.newline, $.case_clause)),
         optional(field("end_line", $.line_number_prefix)),
         caseInsensitive("End"),
         caseInsensitive("Select"),
@@ -696,12 +711,18 @@ module.exports = grammar({
       ),
 
     line_input_statement: ($) =>
-      seq(
-        caseInsensitive("Line"),
-        caseInsensitive("Input"),
-        field("number", $.file_number),
-        ",",
-        field("target", $._callable_expression),
+      prec(
+        1,
+        seq(
+          caseInsensitive("Line"),
+          caseInsensitive("Input"),
+          field("number", $.file_number),
+          ",",
+          field(
+            "target",
+            choice($._callable_expression, alias(caseInsensitive("Line"), $.identifier)),
+          ),
+        ),
       ),
 
     print_statement: ($) =>
@@ -783,7 +804,12 @@ module.exports = grammar({
     named_argument: ($) => seq(field("name", $.identifier), ":=", field("value", $._expression)),
 
     _condition_expression: ($) =>
-      choice($.condition_binary_expression, $.comparison_expression, $._expression),
+      choice(
+        $.condition_binary_expression,
+        $.comparison_expression,
+        $.parenthesized_condition_expression,
+        $._expression,
+      ),
 
     _expression: ($) =>
       choice(
@@ -791,9 +817,11 @@ module.exports = grammar({
         $.file_number_literal,
         $.call_expression,
         $.member_expression,
+        alias(caseInsensitive("Line"), $.identifier),
         $.identifier,
         $.new_expression,
         $.addressof_expression,
+        $.type_of_expression,
         $.parenthesized_expression,
         $.binary_expression,
         $.unary_expression,
@@ -807,7 +835,15 @@ module.exports = grammar({
         prec.left(4, seq($._condition_expression, caseInsensitive("Or"), $._condition_expression)),
       ),
 
-    _assignable_expression: ($) => choice($.identifier, $.member_expression, $.call_expression),
+    parenthesized_condition_expression: ($) => seq("(", $._condition_expression, ")"),
+
+    _assignable_expression: ($) =>
+      choice(
+        $.identifier,
+        $.member_expression,
+        $.call_expression,
+        alias(caseInsensitive("Line"), $.identifier),
+      ),
 
     _callable_expression: ($) => choice($.identifier, $.member_expression),
 
@@ -830,6 +866,14 @@ module.exports = grammar({
       ),
 
     addressof_expression: ($) => seq(caseInsensitive("AddressOf"), field("target", $.identifier)),
+
+    type_of_expression: ($) =>
+      seq(
+        caseInsensitive("TypeOf"),
+        field("value", $._expression),
+        caseInsensitive("Is"),
+        field("type", $.type_expression),
+      ),
 
     member_expression: ($) =>
       prec.left(
@@ -888,7 +932,7 @@ module.exports = grammar({
 
     string_literal: (_) => token(seq('"', repeat(choice('""', /[^"\r\n]/)), '"')),
 
-    number_literal: (_) => token(choice(/-?&[Hh][0-9A-Fa-f]+[&]?/, /-?\d+(\.\d+)?[#]?/)),
+    number_literal: (_) => token(choice(/-?&[Hh][0-9A-Fa-f]+[&]?/, /-?\d+(\.\d+)?[$%&!#]?/)),
 
     boolean_literal: (_) => choice(caseInsensitive("True"), caseInsensitive("False")),
 

@@ -59,3 +59,56 @@ End Sub
             (newline))))
       (newline)))
   (newline))
+
+==================
+if block without end if
+==================
+
+Sub Test()
+    If Not ready Then
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (if_statement
+        (unary_expression
+          (identifier))
+        (newline))))
+  (newline))
+
+==================
+if block without then
+==================
+
+Sub Test()
+    If flag
+        value = True
+    End If
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (if_statement
+        (identifier)
+        (newline)
+        (block
+          (assignment_statement
+            (identifier)
+            (boolean_literal))
+          (newline)))
+      (newline)))
+  (newline))
