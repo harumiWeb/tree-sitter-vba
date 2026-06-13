@@ -1,0 +1,75 @@
+==================
+debug print semicolon arguments
+==================
+
+Sub Test()
+    Debug.Print latitude; longitude; radius
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (call_statement
+        (member_expression
+          (identifier)
+          (identifier))
+        (argument_list
+          (identifier)
+          (identifier)
+          (identifier)))
+      (newline)))
+  (newline))
+
+==================
+access report line
+==================
+
+Sub Test()
+    Me.Line ((0), .Section(acHeader).Height) _
+        -(0, .ScaleHeight - (.Section(acFooter).Height))
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (call_statement
+        (member_expression
+          (identifier)
+          (identifier))
+        (line_range_argument_list
+          (coordinate_pair
+            (parenthesized_expression
+              (number_literal))
+            (member_expression
+              (call_expression
+                (member_expression
+                  (identifier))
+                (identifier))
+              (identifier)))
+          (line_continuation)
+          (coordinate_pair
+            (number_literal)
+            (binary_expression
+              (member_expression
+                (identifier))
+              (parenthesized_expression
+                (member_expression
+                  (call_expression
+                    (member_expression
+                      (identifier))
+                    (identifier))
+                  (identifier)))))))
+      (newline)))
+  (newline))

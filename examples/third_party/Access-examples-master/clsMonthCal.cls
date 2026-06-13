@@ -142,7 +142,7 @@ hwndFrom As Long
     
 Private Type NMDAYSTATE
  nmhd As NMHDR ' // this must be first, so we don't break WM_NOTIFY
- stStart As SYSTEMTIME
+ stStart As SYSTEMTIME
 cDayState As Long
 ' FOr ease of use always specify 12 months of data
 prgDayState(11) As MONTHDAYSTATE '; // points to cDayState MONTHDAYSTATEs

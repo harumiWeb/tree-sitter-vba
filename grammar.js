@@ -579,7 +579,14 @@ module.exports = grammar({
         ),
       ),
 
-    dotted_type_expression: ($) => prec(5, seq($.identifier, repeat1(seq(".", $.identifier)))),
+    dotted_type_expression: ($) =>
+      prec(
+        5,
+        seq(
+          $.identifier,
+          repeat1(seq(".", choice($.identifier, alias(caseInsensitive("Line"), $.identifier)))),
+        ),
+      ),
 
     visibility: (_) =>
       choice(caseInsensitive("Public"), caseInsensitive("Private"), caseInsensitive("Friend")),
@@ -846,7 +853,7 @@ module.exports = grammar({
         caseInsensitive("For"),
         field("mode", $.file_mode),
         optional(seq(caseInsensitive("Access"), field("access", $.file_access))),
-        optional(seq(caseInsensitive("Lock"), field("lock", $.file_lock))),
+        optional(field("lock", $.file_lock)),
         caseInsensitive("As"),
         field("number", $.file_number),
         optional(seq(caseInsensitive("Len"), "=", field("record_length", $._expression))),
@@ -870,10 +877,15 @@ module.exports = grammar({
 
     file_lock: (_) =>
       choice(
-        caseInsensitive("Read"),
-        caseInsensitive("Write"),
-        seq(caseInsensitive("Read"), caseInsensitive("Write")),
         caseInsensitive("Shared"),
+        seq(
+          caseInsensitive("Lock"),
+          choice(
+            caseInsensitive("Read"),
+            caseInsensitive("Write"),
+            seq(caseInsensitive("Read"), caseInsensitive("Write")),
+          ),
+        ),
       ),
 
     file_number: ($) => prec(1, choice($.file_number_literal, $._expression)),
@@ -931,6 +943,18 @@ module.exports = grammar({
         field("right", choice($.logical_value_expression, $.comparison_expression, $._expression)),
       ),
 
+    coordinate_pair: ($) =>
+      prec(
+        2,
+        seq(
+          "(",
+          field("x", choice($.comparison_expression, $._expression)),
+          ",",
+          field("y", choice($.comparison_expression, $._expression)),
+          ")",
+        ),
+      ),
+
     call_statement: ($) =>
       prec.right(
         1,
@@ -939,6 +963,10 @@ module.exports = grammar({
             caseInsensitive("Call"),
             field("callee", choice($.identifier, $.member_expression)),
             optional($.argument_list),
+          ),
+          seq(
+            field("callee", alias($._line_method_expression, $.member_expression)),
+            $.line_range_argument_list,
           ),
           field("callee", $._callable_expression),
           seq(field("callee", $._callable_expression), $.argument_list),
@@ -951,6 +979,16 @@ module.exports = grammar({
     argument_list: ($) =>
       choice(seq("(", optional($._argument_sequence), ")"), $._unparenthesized_argument_sequence),
 
+    line_range_argument_list: ($) =>
+      seq(
+        optional(caseInsensitive("Step")),
+        field("start", $.coordinate_pair),
+        optional(caseInsensitive("Step")),
+        "-",
+        field("end", $.coordinate_pair),
+        optional(seq(",", $.print_argument_sequence)),
+      ),
+
     _argument_sequence: ($) =>
       choice(
         prec(1, commaSep1($._argument)),
@@ -958,7 +996,11 @@ module.exports = grammar({
       ),
 
     _unparenthesized_argument_sequence: ($) =>
-      choice(prec(2, $._omitted_argument_sequence), commaSep1($._argument)),
+      choice(
+        prec(2, $._omitted_argument_sequence),
+        commaSep1($._argument),
+        seq($._argument, repeat1(seq(";", $._argument))),
+      ),
 
     _omitted_argument_sequence: ($) =>
       prec.right(
@@ -1075,6 +1117,16 @@ module.exports = grammar({
 
     _callable_expression: ($) => choice($.identifier, $.member_expression),
 
+    _line_method_expression: ($) =>
+      prec(
+        7,
+        seq(
+          field("object", choice($.identifier, $.call_expression, $.member_expression)),
+          ".",
+          field("property", alias(caseInsensitive("Line"), $.identifier)),
+        ),
+      ),
+
     call_expression: ($) =>
       prec(
         2,
@@ -1109,12 +1161,15 @@ module.exports = grammar({
         choice(
           seq(
             field("object", choice($.identifier, $.call_expression, $.member_expression)),
-            ".",
-            field("property", $.identifier),
+            choice(".", "!"),
+            field("property", $._member_property),
           ),
-          seq(".", field("property", $.identifier)),
+          seq(choice(".", "!"), field("property", $._member_property)),
         ),
       ),
+
+    _member_property: ($) =>
+      prec(6, choice($.identifier, alias(caseInsensitive("Line"), $.identifier))),
 
     parenthesized_expression: ($) =>
       seq("(", choice($._expression, $.comparison_expression, $.condition_binary_expression), ")"),
@@ -1181,7 +1236,8 @@ module.exports = grammar({
     identifier: (_) =>
       token(
         choice(
-          /[A-Za-z_\u00C0-\u{10FFFF}][A-Za-z0-9_\u00C0-\u{10FFFF}]*[$%&!#]?/u,
+          /[A-Za-z_\u00C0-\u{10FFFF}][A-Za-z0-9_\u00C0-\u{10FFFF}]*[$%&#]?/u,
+          prec(-1, /[A-Za-z_\u00C0-\u{10FFFF}][A-Za-z0-9_\u00C0-\u{10FFFF}]*!/u),
           /\[[^\]\r\n]+\]/,
         ),
       ),

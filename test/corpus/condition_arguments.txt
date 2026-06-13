@@ -267,6 +267,9 @@ Sub Test()
     If TypeOf Obj Is Collection Then
         matched = True
     End If
+    If Not TypeOf CtlDetail Is Access.Line Then
+        matched = True
+    End If
 End Sub
 
 ---
@@ -289,5 +292,21 @@ End Sub
             (identifier)
             (boolean_literal))
           (newline)))
-      (newline)))
+      (newline)
+      (if_statement
+        (unary_expression
+          (type_of_expression
+            (identifier)
+            (type_expression
+              (dotted_type_expression
+                (identifier)
+                (identifier)))))
+        (newline)
+        (block
+          (assignment_statement
+            (identifier)
+            (boolean_literal))
+          (newline)))
+      (newline)
+      ))
   (newline))

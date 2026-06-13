@@ -26,6 +26,48 @@ End Sub
   (newline))
 
 ==================
+bang member access
+==================
+
+Sub Test()
+    value = rst!FileData
+    value = CodeDb.Containers!Databases.Documents!SummaryInfo.Properties(name)
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (assignment_statement
+        (identifier)
+        (member_expression
+          (identifier)
+          (identifier)))
+      (newline)
+      (assignment_statement
+        (identifier)
+        (call_expression
+          (member_expression
+              (member_expression
+                (member_expression
+                  (member_expression
+                    (member_expression
+                      (identifier)
+                      (identifier))
+                    (identifier))
+                  (identifier))
+                (identifier))
+            (identifier))
+          (identifier)))
+      (newline)))
+  (newline))
+
+==================
 bracketed member access
 ==================
 

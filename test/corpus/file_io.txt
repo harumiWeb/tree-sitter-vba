@@ -4,6 +4,7 @@ file input output statements
 Sub Test()
     Dim textLine As String
     Open path For Input As #1
+    Open path For Binary Access Read Shared As fileNumber
     Line Input #1, textLine
     Input #1, a, b
     Print #1, textLine; ","; b
@@ -31,6 +32,14 @@ End Sub
         number: (file_number
           (file_number_literal
             number: (number_literal))))
+      (newline)
+      (open_statement
+        path: (identifier)
+        mode: (file_mode)
+        access: (file_access)
+        lock: (file_lock)
+        number: (file_number
+          (identifier)))
       (newline)
       (line_input_statement
         number: (file_number
