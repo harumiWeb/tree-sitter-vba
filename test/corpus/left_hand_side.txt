@@ -22,6 +22,29 @@ End Sub
   (newline))
 
 ==================
+assignment with equality-like operands
+==================
+
+Sub Test()
+    a = b
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (assignment_statement
+        (identifier)
+        (identifier))
+      (newline)))
+  (newline))
+
+==================
 indexed left hand side
 ==================
 

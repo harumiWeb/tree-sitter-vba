@@ -51,6 +51,26 @@ Expected strategy:
 - Prioritize stable editor parsing over exact VBE semantic interpretation.
 - Downstream semantic layers may need access to the original source text if they need to distinguish these cases.
 
+## Comparison expressions outside condition contexts
+
+Equality comparison is currently supported only in selected condition contexts.
+
+Example:
+
+```vb
+Debug.Print a = b
+```
+
+Current status:
+
+- General expression-level equality comparison is not fully supported yet.
+- Statement-level assignment remains prioritized so forms such as `a = b` parse as `assignment_statement`.
+
+Expected strategy:
+
+- Broaden equality comparison only after adding neighboring corpus tests that prove assignment parsing does not regress.
+- Keep semantic validity out of the grammar; downstream layers can decide whether a parsed expression is meaningful VBA.
+
 ## Single-line If
 
 Example:
