@@ -31,6 +31,35 @@ End Sub
   (newline))
 
 ==================
+logical equality comparisons assigned as value
+==================
+
+Sub Test()
+    matched = ch = "_" Or ch = "-"
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (assignment_statement
+        (identifier)
+        (logical_value_expression
+          (comparison_expression
+            (identifier)
+            (string_literal))
+          (comparison_expression
+            (identifier)
+            (string_literal))))
+      (newline)))
+  (newline))
+
+==================
 logical comparisons assigned as value
 ==================
 

@@ -108,7 +108,7 @@ Private Function getListRows(r As Range) As Collection
         Set rng = Application.Intersect(r.EntireRow, pLO.Range)
         Dim are As Range
         For Each are In rng.Areas
-        
+        Next
     End If
     Set getListRows = res
 End Function

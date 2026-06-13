@@ -48,6 +48,7 @@ longlong literal type character
 Sub Test()
     nullPtr = 0^
     invalid = -1^
+    mask = &H8000000000000000^
 End Sub
 
 ---
@@ -59,6 +60,10 @@ End Sub
     (parameter_list)
     (newline)
     (block
+      (assignment_statement
+        (identifier)
+        (number_literal))
+      (newline)
       (assignment_statement
         (identifier)
         (number_literal))

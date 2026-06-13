@@ -174,7 +174,7 @@ Property Get isContentSupported() as boolean
 End Property
 
 Property Get Contents(Optional ByVal iStartAt as Long, Optional ByVal iByteCount as Long) as Byte
-  Contents = stdIResource_Contents(Optional ByVal iStartAt as Long, Optional ByVal iByteCount as Long) 
+  Contents = stdIResource_Contents(iStartAt, iByteCount)
 End Property
 
 Property Get Size() as Long
@@ -360,7 +360,8 @@ Public Property Get stdIResource_Contents(Optional ByVal iStartAt as Long=0, Opt
             if iStartAt > 0 then Seek #ff, iStartAt
             Dim iNumBytes as long: iNumBytes = iif(iByteCount = -1, LOF(ff)-iStartAt, iByteCount)
             if iByteCount = -1 then
-            stdIResource_Contents = Input(iNumBytes,ff)
+                stdIResource_Contents = Input(iNumBytes,ff)
+            end if
         Close #ff
     else
         Err.Raise 440, "stdResource", "Content not supported by this resource"
@@ -375,7 +376,7 @@ End Property
 Public Property Get stdIResource_Children() as Collection
     set stdIResource_Children = new Collection
     Dim res as stdIResource: 
-End Function
+End Property
 
 'Copies the current resource to another existing resource container.
 '@param {stdIResource} The resource to copy this resource to.
@@ -433,7 +434,7 @@ Public Function stdIResource_CreateChild(ByVal name as string, ByVal iStandardTy
         select case iStandardType
             case StandardFile
                 ff = FreeFile()
-                Open File stdIResource_Path & "\" & name as #ff for Output
+                Open stdIResource_Path & "\" & name For Output As #ff
                     if not isEmpty(contents) then Print #ff, contents
                 Close #ff
             case StandardFolder
@@ -451,4 +452,4 @@ End Function
 Public Function stdIResource_Identify(ByVal ContainerResource as stdIResource) as Collection
     'All children can be a `stdResource`
     set stdIResource_Identify = ContainerResource.ChildrenCollection
-End Property
+End Function

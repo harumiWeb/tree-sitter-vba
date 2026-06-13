@@ -208,7 +208,8 @@ Private Sub pSheet_SelectionChange(ByVal Target As Range)
     
         If Not Application.Intersect(row, pRange) Is Nothing Then
           
-        
+        End If
+
     If Not Application.intersects(Target, lo.Range) Is Nothing Then
       If Not pIsSelected Then
         RaiseEvent Selected

@@ -34,6 +34,29 @@ End Sub
   (newline))
 
 ==================
+single line empty while
+==================
+
+Sub Test()
+    While IsReady(): Wend
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (while_statement
+        (call_expression
+          (identifier)))
+      (newline)))
+  (newline))
+
+==================
 do until loop
 ==================
 

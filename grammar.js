@@ -46,6 +46,9 @@ module.exports = grammar({
         $.type_declaration,
         $.enum_declaration,
         $.declare_statement,
+        $.conditional_sub_declaration,
+        $.conditional_function_declaration,
+        $.conditional_property_declaration,
         $.sub_declaration,
         $.function_declaration,
         $.property_declaration,
@@ -58,7 +61,7 @@ module.exports = grammar({
 
     _statement_separator: ($) => choice($.newline, ":"),
 
-    line_continuation: (_) => token(seq("_", /\r?\n/)),
+    line_continuation: (_) => token(seq("_", /[ \t]*\r?\n/)),
 
     comment: (_) => token(choice(seq("'", /.*/), seq(caseInsensitive("Rem"), /([ \t].*)?/))),
 
@@ -187,7 +190,7 @@ module.exports = grammar({
         caseInsensitive("Enum"),
         field("name", $.identifier),
         $._statement_separator,
-        repeat(choice($.newline, $.enum_member, $.preprocessor_if)),
+        repeat(choice($._statement_separator, $.enum_member, $.preprocessor_if)),
         caseInsensitive("End"),
         caseInsensitive("Enum"),
       ),
@@ -216,7 +219,7 @@ module.exports = grammar({
         caseInsensitive("#Const"),
         field("name", $.identifier),
         "=",
-        field("value", $._expression),
+        field("value", choice($.comparison_expression, $._expression)),
       ),
 
     preprocessor_if: ($) =>
@@ -241,10 +244,14 @@ module.exports = grammar({
         $.declare_statement,
         $.type_declaration,
         $.enum_declaration,
+        $.conditional_sub_declaration,
+        $.conditional_function_declaration,
+        $.conditional_property_declaration,
         $.sub_declaration,
         $.function_declaration,
         $.property_declaration,
         $.event_declaration,
+        ":",
       ),
 
     preprocessor_elseif: ($) =>
@@ -261,10 +268,7 @@ module.exports = grammar({
 
     sub_declaration: ($) =>
       seq(
-        optional($.procedure_modifier),
-        caseInsensitive("Sub"),
-        field("name", $.identifier),
-        optional($.parameter_list),
+        $._sub_header,
         $._statement_separator,
         field("body", optional($.block)),
         caseInsensitive("End"),
@@ -273,11 +277,7 @@ module.exports = grammar({
 
     function_declaration: ($) =>
       seq(
-        optional($.procedure_modifier),
-        caseInsensitive("Function"),
-        field("name", $.identifier),
-        optional($.parameter_list),
-        optional($.as_type_clause),
+        $._function_header,
         $._statement_separator,
         field("body", optional($.block)),
         caseInsensitive("End"),
@@ -285,6 +285,32 @@ module.exports = grammar({
       ),
 
     property_declaration: ($) =>
+      seq(
+        $._property_header,
+        $._statement_separator,
+        field("body", optional($.block)),
+        caseInsensitive("End"),
+        caseInsensitive("Property"),
+      ),
+
+    _sub_header: ($) =>
+      seq(
+        optional($.procedure_modifier),
+        caseInsensitive("Sub"),
+        field("name", $.identifier),
+        optional($.parameter_list),
+      ),
+
+    _function_header: ($) =>
+      seq(
+        optional($.procedure_modifier),
+        caseInsensitive("Function"),
+        field("name", $.identifier),
+        optional($.parameter_list),
+        optional($.as_type_clause),
+      ),
+
+    _property_header: ($) =>
       seq(
         optional($.procedure_modifier),
         caseInsensitive("Property"),
@@ -295,10 +321,118 @@ module.exports = grammar({
         field("name", $.identifier),
         optional($.parameter_list),
         optional($.as_type_clause),
-        $._statement_separator,
+      ),
+
+    conditional_sub_declaration: ($) =>
+      seq(
+        $._conditional_sub_headers,
+        $.newline,
+        field("body", optional($.block)),
+        caseInsensitive("End"),
+        caseInsensitive("Sub"),
+      ),
+
+    conditional_function_declaration: ($) =>
+      seq(
+        $._conditional_function_headers,
+        $.newline,
+        field("body", optional($.block)),
+        caseInsensitive("End"),
+        caseInsensitive("Function"),
+      ),
+
+    conditional_property_declaration: ($) =>
+      seq(
+        $._conditional_property_headers,
+        $.newline,
         field("body", optional($.block)),
         caseInsensitive("End"),
         caseInsensitive("Property"),
+      ),
+
+    _conditional_sub_headers: ($) =>
+      seq(
+        caseInsensitive("#If"),
+        field("condition", $._condition_expression),
+        caseInsensitive("Then"),
+        $.newline,
+        field("consequence", $._sub_header),
+        $.newline,
+        repeat(
+          seq(
+            caseInsensitive("#ElseIf"),
+            field("condition", $._condition_expression),
+            caseInsensitive("Then"),
+            $.newline,
+            field("alternative", $._sub_header),
+            $.newline,
+          ),
+        ),
+        optional(
+          seq(caseInsensitive("#Else"), $.newline, field("alternative", $._sub_header), $.newline),
+        ),
+        caseInsensitive("#End"),
+        caseInsensitive("If"),
+      ),
+
+    _conditional_function_headers: ($) =>
+      seq(
+        caseInsensitive("#If"),
+        field("condition", $._condition_expression),
+        caseInsensitive("Then"),
+        $.newline,
+        field("consequence", $._function_header),
+        $.newline,
+        repeat(
+          seq(
+            caseInsensitive("#ElseIf"),
+            field("condition", $._condition_expression),
+            caseInsensitive("Then"),
+            $.newline,
+            field("alternative", $._function_header),
+            $.newline,
+          ),
+        ),
+        optional(
+          seq(
+            caseInsensitive("#Else"),
+            $.newline,
+            field("alternative", $._function_header),
+            $.newline,
+          ),
+        ),
+        caseInsensitive("#End"),
+        caseInsensitive("If"),
+      ),
+
+    _conditional_property_headers: ($) =>
+      seq(
+        caseInsensitive("#If"),
+        field("condition", $._condition_expression),
+        caseInsensitive("Then"),
+        $.newline,
+        field("consequence", $._property_header),
+        $.newline,
+        repeat(
+          seq(
+            caseInsensitive("#ElseIf"),
+            field("condition", $._condition_expression),
+            caseInsensitive("Then"),
+            $.newline,
+            field("alternative", $._property_header),
+            $.newline,
+          ),
+        ),
+        optional(
+          seq(
+            caseInsensitive("#Else"),
+            $.newline,
+            field("alternative", $._property_header),
+            $.newline,
+          ),
+        ),
+        caseInsensitive("#End"),
+        caseInsensitive("If"),
       ),
 
     event_declaration: ($) =>
@@ -325,6 +459,7 @@ module.exports = grammar({
         $.do_statement,
         $.while_statement,
         $.with_statement,
+        $.on_goto_statement,
         $.on_error_statement,
         $.resume_statement,
         $.goto_statement,
@@ -603,7 +738,7 @@ module.exports = grammar({
         optional(field("start_line", $.line_number_prefix)),
         caseInsensitive("While"),
         field("condition", $._condition_expression),
-        $.newline,
+        $._statement_separator,
         field("body", optional($.block)),
         optional(field("end_line", $.line_number_prefix)),
         caseInsensitive("Wend"),
@@ -634,6 +769,14 @@ module.exports = grammar({
       ),
 
     end_statement: (_) => token(/[Ee][Nn][Dd][ \t]*(?:\r?\n|:)/),
+
+    on_goto_statement: ($) =>
+      seq(
+        caseInsensitive("On"),
+        field("selector", $._expression),
+        choice(caseInsensitive("GoTo"), caseInsensitive("GoSub")),
+        commaSep1(field("target", choice($.identifier, lineNumber($)))),
+      ),
 
     on_error_statement: ($) =>
       seq(
@@ -833,7 +976,13 @@ module.exports = grammar({
       ),
 
     _argument: ($) =>
-      choice($.byval_argument, $.named_argument, $.comparison_expression, $._expression),
+      choice(
+        $.byval_argument,
+        $.named_argument,
+        $.logical_value_expression,
+        $.comparison_expression,
+        $._expression,
+      ),
 
     named_argument: ($) => seq(field("name", $.identifier), ":=", field("value", $._expression)),
 
@@ -867,25 +1016,44 @@ module.exports = grammar({
     comparison_expression: ($) => prec.left(7, seq($._expression, "=", $._expression)),
 
     logical_value_expression: ($) =>
-      choice(
-        prec.left(
-          5,
-          seq(
-            choice($.comparison_expression, $._expression),
-            caseInsensitive("And"),
-            $.comparison_expression,
+      prec.dynamic(
+        1,
+        choice(
+          prec.left(
+            5,
+            seq(
+              choice($.comparison_expression, $._expression),
+              caseInsensitive("And"),
+              $.comparison_expression,
+            ),
+          ),
+          prec.left(5, seq($.comparison_expression, caseInsensitive("And"), $._expression)),
+          prec.left(
+            5,
+            seq(
+              $.logical_value_expression,
+              caseInsensitive("And"),
+              choice($.comparison_expression, $._expression),
+            ),
+          ),
+          prec.left(
+            4,
+            seq(
+              choice($.comparison_expression, $._expression),
+              caseInsensitive("Or"),
+              $.comparison_expression,
+            ),
+          ),
+          prec.left(4, seq($.comparison_expression, caseInsensitive("Or"), $._expression)),
+          prec.left(
+            4,
+            seq(
+              $.logical_value_expression,
+              caseInsensitive("Or"),
+              choice($.comparison_expression, $._expression),
+            ),
           ),
         ),
-        prec.left(5, seq($.comparison_expression, caseInsensitive("And"), $._expression)),
-        prec.left(
-          4,
-          seq(
-            choice($.comparison_expression, $._expression),
-            caseInsensitive("Or"),
-            $.comparison_expression,
-          ),
-        ),
-        prec.left(4, seq($.comparison_expression, caseInsensitive("Or"), $._expression)),
       ),
 
     condition_binary_expression: ($) =>
@@ -993,7 +1161,8 @@ module.exports = grammar({
 
     string_literal: (_) => token(seq('"', repeat(choice('""', /[^"\r\n]/)), '"')),
 
-    number_literal: (_) => token(choice(/-?&[Hh][0-9A-Fa-f]+[&]?/, /-?\d+(\.\d+)?[$%&!#@^]?/)),
+    number_literal: (_) =>
+      token(choice(/-?&[Hh][0-9A-Fa-f]+[$%&!#@^]?/, /-?\d+(\.\d+)?[$%&!#@^]?/)),
 
     boolean_literal: (_) => choice(caseInsensitive("True"), caseInsensitive("False")),
 

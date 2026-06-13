@@ -1,0 +1,24 @@
+==================
+computed goto
+==================
+
+Sub Dispatch()
+    On operation GoTo lblPush, lblPop, 100
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (on_goto_statement
+        (identifier)
+        (identifier)
+        (identifier)
+        (line_number_literal))
+      (newline)))
+  (newline))

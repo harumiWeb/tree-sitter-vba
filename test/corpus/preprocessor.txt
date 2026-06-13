@@ -14,6 +14,23 @@ preprocessor const
   (newline))
 
 ==================
+comparison preprocessor constant
+==================
+
+#Const isWindows = Mac = 0
+
+---
+
+(source_file
+  (newline)
+  (preprocessor_const
+    (identifier)
+    (comparison_expression
+      (identifier)
+      (number_literal)))
+  (newline))
+
+==================
 preprocessor if declare
 ==================
 

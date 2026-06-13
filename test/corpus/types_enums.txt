@@ -34,6 +34,31 @@ End Type
   (newline))
 
 ==================
+colon separated enum members
+==================
+
+Private Enum VirtualKey
+    VK_LEFT = &H25: VK_UP = &H26:
+End Enum
+
+---
+
+(source_file
+  (newline)
+  (enum_declaration
+    (visibility)
+    (identifier)
+    (newline)
+    (enum_member
+      (identifier)
+      (number_literal))
+    (enum_member
+      (identifier)
+      (number_literal))
+    (newline))
+  (newline))
+
+==================
 conditional compilation in enum declaration
 ==================
 

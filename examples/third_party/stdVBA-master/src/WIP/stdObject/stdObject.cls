@@ -514,7 +514,7 @@ Private Sub Class_Initialize()
     'stdObject definitions:
     set MethodDict = CreateObject("Scripting.Dictionary")
     Call pvAddInterface("IDispatch","{00020400-0000-0000-C000-000000000046}",4,1,3,5,8)
-End Function
+End Sub
 
 ' ////////////////////////////////////////////////////////////////////////////////////////////////////
 '   Interface methods begin here, must all be in VTable order.

@@ -1,0 +1,29 @@
+==================
+line continuation with trailing whitespace
+==================
+
+Sub Test()
+    values = Array( _
+        1, _ 
+        2)
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (assignment_statement
+        (identifier)
+        (call_expression
+          (identifier)
+          (line_continuation)
+          (number_literal)
+          (line_continuation)
+          (number_literal)))
+      (newline)))
+  (newline))

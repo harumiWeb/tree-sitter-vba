@@ -117,8 +117,8 @@ End Function
 '@param iStart - The index to start matching from
 '@return - An individual match which is the first match found after iStart
 Private Function matchRegex(ByRef buff as HaystackBuffer, ByVal astRegex as Object, ByVal iStart as Long) as TRegexMatch
-    
-End Sub
+
+End Function
 
 
 

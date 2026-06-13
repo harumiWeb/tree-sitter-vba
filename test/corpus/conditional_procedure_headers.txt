@@ -1,0 +1,139 @@
+==================
+conditional function header
+==================
+
+#If VBA7 Then
+Public Function FromPointer(ByVal ptr As LongPtr) As Object
+#Else
+Public Function FromPointer(ByVal ptr As Long) As Object
+#End If
+    Set FromPointer = Nothing
+End Function
+
+---
+
+(source_file
+  (newline)
+  (conditional_function_declaration
+    (identifier)
+    (newline)
+    (procedure_modifier
+      (visibility))
+    (identifier)
+    (parameter_list
+      (parameter
+        (identifier)
+        (as_type_clause
+          (type_expression))))
+    (as_type_clause
+      (type_expression))
+    (newline)
+    (newline)
+    (procedure_modifier
+      (visibility))
+    (identifier)
+    (parameter_list
+      (parameter
+        (identifier)
+        (as_type_clause
+          (type_expression))))
+    (as_type_clause
+      (type_expression))
+    (newline)
+    (newline)
+    (block
+      (set_statement
+        (identifier)
+        (nothing_literal))
+      (newline)))
+  (newline))
+
+==================
+conditional sub header
+==================
+
+#If VBA7 Then
+Public Sub SendMessage(ByVal hwnd As LongPtr)
+#Else
+Public Sub SendMessage(ByVal hwnd As Long)
+#End If
+    Call Dispatch(hwnd)
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (conditional_sub_declaration
+    (identifier)
+    (newline)
+    (procedure_modifier
+      (visibility))
+    (identifier)
+    (parameter_list
+      (parameter
+        (identifier)
+        (as_type_clause
+          (type_expression))))
+    (newline)
+    (newline)
+    (procedure_modifier
+      (visibility))
+    (identifier)
+    (parameter_list
+      (parameter
+        (identifier)
+        (as_type_clause
+          (type_expression))))
+    (newline)
+    (newline)
+    (block
+      (call_statement
+        (identifier)
+        (argument_list
+          (parenthesized_expression
+            (identifier))))
+      (newline)))
+  (newline))
+
+==================
+conditional property header
+==================
+
+#If VBA7 Then
+Public Property Get Pointer() As LongPtr
+#Else
+Public Property Get Pointer() As Long
+#End If
+    Pointer = 0
+End Property
+
+---
+
+(source_file
+  (newline)
+  (conditional_property_declaration
+    (identifier)
+    (newline)
+    (procedure_modifier
+      (visibility))
+    (identifier)
+    (parameter_list)
+    (as_type_clause
+      (type_expression))
+    (newline)
+    (newline)
+    (procedure_modifier
+      (visibility))
+    (identifier)
+    (parameter_list)
+    (as_type_clause
+      (type_expression))
+    (newline)
+    (newline)
+    (block
+      (assignment_statement
+        (identifier)
+        (number_literal))
+      (newline)))
+  (newline))

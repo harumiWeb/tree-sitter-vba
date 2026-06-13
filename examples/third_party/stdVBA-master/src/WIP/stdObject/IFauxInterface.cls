@@ -506,7 +506,7 @@ Private Sub Class_Initialize()
     '    '///// IFileDialogEvents - don't include IUnknown
     '    Private Function pvIFileDialogEvents_OnFileOk(ByVal pUnk As Long, ...) As Long
     '     '    and then the remaining 6 methods
-End Function
+End Sub
 
 ' ////////////////////////////////////////////////////////////////////////////////////////////////////
 '   Interface methods begin here, must all be in VTable order.
