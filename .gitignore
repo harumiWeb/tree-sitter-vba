@@ -18,3 +18,5 @@ yarn-debug.log*
 
 # Build artifacts
 *.tgz
+
+tmp/

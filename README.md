@@ -1,54 +1,165 @@
 # tree-sitter-vba
 
-Tree-sitter grammar for Visual Basic for Applications (VBA).
+A Tree-sitter grammar for Visual Basic for Applications (VBA), targeting
+exported Excel/VBA source files such as `.bas`, `.cls`, and `.frm`.
 
-This project provides a parsing foundation for exported VBA source files such as
-`.bas`, `.cls`, and `.frm`. The grammar is intended for editor-facing features
-such as highlighting, folding, tags, outline extraction, and future LSP work.
+This grammar is designed as a parsing foundation for editor and tooling use
+cases, including syntax highlighting, folding, tags, outline extraction, symbol
+inspection, linting, formatting, and future LSP integrations.
 
 ## Status
 
-This project is in an MVP phase. It can parse a useful subset of exported VBA
-modules and the real-world examples included in this repository, but it is not a
-complete VBA grammar and is not production-ready.
+This is a `v0.x` initial public release.
 
-The grammar currently parses all 77 checked-in real-world VBA examples without
-`ERROR` or `MISSING` recovery nodes.
+The grammar is already usable for syntax-aware tooling such as highlighting, folding, tags, outline extraction, and initial symbol analysis. It parses the checked-in corpus and all 77 checked-in real-world VBA examples without `ERROR` or `MISSING` recovery nodes.
 
-Currently supported:
+It is not yet a complete VBA grammar. Node names and tree shapes may still change before `v1.0.0`.
+
+## Installation
+
+```bash
+npm install tree-sitter tree-sitter-vba
+```
+
+## Usage
+
+```js
+const Parser = require("tree-sitter");
+const VBA = require("tree-sitter-vba");
+
+const parser = new Parser();
+parser.setLanguage(VBA);
+
+const tree = parser.parse(`
+Sub Hello()
+    Debug.Print "Hello"
+End Sub
+`);
+
+console.log(tree.rootNode.toString());
+```
+
+Example output:
+
+```text
+(source_file
+  (sub_declaration
+    name: (identifier)
+    (parameter_list)
+    body: (block
+      (call_statement
+        callee: (member_expression
+          object: (identifier)
+          property: (identifier))
+        (argument_list
+          (string_literal))))))
+```
+
+## Node.js native build requirements
+
+The npm package currently builds its native addon from source during
+installation. Prebuilt native binaries may be added in a future release.
+
+A supported Python installation, a C/C++ toolchain, and the platform
+requirements documented by `node-gyp` are required.
+
+On Windows, Visual Studio 2022 Build Tools with the **Desktop development with
+C++** workload is recommended.
+
+At minimum, Windows users typically need:
+
+- Python 3.11 or later
+- Visual Studio 2022 Build Tools
+- MSVC C++ x64/x86 build tools
+- Windows 10 SDK or Windows 11 SDK
+
+If multiple Python installations are present, configure npm to use the intended
+Python executable:
+
+```powershell
+npm config set python "C:\Users\<you>\AppData\Local\Programs\Python\Python312\python.exe"
+```
+
+For reliable native builds on Windows, run installation from:
+
+```text
+x64 Native Tools Command Prompt for VS 2022
+```
+
+## Supported syntax
+
+The grammar currently supports:
 
 - apostrophe comments and `Rem` comments
-- string, integer, floating-point, boolean, `Nothing`, `Null`, and `Empty` literals
-- hex literals and identifiers with common VBA type-declaration characters
+- string, integer, floating-point, boolean, date, `Nothing`, `Null`, and `Empty`
+  literals
+- hex literals
+- identifiers with common VBA type-declaration characters
 - identifiers, simple type clauses, dotted type names, and array type suffixes
 - `Attribute` statements
 - `Option Explicit`, `Option Private Module`, `Option Compare`, and `Option Base`
 - `Sub`, `Function`, and `Property Get/Let/Set` procedures
-- `Dim`, `Static`, `WithEvents`, visibility-based variable declarations, arrays, `ReDim`, and `Const`
-- `Type`, `Enum`, `Declare PtrSafe`, `Lib`, and `Alias`
-- external `Declare Function` and `Declare Sub` declarations
-- simple assignments, `Set` assignments, calls, named and omitted arguments, member access, and leading-dot member access
+- `Dim`, `Static`, `WithEvents`, visibility-based variable declarations,
+  arrays, `ReDim`, and `Const`
+- `Type` and `Enum` declarations
+- external `Declare Function` and `Declare Sub` declarations, including
+  `PtrSafe`, `Lib`, and `Alias`
+- simple assignments and `Set` assignments
+- calls, named arguments, omitted arguments, member access, and leading-dot
+  member access
 - `New` expressions and `As New` declarations
-- fixed-length string declarations and date literals
+- fixed-length string declarations
 - `AddressOf` expressions
-- block `If`, single-line `If`, `Select Case`, `For`, `For Each`, `Do`, `While/Wend`, and `With`
+- common VBA operator precedence for arithmetic, concatenation, comparison, and
+  logical operators
+- block `If`, single-line `If`, `Select Case`, `For`, `For Each`, `Do`,
+  `While/Wend`, and `With`
 - `On Error`, `Resume`, `GoTo`, labels, and `Exit` statements
 - numeric line labels, numbered statements, and numbered control-flow delimiters
-- conditional compilation with `#Const`, `#If`, `#ElseIf`, `#Else`, and `#End If`, including statement branches inside procedures
+- conditional compilation with `#Const`, `#If`, `#ElseIf`, `#Else`, and
+  `#End If`, including statement branches inside procedures
 - line continuations and colon-separated statements
-- minimal `.frm` / `.cls` export metadata such as `VERSION`, `Begin ... End`, `BeginProperty ... EndProperty`, GUID form blocks, and `.frx` blob references
+- minimal `.frm` and `.cls` export metadata, including `VERSION`,
+  `Begin ... End`, `BeginProperty ... EndProperty`, GUID form blocks, and
+  `.frx` blob references
 - initial `highlights.scm`, `folds.scm`, and `tags.scm` queries
 
-Known limitations:
+## Known limitations
 
-- no type checking or semantic analysis
-- no Excel Object Model or COM reference knowledge
-- no formatter or LSP server
-- common VBA operator precedence is supported, including arithmetic, concatenation, comparison, and logical operators
-- `.frm` designer metadata is parsed syntactically, not interpreted semantically
-- context-sensitive statement validity is not checked; for example, invalid `Exit For` placement is left to downstream semantic validation
-- general expression-level `=` comparison remains context-limited to avoid ambiguity with assignment
-- the expression grammar does not yet cover every VBA edge case
+This grammar parses VBA syntax only.
+
+It does not currently provide:
+
+- type checking
+- semantic analysis
+- Excel Object Model or COM reference knowledge
+- validation of identifier, member, type, procedure, workbook, or reference
+  existence
+- validation of context-sensitive statement placement
+- a formatter
+- an LSP server
+- complete coverage of every VBA expression edge case
+- semantic interpretation of `.frm` designer metadata
+
+For example, invalid placement of `Exit For`, unresolved procedure calls, invalid
+Excel object members, or missing workbook references are intentionally left to
+downstream tools.
+
+General expression-level `=` comparison is still context-limited to avoid
+ambiguity with assignment.
+
+## Queries
+
+This package includes initial Tree-sitter queries for:
+
+```text
+queries/highlights.scm
+queries/folds.scm
+queries/tags.scm
+```
+
+These queries are intended as a starting point for editor integrations and
+tooling. They may evolve as the grammar stabilizes.
 
 ## Development
 
@@ -96,43 +207,35 @@ test/corpus/
 When changing `grammar.js`, always add or update focused corpus tests. Do not
 weaken existing expectations just to make a grammar change pass.
 
-## Design Principles
+The repository also includes real-world exported VBA examples. These examples
+are parsed in CI to catch regressions against practical Excel/VBA code.
 
-This repository parses VBA syntax only. It does not validate whether identifiers,
-types, members, procedures, workbook objects, or references are semantically
-valid. Those concerns belong in downstream tools such as `xlflow`,
-`xlflow-lsp`, or editor extensions.
+## Design principles
+
+This repository parses VBA syntax only.
+
+It does not validate whether identifiers, types, members, procedures, workbook
+objects, or references are semantically valid. Those concerns belong in
+downstream tools such as `xlflow`, `xlflow-lsp`, editor extensions, or other
+analysis tools.
 
 Node names should remain stable once introduced because downstream query files
-and integrations may depend on them.
+and integrations may depend on them. However, because this is a `v0.x` release,
+node names and tree shapes may still change before `v1.0.0`.
 
-## Node.js
+## Versioning
 
-Install the parser runtime and this grammar:
+Recommended interpretation of the current release line:
 
-```bash
-npm install tree-sitter tree-sitter-vba
-```
+- `0.1.x`: parser coverage fixes, query fixes, and non-breaking improvements
+- `0.x.0`: notable grammar expansion or tree-shape changes
+- `1.0.0`: node names and tree shapes are considered stable for downstream use
 
-Use the grammar with `tree-sitter`:
+## Related projects
 
-```js
-const Parser = require("tree-sitter");
-const VBA = require("tree-sitter-vba");
+This grammar is intended to support practical VBA tooling, including the
+`xlflow` ecosystem for AI-assisted Excel/VBA development.
 
-const parser = new Parser();
-parser.setLanguage(VBA);
+## License
 
-const tree = parser.parse(`
-Sub Hello()
-    Debug.Print "Hello"
-End Sub
-`);
-
-console.log(tree.rootNode.toString());
-```
-
-The npm package currently builds its native addon from source during
-installation. A supported Python installation, a C/C++ toolchain, and the
-platform requirements documented by `node-gyp` are therefore required.
-Prebuilt native binaries may be added in a future release.
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
