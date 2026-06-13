@@ -33,7 +33,7 @@ Currently supported:
 - `AddressOf` expressions
 - block `If`, single-line `If`, `Select Case`, `For`, `For Each`, `Do`, `While/Wend`, and `With`
 - `On Error`, `Resume`, `GoTo`, labels, and `Exit` statements
-- numeric line labels and numbered statements
+- numeric line labels, numbered statements, and numbered control-flow delimiters
 - conditional compilation with `#Const`, `#If`, `#ElseIf`, `#Else`, and `#End If`, including statement branches inside procedures
 - line continuations and colon-separated statements
 - minimal `.frm` / `.cls` export metadata such as `VERSION`, `Begin ... End`, `BeginProperty ... EndProperty`, GUID form blocks, and `.frx` blob references
@@ -49,7 +49,6 @@ Known limitations:
 - context-sensitive statement validity is not checked; for example, invalid `Exit For` placement is left to downstream semantic validation
 - general expression-level `=` comparison remains context-limited to avoid ambiguity with assignment
 - the expression grammar does not yet cover every VBA edge case
-- line numbers are supported on simple statements and labels, but not yet on block delimiters such as `Else`, `Next`, or `End If`
 
 ## Development
 

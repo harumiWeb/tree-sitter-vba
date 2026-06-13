@@ -13,6 +13,7 @@
 
 - Do not give a dedicated line-number token higher lexical precedence than `number_literal`; the contextual lexer may then reinterpret numeric call arguments such as `Foo 1` as line numbers.
 - Reuse `number_literal` and alias it at line-number grammar sites when a distinct CST node is required.
+- Numbered block delimiters compete with numbered body statements and numeric labels. Use an explicit `line_number_prefix` plus dynamic precedence, and verify the generated CST attaches the number to `Else`, `Case`, `Next`, `Loop`, and `End` delimiters rather than merely checking for the absence of `ERROR` nodes.
 
 ## String literals
 

@@ -1,0 +1,339 @@
+==================
+numbered if block
+==================
+
+Sub Test()
+10 If x = 1 Then
+20     Debug.Print "one"
+30 ElseIf x = 2 Then
+40     Debug.Print "two"
+50 Else
+60     Debug.Print "other"
+70 End If
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (if_statement
+        (line_number_prefix
+          (line_number_literal))
+        (comparison_expression
+          (identifier)
+          (number_literal))
+        (newline)
+        (block
+          (line_number_statement
+            (line_number_literal)
+            (call_statement
+              (member_expression
+                (identifier)
+                (identifier))
+              (argument_list
+                (string_literal))))
+          (newline))
+        (elseif_clause
+          (line_number_prefix
+            (line_number_literal))
+          (comparison_expression
+            (identifier)
+            (number_literal))
+          (newline)
+          (block
+            (line_number_statement
+              (line_number_literal)
+              (call_statement
+                (member_expression
+                  (identifier)
+                  (identifier))
+                (argument_list
+                  (string_literal))))
+            (newline)))
+        (else_clause
+          (line_number_prefix
+            (line_number_literal))
+          (newline)
+          (block
+            (line_number_statement
+              (line_number_literal)
+              (call_statement
+                (member_expression
+                  (identifier)
+                  (identifier))
+                (argument_list
+                  (string_literal))))
+            (newline)))
+        (line_number_prefix
+          (line_number_literal)))
+      (newline)))
+  (newline))
+
+==================
+colon numbered if block
+==================
+
+Sub Test()
+10: If x Then
+20:     Debug.Print x
+30: Else
+40:     Debug.Print "other"
+50: End If
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (if_statement
+        (line_number_prefix
+          (line_number_literal))
+        (identifier)
+        (newline)
+        (block
+          (label_statement
+            (line_number_literal))
+          (call_statement
+            (member_expression
+              (identifier)
+              (identifier))
+            (argument_list
+              (identifier)))
+          (newline))
+        (else_clause
+          (line_number_prefix
+            (line_number_literal))
+          (newline)
+          (block
+            (label_statement
+              (line_number_literal))
+            (call_statement
+              (member_expression
+                (identifier)
+                (identifier))
+              (argument_list
+                (string_literal)))
+            (newline)))
+        (line_number_prefix
+          (line_number_literal)))
+      (newline)))
+  (newline))
+
+==================
+numbered select block
+==================
+
+Sub Test()
+10 Select Case x
+20 Case 1
+30     Debug.Print "one"
+40 Case Else
+50     Debug.Print "other"
+60 End Select
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (select_statement
+        (line_number_prefix
+          (line_number_literal))
+        (identifier)
+        (newline)
+        (case_clause
+          (line_number_prefix
+            (line_number_literal))
+          (case_expression
+            (number_literal))
+          (newline)
+          (block
+            (line_number_statement
+              (line_number_literal)
+              (call_statement
+                (member_expression
+                  (identifier)
+                  (identifier))
+                (argument_list
+                  (string_literal))))
+            (newline)))
+        (case_clause
+          (line_number_prefix
+            (line_number_literal))
+          (newline)
+          (block
+            (line_number_statement
+              (line_number_literal)
+              (call_statement
+                (member_expression
+                  (identifier)
+                  (identifier))
+                (argument_list
+                  (string_literal))))
+            (newline)))
+        (line_number_prefix
+          (line_number_literal)))
+      (newline)))
+  (newline))
+
+==================
+colon numbered for blocks
+==================
+
+Sub Test()
+10: For i = 1 To 10
+20:     Debug.Print i
+30: Next i
+40: For Each item In items
+50:     Debug.Print item
+60: Next item
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (for_statement
+        (line_number_prefix
+          (line_number_literal))
+        (identifier)
+        (number_literal)
+        (number_literal)
+        (newline)
+        (block
+          (label_statement
+            (line_number_literal))
+          (call_statement
+            (member_expression
+              (identifier)
+              (identifier))
+            (argument_list
+              (identifier)))
+          (newline))
+        (line_number_prefix
+          (line_number_literal))
+        (identifier))
+      (newline)
+      (for_each_statement
+        (line_number_prefix
+          (line_number_literal))
+        (identifier)
+        (identifier)
+        (newline)
+        (block
+          (label_statement
+            (line_number_literal))
+          (call_statement
+            (member_expression
+              (identifier)
+              (identifier))
+            (argument_list
+              (identifier)))
+          (newline))
+        (line_number_prefix
+          (line_number_literal))
+        (identifier))
+      (newline)))
+  (newline))
+
+==================
+numbered do while with blocks
+==================
+
+Sub Test()
+10 Do While x < 10
+20     x = x + 1
+30 Loop
+40 While x < 20
+50     x = x + 1
+60 Wend
+70 With ws
+80     .Value = x
+90 End With
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (do_statement
+        (line_number_prefix
+          (line_number_literal))
+        (do_condition
+          (binary_expression
+            (identifier)
+            (number_literal)))
+        (newline)
+        (block
+          (line_number_statement
+            (line_number_literal)
+            (assignment_statement
+              (identifier)
+              (binary_expression
+                (identifier)
+                (number_literal))))
+          (newline))
+        (line_number_prefix
+          (line_number_literal)))
+      (newline)
+      (while_statement
+        (line_number_prefix
+          (line_number_literal))
+        (binary_expression
+          (identifier)
+          (number_literal))
+        (newline)
+        (block
+          (line_number_statement
+            (line_number_literal)
+            (assignment_statement
+              (identifier)
+              (binary_expression
+                (identifier)
+                (number_literal))))
+          (newline))
+        (line_number_prefix
+          (line_number_literal)))
+      (newline)
+      (with_statement
+        (line_number_prefix
+          (line_number_literal))
+        (identifier)
+        (newline)
+        (block
+          (line_number_statement
+            (line_number_literal)
+            (assignment_statement
+              (member_expression
+                (identifier))
+              (identifier)))
+          (newline))
+        (line_number_prefix
+          (line_number_literal)))
+      (newline)))
+  (newline))

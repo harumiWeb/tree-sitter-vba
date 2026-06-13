@@ -162,6 +162,22 @@ Private Sub UserForm_Initialize()
 End Sub
 ```
 
+## If...Then...Else statement and line numbers
+
+Official page:
+
+- https://learn.microsoft.com/en-us/office/vba/language/reference/user-interface-help/ifthenelse-statement
+
+Microsoft documents that `Else`, `ElseIf`, and `End If` may have a line number
+or line label before them. Use this as the baseline for numbered block
+delimiter support.
+
+Grammar note:
+
+The grammar also accepts colon-suffixed numeric prefixes such as `10: Else` for
+source tolerance. Semantic validation of exact VBE compatibility remains
+outside this repository.
+
 ## Implementation policy
 
 When adding grammar support based on official references:

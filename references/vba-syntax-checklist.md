@@ -79,7 +79,7 @@ Status legend:
 - [x] `Resume`
 - [x] labels
 - [x] numeric labels and numbered statements
-- [~] numbered block statements and delimiters
+- [x] numbered block statements and delimiters
 
 ## Expressions
 

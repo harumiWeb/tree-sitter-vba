@@ -18,6 +18,10 @@ module.exports = grammar({
     [$._expression, $._callable_expression],
     [$._argument, $.parenthesized_expression],
     [$._argument_sequence],
+    [$.block],
+    [$.elseif_clause],
+    [$.else_clause],
+    [$.case_clause],
   ],
 
   rules: {
@@ -391,6 +395,7 @@ module.exports = grammar({
 
     if_statement: ($) =>
       seq(
+        optional(field("start_line", $.line_number_prefix)),
         caseInsensitive("If"),
         field("condition", $._condition_expression),
         caseInsensitive("Then"),
@@ -398,6 +403,7 @@ module.exports = grammar({
         field("consequence", optional($.block)),
         repeat($.elseif_clause),
         optional($.else_clause),
+        optional(field("end_line", $.line_number_prefix)),
         caseInsensitive("End"),
         caseInsensitive("If"),
       ),
@@ -428,6 +434,7 @@ module.exports = grammar({
 
     elseif_clause: ($) =>
       seq(
+        optional(field("line", $.line_number_prefix)),
         caseInsensitive("ElseIf"),
         field("condition", $._condition_expression),
         caseInsensitive("Then"),
@@ -435,21 +442,30 @@ module.exports = grammar({
         field("body", optional($.block)),
       ),
 
-    else_clause: ($) => seq(caseInsensitive("Else"), $.newline, field("body", optional($.block))),
+    else_clause: ($) =>
+      seq(
+        optional(field("line", $.line_number_prefix)),
+        caseInsensitive("Else"),
+        $.newline,
+        field("body", optional($.block)),
+      ),
 
     select_statement: ($) =>
       seq(
+        optional(field("start_line", $.line_number_prefix)),
         caseInsensitive("Select"),
         caseInsensitive("Case"),
         field("value", $._expression),
         $.newline,
         repeat($.case_clause),
+        optional(field("end_line", $.line_number_prefix)),
         caseInsensitive("End"),
         caseInsensitive("Select"),
       ),
 
     case_clause: ($) =>
       seq(
+        optional(field("line", $.line_number_prefix)),
         caseInsensitive("Case"),
         choice(caseInsensitive("Else"), commaSep1($.case_expression)),
         $._statement_separator,
@@ -466,6 +482,7 @@ module.exports = grammar({
     for_statement: ($) =>
       prec.right(
         seq(
+          optional(field("start_line", $.line_number_prefix)),
           caseInsensitive("For"),
           field("variable", $.identifier),
           "=",
@@ -475,6 +492,7 @@ module.exports = grammar({
           optional(seq(caseInsensitive("Step"), field("step", $._expression))),
           $.newline,
           field("body", optional($.block)),
+          optional(field("end_line", $.line_number_prefix)),
           caseInsensitive("Next"),
           optional(field("next_variable", $.identifier)),
         ),
@@ -483,6 +501,7 @@ module.exports = grammar({
     for_each_statement: ($) =>
       prec.right(
         seq(
+          optional(field("start_line", $.line_number_prefix)),
           caseInsensitive("For"),
           caseInsensitive("Each"),
           field("variable", $.identifier),
@@ -490,6 +509,7 @@ module.exports = grammar({
           field("collection", $._expression),
           $.newline,
           field("body", optional($.block)),
+          optional(field("end_line", $.line_number_prefix)),
           caseInsensitive("Next"),
           optional(field("next_variable", $.identifier)),
         ),
@@ -498,10 +518,12 @@ module.exports = grammar({
     do_statement: ($) =>
       prec.right(
         seq(
+          optional(field("start_line", $.line_number_prefix)),
           caseInsensitive("Do"),
           optional($.do_condition),
           $.newline,
           field("body", optional($.block)),
+          optional(field("end_line", $.line_number_prefix)),
           caseInsensitive("Loop"),
           optional($.do_condition),
         ),
@@ -515,19 +537,23 @@ module.exports = grammar({
 
     while_statement: ($) =>
       seq(
+        optional(field("start_line", $.line_number_prefix)),
         caseInsensitive("While"),
         field("condition", $._condition_expression),
         $.newline,
         field("body", optional($.block)),
+        optional(field("end_line", $.line_number_prefix)),
         caseInsensitive("Wend"),
       ),
 
     with_statement: ($) =>
       seq(
+        optional(field("start_line", $.line_number_prefix)),
         caseInsensitive("With"),
         field("value", $._expression),
         $.newline,
         field("body", optional($.block)),
+        optional(field("end_line", $.line_number_prefix)),
         caseInsensitive("End"),
         caseInsensitive("With"),
       ),
@@ -568,6 +594,8 @@ module.exports = grammar({
       seq(caseInsensitive("GoTo"), field("target", choice($.identifier, lineNumber($)))),
 
     label_statement: ($) => prec(5, seq(field("name", choice($.identifier, lineNumber($))), ":")),
+
+    line_number_prefix: ($) => prec.dynamic(1, prec(6, seq(lineNumber($), optional(":")))),
 
     line_number_statement: ($) =>
       prec.right(5, seq(field("number", lineNumber($)), field("statement", $._numbered_statement))),

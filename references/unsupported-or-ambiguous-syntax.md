@@ -71,14 +71,20 @@ Expected strategy:
 - Broaden equality comparison only after adding neighboring corpus tests that prove assignment parsing does not regress.
 - Keep semantic validity out of the grammar; downstream layers can decide whether a parsed expression is meaningful VBA.
 
-## Numbered block statements
+## Numeric labels with colons
 
-Simple numbered statements and numeric labels are supported. Fully numbered
-control-flow blocks are not yet supported when line numbers precede structural
-delimiters such as `Else`, `Case`, `Next`, `Loop`, or `End If`.
+The grammar accepts both bare line numbers and colon-suffixed numeric forms:
 
-Supporting those forms requires a consistent CST representation for numbered
-block delimiters rather than widening `line_number_statement` alone.
+```vb
+10 If ready Then
+20: Else
+30 End If
+```
+
+Microsoft documentation distinguishes digit-only line numbers from
+letter-prefixed line labels ending in a colon. This grammar tolerates numeric
+`10:` forms found in source and represents block-line prefixes consistently.
+Downstream semantic validation may enforce stricter VBE compatibility.
 
 ## Context-sensitive statement validity
 
