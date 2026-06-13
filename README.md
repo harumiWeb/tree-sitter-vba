@@ -290,3 +290,9 @@ This grammar is intended to support practical VBA tooling, including the
 ## License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
+### Third-party examples
+
+The `examples/third_party` directory may contain third-party fixture files under
+their original licenses. These files are provided for parser coverage only and
+are not licensed under this repository's MIT license unless explicitly stated.
