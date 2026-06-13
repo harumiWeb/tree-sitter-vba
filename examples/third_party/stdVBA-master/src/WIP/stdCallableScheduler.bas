@@ -11,7 +11,7 @@ Public Function ScheduleCallback(ByVal cb As stdICallable, ByVal seconds As Long
   Call scheduledCallbacks.Add(Array(cb, onTime))
   Call Application.onTime(onTime, "protCallScheduledCallbacks")
   ScheduleCallback = scheduledCallbacks.Count
-End Sub
+End Function
 
 'Call all scheduled callbacks
 '@protected

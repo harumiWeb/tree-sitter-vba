@@ -99,4 +99,4 @@ Public Function CreateChild(ByVal name as string, ByVal iStandardType as EStanda
 '@param {stdIResource} A container to identify this resource within.
 '@returns {Collection<stdIResource>} Collection of resources which are supported by this class.
 '@remark This function is implemented for ResourceManagers to allocate files correctly.
-Public Function Identify(ByVal ContainerResource as stdIResource) as Collection: End Property
+Public Function Identify(ByVal ContainerResource As stdIResource) As Collection: End Function

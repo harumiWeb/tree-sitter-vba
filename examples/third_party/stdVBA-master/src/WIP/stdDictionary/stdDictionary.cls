@@ -83,13 +83,13 @@ Public Property Get Item(ByVal vKey as variant) as Variant
   else
     Item = Empty
   end if
-End Function
+End Property
 Public Property Let Item(ByVal vKey as variant, ByVal vValue as variant)
   
-End Function
+End Property
 Public Property Set Item(ByVal vKey as variant, ByVal vValue as variant)
 
-End Function
+End Property
 
 Public Sub Add(ByVal vKey as Variant, ByVal vValue as variant)
   '

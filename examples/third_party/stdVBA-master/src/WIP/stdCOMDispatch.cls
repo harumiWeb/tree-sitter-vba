@@ -136,7 +136,7 @@ Public Function dispGetIDsOfNames(ByVal names as Variant, optional byval lcid as
   next
   
   Dim result as long
-  result = pCOM.CallVT(EIDispatch.GetIDsOfNames, vbLong, varptr(pRIID.data1), varptr(sNames(iLB)), iUB-iLB+1, lcid, varptr(ids(iLB))
+  result = pCOM.CallVT(EIDispatch.GetIDsOfNames, vbLong, varptr(pRIID.data1), varptr(sNames(iLB)), iUB-iLB+1, lcid, varptr(ids(iLB)))
 
   if result = 0 then
     dispGetIDsOfNames = ids
@@ -151,7 +151,7 @@ Public Property Get dispGetIEnumVARIANT() as stdCOM
     Set disp = Me.QueryKnownInterface(IDispatch)
     
     Dim oIEnumVariant as IUnknown
-    set oIEnumVariant = dispInvoke(stdCOMDispIDNewEnum,VbGet | VbMethod)
+    set oIEnumVariant = dispInvoke(stdCOMDispIDNewEnum, VbGet Or VbMethod)
 
     Exit Property
 CannotQuery:

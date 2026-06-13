@@ -38,6 +38,48 @@ End Sub
   (newline))
 
 ==================
+byval call arguments
+==================
+
+Sub Test()
+    result = NativeCall(ByVal 0&, ByVal VarPtr(value))
+    CopyMemory ByVal StrPtr(buffer), ByVal source, length
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (assignment_statement
+        (identifier)
+        (call_expression
+          (identifier)
+          (byval_argument
+            (number_literal))
+          (byval_argument
+            (call_expression
+              (identifier)
+              (identifier)))))
+      (newline)
+      (call_statement
+        (identifier)
+        (argument_list
+          (byval_argument
+            (call_expression
+              (identifier)
+              (identifier)))
+          (byval_argument
+            (identifier))
+          (identifier)))
+      (newline)))
+  (newline))
+
+==================
 named argument in call statement
 ==================
 

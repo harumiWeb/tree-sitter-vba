@@ -34,6 +34,91 @@ End Type
   (newline))
 
 ==================
+conditional compilation in enum declaration
+==================
+
+Public Enum StatusCode
+    Success = 0
+#If False Then
+    Dim Success
+#End If
+End Enum
+
+---
+
+(source_file
+  (newline)
+  (enum_declaration
+    (visibility)
+    (identifier)
+    (newline)
+    (enum_member
+      (identifier)
+      (number_literal))
+    (newline)
+    (preprocessor_if
+      (boolean_literal)
+      (newline)
+      (preprocessor_block
+        (variable_declaration
+          (variable_declarator
+            (identifier)))
+        (newline)))
+    (newline))
+  (newline))
+
+==================
+conditional compilation in type declaration
+==================
+
+Private Type PointerData
+    #If VBA7 Then
+        Value As LongPtr
+    #ElseIf Win64 Then
+        Value As LongLong
+    #Else
+        Value As Long
+    #End If
+End Type
+
+---
+
+(source_file
+  (newline)
+  (type_declaration
+    (visibility)
+    (identifier)
+    (newline)
+    (type_preprocessor_if
+      (identifier)
+      (newline)
+      (type_preprocessor_block
+        (type_member
+          (identifier)
+          (as_type_clause
+            (type_expression)))
+        (newline))
+      (type_preprocessor_elseif
+        (identifier)
+        (newline)
+        (type_preprocessor_block
+          (type_member
+            (identifier)
+            (as_type_clause
+              (type_expression)))
+          (newline)))
+      (type_preprocessor_else
+        (newline)
+        (type_preprocessor_block
+          (type_member
+            (identifier)
+            (as_type_clause
+              (type_expression)))
+          (newline))))
+    (newline))
+  (newline))
+
+==================
 public enum declaration
 ==================
 

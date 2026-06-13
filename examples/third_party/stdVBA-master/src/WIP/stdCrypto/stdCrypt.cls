@@ -41,15 +41,15 @@ Private Function Decrypt(sDecr As String) As Boolean
     LocalFree DataTmp.Data
 End Function
 
-Private Sub BytesToHex(sDescr As String, bArray() As Byte) as string
+Private Function BytesToHex(sDescr As String, bArray() As Byte) As String
     Dim lPtr As Long
-    If GetbSize(bArray) = 0 Then Exit Sub
+    If GetbSize(bArray) = 0 Then Exit Function
     Dim s as string
     For lPtr = 0 To UBound(bArray)
-        s = s &  Right$("0" & Hex$(bArray(lPtr)), 2) & " ";
+        s = s & Right$("0" & Hex$(bArray(lPtr)), 2) & " "
     Next lPtr
     BytesToHex = s
-End Sub
+End Function
 Private Function BytesToStr(sDescr As String, bArray() As Byte) as string
     Dim lPntr As Long
     Dim strBuff As String

@@ -31,6 +31,89 @@ End Sub
   (newline))
 
 ==================
+logical comparisons assigned as value
+==================
+
+Sub Test()
+    matched = code >= 48 And code <= 57 Or ch = "_"
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (assignment_statement
+        (identifier)
+        (logical_value_expression
+          (binary_expression
+            (binary_expression
+              (identifier)
+              (number_literal))
+            (binary_expression
+              (identifier)
+              (number_literal)))
+          (comparison_expression
+            (identifier)
+            (string_literal))))
+      (newline)))
+  (newline))
+
+==================
+parenthesized logical comparisons in expressions
+==================
+
+Sub Test()
+    isHeader = (startRecord = 1 And recordCount = 0)
+    If Not (path = vbNullString And csvText = vbNullString) Then
+        matched = True
+    End If
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (assignment_statement
+        (identifier)
+        (parenthesized_expression
+          (condition_binary_expression
+            (comparison_expression
+              (identifier)
+              (number_literal))
+            (comparison_expression
+              (identifier)
+              (number_literal)))))
+      (newline)
+      (if_statement
+        (unary_expression
+          (parenthesized_expression
+            (condition_binary_expression
+              (comparison_expression
+                (identifier)
+                (identifier))
+              (comparison_expression
+                (identifier)
+                (identifier)))))
+        (newline)
+        (block
+          (assignment_statement
+            (identifier)
+            (boolean_literal))
+          (newline)))
+      (newline)))
+  (newline))
+
+==================
 parenthesized condition binary
 ==================
 

@@ -33,8 +33,8 @@ Private P_ERROR_NUMBER As Long '-----------------Holds the Error number
 Private P_ERROR_SOURCE As String '---------------Holds the Error source
 Private P_SUCCESSFUL_EXPORT As Boolean
 Private P_SUCCESSFUL_IMPORT As Boolean
-Private P_VARYING_LENGTHS As Boolean '-----------Indicates if the read CSV has varying number _
-                                                 of fields per records
+Private P_VARYING_LENGTHS As Boolean '-----------Indicates if the read CSV has varying number
+                                                'of fields per records
 Private P_VECTORS_MAX_BOUND As Long '------------Maximum index of vectors on jagged array
 Private P_VECTORS_REGULAR_BOUND As Long '--------Regular upper index of vectors on jagged array
 '////////////////////////////////////////////////////////////////////////////////////////////

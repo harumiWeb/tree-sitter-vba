@@ -97,6 +97,38 @@ End Sub
   (newline))
 
 ==================
+erase indexed and member arrays
+==================
+
+Sub Test()
+    Erase buckets(index).Elements()
+    Erase values()
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (erase_statement
+        (call_expression
+          (member_expression
+            (call_expression
+              (identifier)
+              (identifier))
+            (identifier))))
+      (newline)
+      (erase_statement
+        (call_expression
+          (identifier)))
+      (newline)))
+  (newline))
+
+==================
 line input into variable named line
 ==================
 

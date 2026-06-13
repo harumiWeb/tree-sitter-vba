@@ -40,3 +40,54 @@ End Sub
         (number_literal))
       (newline)))
   (newline))
+
+==================
+longlong literal type character
+==================
+
+Sub Test()
+    nullPtr = 0^
+    invalid = -1^
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (assignment_statement
+        (identifier)
+        (number_literal))
+      (newline)
+      (assignment_statement
+        (identifier)
+        (number_literal))
+      (newline)))
+  (newline))
+
+==================
+currency literal type character
+==================
+
+Sub Test()
+    thunk = 465203369712025.6232@
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (assignment_statement
+        (identifier)
+        (number_literal))
+      (newline)))
+  (newline))

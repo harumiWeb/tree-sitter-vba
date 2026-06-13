@@ -33,6 +33,26 @@ End Sub
   (newline))
 
 ==================
+standalone end statement
+==================
+
+Sub StopNow()
+    End
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (end_statement)))
+  (newline))
+
+==================
 on error goto zero and resume label
 ==================
 

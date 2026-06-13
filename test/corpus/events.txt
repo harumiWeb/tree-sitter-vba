@@ -1,0 +1,29 @@
+==================
+event declarations
+==================
+
+Public Event Tick()
+Private Event Changed(ByVal oldValue As String, ByRef newValue As String)
+
+---
+
+(source_file
+  (newline)
+  (event_declaration
+    (visibility)
+    (identifier)
+    (parameter_list))
+  (newline)
+  (event_declaration
+    (visibility)
+    (identifier)
+    (parameter_list
+      (parameter
+        (identifier)
+        (as_type_clause
+          (type_expression)))
+      (parameter
+        (identifier)
+        (as_type_clause
+          (type_expression)))))
+  (newline))
