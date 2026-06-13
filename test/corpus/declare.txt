@@ -1,0 +1,71 @@
+==================
+basic declare function
+==================
+
+Private Declare Function GetTickCount Lib "kernel32" () As Long
+
+---
+
+(source_file
+  (newline)
+  (declare_statement
+    (visibility)
+    (identifier)
+    (string_literal)
+    (parameter_list)
+    (as_type_clause
+      (type_expression)))
+  (newline))
+
+==================
+ptrsafe declare function
+==================
+
+Private Declare PtrSafe Function GetTickCount Lib "kernel32" () As LongPtr
+
+---
+
+(source_file
+  (newline)
+  (declare_statement
+    (visibility)
+    (identifier)
+    (string_literal)
+    (parameter_list)
+    (as_type_clause
+      (type_expression)))
+  (newline))
+
+==================
+declare with alias and line continuation
+==================
+
+Private Declare PtrSafe Function FindWindow Lib "user32" Alias "FindWindowA" ( _
+    ByVal lpClassName As String, _
+    ByVal lpWindowName As String _
+) As LongPtr
+
+---
+
+(source_file
+  (newline)
+  (declare_statement
+    (visibility)
+    (identifier)
+    (string_literal)
+    (string_literal)
+    (parameter_list
+      (line_continuation)
+      (parameter
+        (identifier)
+        (as_type_clause
+          (type_expression)))
+      (line_continuation)
+      (parameter
+        (identifier)
+        (as_type_clause
+          (type_expression)))
+      (line_continuation))
+    (as_type_clause
+      (type_expression)))
+  (newline))

@@ -1,0 +1,66 @@
+==================
+private type declaration
+==================
+
+Private Type QRConfig
+    Version As Long
+    Size As Long
+    EcLevel As Long
+End Type
+
+---
+
+(source_file
+  (newline)
+  (type_declaration
+    (visibility)
+    (identifier)
+    (newline)
+    (type_member
+      (identifier)
+      (as_type_clause
+        (type_expression)))
+    (newline)
+    (type_member
+      (identifier)
+      (as_type_clause
+        (type_expression)))
+    (newline)
+    (type_member
+      (identifier)
+      (as_type_clause
+        (type_expression)))
+    (newline))
+  (newline))
+
+==================
+public enum declaration
+==================
+
+Public Enum LogLevel
+    LogDebug = 0
+    LogInfo = 1
+    LogError = 2
+End Enum
+
+---
+
+(source_file
+  (newline)
+  (enum_declaration
+    (visibility)
+    (identifier)
+    (newline)
+    (enum_member
+      (identifier)
+      (number_literal))
+    (newline)
+    (enum_member
+      (identifier)
+      (number_literal))
+    (newline)
+    (enum_member
+      (identifier)
+      (number_literal))
+    (newline))
+  (newline))

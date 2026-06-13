@@ -1,0 +1,164 @@
+==================
+nested if for exit
+==================
+
+Sub Test()
+    If a = b Then
+        For i = 1 To 10
+            If i = 5 Then
+                Exit For
+            End If
+        Next i
+    End If
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (if_statement
+        (comparison_expression
+          (identifier)
+          (identifier))
+        (newline)
+        (block
+          (for_statement
+            (identifier)
+            (number_literal)
+            (number_literal)
+            (newline)
+            (block
+              (if_statement
+                (comparison_expression
+                  (identifier)
+                  (number_literal))
+                (newline)
+                (block
+                  (exit_statement)
+                  (newline)))
+              (newline))
+            (identifier))
+          (newline)))
+      (newline)))
+  (newline))
+
+==================
+multiple elseif clauses
+==================
+
+Sub Test()
+    If x = 1 Then
+        Debug.Print "one"
+    ElseIf x = 2 Then
+        Debug.Print "two"
+    ElseIf x = 3 Then
+        Debug.Print "three"
+    Else
+        Debug.Print "other"
+    End If
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (if_statement
+        (comparison_expression
+          (identifier)
+          (number_literal))
+        (newline)
+        (block
+          (call_statement
+            (member_expression
+              (identifier)
+              (identifier))
+            (argument_list
+              (string_literal)))
+          (newline))
+        (elseif_clause
+          (comparison_expression
+            (identifier)
+            (number_literal))
+          (newline)
+          (block
+            (call_statement
+              (member_expression
+                (identifier)
+                (identifier))
+              (argument_list
+                (string_literal)))
+            (newline)))
+        (elseif_clause
+          (comparison_expression
+            (identifier)
+            (number_literal))
+          (newline)
+          (block
+            (call_statement
+              (member_expression
+                (identifier)
+                (identifier))
+              (argument_list
+                (string_literal)))
+            (newline)))
+        (else_clause
+          (newline)
+          (block
+            (call_statement
+              (member_expression
+                (identifier)
+                (identifier))
+              (argument_list
+                (string_literal)))
+            (newline))))
+      (newline)))
+  (newline))
+
+==================
+for each member collection
+==================
+
+Sub Test()
+    For Each ws In ThisWorkbook.Worksheets
+        Debug.Print ws.Name
+    Next ws
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (for_each_statement
+        (identifier)
+        (member_expression
+          (identifier)
+          (identifier))
+        (newline)
+        (block
+          (call_statement
+            (member_expression
+              (identifier)
+              (identifier))
+            (argument_list
+              (member_expression
+                (identifier)
+                (identifier))))
+          (newline))
+        (identifier))
+      (newline)))
+  (newline))

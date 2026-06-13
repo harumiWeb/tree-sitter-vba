@@ -71,6 +71,51 @@ Expected strategy:
 - Broaden equality comparison only after adding neighboring corpus tests that prove assignment parsing does not regress.
 - Keep semantic validity out of the grammar; downstream layers can decide whether a parsed expression is meaningful VBA.
 
+## Context-sensitive statement validity
+
+Some VBA statements are only valid in specific semantic contexts.
+
+Examples:
+
+```vb
+Exit For
+Exit Do
+Exit Function
+```
+
+Current status:
+
+- The grammar parses these as `exit_statement` wherever statements are accepted.
+- It does not validate whether `Exit For` appears inside a `For` loop or whether `Exit Function` appears inside a function procedure.
+
+Expected strategy:
+
+- Keep context validation out of the grammar.
+- Downstream semantic layers or compiler-facing diagnostics should report invalid statement context.
+
+## Semantic validation for Declare and conditional compilation
+
+Declare statements and conditional compilation directives include platform- and project-specific semantics.
+
+Examples:
+
+```vb
+Private Declare PtrSafe Function GetTickCount Lib "kernel32" () As LongPtr
+#If VBA7 Then
+    ' ...
+#End If
+```
+
+Current status:
+
+- The grammar parses syntax for `Declare`, `PtrSafe`, `Lib`, `Alias`, `#Const`, and `#If` blocks.
+- It does not validate whether `PtrSafe` is required, whether `LongPtr` is used correctly, whether a library exists, or whether a conditional compilation symbol is defined.
+
+Expected strategy:
+
+- Keep these checks in downstream semantic tooling.
+- Corpus tests should focus on parse stability for exported VBA syntax.
+
 ## Single-line If
 
 Example:

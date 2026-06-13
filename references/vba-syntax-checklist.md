@@ -46,8 +46,8 @@ Status legend:
 - [ ] `Private`
 - [ ] `Public`
 - [ ] `Const`
-- [ ] `Type ... End Type`
-- [ ] `Enum ... End Enum`
+- [x] `Type ... End Type`
+- [x] `Enum ... End Enum`
 - [ ] `WithEvents`
 - [ ] arrays
 - [ ] fixed-length strings
@@ -59,22 +59,22 @@ Status legend:
 - [ ] `Set`
 - [ ] call statement without `Call`
 - [ ] call statement with `Call`
-- [ ] `If ... Then ... End If`
-- [ ] single-line `If ... Then ... Else ...`
-- [ ] `Select Case ... End Select`
-- [ ] `For ... Next`
-- [ ] `For Each ... Next`
-- [ ] `Do ... Loop`
-- [ ] `While ... Wend`
-- [ ] `With ... End With`
+- [x] `If ... Then ... End If`
+- [x] single-line `If ... Then ... Else ...`
+- [x] `Select Case ... End Select`
+- [x] `For ... Next`
+- [x] `For Each ... Next`
+- [x] `Do ... Loop`
+- [x] `While ... Wend`
+- [x] `With ... End With`
 - [ ] `On Error GoTo`
 - [ ] `On Error Resume Next`
 - [ ] `GoTo`
-- [ ] `Exit Sub`
-- [ ] `Exit Function`
-- [ ] `Exit Property`
-- [ ] `Exit For`
-- [ ] `Exit Do`
+- [x] `Exit Sub`
+- [x] `Exit Function`
+- [x] `Exit Property`
+- [x] `Exit For`
+- [x] `Exit Do`
 
 ## Expressions
 
@@ -95,25 +95,25 @@ Status legend:
 
 ## VBA-specific source forms
 
-- [ ] line continuation `_`
+- [~] line continuation `_`
 - [ ] colon-separated statements
 - [ ] apostrophe comments
 - [ ] `Rem` comments
-- [ ] conditional compilation
-- [ ] `#Const`
-- [ ] `#If`
-- [ ] `#ElseIf`
-- [ ] `#Else`
-- [ ] `#End If`
+- [x] conditional compilation
+- [x] `#Const`
+- [x] `#If`
+- [x] `#ElseIf`
+- [x] `#Else`
+- [x] `#End If`
 
 ## 64-bit VBA
 
-- [ ] `Declare`
-- [ ] `PtrSafe`
-- [ ] `Lib`
-- [ ] `Alias`
-- [ ] `LongPtr`
-- [ ] `LongLong`
+- [x] `Declare`
+- [x] `PtrSafe`
+- [x] `Lib`
+- [x] `Alias`
+- [x] `LongPtr`
+- [x] `LongLong`
 
 ## UserForm / `.frm`
 

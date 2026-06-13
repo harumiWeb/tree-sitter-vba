@@ -1,0 +1,106 @@
+==================
+preprocessor const
+==================
+
+#Const DEBUG_MODE = True
+
+---
+
+(source_file
+  (newline)
+  (preprocessor_const
+    (identifier)
+    (boolean_literal))
+  (newline))
+
+==================
+preprocessor if declare
+==================
+
+#If VBA7 Then
+    Private Declare PtrSafe Function GetTickCount Lib "kernel32" () As LongPtr
+#Else
+    Private Declare Function GetTickCount Lib "kernel32" () As Long
+#End If
+
+---
+
+(source_file
+  (newline)
+  (preprocessor_if
+    (identifier)
+    (newline)
+    (preprocessor_block
+      (declare_statement
+        (visibility)
+        (identifier)
+        (string_literal)
+        (parameter_list)
+        (as_type_clause
+          (type_expression)))
+      (newline))
+    (preprocessor_else
+      (newline)
+      (preprocessor_block
+        (declare_statement
+          (visibility)
+          (identifier)
+          (string_literal)
+          (parameter_list)
+          (as_type_clause
+            (type_expression)))
+        (newline))))
+  (newline))
+
+==================
+preprocessor elseif declare
+==================
+
+#If VBA7 Then
+    Private Declare PtrSafe Function GetTickCount Lib "kernel32" () As LongPtr
+#ElseIf Win64 Then
+    Private Declare PtrSafe Function GetTickCount Lib "kernel32" () As LongLong
+#Else
+    Private Declare Function GetTickCount Lib "kernel32" () As Long
+#End If
+
+---
+
+(source_file
+  (newline)
+  (preprocessor_if
+    (identifier)
+    (newline)
+    (preprocessor_block
+      (declare_statement
+        (visibility)
+        (identifier)
+        (string_literal)
+        (parameter_list)
+        (as_type_clause
+          (type_expression)))
+      (newline))
+    (preprocessor_elseif
+      (identifier)
+      (newline)
+      (preprocessor_block
+        (declare_statement
+          (visibility)
+          (identifier)
+          (string_literal)
+          (parameter_list)
+          (as_type_clause
+            (type_expression)))
+        (newline)))
+    (preprocessor_else
+      (newline)
+      (preprocessor_block
+        (declare_statement
+          (visibility)
+          (identifier)
+          (string_literal)
+          (parameter_list)
+          (as_type_clause
+            (type_expression)))
+        (newline))))
+  (newline))

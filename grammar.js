@@ -10,7 +10,7 @@
 module.exports = grammar({
   name: "vba",
 
-  extras: ($) => [/[ \t\f]/, $.comment],
+  extras: ($) => [/[ \t\f]/, $.line_continuation, $.comment],
 
   word: ($) => $.identifier,
 
@@ -28,8 +28,13 @@ module.exports = grammar({
         $.frm_version_statement,
         $.frm_begin_block,
         $.frm_property_statement,
+        $.preprocessor_const,
+        $.preprocessor_if,
         $.attribute_statement,
         $.option_statement,
+        $.type_declaration,
+        $.enum_declaration,
+        $.declare_statement,
         $.sub_declaration,
         $.function_declaration,
         $.property_declaration,
@@ -38,6 +43,8 @@ module.exports = grammar({
       ),
 
     newline: (_) => /\r?\n/,
+
+    line_continuation: (_) => token(seq("_", /\r?\n/)),
 
     comment: (_) => token(choice(seq("'", /.*/), seq(caseInsensitive("Rem"), /([ \t].*)?/))),
 
@@ -87,6 +94,96 @@ module.exports = grammar({
           seq(caseInsensitive("Base"), $.number_literal),
         ),
       ),
+
+    type_declaration: ($) =>
+      seq(
+        optional($.visibility),
+        caseInsensitive("Type"),
+        field("name", $.identifier),
+        $.newline,
+        repeat(choice($.newline, $.type_member)),
+        caseInsensitive("End"),
+        caseInsensitive("Type"),
+      ),
+
+    type_member: ($) =>
+      seq(field("name", $.identifier), $.as_type_clause),
+
+    enum_declaration: ($) =>
+      seq(
+        optional($.visibility),
+        caseInsensitive("Enum"),
+        field("name", $.identifier),
+        $.newline,
+        repeat(choice($.newline, $.enum_member)),
+        caseInsensitive("End"),
+        caseInsensitive("Enum"),
+      ),
+
+    enum_member: ($) =>
+      seq(field("name", $.identifier), optional(seq("=", field("value", $._expression)))),
+
+    declare_statement: ($) =>
+      seq(
+        optional($.visibility),
+        caseInsensitive("Declare"),
+        optional(caseInsensitive("PtrSafe")),
+        caseInsensitive("Function"),
+        field("name", $.identifier),
+        caseInsensitive("Lib"),
+        field("library", $.string_literal),
+        optional(seq(caseInsensitive("Alias"), field("alias", $.string_literal))),
+        optional($.parameter_list),
+        optional($.as_type_clause),
+      ),
+
+    preprocessor_const: ($) =>
+      seq(
+        caseInsensitive("#Const"),
+        field("name", $.identifier),
+        "=",
+        field("value", $._expression),
+      ),
+
+    preprocessor_if: ($) =>
+      seq(
+        caseInsensitive("#If"),
+        field("condition", $._condition_expression),
+        caseInsensitive("Then"),
+        $.newline,
+        field("body", optional($.preprocessor_block)),
+        repeat($.preprocessor_elseif),
+        optional($.preprocessor_else),
+        caseInsensitive("#End"),
+        caseInsensitive("If"),
+      ),
+
+    preprocessor_block: ($) => repeat1(choice($._preprocessor_item)),
+
+    _preprocessor_item: ($) =>
+      choice(
+        $.newline,
+        $.declare_statement,
+        $.type_declaration,
+        $.enum_declaration,
+        $.const_declaration,
+        $.variable_declaration,
+        $.sub_declaration,
+        $.function_declaration,
+        $.property_declaration,
+      ),
+
+    preprocessor_elseif: ($) =>
+      seq(
+        caseInsensitive("#ElseIf"),
+        field("condition", $._condition_expression),
+        caseInsensitive("Then"),
+        $.newline,
+        field("body", optional($.preprocessor_block)),
+      ),
+
+    preprocessor_else: ($) =>
+      seq(caseInsensitive("#Else"), $.newline, field("body", optional($.preprocessor_block))),
 
     sub_declaration: ($) =>
       seq(

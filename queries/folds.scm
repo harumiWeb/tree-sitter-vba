@@ -7,6 +7,12 @@
 (property_declaration
   body: (block) @fold)
 
+(type_declaration) @fold
+
+(enum_declaration) @fold
+
+(preprocessor_if) @fold
+
 (if_statement
   consequence: (block) @fold)
 

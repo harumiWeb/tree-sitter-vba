@@ -6,9 +6,17 @@
 
 (attribute_statement) @keyword
 (option_statement) @keyword
+(type_declaration) @keyword
+(enum_declaration) @keyword
+(declare_statement) @keyword
+(preprocessor_const) @keyword
+(preprocessor_if) @keyword
+(preprocessor_elseif) @keyword
+(preprocessor_else) @keyword
 (visibility) @keyword
 (procedure_modifier) @keyword
 (as_type_clause) @keyword
+(line_continuation) @punctuation.special
 
 (if_statement) @keyword
 (single_line_if_statement) @keyword
@@ -26,6 +34,21 @@
 (set_statement) @keyword
 
 (type_expression) @type
+
+(type_declaration
+  name: (identifier) @type)
+
+(enum_declaration
+  name: (identifier) @type)
+
+(type_member
+  name: (identifier) @property)
+
+(enum_member
+  name: (identifier) @constant)
+
+(declare_statement
+  name: (identifier) @function)
 
 (sub_declaration
   name: (identifier) @function)
