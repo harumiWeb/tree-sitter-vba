@@ -9,16 +9,16 @@ Salesforce Documentation:
 4. If necessary, create a prefix for your developer account
 5. Complete Form using the following information:
 
-    **App Name**: Full name used to identify app (e.g. Excel Client Example)
-    
-    **API Name**: Unique Id for identifying app (e.g. ExcelClientExample)
-    
-    **Contact Email**: Email used for any app related issues
+   **App Name**: Full name used to identify app (e.g. Excel Client Example)
+
+   **API Name**: Unique Id for identifying app (e.g. ExcelClientExample)
+
+   **Contact Email**: Email used for any app related issues
 
 6. Check Enable OAuth Settings
 7. For Callback URL, use https://login.salesforce.com/services/oauth2/callback
 
-    (The Callback URL is not currently used in the Excel Client so the example value is used)
+   (The Callback URL is not currently used in the Excel Client so the example value is used)
 
-7. Select the minimal level of OAuth Scope that works for your application and save
-8. Copy the Consumer Key and Consumer Secret for the Connected App page
+8. Select the minimal level of OAuth Scope that works for your application and save
+9. Copy the Consumer Key and Consumer Secret for the Connected App page

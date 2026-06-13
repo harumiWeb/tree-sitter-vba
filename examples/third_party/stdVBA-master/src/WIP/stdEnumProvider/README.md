@@ -16,11 +16,11 @@ class ArrayList
     oMeta("index") = oMeta("index") + 1
     bFinished = oMeta("index") > al.length
   End Function
-  
+
   Public Function protEnumProviderReset(ByVal al as ArrayList, ByVal oMeta as Object, ByRef bFinished as boolean) as Variant
     oMeta("index") = 1
   End Function
-  
+
   Public Function protEnumProviderSkip(ByVal al as ArrayList, ByRef bFinished as boolean, ByVal oMeta as Object, ByVal params as variant) as Variant
     oMeta("index") = oMeta("index") + params(0)
     bFinished = oMeta("index") > al.length
@@ -46,9 +46,8 @@ But instead of using `AddressOf` we'll have to use an object identifier (e.g. La
 
 N.B. `CreateServer` will have to lock itself (using `CoLockObjectExternal`) post-creation in order that the `IEnumVariant` object survives and can call to it. The object will unlock itself again when `bFinished` flag returns `true`, else the VBA runtime will crash.
 
-
 ## Hurdles
 
-* Obtain pointer of function in class - need a good example of this.
-  * Ensure it works in both 32 and 64 bit.
-* Alternative: Use M-Code thunks.
+- Obtain pointer of function in class - need a good example of this.
+  - Ensure it works in both 32 and 64 bit.
+- Alternative: Use M-Code thunks.

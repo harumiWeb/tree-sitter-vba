@@ -18,6 +18,7 @@ module.exports = grammar({
     [$._expression, $._callable_expression],
     [$._argument, $.parenthesized_expression],
     [$._argument_sequence],
+    [$.member_expression],
     [$.block],
     [$.elseif_clause],
     [$.else_clause],
@@ -145,7 +146,8 @@ module.exports = grammar({
         caseInsensitive("Type"),
       ),
 
-    type_member: ($) => seq(field("name", $.identifier), $.as_type_clause),
+    type_member: ($) =>
+      seq(field("name", $.identifier), optional($.array_bounds), $.as_type_clause),
 
     enum_declaration: ($) =>
       seq(
@@ -424,6 +426,7 @@ module.exports = grammar({
           caseInsensitive("If"),
           field("condition", $._condition_expression),
           caseInsensitive("Then"),
+          optional(":"),
           field("consequence", $._single_line_statement),
           optional(seq(caseInsensitive("Else"), field("alternative", $._single_line_statement))),
         ),
@@ -737,7 +740,7 @@ module.exports = grammar({
         choice(
           seq(
             caseInsensitive("Call"),
-            field("callee", $._callable_expression),
+            field("callee", choice($.identifier, $.member_expression)),
             optional($.argument_list),
           ),
           field("callee", $._callable_expression),
@@ -786,9 +789,9 @@ module.exports = grammar({
       choice(
         $._literal,
         $.file_number_literal,
-        $.identifier,
-        $.member_expression,
         $.call_expression,
+        $.member_expression,
+        $.identifier,
         $.new_expression,
         $.addressof_expression,
         $.parenthesized_expression,
@@ -811,9 +814,12 @@ module.exports = grammar({
     call_expression: ($) =>
       prec(
         2,
-        seq(
-          field("function", $._callable_expression),
-          seq("(", optional($._argument_sequence), ")"),
+        choice(
+          seq(
+            field("function", $._callable_expression),
+            seq("(", optional($._argument_sequence), ")"),
+          ),
+          seq(field("function", $.call_expression), seq("(", optional($._argument_sequence), ")")),
         ),
       ),
 
@@ -898,7 +904,13 @@ module.exports = grammar({
 
     file_number_literal: ($) => seq("#", field("number", $._expression)),
 
-    identifier: (_) => /[A-Za-z_\u00C0-\u{10FFFF}][A-Za-z0-9_\u00C0-\u{10FFFF}]*[$%&!#]?/u,
+    identifier: (_) =>
+      token(
+        choice(
+          /[A-Za-z_\u00C0-\u{10FFFF}][A-Za-z0-9_\u00C0-\u{10FFFF}]*[$%&!#]?/u,
+          /\[[^\]\r\n]+\]/,
+        ),
+      ),
   },
 });
 

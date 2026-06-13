@@ -2,58 +2,18 @@
 
 ## Spec
 
-* Tracks stack
-* Supercedes `Err`.
-* Should be able to handle errors despite position in code (e.g. Classes / Modules).
-* Overcome [error option functionality](https://stackoverflow.com/questions/38132790/debugging-errors-in-vba-classes-in-excel)
-* minimal boiler plate
-* provides logging of CriticalErrors, Errors, Warning, Info
-* provides rendering of logging to HTML, RTF(?), TXT, Debug Window
+- Tracks stack
+- Supercedes `Err`.
+- Should be able to handle errors despite position in code (e.g. Classes / Modules).
+- Overcome [error option functionality](https://stackoverflow.com/questions/38132790/debugging-errors-in-vba-classes-in-excel)
+- minimal boiler plate
+- provides logging of CriticalErrors, Errors, Warning, Info
+- provides rendering of logging to HTML, RTF(?), TXT, Debug Window
 
 ## Hurdles:
 
-* Automated Stack tracing on error
-    * [Might be useful](https://www.vbforums.com/showthread.php?896754-Get-module-(or-and)-class-but-also-sub-function-names&p=5571739&viewfull=1#post5571739)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+- Automated Stack tracing on error
+  - [Might be useful](<https://www.vbforums.com/showthread.php?896754-Get-module-(or-and)-class-but-also-sub-function-names&p=5571739&viewfull=1#post5571739>)
 
 ## Appendix A
 
@@ -139,7 +99,7 @@ Private Declare Function EbGetCallstackFunction Lib "vba6" ( _
                          ByVal pModule As PTR, _
                          ByVal pFunction As PTR, _
                          ByRef lRet As Long) As Long
-    
+
 Private Declare Sub GetMem4 Lib "msvbvm60" ( _
                     ByRef pAddr As Any, _
                     ByRef pRetVal As Any)
@@ -160,13 +120,13 @@ Public Function GetCallingProcName( _
     Dim sProject    As String
     Dim sModule     As String
     Dim sFunction   As String
-    
+
     Debug.Assert MakeTrue(bIsInIDE)
-    
+
     If bIsInIDE Then
-        
+
         EbSetMode 2
-        
+
         If EbGetCallstackCount(lStackCount) >= 0 Then
             If lStackCount > 1 Then
                 If EbGetCallstackFunction(1, VarPtr(sProject), VarPtr(sModule), VarPtr(sFunction), 0) >= 0 Then
@@ -174,13 +134,13 @@ Public Function GetCallingProcName( _
                 End If
             End If
         End If
-        
+
         EbSetMode 1
-        
+
         Exit Function
-        
+
     End If
-    
+
     If Not m_bInintialized Then
         If SymInitialize(VarPtr(m_bInintialized), ByVal 0&, 0) = 0 Then
             Exit Function
@@ -190,18 +150,18 @@ Public Function GetCallingProcName( _
             m_bInintialized = True
         End If
     End If
-    
+
     tSymInfo.SizeOfStruct = SIZEOF_SYMBOL_INFO
     tSymInfo.MaxNameLen = MAX_SYM_NAME
-    
+
     GetMem4 ByVal VarPtr(lReserved) - 4, cAddr
-    
+
     If SymFromAddr(VarPtr(m_bInintialized), cAddr, cDisp, tSymInfo) = 0 Then
         Exit Function
     End If
-    
+
     PutMemPtr ByVal VarPtr(GetCallingProcName), SysAllocString(tSymInfo.iName(0))
-    
+
 End Function
 
 Private Function MakeTrue( _
@@ -214,15 +174,15 @@ Private Function GetExecutableName() As String
     Dim sRet    As String
     Dim lSize   As Long
     Dim hMod    As PTR
-    
+
     If GetModuleHandleEx(GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS Or GET_MODULE_HANDLE_EX_FLAG_UNCHANGED_REFCOUNT, _
                          AddressOf GetCallingProcName, hMod) = 0 Then
         Exit Function
     End If
-    
+
     sRet = Space$(MAX_PATH)
     lSize = GetModuleFileName(hMod, StrPtr(sRet), Len(sRet))
-    
+
     If lSize Then
         GetExecutableName = Left$(sRet, lSize)
     End If
@@ -230,7 +190,7 @@ Private Function GetExecutableName() As String
 End Function
 ```
 
-Usage: 
+Usage:
 
 ```vb
 MsgBox GetCallingProcName
@@ -239,7 +199,6 @@ MsgBox GetCallingProcName
 ...
 
 You can walk through call stack using RtlCaptureStackBackTrace function like:
-
 
 ```vb
 Private Declare Function RtlCaptureStackBackTrace Lib "kernel32" ( _
@@ -269,9 +228,9 @@ Public Function GetCallStack() As String
     Dim sFunction   As String
     Dim lIndex      As Long
     Dim pAddr()     As PTR
-    
+
     Debug.Assert MakeTrue(bIsInIDE)
-    
+
     If bIsInIDE Then
         EbSetMode 2
         If EbGetCallstackCount(lStackCount) >= 0 Then
@@ -287,7 +246,7 @@ Public Function GetCallStack() As String
         EbSetMode 1
         Exit Function
     End If
-    
+
     If Not m_bInintialized Then
         If SymInitialize(VarPtr(m_bInintialized), ByVal 0&, 0) = 0 Then
             Exit Function
@@ -297,12 +256,12 @@ Public Function GetCallStack() As String
             m_bInintialized = True
         End If
     End If
-    
+
     tSymInfo.SizeOfStruct = SIZEOF_SYMBOL_INFO
     tSymInfo.MaxNameLen = MAX_SYM_NAME
-    
+
     ReDim pAddr(31)
-    
+
     lStackCount = RtlCaptureStackBackTrace(1, UBound(pAddr) + 1, pAddr(0), ByVal 0&)
     For lIndex = 0 To UBound(pAddr)
         GetMem4 pAddr(lIndex), cAddr

@@ -1,10 +1,8 @@
 http://www.vbforums.com/showthread.php?860333-vb6-Enhancing-VB-s-StdPicture-Object-to-Support-GDI
 http://www.vbforums.com/showthread.php?882857-VB-SQLite-Library-(COM-Wrapper)
 
-
 Pointers (sorta implemented into stdPointer v2)
 http://www.vbforums.com/showthread.php?886203-vb6-Getting-AddressOf-for-VB-Class-Object-Modules
-
 
 Thunking Pointer.GetAddressOf() for C Calls (?):
 https://www.codeguru.com/cpp/misc/misc/assemblylanguage/article.php/c12667/Thunking-in-Win32.htm
@@ -33,7 +31,7 @@ http://www.vbforums.com/showthread.php?724529-Anyone-know-what-this-code-is-what
 M2000 - Custom Language Interpreter written in VB6
 https://github.com/M2000Interpreter/Version9
 
-'```
+'`
 Module Alfa {
       Print @alfa(100) ' 200
       Function alfa(x)
@@ -50,11 +48,10 @@ Module Beta {
 Alfa
 Beta
 Beta
-'```
+'`
 
 M2000 Fast collection
 https://github.com/M2000Interpreter/Version9/blob/master/FastCollection.cls
 
 M2000 Math.cls
 https://github.com/M2000Interpreter/Version9/blob/master/Math.cls
-

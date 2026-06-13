@@ -164,3 +164,28 @@ End Sub
           (number_literal)))
       (newline)))
   (newline))
+
+==================
+single line if then colon
+==================
+
+Sub Test()
+    If value = 0 Then: Exit Function
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (single_line_if_statement
+        (comparison_expression
+          (identifier)
+          (number_literal))
+        (exit_statement))
+      (newline)))
+  (newline))

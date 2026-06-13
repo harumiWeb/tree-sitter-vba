@@ -64,3 +64,40 @@ End Enum
       (number_literal))
     (newline))
   (newline))
+
+==================
+type member array bounds
+==================
+
+Private Type TIME_ZONE_INFORMATION
+    StandardName(0 To 31) As Integer
+    DaylightName(0 To 31) As Integer
+End Type
+
+---
+
+(source_file
+  (newline)
+  (type_declaration
+    (visibility)
+    (identifier)
+    (newline)
+    (type_member
+      (identifier)
+      (array_bounds
+        (array_bound
+          (number_literal)
+          (number_literal)))
+      (as_type_clause
+        (type_expression)))
+    (newline)
+    (type_member
+      (identifier)
+      (array_bounds
+        (array_bound
+          (number_literal)
+          (number_literal)))
+      (as_type_clause
+        (type_expression)))
+    (newline))
+  (newline))

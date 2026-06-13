@@ -731,6 +731,10 @@
         "required": true,
         "types": [
           {
+            "type": "call_expression",
+            "named": true
+          },
+          {
             "type": "identifier",
             "named": true
           },
@@ -4965,9 +4969,13 @@
       }
     },
     "children": {
-      "multiple": false,
+      "multiple": true,
       "required": true,
       "types": [
+        {
+          "type": "array_bounds",
+          "named": true
+        },
         {
           "type": "as_type_clause",
           "named": true

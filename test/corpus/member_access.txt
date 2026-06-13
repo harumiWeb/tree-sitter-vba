@@ -26,6 +26,31 @@ End Sub
   (newline))
 
 ==================
+bracketed member access
+==================
+
+Sub Test()
+    Me.[GAMessage] = "Loading"
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (assignment_statement
+        (member_expression
+          (identifier)
+          (identifier))
+        (string_literal))
+      (newline)))
+  (newline))
+
+==================
 member assignment
 ==================
 
@@ -175,5 +200,67 @@ End Sub
             (number_literal))
           (identifier))
         (number_literal))
+      (newline)))
+  (newline))
+
+==================
+chained indexed call
+==================
+
+Sub Test()
+    value = Dict.Keys()(0)
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (assignment_statement
+        (identifier)
+        (call_expression
+          (call_expression
+            (member_expression
+              (identifier)
+              (identifier)))
+          (number_literal)))
+      (newline)))
+  (newline))
+
+==================
+fluent call on chained indexed argument
+==================
+
+Sub Test()
+    .Expect(Dict.Keys()(0)).ToEqual "A"
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (call_statement
+        (member_expression
+          (call_expression
+            (member_expression
+              (identifier))
+            (call_expression
+              (call_expression
+                (member_expression
+                  (identifier)
+                  (identifier)))
+              (number_literal)))
+          (identifier))
+        (argument_list
+          (string_literal)))
       (newline)))
   (newline))
