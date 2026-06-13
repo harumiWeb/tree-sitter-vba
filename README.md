@@ -131,47 +131,6 @@ Support for `.frm` designer metadata is planned but not complete yet.
 
 ---
 
-## 追加で入れるなら: `tree-sitter.json`
-
-今回のリストにはありませんが、入れておくのを推奨します。
-
-```json
-{
-  "grammars": [
-    {
-      "name": "vba",
-      "camelcase": "Vba",
-      "scope": "source.vba",
-      "path": ".",
-      "file-types": ["bas", "cls", "frm"],
-      "injection-regex": "^vba$"
-    }
-  ],
-  "metadata": {
-    "version": "0.1.0",
-    "license": "MIT",
-    "description": "Tree-sitter grammar for Visual Basic for Applications",
-    "authors": [
-      {
-        "name": "harumiWeb"
-      }
-    ],
-    "links": {
-      "repository": "https://github.com/harumiWeb/tree-sitter-vba"
-    }
-  },
-  "bindings": {
-    "c": true,
-    "node": true,
-    "rust": false,
-    "go": false,
-    "python": false,
-    "swift": false,
-    "zig": false
-  }
-}
-```
-
 ## Background
 
 This project is a tree-sitter for VBA developed for the Excel VBA development tool xlflow (https://github.com/harumiWeb/xlflow). The goal is to provide a robust and accurate parser for VBA code that can be used for syntax highlighting, code analysis, and other editor features in xlflow and potentially other tools.
