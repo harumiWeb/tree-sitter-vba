@@ -18,7 +18,7 @@ All notable changes to tree-sitter-vba will be documented in this file.
 Shared As ...` statements.
 - Add support for dotted `TypeOf ... Is ...` type names whose final segment is
   `Line`, such as `TypeOf ctl Is Access.Line`.
-- Add Access-examples, better-access-charts, IguanaTex, PhotoDemon, and related
+- Add Access-examples, better-access-charts, IguanaTex, and related
   newly bundled third-party parser fixtures with source and license
   attribution.
 
