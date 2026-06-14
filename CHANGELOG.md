@@ -4,6 +4,26 @@ All notable changes to tree-sitter-vba will be documented in this file.
 
 ## Unreleased
 
+## [0.4.0] - 2026-06-14
+
+### Added
+
+- Add dedicated statement nodes for `RaiseEvent` and `Name oldPath As newPath`.
+- Add dedicated statement nodes for classic file I/O statements: `Get #`,
+  `Put #`, `Lock`, `Unlock`, `Seek`, and `Reset`.
+- Add dedicated statement nodes for `Stop`, `Beep`, `Load`, and `Unload`.
+- Add parser support for exponent and abbreviated decimal numeric literals such
+  as `1E-3`, `.5`, and `1.`.
+- Add identifier type-declaration character support for Currency (`@`) and
+  LongLong (`^`).
+- Add parser support for old default type declaration statements such as
+  `DefInt` and `DefStr`.
+
+### Fixed
+
+- Fix an obvious malformed `Name` rename example in a real-world fixture so
+  example parsing continues to validate valid VBA syntax.
+
 ## [0.3.0] - 2026-06-14
 
 ### Added

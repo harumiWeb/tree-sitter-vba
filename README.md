@@ -32,7 +32,7 @@ This is a `v0.x` public release.
 
 The grammar is already usable for syntax-aware tooling such as highlighting,
 folding, tags, outline extraction, and initial symbol analysis. The current test
-suite covers 159 focused corpus cases and 343 checked-in VBA example files
+suite covers 164 focused corpus cases and 343 checked-in VBA example files
 without `ERROR` or `MISSING` recovery nodes.
 
 It is not yet a complete VBA grammar. Node names and tree shapes may still change before `v1.0.0`.
@@ -116,20 +116,25 @@ The grammar currently supports:
 - string, integer, floating-point, boolean, date, `Nothing`, `Null`, and `Empty`
   literals
 - decimal and hexadecimal literals with common VBA type characters, including
-  Currency (`@`) and LongLong (`^`)
-- identifiers with common VBA type-declaration characters
+  Currency (`@`) and LongLong (`^`), exponent notation such as `1E-3`, and
+  abbreviated decimal forms such as `.5` and `1.`
+- identifiers with common VBA type-declaration characters, including `@` and
+  `^`
 - identifiers, simple type clauses, dotted type names, and array type suffixes
 - `Attribute` statements
 - `Option Explicit`, `Option Private Module`, `Option Compare`, and `Option Base`
 - `Implements` statements
 - `Sub`, `Function`, and `Property Get/Let/Set` procedures
 - `Event` declarations
+- `RaiseEvent` statements
 - `Dim`, `Static`, `WithEvents`, visibility-based variable declarations,
   arrays, `ReDim`, `Erase`, and `Const`
+- default type declaration statements such as `DefInt` and `DefStr`
 - `Type` and `Enum` declarations
 - external `Declare Function` and `Declare Sub` declarations, including
   `PtrSafe`, `Lib`, and `Alias`
 - simple assignments and `Set` assignments
+- `Name oldPath As newPath` file rename statements
 - calls, named arguments, omitted arguments, call-site `ByVal`, member access,
   bang member access, and leading-dot member access
 - `New` expressions and `As New` declarations
@@ -142,7 +147,9 @@ The grammar currently supports:
 - `On Error`, computed `On ... GoTo`/`GoSub`, `Resume`, `GoTo`, labels,
   standalone `End`, and `Exit` statements
 - common file I/O statements: `Open`, `Input #`, `Line Input #`, `Print #`,
-  and `Close`, including common `Access ... Shared` locking clauses
+  `Close`, `Get #`, `Put #`, `Lock`, `Unlock`, `Seek`, and `Reset`, including
+  common `Access ... Shared` locking clauses
+- simple runtime statements: `Stop`, `Beep`, `Load`, and `Unload`
 - Access report `Line` drawing calls that use coordinate ranges such as
   `Me.Line (x, y)-(x2, y2)`
 - `TypeOf ... Is ...` checks, including dotted type names such as `Access.Line`
