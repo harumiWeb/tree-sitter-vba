@@ -28,7 +28,7 @@
     "c": true,
     "node": true,
     "rust": false,
-    "go": false,
+    "go": true,
     "python": false,
     "swift": false,
     "zig": false

@@ -61,6 +61,31 @@ End Sub
 console.log(tree.rootNode.toString());
 ```
 
+## Go Usage
+
+```go
+package main
+
+import (
+	"fmt"
+
+	tree_sitter "github.com/tree-sitter/go-tree-sitter"
+	tree_sitter_vba "github.com/harumiWeb/tree-sitter-vba/bindings/go"
+)
+
+func main() {
+	parser := tree_sitter.NewParser()
+	defer parser.Close()
+
+	parser.SetLanguage(tree_sitter.NewLanguage(tree_sitter_vba.Language()))
+
+	tree := parser.Parse([]byte("Sub Hello()\nEnd Sub\n"), nil)
+	defer tree.Close()
+
+	fmt.Println(tree.RootNode().ToSexp())
+}
+```
+
 Example output:
 
 ```text

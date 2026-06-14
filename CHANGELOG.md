@@ -18,6 +18,7 @@ All notable changes to tree-sitter-vba will be documented in this file.
   LongLong (`^`).
 - Add parser support for old default type declaration statements such as
   `DefInt` and `DefStr`.
+- Add Go binding support under `bindings/go`.
 
 ### Fixed
 

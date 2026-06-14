@@ -28,6 +28,7 @@
     "tree-sitter.json",
     "binding.gyp",
     "bindings/node/*",
+    "bindings/go/*",
     "src/**",
     "queries/*",
     "README.md",
