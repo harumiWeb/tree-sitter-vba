@@ -4,7 +4,7 @@ All notable changes to tree-sitter-vba will be documented in this file.
 
 ## Unreleased
 
-## [0.3.0] - 2026-06-13
+## [0.3.0] - 2026-06-14
 
 ### Added
 
