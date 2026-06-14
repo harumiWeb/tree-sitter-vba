@@ -30,5 +30,11 @@ jobs:
       - name: Run corpus tests
         run: pnpm test
 
+      - name: Run binding tests
+        run: pnpm test:binding
+
       - name: Parse examples
         run: pnpm parse:examples
+
+      - name: Run query validation
+        run: pnpm query:examples
