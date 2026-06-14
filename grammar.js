@@ -43,6 +43,7 @@ module.exports = grammar({
         $.attribute_statement,
         $.option_statement,
         $.implements_statement,
+        $.def_type_statement,
         $.type_declaration,
         $.enum_declaration,
         $.declare_statement,
@@ -96,7 +97,10 @@ module.exports = grammar({
 
     frm_property_statement: ($) =>
       seq(
-        field("name", choice($.identifier, $.member_expression)),
+        field(
+          "name",
+          choice($.identifier, alias(caseInsensitive("Name"), $.identifier), $.member_expression),
+        ),
         "=",
         field("value", $._frm_property_value),
       ),
@@ -474,8 +478,21 @@ module.exports = grammar({
         $.line_input_statement,
         $.print_statement,
         $.close_statement,
+        $.get_statement,
+        $.put_statement,
+        $.lock_statement,
+        $.unlock_statement,
+        $.seek_statement,
+        $.reset_statement,
+        $.raise_event_statement,
+        $.name_statement,
+        $.stop_statement,
+        $.beep_statement,
+        $.load_statement,
+        $.unload_statement,
         $.preprocessor_const,
         $.preprocessor_if,
+        $.def_type_statement,
         $.const_declaration,
         $.variable_declaration,
         $.set_statement,
@@ -631,6 +648,18 @@ module.exports = grammar({
         $.line_input_statement,
         $.print_statement,
         $.close_statement,
+        $.get_statement,
+        $.put_statement,
+        $.lock_statement,
+        $.unlock_statement,
+        $.seek_statement,
+        $.reset_statement,
+        $.raise_event_statement,
+        $.name_statement,
+        $.stop_statement,
+        $.beep_statement,
+        $.load_statement,
+        $.unload_statement,
         $.set_statement,
         $.assignment_statement,
         $.call_statement,
@@ -825,6 +854,19 @@ module.exports = grammar({
         $.redim_statement,
         $.const_declaration,
         $.variable_declaration,
+        $.def_type_statement,
+        $.get_statement,
+        $.put_statement,
+        $.lock_statement,
+        $.unlock_statement,
+        $.seek_statement,
+        $.reset_statement,
+        $.raise_event_statement,
+        $.name_statement,
+        $.stop_statement,
+        $.beep_statement,
+        $.load_statement,
+        $.unload_statement,
         $.set_statement,
         $.assignment_statement,
         $.call_statement,
@@ -928,6 +970,111 @@ module.exports = grammar({
     close_statement: ($) =>
       prec.right(seq(caseInsensitive("Close"), optional(commaSep1($.file_number)))),
 
+    get_statement: ($) =>
+      seq(
+        caseInsensitive("Get"),
+        field("number", $.file_number),
+        optional(
+          seq(
+            ",",
+            optional(field("record", $._expression)),
+            ",",
+            field("target", $._assignable_expression),
+          ),
+        ),
+      ),
+
+    put_statement: ($) =>
+      seq(
+        caseInsensitive("Put"),
+        field("number", $.file_number),
+        optional(
+          seq(",", optional(field("record", $._expression)), ",", field("source", $._expression)),
+        ),
+      ),
+
+    lock_statement: ($) =>
+      seq(
+        caseInsensitive("Lock"),
+        field("number", $.file_number),
+        optional(seq(",", field("range", $.file_record_range))),
+      ),
+
+    unlock_statement: ($) =>
+      seq(
+        caseInsensitive("Unlock"),
+        field("number", $.file_number),
+        optional(seq(",", field("range", $.file_record_range))),
+      ),
+
+    file_record_range: ($) =>
+      seq(
+        field("start", $._expression),
+        optional(seq(caseInsensitive("To"), field("end", $._expression))),
+      ),
+
+    seek_statement: ($) =>
+      seq(
+        caseInsensitive("Seek"),
+        field("number", $.file_number),
+        ",",
+        field("position", $._expression),
+      ),
+
+    reset_statement: (_) => caseInsensitive("Reset"),
+
+    raise_event_statement: ($) =>
+      prec.right(
+        seq(caseInsensitive("RaiseEvent"), field("event", $.identifier), optional($.argument_list)),
+      ),
+
+    name_statement: ($) =>
+      prec(
+        1,
+        seq(
+          caseInsensitive("Name"),
+          field("old_path", $._expression),
+          caseInsensitive("As"),
+          field("new_path", $._expression),
+        ),
+      ),
+
+    stop_statement: (_) => caseInsensitive("Stop"),
+
+    beep_statement: (_) => caseInsensitive("Beep"),
+
+    load_statement: ($) => seq(caseInsensitive("Load"), field("target", $._assignable_expression)),
+
+    unload_statement: ($) =>
+      seq(caseInsensitive("Unload"), field("target", $._assignable_expression)),
+
+    def_type_statement: ($) =>
+      seq(
+        field(
+          "kind",
+          choice(
+            caseInsensitive("DefBool"),
+            caseInsensitive("DefByte"),
+            caseInsensitive("DefCur"),
+            caseInsensitive("DefDate"),
+            caseInsensitive("DefDbl"),
+            caseInsensitive("DefDec"),
+            caseInsensitive("DefInt"),
+            caseInsensitive("DefLng"),
+            caseInsensitive("DefLngLng"),
+            caseInsensitive("DefLngPtr"),
+            caseInsensitive("DefObj"),
+            caseInsensitive("DefSng"),
+            caseInsensitive("DefStr"),
+            caseInsensitive("DefVar"),
+          ),
+        ),
+        commaSep1($.letter_range),
+      ),
+
+    letter_range: ($) =>
+      prec.right(seq(field("start", $.identifier), optional(seq("-", field("end", $.identifier))))),
+
     set_statement: ($) =>
       seq(
         caseInsensitive("Set"),
@@ -1026,7 +1173,12 @@ module.exports = grammar({
         $._expression,
       ),
 
-    named_argument: ($) => seq(field("name", $.identifier), ":=", field("value", $._expression)),
+    named_argument: ($) =>
+      seq(
+        field("name", choice($.identifier, alias(caseInsensitive("Name"), $.identifier))),
+        ":=",
+        field("value", $._expression),
+      ),
 
     byval_argument: ($) =>
       seq(caseInsensitive("ByVal"), field("value", choice($.comparison_expression, $._expression))),
@@ -1046,6 +1198,7 @@ module.exports = grammar({
         $.call_expression,
         $.member_expression,
         alias(caseInsensitive("Line"), $.identifier),
+        alias(caseInsensitive("Name"), $.identifier),
         $.identifier,
         $.new_expression,
         $.addressof_expression,
@@ -1110,12 +1263,14 @@ module.exports = grammar({
     _assignable_expression: ($) =>
       choice(
         $.identifier,
+        alias(caseInsensitive("Name"), $.identifier),
         $.member_expression,
         $.call_expression,
         alias(caseInsensitive("Line"), $.identifier),
       ),
 
-    _callable_expression: ($) => choice($.identifier, $.member_expression),
+    _callable_expression: ($) =>
+      choice($.identifier, alias(caseInsensitive("Name"), $.identifier), $.member_expression),
 
     _line_method_expression: ($) =>
       prec(
@@ -1217,7 +1372,12 @@ module.exports = grammar({
     string_literal: (_) => token(seq('"', repeat(choice('""', /[^"\r\n]/)), '"')),
 
     number_literal: (_) =>
-      token(choice(/-?&[Hh][0-9A-Fa-f]+[$%&!#@^]?/, /-?\d+(\.\d+)?[$%&!#@^]?/)),
+      token(
+        choice(
+          /-?&[Hh][0-9A-Fa-f]+[$%&!#@^]?/,
+          /-?(?:\d+\.\d*|\.\d+|\d+)(?:[Ee][+-]?\d+)?[$%&!#@^]?/,
+        ),
+      ),
 
     boolean_literal: (_) => choice(caseInsensitive("True"), caseInsensitive("False")),
 
@@ -1236,7 +1396,7 @@ module.exports = grammar({
     identifier: (_) =>
       token(
         choice(
-          /[A-Za-z_\u00C0-\u{10FFFF}][A-Za-z0-9_\u00C0-\u{10FFFF}]*[$%&#]?/u,
+          /[A-Za-z_\u00C0-\u{10FFFF}][A-Za-z0-9_\u00C0-\u{10FFFF}]*[$%&#@^]?/u,
           prec(-1, /[A-Za-z_\u00C0-\u{10FFFF}][A-Za-z0-9_\u00C0-\u{10FFFF}]*!/u),
           /\[[^\]\r\n]+\]/,
         ),

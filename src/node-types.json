@@ -635,6 +635,10 @@
           "named": true
         },
         {
+          "type": "beep_statement",
+          "named": true
+        },
+        {
           "type": "call_statement",
           "named": true
         },
@@ -644,6 +648,10 @@
         },
         {
           "type": "const_declaration",
+          "named": true
+        },
+        {
+          "type": "def_type_statement",
           "named": true
         },
         {
@@ -675,6 +683,10 @@
           "named": true
         },
         {
+          "type": "get_statement",
+          "named": true
+        },
+        {
           "type": "goto_statement",
           "named": true
         },
@@ -696,6 +708,18 @@
         },
         {
           "type": "line_number_statement",
+          "named": true
+        },
+        {
+          "type": "load_statement",
+          "named": true
+        },
+        {
+          "type": "lock_statement",
+          "named": true
+        },
+        {
+          "type": "name_statement",
           "named": true
         },
         {
@@ -727,11 +751,27 @@
           "named": true
         },
         {
+          "type": "put_statement",
+          "named": true
+        },
+        {
+          "type": "raise_event_statement",
+          "named": true
+        },
+        {
           "type": "redim_statement",
           "named": true
         },
         {
+          "type": "reset_statement",
+          "named": true
+        },
+        {
           "type": "resume_statement",
+          "named": true
+        },
+        {
+          "type": "seek_statement",
           "named": true
         },
         {
@@ -744,6 +784,18 @@
         },
         {
           "type": "single_line_if_statement",
+          "named": true
+        },
+        {
+          "type": "stop_statement",
+          "named": true
+        },
+        {
+          "type": "unload_statement",
+          "named": true
+        },
+        {
+          "type": "unlock_statement",
           "named": true
         },
         {
@@ -2132,6 +2184,21 @@
     }
   },
   {
+    "type": "def_type_statement",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "letter_range",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "do_condition",
     "named": true,
     "fields": {
@@ -2811,6 +2878,160 @@
     "named": true,
     "fields": {
       "number": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "addressof_expression",
+            "named": true
+          },
+          {
+            "type": "binary_expression",
+            "named": true
+          },
+          {
+            "type": "boolean_literal",
+            "named": true
+          },
+          {
+            "type": "call_expression",
+            "named": true
+          },
+          {
+            "type": "date_literal",
+            "named": true
+          },
+          {
+            "type": "empty_literal",
+            "named": true
+          },
+          {
+            "type": "file_number_literal",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "member_expression",
+            "named": true
+          },
+          {
+            "type": "new_expression",
+            "named": true
+          },
+          {
+            "type": "nothing_literal",
+            "named": true
+          },
+          {
+            "type": "null_literal",
+            "named": true
+          },
+          {
+            "type": "number_literal",
+            "named": true
+          },
+          {
+            "type": "parenthesized_expression",
+            "named": true
+          },
+          {
+            "type": "string_literal",
+            "named": true
+          },
+          {
+            "type": "type_of_expression",
+            "named": true
+          },
+          {
+            "type": "unary_expression",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "file_record_range",
+    "named": true,
+    "fields": {
+      "end": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "addressof_expression",
+            "named": true
+          },
+          {
+            "type": "binary_expression",
+            "named": true
+          },
+          {
+            "type": "boolean_literal",
+            "named": true
+          },
+          {
+            "type": "call_expression",
+            "named": true
+          },
+          {
+            "type": "date_literal",
+            "named": true
+          },
+          {
+            "type": "empty_literal",
+            "named": true
+          },
+          {
+            "type": "file_number_literal",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "member_expression",
+            "named": true
+          },
+          {
+            "type": "new_expression",
+            "named": true
+          },
+          {
+            "type": "nothing_literal",
+            "named": true
+          },
+          {
+            "type": "null_literal",
+            "named": true
+          },
+          {
+            "type": "number_literal",
+            "named": true
+          },
+          {
+            "type": "parenthesized_expression",
+            "named": true
+          },
+          {
+            "type": "string_literal",
+            "named": true
+          },
+          {
+            "type": "type_of_expression",
+            "named": true
+          },
+          {
+            "type": "unary_expression",
+            "named": true
+          }
+        ]
+      },
+      "start": {
         "multiple": false,
         "required": true,
         "types": [
@@ -3641,6 +3862,114 @@
     }
   },
   {
+    "type": "get_statement",
+    "named": true,
+    "fields": {
+      "number": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "file_number",
+            "named": true
+          }
+        ]
+      },
+      "record": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "addressof_expression",
+            "named": true
+          },
+          {
+            "type": "binary_expression",
+            "named": true
+          },
+          {
+            "type": "boolean_literal",
+            "named": true
+          },
+          {
+            "type": "call_expression",
+            "named": true
+          },
+          {
+            "type": "date_literal",
+            "named": true
+          },
+          {
+            "type": "empty_literal",
+            "named": true
+          },
+          {
+            "type": "file_number_literal",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "member_expression",
+            "named": true
+          },
+          {
+            "type": "new_expression",
+            "named": true
+          },
+          {
+            "type": "nothing_literal",
+            "named": true
+          },
+          {
+            "type": "null_literal",
+            "named": true
+          },
+          {
+            "type": "number_literal",
+            "named": true
+          },
+          {
+            "type": "parenthesized_expression",
+            "named": true
+          },
+          {
+            "type": "string_literal",
+            "named": true
+          },
+          {
+            "type": "type_of_expression",
+            "named": true
+          },
+          {
+            "type": "unary_expression",
+            "named": true
+          }
+        ]
+      },
+      "target": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "call_expression",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "member_expression",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "goto_statement",
     "named": true,
     "fields": {
@@ -3951,6 +4280,32 @@
     }
   },
   {
+    "type": "letter_range",
+    "named": true,
+    "fields": {
+      "end": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "start": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "line_input_statement",
     "named": true,
     "fields": {
@@ -4018,11 +4373,19 @@
             "named": true
           },
           {
+            "type": "beep_statement",
+            "named": true
+          },
+          {
             "type": "call_statement",
             "named": true
           },
           {
             "type": "const_declaration",
+            "named": true
+          },
+          {
+            "type": "def_type_statement",
             "named": true
           },
           {
@@ -4034,7 +4397,23 @@
             "named": true
           },
           {
+            "type": "get_statement",
+            "named": true
+          },
+          {
             "type": "goto_statement",
+            "named": true
+          },
+          {
+            "type": "load_statement",
+            "named": true
+          },
+          {
+            "type": "lock_statement",
+            "named": true
+          },
+          {
+            "type": "name_statement",
             "named": true
           },
           {
@@ -4042,11 +4421,27 @@
             "named": true
           },
           {
+            "type": "put_statement",
+            "named": true
+          },
+          {
+            "type": "raise_event_statement",
+            "named": true
+          },
+          {
             "type": "redim_statement",
             "named": true
           },
           {
+            "type": "reset_statement",
+            "named": true
+          },
+          {
             "type": "resume_statement",
+            "named": true
+          },
+          {
+            "type": "seek_statement",
             "named": true
           },
           {
@@ -4055,6 +4450,18 @@
           },
           {
             "type": "single_line_if_statement",
+            "named": true
+          },
+          {
+            "type": "stop_statement",
+            "named": true
+          },
+          {
+            "type": "unload_statement",
+            "named": true
+          },
+          {
+            "type": "unlock_statement",
             "named": true
           },
           {
@@ -4099,6 +4506,56 @@
           "named": true
         }
       ]
+    }
+  },
+  {
+    "type": "load_statement",
+    "named": true,
+    "fields": {
+      "target": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "call_expression",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "member_expression",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "lock_statement",
+    "named": true,
+    "fields": {
+      "number": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "file_number",
+            "named": true
+          }
+        ]
+      },
+      "range": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "file_record_range",
+            "named": true
+          }
+        ]
+      }
     }
   },
   {
@@ -4216,6 +4673,160 @@
         "types": [
           {
             "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "name_statement",
+    "named": true,
+    "fields": {
+      "new_path": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "addressof_expression",
+            "named": true
+          },
+          {
+            "type": "binary_expression",
+            "named": true
+          },
+          {
+            "type": "boolean_literal",
+            "named": true
+          },
+          {
+            "type": "call_expression",
+            "named": true
+          },
+          {
+            "type": "date_literal",
+            "named": true
+          },
+          {
+            "type": "empty_literal",
+            "named": true
+          },
+          {
+            "type": "file_number_literal",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "member_expression",
+            "named": true
+          },
+          {
+            "type": "new_expression",
+            "named": true
+          },
+          {
+            "type": "nothing_literal",
+            "named": true
+          },
+          {
+            "type": "null_literal",
+            "named": true
+          },
+          {
+            "type": "number_literal",
+            "named": true
+          },
+          {
+            "type": "parenthesized_expression",
+            "named": true
+          },
+          {
+            "type": "string_literal",
+            "named": true
+          },
+          {
+            "type": "type_of_expression",
+            "named": true
+          },
+          {
+            "type": "unary_expression",
+            "named": true
+          }
+        ]
+      },
+      "old_path": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "addressof_expression",
+            "named": true
+          },
+          {
+            "type": "binary_expression",
+            "named": true
+          },
+          {
+            "type": "boolean_literal",
+            "named": true
+          },
+          {
+            "type": "call_expression",
+            "named": true
+          },
+          {
+            "type": "date_literal",
+            "named": true
+          },
+          {
+            "type": "empty_literal",
+            "named": true
+          },
+          {
+            "type": "file_number_literal",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "member_expression",
+            "named": true
+          },
+          {
+            "type": "new_expression",
+            "named": true
+          },
+          {
+            "type": "nothing_literal",
+            "named": true
+          },
+          {
+            "type": "null_literal",
+            "named": true
+          },
+          {
+            "type": "number_literal",
+            "named": true
+          },
+          {
+            "type": "parenthesized_expression",
+            "named": true
+          },
+          {
+            "type": "string_literal",
+            "named": true
+          },
+          {
+            "type": "type_of_expression",
+            "named": true
+          },
+          {
+            "type": "unary_expression",
             "named": true
           }
         ]
@@ -4895,6 +5506,10 @@
           "named": true
         },
         {
+          "type": "beep_statement",
+          "named": true
+        },
+        {
           "type": "call_statement",
           "named": true
         },
@@ -4920,6 +5535,10 @@
         },
         {
           "type": "declare_statement",
+          "named": true
+        },
+        {
+          "type": "def_type_statement",
           "named": true
         },
         {
@@ -4963,6 +5582,10 @@
           "named": true
         },
         {
+          "type": "get_statement",
+          "named": true
+        },
+        {
           "type": "goto_statement",
           "named": true
         },
@@ -4984,6 +5607,18 @@
         },
         {
           "type": "line_number_statement",
+          "named": true
+        },
+        {
+          "type": "load_statement",
+          "named": true
+        },
+        {
+          "type": "lock_statement",
+          "named": true
+        },
+        {
+          "type": "name_statement",
           "named": true
         },
         {
@@ -5019,11 +5654,27 @@
           "named": true
         },
         {
+          "type": "put_statement",
+          "named": true
+        },
+        {
+          "type": "raise_event_statement",
+          "named": true
+        },
+        {
           "type": "redim_statement",
           "named": true
         },
         {
+          "type": "reset_statement",
+          "named": true
+        },
+        {
           "type": "resume_statement",
+          "named": true
+        },
+        {
+          "type": "seek_statement",
           "named": true
         },
         {
@@ -5039,11 +5690,23 @@
           "named": true
         },
         {
+          "type": "stop_statement",
+          "named": true
+        },
+        {
           "type": "sub_declaration",
           "named": true
         },
         {
           "type": "type_declaration",
+          "named": true
+        },
+        {
+          "type": "unload_statement",
+          "named": true
+        },
+        {
+          "type": "unlock_statement",
           "named": true
         },
         {
@@ -5582,6 +6245,196 @@
     }
   },
   {
+    "type": "put_statement",
+    "named": true,
+    "fields": {
+      "number": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "file_number",
+            "named": true
+          }
+        ]
+      },
+      "record": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "addressof_expression",
+            "named": true
+          },
+          {
+            "type": "binary_expression",
+            "named": true
+          },
+          {
+            "type": "boolean_literal",
+            "named": true
+          },
+          {
+            "type": "call_expression",
+            "named": true
+          },
+          {
+            "type": "date_literal",
+            "named": true
+          },
+          {
+            "type": "empty_literal",
+            "named": true
+          },
+          {
+            "type": "file_number_literal",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "member_expression",
+            "named": true
+          },
+          {
+            "type": "new_expression",
+            "named": true
+          },
+          {
+            "type": "nothing_literal",
+            "named": true
+          },
+          {
+            "type": "null_literal",
+            "named": true
+          },
+          {
+            "type": "number_literal",
+            "named": true
+          },
+          {
+            "type": "parenthesized_expression",
+            "named": true
+          },
+          {
+            "type": "string_literal",
+            "named": true
+          },
+          {
+            "type": "type_of_expression",
+            "named": true
+          },
+          {
+            "type": "unary_expression",
+            "named": true
+          }
+        ]
+      },
+      "source": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "addressof_expression",
+            "named": true
+          },
+          {
+            "type": "binary_expression",
+            "named": true
+          },
+          {
+            "type": "boolean_literal",
+            "named": true
+          },
+          {
+            "type": "call_expression",
+            "named": true
+          },
+          {
+            "type": "date_literal",
+            "named": true
+          },
+          {
+            "type": "empty_literal",
+            "named": true
+          },
+          {
+            "type": "file_number_literal",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "member_expression",
+            "named": true
+          },
+          {
+            "type": "new_expression",
+            "named": true
+          },
+          {
+            "type": "nothing_literal",
+            "named": true
+          },
+          {
+            "type": "null_literal",
+            "named": true
+          },
+          {
+            "type": "number_literal",
+            "named": true
+          },
+          {
+            "type": "parenthesized_expression",
+            "named": true
+          },
+          {
+            "type": "string_literal",
+            "named": true
+          },
+          {
+            "type": "type_of_expression",
+            "named": true
+          },
+          {
+            "type": "unary_expression",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "raise_event_statement",
+    "named": true,
+    "fields": {
+      "event": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "argument_list",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "redim_declarator",
     "named": true,
     "fields": {
@@ -5640,6 +6493,96 @@
           },
           {
             "type": "line_number_literal",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "seek_statement",
+    "named": true,
+    "fields": {
+      "number": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "file_number",
+            "named": true
+          }
+        ]
+      },
+      "position": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "addressof_expression",
+            "named": true
+          },
+          {
+            "type": "binary_expression",
+            "named": true
+          },
+          {
+            "type": "boolean_literal",
+            "named": true
+          },
+          {
+            "type": "call_expression",
+            "named": true
+          },
+          {
+            "type": "date_literal",
+            "named": true
+          },
+          {
+            "type": "empty_literal",
+            "named": true
+          },
+          {
+            "type": "file_number_literal",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "member_expression",
+            "named": true
+          },
+          {
+            "type": "new_expression",
+            "named": true
+          },
+          {
+            "type": "nothing_literal",
+            "named": true
+          },
+          {
+            "type": "null_literal",
+            "named": true
+          },
+          {
+            "type": "number_literal",
+            "named": true
+          },
+          {
+            "type": "parenthesized_expression",
+            "named": true
+          },
+          {
+            "type": "string_literal",
+            "named": true
+          },
+          {
+            "type": "type_of_expression",
+            "named": true
+          },
+          {
+            "type": "unary_expression",
             "named": true
           }
         ]
@@ -5875,6 +6818,10 @@
             "named": true
           },
           {
+            "type": "beep_statement",
+            "named": true
+          },
+          {
             "type": "call_statement",
             "named": true
           },
@@ -5895,6 +6842,10 @@
             "named": true
           },
           {
+            "type": "get_statement",
+            "named": true
+          },
+          {
             "type": "goto_statement",
             "named": true
           },
@@ -5904,6 +6855,18 @@
           },
           {
             "type": "line_input_statement",
+            "named": true
+          },
+          {
+            "type": "load_statement",
+            "named": true
+          },
+          {
+            "type": "lock_statement",
+            "named": true
+          },
+          {
+            "type": "name_statement",
             "named": true
           },
           {
@@ -5919,7 +6882,19 @@
             "named": true
           },
           {
+            "type": "put_statement",
+            "named": true
+          },
+          {
+            "type": "raise_event_statement",
+            "named": true
+          },
+          {
             "type": "redim_statement",
+            "named": true
+          },
+          {
+            "type": "reset_statement",
             "named": true
           },
           {
@@ -5927,7 +6902,23 @@
             "named": true
           },
           {
+            "type": "seek_statement",
+            "named": true
+          },
+          {
             "type": "set_statement",
+            "named": true
+          },
+          {
+            "type": "stop_statement",
+            "named": true
+          },
+          {
+            "type": "unload_statement",
+            "named": true
+          },
+          {
+            "type": "unlock_statement",
             "named": true
           }
         ]
@@ -6027,6 +7018,10 @@
             "named": true
           },
           {
+            "type": "beep_statement",
+            "named": true
+          },
+          {
             "type": "call_statement",
             "named": true
           },
@@ -6047,6 +7042,10 @@
             "named": true
           },
           {
+            "type": "get_statement",
+            "named": true
+          },
+          {
             "type": "goto_statement",
             "named": true
           },
@@ -6056,6 +7055,18 @@
           },
           {
             "type": "line_input_statement",
+            "named": true
+          },
+          {
+            "type": "load_statement",
+            "named": true
+          },
+          {
+            "type": "lock_statement",
+            "named": true
+          },
+          {
+            "type": "name_statement",
             "named": true
           },
           {
@@ -6071,7 +7082,19 @@
             "named": true
           },
           {
+            "type": "put_statement",
+            "named": true
+          },
+          {
+            "type": "raise_event_statement",
+            "named": true
+          },
+          {
             "type": "redim_statement",
+            "named": true
+          },
+          {
+            "type": "reset_statement",
             "named": true
           },
           {
@@ -6079,7 +7102,23 @@
             "named": true
           },
           {
+            "type": "seek_statement",
+            "named": true
+          },
+          {
             "type": "set_statement",
+            "named": true
+          },
+          {
+            "type": "stop_statement",
+            "named": true
+          },
+          {
+            "type": "unload_statement",
+            "named": true
+          },
+          {
+            "type": "unlock_statement",
             "named": true
           }
         ]
@@ -6117,6 +7156,10 @@
         },
         {
           "type": "declare_statement",
+          "named": true
+        },
+        {
+          "type": "def_type_statement",
           "named": true
         },
         {
@@ -6768,6 +7811,56 @@
     }
   },
   {
+    "type": "unload_statement",
+    "named": true,
+    "fields": {
+      "target": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "call_expression",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "member_expression",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "unlock_statement",
+    "named": true,
+    "fields": {
+      "number": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "file_number",
+            "named": true
+          }
+        ]
+      },
+      "range": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "file_record_range",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "variable_declaration",
     "named": true,
     "fields": {},
@@ -7166,6 +8259,10 @@
     "named": false
   },
   {
+    "type": "beep_statement",
+    "named": true
+  },
+  {
     "type": "comment",
     "named": true,
     "extra": true
@@ -7221,6 +8318,14 @@
   },
   {
     "type": "number_literal",
+    "named": true
+  },
+  {
+    "type": "reset_statement",
+    "named": true
+  },
+  {
+    "type": "stop_statement",
     "named": true
   },
   {
