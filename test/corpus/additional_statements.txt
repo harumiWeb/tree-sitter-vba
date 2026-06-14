@@ -1,0 +1,203 @@
+==================
+event and file rename statements
+==================
+
+Sub Test()
+    RaiseEvent Changed(1, value)
+    Name oldPath As newPath
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    name: (identifier)
+    (parameter_list)
+    (newline)
+    body: (block
+      (raise_event_statement
+        event: (identifier)
+        (argument_list
+          (number_literal)
+          (identifier)))
+      (newline)
+      (name_statement
+        old_path: (identifier)
+        new_path: (identifier))
+      (newline)))
+  (newline))
+
+==================
+classic file io statements
+==================
+
+Sub Test()
+    Get #1, , buffer
+    Get #1, 2, record
+    Put #1, 3, record
+    Lock #1, 1 To 10
+    Unlock #1
+    Seek #1, 100
+    Reset
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    name: (identifier)
+    (parameter_list)
+    (newline)
+    body: (block
+      (get_statement
+        number: (file_number
+          (file_number_literal
+            number: (number_literal)))
+        target: (identifier))
+      (newline)
+      (get_statement
+        number: (file_number
+          (file_number_literal
+            number: (number_literal)))
+        record: (number_literal)
+        target: (identifier))
+      (newline)
+      (put_statement
+        number: (file_number
+          (file_number_literal
+            number: (number_literal)))
+        record: (number_literal)
+        source: (identifier))
+      (newline)
+      (lock_statement
+        number: (file_number
+          (file_number_literal
+            number: (number_literal)))
+        range: (file_record_range
+          start: (number_literal)
+          end: (number_literal)))
+      (newline)
+      (unlock_statement
+        number: (file_number
+          (file_number_literal
+            number: (number_literal))))
+      (newline)
+      (seek_statement
+        number: (file_number
+          (file_number_literal
+            number: (number_literal)))
+        position: (number_literal))
+      (newline)
+      (reset_statement)
+      (newline)))
+  (newline))
+
+==================
+simple runtime statements
+==================
+
+Sub Test()
+    Stop
+    Beep
+    Load UserForm1
+    Unload UserForm1
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    name: (identifier)
+    (parameter_list)
+    (newline)
+    body: (block
+      (stop_statement)
+      (newline)
+      (beep_statement)
+      (newline)
+      (load_statement
+        target: (identifier))
+      (newline)
+      (unload_statement
+        target: (identifier))
+      (newline)))
+  (newline))
+
+==================
+def type statements
+==================
+
+DefInt A-C, X-Z
+DefStr S
+
+Sub Test()
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (def_type_statement
+    (letter_range
+      start: (identifier)
+      end: (identifier))
+    (letter_range
+      start: (identifier)
+      end: (identifier)))
+  (newline)
+  (def_type_statement
+    (letter_range
+      start: (identifier)))
+  (newline)
+  (newline)
+  (sub_declaration
+    name: (identifier)
+    (parameter_list)
+    (newline))
+  (newline))
+
+==================
+expanded numeric literals and identifier type characters
+==================
+
+Sub Test()
+    small = 1E-3
+    half = .5
+    whole = 1.
+    currency@ = 1@
+    longLong^ = 2^
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    name: (identifier)
+    (parameter_list)
+    (newline)
+    body: (block
+      (assignment_statement
+        left: (identifier)
+        right: (number_literal))
+      (newline)
+      (assignment_statement
+        left: (identifier)
+        right: (number_literal))
+      (newline)
+      (assignment_statement
+        left: (identifier)
+        right: (number_literal))
+      (newline)
+      (assignment_statement
+        left: (identifier)
+        right: (number_literal))
+      (newline)
+      (assignment_statement
+        left: (identifier)
+        right: (number_literal))
+      (newline)))
+  (newline))

@@ -779,7 +779,7 @@ Sub フォルダファイル名一括変更()
     newFileName = "新しいファイル名"
 
     ' フォルダ内のフォルダ名を一括変更
-    Name folderPath & "*" & "\", folderPath & newFolderName & "\"
+    Name folderPath & "*" & "\" As folderPath & newFolderName & "\"
 
     ' フォルダ内のファイル名を一括変更
     Dim fileName As String
