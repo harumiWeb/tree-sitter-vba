@@ -2193,6 +2193,10 @@
         },
         {
           "type": "SYMBOL",
+          "name": "debug_print_statement"
+        },
+        {
+          "type": "SYMBOL",
           "name": "close_statement"
         },
         {
@@ -3224,6 +3228,10 @@
         {
           "type": "SYMBOL",
           "name": "print_statement"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "debug_print_statement"
         },
         {
           "type": "SYMBOL",
@@ -4618,6 +4626,10 @@
         },
         {
           "type": "SYMBOL",
+          "name": "debug_print_statement"
+        },
+        {
+          "type": "SYMBOL",
           "name": "raise_event_statement"
         },
         {
@@ -5189,6 +5201,82 @@
               }
             ]
           }
+        }
+      ]
+    },
+    "debug_print_statement": {
+      "type": "PREC_RIGHT",
+      "value": 0,
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "STRING",
+            "value": "?"
+          },
+          {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "debug_print_argument_sequence"
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "debug_print_argument_sequence": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "debug_print_argument"
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "CHOICE",
+                "members": [
+                  {
+                    "type": "STRING",
+                    "value": ","
+                  },
+                  {
+                    "type": "STRING",
+                    "value": ";"
+                  }
+                ]
+              },
+              {
+                "type": "SYMBOL",
+                "name": "debug_print_argument"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "debug_print_argument": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "logical_value_expression"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "comparison_expression"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_expression"
         }
       ]
     },
@@ -7840,55 +7928,22 @@
     }
   ],
   "conflicts": [
-    [
-      "_expression",
-      "_callable_expression"
-    ],
-    [
-      "_expression",
-      "_comparison_operand"
-    ],
-    [
-      "_comparison_operand",
-      "unary_expression"
-    ],
-    [
-      "_assignable_expression",
-      "_callable_expression"
-    ],
-    [
-      "_argument",
-      "parenthesized_expression"
-    ],
-    [
-      "_condition_expression",
-      "parenthesized_expression"
-    ],
-    [
-      "_argument_sequence"
-    ],
-    [
-      "qualified_member_expression",
-      "implicit_member_expression"
-    ],
-    [
-      "block"
-    ],
-    [
-      "elseif_clause"
-    ],
-    [
-      "else_clause"
-    ],
-    [
-      "case_clause"
-    ]
+    ["_expression", "_callable_expression"],
+    ["_expression", "_comparison_operand"],
+    ["_comparison_operand", "unary_expression"],
+    ["_assignable_expression", "_callable_expression"],
+    ["_argument", "parenthesized_expression"],
+    ["_condition_expression", "parenthesized_expression"],
+    ["_argument_sequence"],
+    ["qualified_member_expression", "implicit_member_expression"],
+    ["block"],
+    ["elseif_clause"],
+    ["else_clause"],
+    ["case_clause"]
   ],
   "precedences": [],
   "externals": [],
   "inline": [],
-  "supertypes": [
-    "member_expression"
-  ],
+  "supertypes": ["member_expression"],
   "reserved": {}
 }

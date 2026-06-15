@@ -480,6 +480,7 @@ module.exports = grammar({
         $.input_statement,
         $.line_input_statement,
         $.print_statement,
+        $.debug_print_statement,
         $.close_statement,
         $.get_statement,
         $.put_statement,
@@ -650,6 +651,7 @@ module.exports = grammar({
         $.input_statement,
         $.line_input_statement,
         $.print_statement,
+        $.debug_print_statement,
         $.close_statement,
         $.get_statement,
         $.put_statement,
@@ -864,6 +866,7 @@ module.exports = grammar({
         $.unlock_statement,
         $.seek_statement,
         $.reset_statement,
+        $.debug_print_statement,
         $.raise_event_statement,
         $.name_statement,
         $.stop_statement,
@@ -969,6 +972,14 @@ module.exports = grammar({
 
     print_argument_sequence: ($) =>
       seq($._expression, repeat(seq(choice(",", ";"), $._expression))),
+
+    debug_print_statement: ($) => prec.right(seq("?", optional($.debug_print_argument_sequence))),
+
+    debug_print_argument_sequence: ($) =>
+      seq($.debug_print_argument, repeat(seq(choice(",", ";"), $.debug_print_argument))),
+
+    debug_print_argument: ($) =>
+      choice($.logical_value_expression, $.comparison_expression, $._expression),
 
     close_statement: ($) =>
       prec.right(seq(caseInsensitive("Close"), optional(commaSep1($.file_number)))),
