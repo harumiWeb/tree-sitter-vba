@@ -32,7 +32,7 @@ This is a `v0.x` public release.
 
 The grammar is already usable for syntax-aware tooling such as highlighting,
 folding, tags, outline extraction, and initial symbol analysis. The current test
-suite covers 169 focused corpus cases and 343 checked-in VBA example files
+suite covers 178 focused corpus cases and 343 checked-in VBA example files
 without `ERROR` or `MISSING` recovery nodes.
 
 It is not yet a complete VBA grammar. Node names and tree shapes may still change before `v1.0.0`.
@@ -163,6 +163,8 @@ The grammar currently supports:
 - `Name oldPath As newPath` file rename statements
 - calls, named arguments, omitted arguments, call-site `ByVal`, member access,
   bang member access, and leading-dot member access
+- `? expr` Debug.Print shorthand statements, including comma- and
+  semicolon-separated output arguments
 - `New` expressions and `As New` declarations
 - fixed-length string declarations
 - `AddressOf` expressions

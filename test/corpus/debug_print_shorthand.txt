@@ -1,0 +1,252 @@
+==================
+debug print shorthand basic output
+==================
+
+Sub Test()
+    ? "hello"
+    ? x
+    ? obj.Name
+    ? Range("A1").Value
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (debug_print_statement
+        (debug_print_argument_sequence
+          (debug_print_argument
+            (string_literal))))
+      (newline)
+      (debug_print_statement
+        (debug_print_argument_sequence
+          (debug_print_argument
+            (identifier))))
+      (newline)
+      (debug_print_statement
+        (debug_print_argument_sequence
+          (debug_print_argument
+            (qualified_member_expression
+              (identifier)
+              (identifier)))))
+      (newline)
+      (debug_print_statement
+        (debug_print_argument_sequence
+          (debug_print_argument
+            (qualified_member_expression
+              (call_expression
+                (identifier)
+                (string_literal))
+              (identifier)))))
+      (newline)))
+  (newline))
+
+==================
+debug print shorthand separators
+==================
+
+Sub Test()
+    ? x, y
+    ? x; y
+    ? "x="; x
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (debug_print_statement
+        (debug_print_argument_sequence
+          (debug_print_argument
+            (identifier))
+          (debug_print_argument
+            (identifier))))
+      (newline)
+      (debug_print_statement
+        (debug_print_argument_sequence
+          (debug_print_argument
+            (identifier))
+          (debug_print_argument
+            (identifier))))
+      (newline)
+      (debug_print_statement
+        (debug_print_argument_sequence
+          (debug_print_argument
+            (string_literal))
+          (debug_print_argument
+            (identifier))))
+      (newline)))
+  (newline))
+
+==================
+debug print shorthand comparisons
+==================
+
+Sub Test()
+    ? a = b
+    ? a <> b
+    ? obj Is Nothing
+    ? name Like "A*"
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (debug_print_statement
+        (debug_print_argument_sequence
+          (debug_print_argument
+            (comparison_expression
+              (identifier)
+              (identifier)))))
+      (newline)
+      (debug_print_statement
+        (debug_print_argument_sequence
+          (debug_print_argument
+            (comparison_expression
+              (identifier)
+              (identifier)))))
+      (newline)
+      (debug_print_statement
+        (debug_print_argument_sequence
+          (debug_print_argument
+            (comparison_expression
+              (identifier)
+              (nothing_literal)))))
+      (newline)
+      (debug_print_statement
+        (debug_print_argument_sequence
+          (debug_print_argument
+            (comparison_expression
+              (identifier)
+              (string_literal)))))
+      (newline)))
+  (newline))
+
+==================
+debug print shorthand numbered statements
+==================
+
+Sub Test()
+10 ? "hello"
+20 ? x
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (line_number_statement
+        (line_number_literal)
+        (debug_print_statement
+          (debug_print_argument_sequence
+            (debug_print_argument
+              (string_literal)))))
+      (newline)
+      (line_number_statement
+        (line_number_literal)
+        (debug_print_statement
+          (debug_print_argument_sequence
+            (debug_print_argument
+              (identifier)))))
+      (newline)))
+  (newline))
+
+==================
+debug print shorthand single line if
+==================
+
+Sub Test()
+    If x > 0 Then ? x
+    If x > 0 Then ? x Else ? "none"
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (single_line_if_statement
+        (comparison_expression
+          (identifier)
+          (number_literal))
+        (debug_print_statement
+          (debug_print_argument_sequence
+            (debug_print_argument
+              (identifier)))))
+      (newline)
+      (single_line_if_statement
+        (comparison_expression
+          (identifier)
+          (number_literal))
+        (debug_print_statement
+          (debug_print_argument_sequence
+            (debug_print_argument
+              (identifier))))
+        (debug_print_statement
+          (debug_print_argument_sequence
+            (debug_print_argument
+              (string_literal)))))
+      (newline)))
+  (newline))
+
+==================
+debug print shorthand colon-separated statements
+==================
+
+Sub Test()
+    x = 1: ? x
+    ? "before": ? "after"
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (assignment_statement
+        (identifier)
+        (number_literal))
+      (debug_print_statement
+        (debug_print_argument_sequence
+          (debug_print_argument
+            (identifier))))
+      (newline)
+      (debug_print_statement
+        (debug_print_argument_sequence
+          (debug_print_argument
+            (string_literal))))
+      (debug_print_statement
+        (debug_print_argument_sequence
+          (debug_print_argument
+            (string_literal))))
+      (newline)))
+  (newline))

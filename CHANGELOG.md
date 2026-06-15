@@ -4,6 +4,15 @@ All notable changes to tree-sitter-vba will be documented in this file.
 
 ## Unreleased
 
+## [v0.5.0] - 2026-06-15
+
+### Added
+
+- Add parser support for `? expr` Debug.Print shorthand statements, including
+  comma- and semicolon-separated output arguments, comparison expressions,
+  numbered statements, single-line `If` branches, and colon-separated
+  statements.
+
 ### Changed
 
 - Split visible member access trees into `qualified_member_expression` for
