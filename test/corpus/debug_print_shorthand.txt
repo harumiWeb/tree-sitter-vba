@@ -215,7 +215,7 @@ End Sub
   (newline))
 
 ==================
-debug print shorthand colon separated statements
+debug print shorthand colon-separated statements
 ==================
 
 Sub Test()

@@ -7928,22 +7928,55 @@
     }
   ],
   "conflicts": [
-    ["_expression", "_callable_expression"],
-    ["_expression", "_comparison_operand"],
-    ["_comparison_operand", "unary_expression"],
-    ["_assignable_expression", "_callable_expression"],
-    ["_argument", "parenthesized_expression"],
-    ["_condition_expression", "parenthesized_expression"],
-    ["_argument_sequence"],
-    ["qualified_member_expression", "implicit_member_expression"],
-    ["block"],
-    ["elseif_clause"],
-    ["else_clause"],
-    ["case_clause"]
+    [
+      "_expression",
+      "_callable_expression"
+    ],
+    [
+      "_expression",
+      "_comparison_operand"
+    ],
+    [
+      "_comparison_operand",
+      "unary_expression"
+    ],
+    [
+      "_assignable_expression",
+      "_callable_expression"
+    ],
+    [
+      "_argument",
+      "parenthesized_expression"
+    ],
+    [
+      "_condition_expression",
+      "parenthesized_expression"
+    ],
+    [
+      "_argument_sequence"
+    ],
+    [
+      "qualified_member_expression",
+      "implicit_member_expression"
+    ],
+    [
+      "block"
+    ],
+    [
+      "elseif_clause"
+    ],
+    [
+      "else_clause"
+    ],
+    [
+      "case_clause"
+    ]
   ],
   "precedences": [],
   "externals": [],
   "inline": [],
-  "supertypes": ["member_expression"],
+  "supertypes": [
+    "member_expression"
+  ],
   "reserved": {}
 }
