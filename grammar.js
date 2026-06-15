@@ -17,6 +17,7 @@ module.exports = grammar({
   conflicts: ($) => [
     [$._expression, $._callable_expression],
     [$._expression, $._comparison_operand],
+    [$._comparison_operand, $.unary_expression],
     [$._assignable_expression, $._callable_expression],
     [$._argument, $.parenthesized_expression],
     [$._condition_expression, $.parenthesized_expression],
@@ -1175,19 +1176,15 @@ module.exports = grammar({
       ),
 
     named_argument: ($) =>
-      choice(
-        prec(
-          1,
-          seq(
-            field("name", choice($.identifier, alias(caseInsensitive("Name"), $.identifier))),
-            ":=",
-            field("value", $.comparison_expression),
-          ),
-        ),
+      prec(
+        1,
         seq(
           field("name", choice($.identifier, alias(caseInsensitive("Name"), $.identifier))),
           ":=",
-          field("value", $._expression),
+          field(
+            "value",
+            choice($.logical_value_expression, $.comparison_expression, $._expression),
+          ),
         ),
       ),
 
@@ -1242,6 +1239,7 @@ module.exports = grammar({
         $.addressof_expression,
         $.type_of_expression,
         $.parenthesized_expression,
+        $._signed_unary_expression,
         $.binary_expression,
       ),
 
@@ -1381,9 +1379,11 @@ module.exports = grammar({
 
     unary_expression: ($) =>
       choice(
-        prec(13, seq(choice("+", "-"), $._expression)),
+        $._signed_unary_expression,
         prec(6, seq(caseInsensitive("Not"), choice($.comparison_expression, $._expression))),
       ),
+
+    _signed_unary_expression: ($) => prec(13, seq(choice("+", "-"), $._expression)),
 
     _literal: ($) =>
       choice(

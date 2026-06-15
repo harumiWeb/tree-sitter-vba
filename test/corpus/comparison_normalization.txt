@@ -247,6 +247,7 @@ Sub Test()
     Foo a = b
     Foo (a = b)
     Foo pretty:=a > b
+    Foo result:=a = b And c = d
 End Sub
 
 ---
@@ -305,6 +306,19 @@ End Sub
             (comparison_expression
               (identifier)
               (identifier)))))
+      (newline)
+      (call_statement
+        (identifier)
+        (argument_list
+          (named_argument
+            (identifier)
+            (logical_value_expression
+              (comparison_expression
+                (identifier)
+                (identifier))
+              (comparison_expression
+                (identifier)
+                (identifier))))))
       (newline)))
   (newline))
 
@@ -314,6 +328,8 @@ comparison normalization special cases
 
 Sub Test()
     If TypeOf obj Is Excel.Range Then Debug.Print "range"
+    If -foo < 0 Then Debug.Print "negative"
+    If Not value Is Nothing Then Debug.Print "present"
 
     Select Case value
         Case Is >= 10
@@ -342,6 +358,29 @@ End Sub
             (dotted_type_expression
               (identifier)
               (identifier))))
+        (call_statement
+          (member_expression
+            (identifier)
+            (identifier))
+          (argument_list
+            (string_literal))))
+      (newline)
+      (single_line_if_statement
+        (comparison_expression
+          (identifier)
+          (number_literal))
+        (call_statement
+          (member_expression
+            (identifier)
+            (identifier))
+          (argument_list
+            (string_literal))))
+      (newline)
+      (single_line_if_statement
+        (unary_expression
+          (comparison_expression
+            (identifier)
+            (nothing_literal)))
         (call_statement
           (member_expression
             (identifier)
