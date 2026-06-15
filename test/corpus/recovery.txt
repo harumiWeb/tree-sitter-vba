@@ -58,7 +58,8 @@ End Sub
           (frm_quoted_property_text)
           (newline))
         right: (comparison_expression
-          (identifier)
-          (number_literal)))
+          left: (identifier)
+          operator: (comparison_operator)
+          right: (number_literal)))
       (newline)))
   (newline))

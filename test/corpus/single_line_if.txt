@@ -18,6 +18,7 @@ End Sub
       (single_line_if_statement
         (comparison_expression
           (identifier)
+          (comparison_operator)
           (identifier))
         (call_statement
           (qualified_member_expression
@@ -155,6 +156,7 @@ End Sub
       (single_line_if_statement
         (comparison_expression
           (identifier)
+          (comparison_operator)
           (identifier))
         (assignment_statement
           (identifier)
@@ -185,6 +187,7 @@ End Sub
       (single_line_if_statement
         (comparison_expression
           (identifier)
+          (comparison_operator)
           (number_literal))
         (exit_statement))
       (newline)))

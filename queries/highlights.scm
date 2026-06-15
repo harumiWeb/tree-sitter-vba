@@ -49,12 +49,13 @@
 (input_statement) @keyword
 (line_input_statement) @keyword
 (print_statement) @keyword
+(debug_print_statement) @keyword
 (close_statement) @keyword
 (set_statement) @keyword
 (new_expression) @keyword
 (addressof_expression) @keyword
 (condition_binary_expression) @operator
-(comparison_expression) @operator
+(comparison_operator) @operator
 (case_expression) @keyword
 
 (type_expression) @type

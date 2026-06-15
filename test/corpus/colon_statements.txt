@@ -107,6 +107,7 @@ End Function
               (string_literal))
             (string_literal)
             (identifier))
+          (comparison_operator)
           (number_literal)))
       (newline)))
   (newline))

@@ -1232,11 +1232,14 @@ module.exports = grammar({
       prec.left(
         7,
         seq(
-          $._comparison_operand,
-          choice("=", "<>", "<", "<=", ">", ">=", caseInsensitive("Is"), caseInsensitive("Like")),
-          $._expression,
+          field("left", $._comparison_operand),
+          field("operator", $.comparison_operator),
+          field("right", $._expression),
         ),
       ),
+
+    comparison_operator: (_) =>
+      choice("=", "<>", "<", "<=", ">", ">=", caseInsensitive("Is"), caseInsensitive("Like")),
 
     _comparison_operand: ($) =>
       choice(

@@ -4,6 +4,20 @@ All notable changes to tree-sitter-vba will be documented in this file.
 
 ## Unreleased
 
+## [v0.5.1] - 2026-06-15
+
+### Added
+
+- Add `comparison_operator` nodes and `left`, `operator`, and `right` fields
+  to `comparison_expression` for easier downstream inspection.
+- Add corpus coverage for implicit member call expressions such as `.Method()`,
+  `.Factory.Create()`, and leading-bang member chains inside `With` blocks.
+
+### Changed
+
+- Highlight `?` Debug.Print shorthand statements as keywords and highlight
+  comparison operators through the dedicated `comparison_operator` node.
+
 ## [v0.5.0] - 2026-06-15
 
 ### Added

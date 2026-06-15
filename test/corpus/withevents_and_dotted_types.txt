@@ -79,6 +79,7 @@ End Function
           (comparison_expression
             (call_expression
               (identifier))
+            (comparison_operator)
             (identifier))))
       (newline)))
   (newline))

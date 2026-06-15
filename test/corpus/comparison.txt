@@ -20,6 +20,7 @@ End Sub
       (if_statement
         (comparison_expression
           (identifier)
+          (comparison_operator)
           (identifier))
         (newline)
         (block
@@ -55,6 +56,7 @@ End Sub
       (if_statement
         (comparison_expression
           (identifier)
+          (comparison_operator)
           (identifier))
         (newline)
         (block
@@ -90,6 +92,7 @@ End Sub
       (if_statement
         (comparison_expression
           (identifier)
+          (comparison_operator)
           (identifier))
         (newline)
         (block
@@ -125,6 +128,7 @@ End Sub
       (if_statement
         (comparison_expression
           (identifier)
+          (comparison_operator)
           (identifier))
         (newline)
         (block
