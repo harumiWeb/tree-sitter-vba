@@ -285,7 +285,7 @@ End Sub
         (line_number_prefix
           (line_number_literal))
         (do_condition
-          (binary_expression
+          (comparison_expression
             (identifier)
             (number_literal)))
         (newline)
@@ -304,7 +304,7 @@ End Sub
       (while_statement
         (line_number_prefix
           (line_number_literal))
-        (binary_expression
+        (comparison_expression
           (identifier)
           (number_literal))
         (newline)

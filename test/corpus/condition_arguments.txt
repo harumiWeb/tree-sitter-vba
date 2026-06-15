@@ -79,11 +79,11 @@ End Sub
       (assignment_statement
         (identifier)
         (logical_value_expression
-          (binary_expression
-            (binary_expression
+          (logical_value_expression
+            (comparison_expression
               (identifier)
               (number_literal))
-            (binary_expression
+            (comparison_expression
               (identifier)
               (number_literal)))
           (comparison_expression
@@ -307,6 +307,5 @@ End Sub
             (identifier)
             (boolean_literal))
           (newline)))
-      (newline)
-      ))
+      (newline)))
   (newline))
