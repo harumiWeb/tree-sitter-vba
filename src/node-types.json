@@ -1,5 +1,19 @@
 [
   {
+    "type": "member_expression",
+    "named": true,
+    "subtypes": [
+      {
+        "type": "implicit_member_expression",
+        "named": true
+      },
+      {
+        "type": "qualified_member_expression",
+        "named": true
+      }
+    ]
+  },
+  {
     "type": "addressof_expression",
     "named": true,
     "fields": {
@@ -4146,6 +4160,36 @@
     }
   },
   {
+    "type": "implicit_member_expression",
+    "named": true,
+    "fields": {
+      "operator": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "!",
+            "named": false
+          },
+          {
+            "type": ".",
+            "named": false
+          }
+        ]
+      },
+      "property": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "initializer",
     "named": true,
     "fields": {
@@ -4643,40 +4687,6 @@
           "named": true
         }
       ]
-    }
-  },
-  {
-    "type": "member_expression",
-    "named": true,
-    "fields": {
-      "object": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "call_expression",
-            "named": true
-          },
-          {
-            "type": "identifier",
-            "named": true
-          },
-          {
-            "type": "member_expression",
-            "named": true
-          }
-        ]
-      },
-      "property": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "identifier",
-            "named": true
-          }
-        ]
-      }
     }
   },
   {
@@ -6410,6 +6420,54 @@
           },
           {
             "type": "unary_expression",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "qualified_member_expression",
+    "named": true,
+    "fields": {
+      "object": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "call_expression",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "member_expression",
+            "named": true
+          }
+        ]
+      },
+      "operator": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "!",
+            "named": false
+          },
+          {
+            "type": ".",
+            "named": false
+          }
+        ]
+      },
+      "property": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
             "named": true
           }
         ]

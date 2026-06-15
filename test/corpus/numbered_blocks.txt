@@ -32,7 +32,7 @@ End Sub
           (line_number_statement
             (line_number_literal)
             (call_statement
-              (member_expression
+              (qualified_member_expression
                 (identifier)
                 (identifier))
               (argument_list
@@ -49,7 +49,7 @@ End Sub
             (line_number_statement
               (line_number_literal)
               (call_statement
-                (member_expression
+                (qualified_member_expression
                   (identifier)
                   (identifier))
                 (argument_list
@@ -63,7 +63,7 @@ End Sub
             (line_number_statement
               (line_number_literal)
               (call_statement
-                (member_expression
+                (qualified_member_expression
                   (identifier)
                   (identifier))
                 (argument_list
@@ -104,7 +104,7 @@ End Sub
           (label_statement
             (line_number_literal))
           (call_statement
-            (member_expression
+            (qualified_member_expression
               (identifier)
               (identifier))
             (argument_list
@@ -118,7 +118,7 @@ End Sub
             (label_statement
               (line_number_literal))
             (call_statement
-              (member_expression
+              (qualified_member_expression
                 (identifier)
                 (identifier))
               (argument_list
@@ -166,7 +166,7 @@ End Sub
             (line_number_statement
               (line_number_literal)
               (call_statement
-                (member_expression
+                (qualified_member_expression
                   (identifier)
                   (identifier))
                 (argument_list
@@ -180,7 +180,7 @@ End Sub
             (line_number_statement
               (line_number_literal)
               (call_statement
-                (member_expression
+                (qualified_member_expression
                   (identifier)
                   (identifier))
                 (argument_list
@@ -224,7 +224,7 @@ End Sub
           (label_statement
             (line_number_literal))
           (call_statement
-            (member_expression
+            (qualified_member_expression
               (identifier)
               (identifier))
             (argument_list
@@ -244,7 +244,7 @@ End Sub
           (label_statement
             (line_number_literal))
           (call_statement
-            (member_expression
+            (qualified_member_expression
               (identifier)
               (identifier))
             (argument_list
@@ -329,7 +329,7 @@ End Sub
           (line_number_statement
             (line_number_literal)
             (assignment_statement
-              (member_expression
+              (implicit_member_expression
                 (identifier))
               (identifier)))
           (newline))

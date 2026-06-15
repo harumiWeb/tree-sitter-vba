@@ -18,10 +18,203 @@ End Sub
       (set_statement
         (identifier)
         (call_expression
-          (member_expression
+          (qualified_member_expression
             (identifier)
             (identifier))
           (string_literal)))
+      (newline)))
+  (newline))
+
+==================
+qualified and implicit member access
+==================
+
+Sub Test()
+    Debug.Print obj.Name
+    Debug.Print obj!Field
+    Debug.Print Range("A1").Value
+
+    With ws.Range("A1")
+        .Value = 1
+        .Font.Bold = True
+        !SomeField = 123
+    End With
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (call_statement
+        (qualified_member_expression
+          (identifier)
+          (identifier))
+        (argument_list
+          (qualified_member_expression
+            (identifier)
+            (identifier))))
+      (newline)
+      (call_statement
+        (qualified_member_expression
+          (identifier)
+          (identifier))
+        (argument_list
+          (qualified_member_expression
+            (identifier)
+            (identifier))))
+      (newline)
+      (call_statement
+        (qualified_member_expression
+          (identifier)
+          (identifier))
+        (argument_list
+          (qualified_member_expression
+            (call_expression
+              (identifier)
+              (string_literal))
+            (identifier))))
+      (newline)
+      (newline)
+      (with_statement
+        (call_expression
+          (qualified_member_expression
+            (identifier)
+            (identifier))
+          (string_literal))
+        (newline)
+        (block
+          (assignment_statement
+            (implicit_member_expression
+              (identifier))
+            (number_literal))
+          (newline)
+          (assignment_statement
+            (qualified_member_expression
+              (implicit_member_expression
+                (identifier))
+              (identifier))
+            (boolean_literal))
+          (newline)
+          (assignment_statement
+            (implicit_member_expression
+              (identifier))
+            (number_literal))
+          (newline)))
+      (newline)))
+  (newline))
+
+==================
+nested implicit member access
+==================
+
+Sub Test()
+    With Application.Workbooks(1).Worksheets(1)
+        .Range("A1").Value = 1
+        .Range("A1").Font.Bold = True
+    End With
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (with_statement
+        (call_expression
+          (qualified_member_expression
+            (call_expression
+              (qualified_member_expression
+                (identifier)
+                (identifier))
+              (number_literal))
+            (identifier))
+          (number_literal))
+        (newline)
+        (block
+          (assignment_statement
+            (qualified_member_expression
+              (call_expression
+                (implicit_member_expression
+                  (identifier))
+                (string_literal))
+              (identifier))
+            (number_literal))
+          (newline)
+          (assignment_statement
+            (qualified_member_expression
+              (qualified_member_expression
+                (call_expression
+                  (implicit_member_expression
+                    (identifier))
+                  (string_literal))
+                (identifier))
+              (identifier))
+            (boolean_literal))
+          (newline)))
+      (newline)))
+  (newline))
+
+==================
+member call contexts
+==================
+
+Sub Test()
+    Call obj.Method
+    obj.Method arg1, arg2
+
+    With obj
+        .Method arg1, arg2
+        Call .Method
+    End With
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (call_statement
+        (qualified_member_expression
+          (identifier)
+          (identifier)))
+      (newline)
+      (call_statement
+        (qualified_member_expression
+          (identifier)
+          (identifier))
+        (argument_list
+          (identifier)
+          (identifier)))
+      (newline)
+      (newline)
+      (with_statement
+        (identifier)
+        (newline)
+        (block
+          (call_statement
+            (implicit_member_expression
+              (identifier))
+            (argument_list
+              (identifier)
+              (identifier)))
+          (newline)
+          (call_statement
+            (implicit_member_expression
+              (identifier)))
+          (newline)))
       (newline)))
   (newline))
 
@@ -45,23 +238,23 @@ End Sub
     (block
       (assignment_statement
         (identifier)
-        (member_expression
+        (qualified_member_expression
           (identifier)
           (identifier)))
       (newline)
       (assignment_statement
         (identifier)
         (call_expression
-          (member_expression
-              (member_expression
-                (member_expression
-                  (member_expression
-                    (member_expression
-                      (identifier)
-                      (identifier))
+          (qualified_member_expression
+            (qualified_member_expression
+              (qualified_member_expression
+                (qualified_member_expression
+                  (qualified_member_expression
+                    (identifier)
                     (identifier))
                   (identifier))
                 (identifier))
+              (identifier))
             (identifier))
           (identifier)))
       (newline)))
@@ -85,7 +278,7 @@ End Sub
     (newline)
     (block
       (assignment_statement
-        (member_expression
+        (qualified_member_expression
           (identifier)
           (identifier))
         (string_literal))
@@ -110,9 +303,9 @@ End Sub
     (newline)
     (block
       (assignment_statement
-        (member_expression
+        (qualified_member_expression
           (call_expression
-            (member_expression
+            (qualified_member_expression
               (identifier)
               (identifier))
             (string_literal))
@@ -139,9 +332,9 @@ End Sub
     (newline)
     (block
       (assignment_statement
-        (member_expression
+        (qualified_member_expression
           (call_expression
-            (member_expression
+            (implicit_member_expression
               (identifier))
             (string_literal))
           (identifier))
@@ -192,11 +385,11 @@ End Sub
     (newline)
     (block
       (assignment_statement
-        (member_expression
+        (qualified_member_expression
           (call_expression
-            (member_expression
+            (qualified_member_expression
               (call_expression
-                (member_expression
+                (qualified_member_expression
                   (identifier)
                   (identifier))
                 (string_literal))
@@ -225,13 +418,13 @@ End Sub
     (newline)
     (block
       (assignment_statement
-        (member_expression
+        (qualified_member_expression
           (call_expression
-            (member_expression
+            (qualified_member_expression
               (call_expression
-                (member_expression
+                (qualified_member_expression
                   (call_expression
-                    (member_expression
+                    (qualified_member_expression
                       (identifier)
                       (identifier))
                     (number_literal))
@@ -266,7 +459,7 @@ End Sub
         (identifier)
         (call_expression
           (call_expression
-            (member_expression
+            (qualified_member_expression
               (identifier)
               (identifier)))
           (number_literal)))
@@ -291,13 +484,13 @@ End Sub
     (newline)
     (block
       (call_statement
-        (member_expression
+        (qualified_member_expression
           (call_expression
-            (member_expression
+            (implicit_member_expression
               (identifier))
             (call_expression
               (call_expression
-                (member_expression
+                (qualified_member_expression
                   (identifier)
                   (identifier)))
               (number_literal)))

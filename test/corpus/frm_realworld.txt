@@ -51,7 +51,7 @@ End
     (number_literal))
   (newline)
   (frm_begin_block
-    (member_expression
+    (qualified_member_expression
       (identifier)
       (identifier))
     (identifier)

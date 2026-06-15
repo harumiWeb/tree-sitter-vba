@@ -177,13 +177,13 @@ End Sub
                   (identifier)
                   (line_continuation)
                   (identifier))
-                (member_expression
+                (qualified_member_expression
                   (identifier)
                   (identifier)))
               (line_continuation)
               (comparison_expression
                 (identifier)
-                (member_expression
+                (qualified_member_expression
                   (identifier)
                   (identifier))))))
         (newline)

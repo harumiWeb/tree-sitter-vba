@@ -16,7 +16,7 @@ End Sub
     (newline)
     (block
       (call_statement
-        (member_expression
+        (qualified_member_expression
           (identifier)
           (identifier))
         (argument_list
@@ -45,16 +45,16 @@ End Sub
     (newline)
     (block
       (call_statement
-        (member_expression
+        (qualified_member_expression
           (identifier)
           (identifier))
         (line_range_argument_list
           (coordinate_pair
             (parenthesized_expression
               (number_literal))
-            (member_expression
+            (qualified_member_expression
               (call_expression
-                (member_expression
+                (implicit_member_expression
                   (identifier))
                 (identifier))
               (identifier)))
@@ -62,12 +62,12 @@ End Sub
           (coordinate_pair
             (number_literal)
             (binary_expression
-              (member_expression
+              (implicit_member_expression
                 (identifier))
               (parenthesized_expression
-                (member_expression
+                (qualified_member_expression
                   (call_expression
-                    (member_expression
+                    (implicit_member_expression
                       (identifier))
                     (identifier))
                   (identifier)))))))

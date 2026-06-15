@@ -22,9 +22,9 @@ End Sub
         (newline)
         (block
           (assignment_statement
-            (member_expression
+            (qualified_member_expression
               (call_expression
-                (member_expression
+                (implicit_member_expression
                   (identifier))
                 (string_literal))
               (identifier))
@@ -58,18 +58,18 @@ End Sub
         (newline)
         (block
           (assignment_statement
-            (member_expression
+            (qualified_member_expression
               (call_expression
-                (member_expression
+                (implicit_member_expression
                   (identifier))
                 (string_literal))
               (identifier))
             (number_literal))
           (newline)
           (assignment_statement
-            (member_expression
+            (qualified_member_expression
               (call_expression
-                (member_expression
+                (implicit_member_expression
                   (identifier))
                 (string_literal))
               (identifier))

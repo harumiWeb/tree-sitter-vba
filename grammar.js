@@ -14,6 +14,8 @@ module.exports = grammar({
 
   word: ($) => $.identifier,
 
+  supertypes: ($) => [$.member_expression],
+
   conflicts: ($) => [
     [$._expression, $._callable_expression],
     [$._expression, $._comparison_operand],
@@ -22,8 +24,7 @@ module.exports = grammar({
     [$._argument, $.parenthesized_expression],
     [$._condition_expression, $.parenthesized_expression],
     [$._argument_sequence],
-    [$.member_expression],
-    [$.type_expression, $.dotted_type_expression, $.member_expression],
+    [$.qualified_member_expression, $.implicit_member_expression],
     [$.block],
     [$.elseif_clause],
     [$.else_clause],
@@ -1114,7 +1115,7 @@ module.exports = grammar({
             optional($.argument_list),
           ),
           seq(
-            field("callee", alias($._line_method_expression, $.member_expression)),
+            field("callee", alias($._line_method_expression, $.qualified_member_expression)),
             $.line_range_argument_list,
           ),
           field("callee", $._callable_expression),
@@ -1310,7 +1311,7 @@ module.exports = grammar({
         7,
         seq(
           field("object", choice($.identifier, $.call_expression, $.member_expression)),
-          ".",
+          field("operator", "."),
           field("property", alias(caseInsensitive("Line"), $.identifier)),
         ),
       ),
@@ -1343,18 +1344,20 @@ module.exports = grammar({
         field("type", $.type_expression),
       ),
 
-    member_expression: ($) =>
+    member_expression: ($) => choice($.qualified_member_expression, $.implicit_member_expression),
+
+    qualified_member_expression: ($) =>
       prec.left(
         3,
-        choice(
-          seq(
-            field("object", choice($.identifier, $.call_expression, $.member_expression)),
-            choice(".", "!"),
-            field("property", $._member_property),
-          ),
-          seq(choice(".", "!"), field("property", $._member_property)),
+        seq(
+          field("object", choice($.identifier, $.call_expression, $.member_expression)),
+          field("operator", choice(".", "!")),
+          field("property", $._member_property),
         ),
       ),
+
+    implicit_member_expression: ($) =>
+      prec.left(3, seq(field("operator", choice(".", "!")), field("property", $._member_property))),
 
     _member_property: ($) =>
       prec(6, choice($.identifier, alias(caseInsensitive("Line"), $.identifier))),

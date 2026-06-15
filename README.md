@@ -95,8 +95,9 @@ Example output:
     (parameter_list)
     body: (block
       (call_statement
-        callee: (member_expression
+        callee: (qualified_member_expression
           object: (identifier)
+          operator: "."
           property: (identifier))
         (argument_list
           (string_literal))))))
