@@ -113,6 +113,7 @@ End Sub
           (debug_print_argument
             (comparison_expression
               (identifier)
+              (comparison_operator)
               (identifier)))))
       (newline)
       (debug_print_statement
@@ -120,6 +121,7 @@ End Sub
           (debug_print_argument
             (comparison_expression
               (identifier)
+              (comparison_operator)
               (identifier)))))
       (newline)
       (debug_print_statement
@@ -127,6 +129,7 @@ End Sub
           (debug_print_argument
             (comparison_expression
               (identifier)
+              (comparison_operator)
               (nothing_literal)))))
       (newline)
       (debug_print_statement
@@ -134,6 +137,7 @@ End Sub
           (debug_print_argument
             (comparison_expression
               (identifier)
+              (comparison_operator)
               (string_literal)))))
       (newline)))
   (newline))
@@ -193,6 +197,7 @@ End Sub
       (single_line_if_statement
         (comparison_expression
           (identifier)
+          (comparison_operator)
           (number_literal))
         (debug_print_statement
           (debug_print_argument_sequence
@@ -202,6 +207,7 @@ End Sub
       (single_line_if_statement
         (comparison_expression
           (identifier)
+          (comparison_operator)
           (number_literal))
         (debug_print_statement
           (debug_print_argument_sequence

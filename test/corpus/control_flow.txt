@@ -175,6 +175,7 @@ End Sub
         (do_condition
           (comparison_expression
             (identifier)
+            (comparison_operator)
             (number_literal)))
         (newline)
         (block

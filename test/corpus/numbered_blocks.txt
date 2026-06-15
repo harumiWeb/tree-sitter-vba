@@ -26,6 +26,7 @@ End Sub
           (line_number_literal))
         (comparison_expression
           (identifier)
+          (comparison_operator)
           (number_literal))
         (newline)
         (block
@@ -43,6 +44,7 @@ End Sub
             (line_number_literal))
           (comparison_expression
             (identifier)
+            (comparison_operator)
             (number_literal))
           (newline)
           (block
@@ -287,6 +289,7 @@ End Sub
         (do_condition
           (comparison_expression
             (identifier)
+            (comparison_operator)
             (number_literal)))
         (newline)
         (block
@@ -306,6 +309,7 @@ End Sub
           (line_number_literal))
         (comparison_expression
           (identifier)
+          (comparison_operator)
           (number_literal))
         (newline)
         (block

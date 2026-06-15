@@ -51,6 +51,7 @@ End Sub
           (newline))
         (comparison_expression
           (identifier)
+          (comparison_operator)
           (number_literal)))
       (newline)))
   (newline))

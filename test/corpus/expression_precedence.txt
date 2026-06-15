@@ -102,6 +102,7 @@ End Sub
         (unary_expression
           (comparison_expression
             (identifier)
+            (comparison_operator)
             (nothing_literal)))
         (newline)
         (block

@@ -25,6 +25,7 @@ End Sub
       (single_line_if_statement
         (comparison_expression
           (identifier)
+          (comparison_operator)
           (identifier))
         (call_statement
           (qualified_member_expression
@@ -36,6 +37,7 @@ End Sub
       (single_line_if_statement
         (comparison_expression
           (identifier)
+          (comparison_operator)
           (identifier))
         (call_statement
           (qualified_member_expression
@@ -47,6 +49,7 @@ End Sub
       (single_line_if_statement
         (comparison_expression
           (identifier)
+          (comparison_operator)
           (identifier))
         (call_statement
           (qualified_member_expression
@@ -58,6 +61,7 @@ End Sub
       (single_line_if_statement
         (comparison_expression
           (identifier)
+          (comparison_operator)
           (identifier))
         (call_statement
           (qualified_member_expression
@@ -69,6 +73,7 @@ End Sub
       (single_line_if_statement
         (comparison_expression
           (identifier)
+          (comparison_operator)
           (identifier))
         (call_statement
           (qualified_member_expression
@@ -80,6 +85,7 @@ End Sub
       (single_line_if_statement
         (comparison_expression
           (identifier)
+          (comparison_operator)
           (identifier))
         (call_statement
           (qualified_member_expression
@@ -91,6 +97,7 @@ End Sub
       (single_line_if_statement
         (comparison_expression
           (identifier)
+          (comparison_operator)
           (nothing_literal))
         (call_statement
           (qualified_member_expression
@@ -102,6 +109,7 @@ End Sub
       (single_line_if_statement
         (comparison_expression
           (identifier)
+          (comparison_operator)
           (string_literal))
         (call_statement
           (qualified_member_expression
@@ -134,9 +142,11 @@ End Sub
         (condition_binary_expression
           (comparison_expression
             (identifier)
+            (comparison_operator)
             (identifier))
           (comparison_expression
             (identifier)
+            (comparison_operator)
             (identifier)))
         (call_statement
           (qualified_member_expression
@@ -150,10 +160,12 @@ End Sub
           (parenthesized_condition_expression
             (comparison_expression
               (identifier)
+              (comparison_operator)
               (identifier)))
           (parenthesized_condition_expression
             (comparison_expression
               (identifier)
+              (comparison_operator)
               (string_literal))))
         (call_statement
           (qualified_member_expression
@@ -195,6 +207,7 @@ End Sub
         (do_condition
           (comparison_expression
             (identifier)
+            (comparison_operator)
             (identifier)))
         (newline)
         (block
@@ -210,6 +223,7 @@ End Sub
         (do_condition
           (comparison_expression
             (identifier)
+            (comparison_operator)
             (nothing_literal)))
         (newline)
         (block
@@ -224,6 +238,7 @@ End Sub
       (while_statement
         (comparison_expression
           (identifier)
+          (comparison_operator)
           (number_literal))
         (newline)
         (block
@@ -266,6 +281,7 @@ End Sub
         (argument_list
           (comparison_expression
             (identifier)
+            (comparison_operator)
             (identifier))))
       (newline)
       (call_statement
@@ -275,12 +291,14 @@ End Sub
         (argument_list
           (comparison_expression
             (identifier)
+            (comparison_operator)
             (identifier))))
       (newline)
       (assignment_statement
         (identifier)
         (comparison_expression
           (identifier)
+          (comparison_operator)
           (identifier)))
       (newline)
       (call_statement
@@ -288,6 +306,7 @@ End Sub
         (argument_list
           (comparison_expression
             (identifier)
+            (comparison_operator)
             (identifier))))
       (newline)
       (call_statement
@@ -296,6 +315,7 @@ End Sub
           (parenthesized_expression
             (comparison_expression
               (identifier)
+              (comparison_operator)
               (identifier)))))
       (newline)
       (call_statement
@@ -305,6 +325,7 @@ End Sub
             (identifier)
             (comparison_expression
               (identifier)
+              (comparison_operator)
               (identifier)))))
       (newline)
       (call_statement
@@ -315,9 +336,11 @@ End Sub
             (logical_value_expression
               (comparison_expression
                 (identifier)
+                (comparison_operator)
                 (identifier))
               (comparison_expression
                 (identifier)
+                (comparison_operator)
                 (identifier))))))
       (newline)))
   (newline))
@@ -368,6 +391,7 @@ End Sub
       (single_line_if_statement
         (comparison_expression
           (identifier)
+          (comparison_operator)
           (number_literal))
         (call_statement
           (qualified_member_expression
@@ -380,6 +404,7 @@ End Sub
         (unary_expression
           (comparison_expression
             (identifier)
+            (comparison_operator)
             (nothing_literal)))
         (call_statement
           (qualified_member_expression

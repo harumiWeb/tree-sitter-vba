@@ -24,6 +24,7 @@ End Sub
       (if_statement
         (comparison_expression
           (identifier)
+          (comparison_operator)
           (identifier))
         (newline)
         (block
@@ -37,6 +38,7 @@ End Sub
         (elseif_clause
           (comparison_expression
             (identifier)
+            (comparison_operator)
             (identifier))
           (newline)
           (block

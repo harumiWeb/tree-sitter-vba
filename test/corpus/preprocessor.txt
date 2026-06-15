@@ -27,6 +27,7 @@ comparison preprocessor constant
     (identifier)
     (comparison_expression
       (identifier)
+      (comparison_operator)
       (number_literal)))
   (newline))
 
