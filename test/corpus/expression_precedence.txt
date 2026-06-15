@@ -100,7 +100,7 @@ End Sub
     (block
       (if_statement
         (unary_expression
-          (binary_expression
+          (comparison_expression
             (identifier)
             (nothing_literal)))
         (newline)

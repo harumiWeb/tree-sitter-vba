@@ -4,6 +4,12 @@ All notable changes to tree-sitter-vba will be documented in this file.
 
 ## Unreleased
 
+### Changed
+
+- Normalize VBA comparison operators `=`, `<>`, `<`, `<=`, `>`, `>=`, `Is`,
+  and `Like` under `comparison_expression` while preserving assignment,
+  `TypeOf ... Is ...`, and `Case Is ...` parsing behavior.
+
 ## [0.4.0] - 2026-06-14
 
 ### Added

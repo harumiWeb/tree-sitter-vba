@@ -32,7 +32,7 @@ This is a `v0.x` public release.
 
 The grammar is already usable for syntax-aware tooling such as highlighting,
 folding, tags, outline extraction, and initial symbol analysis. The current test
-suite covers 164 focused corpus cases and 343 checked-in VBA example files
+suite covers 169 focused corpus cases and 343 checked-in VBA example files
 without `ERROR` or `MISSING` recovery nodes.
 
 It is not yet a complete VBA grammar. Node names and tree shapes may still change before `v1.0.0`.
@@ -166,7 +166,8 @@ The grammar currently supports:
 - fixed-length string declarations
 - `AddressOf` expressions
 - common VBA operator precedence for arithmetic, concatenation, comparison, and
-  logical operators
+  logical operators; `=`, `<>`, `<`, `<=`, `>`, `>=`, `Is`, and `Like`
+  comparisons are represented as `comparison_expression`
 - block `If`, single-line `If`, `Select Case`, `For`, `For Each`, `Do`,
   `While/Wend`, and `With`
 - `On Error`, computed `On ... GoTo`/`GoSub`, `Resume`, `GoTo`, labels,

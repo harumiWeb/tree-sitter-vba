@@ -35,7 +35,7 @@ End Sub
               (identifier)))
           (newline))
         (elseif_clause
-          (binary_expression
+          (comparison_expression
             (identifier)
             (identifier))
           (newline)

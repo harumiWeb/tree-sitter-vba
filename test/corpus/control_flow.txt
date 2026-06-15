@@ -173,7 +173,7 @@ End Sub
     (block
       (do_statement
         (do_condition
-          (binary_expression
+          (comparison_expression
             (identifier)
             (number_literal)))
         (newline)

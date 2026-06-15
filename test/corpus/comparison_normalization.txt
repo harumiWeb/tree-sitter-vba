@@ -1,0 +1,430 @@
+==================
+all comparison operators in if conditions
+==================
+
+Sub Test()
+    If a = b Then Debug.Print a
+    If a <> b Then Debug.Print a
+    If a < b Then Debug.Print a
+    If a <= b Then Debug.Print a
+    If a > b Then Debug.Print a
+    If a >= b Then Debug.Print a
+    If obj Is Nothing Then Debug.Print "none"
+    If name Like "A*" Then Debug.Print name
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (single_line_if_statement
+        (comparison_expression
+          (identifier)
+          (identifier))
+        (call_statement
+          (member_expression
+            (identifier)
+            (identifier))
+          (argument_list
+            (identifier))))
+      (newline)
+      (single_line_if_statement
+        (comparison_expression
+          (identifier)
+          (identifier))
+        (call_statement
+          (member_expression
+            (identifier)
+            (identifier))
+          (argument_list
+            (identifier))))
+      (newline)
+      (single_line_if_statement
+        (comparison_expression
+          (identifier)
+          (identifier))
+        (call_statement
+          (member_expression
+            (identifier)
+            (identifier))
+          (argument_list
+            (identifier))))
+      (newline)
+      (single_line_if_statement
+        (comparison_expression
+          (identifier)
+          (identifier))
+        (call_statement
+          (member_expression
+            (identifier)
+            (identifier))
+          (argument_list
+            (identifier))))
+      (newline)
+      (single_line_if_statement
+        (comparison_expression
+          (identifier)
+          (identifier))
+        (call_statement
+          (member_expression
+            (identifier)
+            (identifier))
+          (argument_list
+            (identifier))))
+      (newline)
+      (single_line_if_statement
+        (comparison_expression
+          (identifier)
+          (identifier))
+        (call_statement
+          (member_expression
+            (identifier)
+            (identifier))
+          (argument_list
+            (identifier))))
+      (newline)
+      (single_line_if_statement
+        (comparison_expression
+          (identifier)
+          (nothing_literal))
+        (call_statement
+          (member_expression
+            (identifier)
+            (identifier))
+          (argument_list
+            (string_literal))))
+      (newline)
+      (single_line_if_statement
+        (comparison_expression
+          (identifier)
+          (string_literal))
+        (call_statement
+          (member_expression
+            (identifier)
+            (identifier))
+          (argument_list
+            (identifier))))
+      (newline)))
+  (newline))
+
+==================
+logical comparison conditions
+==================
+
+Sub Test()
+    If a = b And c <> d Then Debug.Print "ok"
+    If (a = b) Or (c Like "x*") Then Debug.Print "ok"
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (single_line_if_statement
+        (condition_binary_expression
+          (comparison_expression
+            (identifier)
+            (identifier))
+          (comparison_expression
+            (identifier)
+            (identifier)))
+        (call_statement
+          (member_expression
+            (identifier)
+            (identifier))
+          (argument_list
+            (string_literal))))
+      (newline)
+      (single_line_if_statement
+        (condition_binary_expression
+          (parenthesized_condition_expression
+            (comparison_expression
+              (identifier)
+              (identifier)))
+          (parenthesized_condition_expression
+            (comparison_expression
+              (identifier)
+              (string_literal))))
+        (call_statement
+          (member_expression
+            (identifier)
+            (identifier))
+          (argument_list
+            (string_literal))))
+      (newline)))
+  (newline))
+
+==================
+loop comparison conditions
+==================
+
+Sub Test()
+    Do While a <= b
+        a = a + 1
+    Loop
+
+    Do Until obj Is Nothing
+        Set obj = obj.Parent
+    Loop
+
+    While i < 10
+        i = i + 1
+    Wend
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (do_statement
+        (do_condition
+          (comparison_expression
+            (identifier)
+            (identifier)))
+        (newline)
+        (block
+          (assignment_statement
+            (identifier)
+            (binary_expression
+              (identifier)
+              (number_literal)))
+          (newline)))
+      (newline)
+      (newline)
+      (do_statement
+        (do_condition
+          (comparison_expression
+            (identifier)
+            (nothing_literal)))
+        (newline)
+        (block
+          (set_statement
+            (identifier)
+            (member_expression
+              (identifier)
+              (identifier)))
+          (newline)))
+      (newline)
+      (newline)
+      (while_statement
+        (comparison_expression
+          (identifier)
+          (number_literal))
+        (newline)
+        (block
+          (assignment_statement
+            (identifier)
+            (binary_expression
+              (identifier)
+              (number_literal)))
+          (newline)))
+      (newline)))
+  (newline))
+
+==================
+assertion and argument comparisons
+==================
+
+Sub Test()
+    Debug.Assert a = b
+    Debug.Assert a <> b
+    result = a = b
+    Foo a = b
+    Foo (a = b)
+    Foo pretty:=a > b
+    Foo result:=a = b And c = d
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (call_statement
+        (member_expression
+          (identifier)
+          (identifier))
+        (argument_list
+          (comparison_expression
+            (identifier)
+            (identifier))))
+      (newline)
+      (call_statement
+        (member_expression
+          (identifier)
+          (identifier))
+        (argument_list
+          (comparison_expression
+            (identifier)
+            (identifier))))
+      (newline)
+      (assignment_statement
+        (identifier)
+        (comparison_expression
+          (identifier)
+          (identifier)))
+      (newline)
+      (call_statement
+        (identifier)
+        (argument_list
+          (comparison_expression
+            (identifier)
+            (identifier))))
+      (newline)
+      (call_statement
+        (identifier)
+        (argument_list
+          (parenthesized_expression
+            (comparison_expression
+              (identifier)
+              (identifier)))))
+      (newline)
+      (call_statement
+        (identifier)
+        (argument_list
+          (named_argument
+            (identifier)
+            (comparison_expression
+              (identifier)
+              (identifier)))))
+      (newline)
+      (call_statement
+        (identifier)
+        (argument_list
+          (named_argument
+            (identifier)
+            (logical_value_expression
+              (comparison_expression
+                (identifier)
+                (identifier))
+              (comparison_expression
+                (identifier)
+                (identifier))))))
+      (newline)))
+  (newline))
+
+==================
+comparison normalization special cases
+==================
+
+Sub Test()
+    If TypeOf obj Is Excel.Range Then Debug.Print "range"
+    If -foo < 0 Then Debug.Print "negative"
+    If Not value Is Nothing Then Debug.Print "present"
+
+    Select Case value
+        Case Is >= 10
+            Debug.Print "big"
+        Case 1 To 5
+            Debug.Print "small"
+    End Select
+
+    x = y
+    Set obj = otherObj
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (single_line_if_statement
+        (type_of_expression
+          (identifier)
+          (type_expression
+            (dotted_type_expression
+              (identifier)
+              (identifier))))
+        (call_statement
+          (member_expression
+            (identifier)
+            (identifier))
+          (argument_list
+            (string_literal))))
+      (newline)
+      (single_line_if_statement
+        (comparison_expression
+          (identifier)
+          (number_literal))
+        (call_statement
+          (member_expression
+            (identifier)
+            (identifier))
+          (argument_list
+            (string_literal))))
+      (newline)
+      (single_line_if_statement
+        (unary_expression
+          (comparison_expression
+            (identifier)
+            (nothing_literal)))
+        (call_statement
+          (member_expression
+            (identifier)
+            (identifier))
+          (argument_list
+            (string_literal))))
+      (newline)
+      (newline)
+      (select_statement
+        (identifier)
+        (newline)
+        (case_clause
+          (case_expression
+            (number_literal))
+          (newline)
+          (block
+            (call_statement
+              (member_expression
+                (identifier)
+                (identifier))
+              (argument_list
+                (string_literal)))
+            (newline)))
+        (case_clause
+          (case_expression
+            (number_literal)
+            (number_literal))
+          (newline)
+          (block
+            (call_statement
+              (member_expression
+                (identifier)
+                (identifier))
+              (argument_list
+                (string_literal)))
+            (newline))))
+      (newline)
+      (newline)
+      (assignment_statement
+        (identifier)
+        (identifier))
+      (newline)
+      (set_statement
+        (identifier)
+        (identifier))
+      (newline)))
+  (newline))

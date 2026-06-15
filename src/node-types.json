@@ -4868,6 +4868,10 @@
             "named": true
           },
           {
+            "type": "comparison_expression",
+            "named": true
+          },
+          {
             "type": "date_literal",
             "named": true
           },
@@ -4881,6 +4885,10 @@
           },
           {
             "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "logical_value_expression",
             "named": true
           },
           {
@@ -7753,6 +7761,10 @@
         },
         {
           "type": "call_expression",
+          "named": true
+        },
+        {
+          "type": "comparison_expression",
           "named": true
         },
         {
