@@ -70,7 +70,7 @@ End Sub
       (newline)
       (erase_statement
         target: (identifier)
-        target: (member_expression
+        target: (qualified_member_expression
           object: (identifier)
           property: (identifier)))
       (newline)))
@@ -125,7 +125,7 @@ End Sub
     (block
       (erase_statement
         (call_expression
-          (member_expression
+          (qualified_member_expression
             (call_expression
               (identifier)
               (identifier))
@@ -164,7 +164,7 @@ End Sub
       (assignment_statement
         left: (identifier)
         right: (call_expression
-          function: (member_expression
+          function: (qualified_member_expression
             object: (identifier)
             property: (identifier))
           (identifier)

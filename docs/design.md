@@ -167,8 +167,15 @@ with_statement
 call_statement
 assignment_statement
 member_expression
+qualified_member_expression
+implicit_member_expression
 argument_list
 ```
+
+`member_expression` is a hidden supertype for member access. Concrete syntax
+trees expose `qualified_member_expression` for member access with an object
+child, such as `obj.Property` and `obj!Field`, and `implicit_member_expression`
+for leading-dot or leading-bang access, such as `.Property` and `!Field`.
 
 ### 8. Keep queries in sync
 

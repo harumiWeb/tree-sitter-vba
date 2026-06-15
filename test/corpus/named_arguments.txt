@@ -18,19 +18,19 @@ End Sub
       (set_statement
         (identifier)
         (call_expression
-          (member_expression
-            (member_expression
+          (qualified_member_expression
+            (qualified_member_expression
               (identifier)
               (identifier))
             (identifier))
           (named_argument
             (identifier)
             (call_expression
-              (member_expression
+              (qualified_member_expression
                 (identifier)
                 (identifier))
-              (member_expression
-                (member_expression
+              (qualified_member_expression
+                (qualified_member_expression
                   (identifier)
                   (identifier))
                 (identifier))))))

@@ -6,6 +6,9 @@ All notable changes to tree-sitter-vba will be documented in this file.
 
 ### Changed
 
+- Split visible member access trees into `qualified_member_expression` for
+  explicit object access and `implicit_member_expression` for leading-dot or
+  leading-bang access, with an `operator` field for `.` and `!`.
 - Normalize VBA comparison operators `=`, `<>`, `<`, `<=`, `>`, `>=`, `Is`,
   and `Like` under `comparison_expression` while preserving assignment,
   `TypeOf ... Is ...`, and `Case Is ...` parsing behavior.

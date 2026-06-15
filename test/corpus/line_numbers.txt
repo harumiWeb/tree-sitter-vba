@@ -37,7 +37,7 @@ End Sub
       (line_number_statement
         (line_number_literal)
         (call_statement
-          (member_expression
+          (qualified_member_expression
             (identifier)
             (identifier))
           (argument_list

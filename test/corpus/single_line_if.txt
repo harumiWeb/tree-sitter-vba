@@ -20,7 +20,7 @@ End Sub
           (identifier)
           (identifier))
         (call_statement
-          (member_expression
+          (qualified_member_expression
             (identifier)
             (identifier))
           (argument_list
@@ -105,9 +105,9 @@ End Sub
           (redim_declarator
             (identifier)
             (array_bounds
-                (array_bound
-                  (number_literal)
-                  (identifier))))))
+              (array_bound
+                (number_literal)
+                (identifier))))))
       (newline)))
   (newline))
 

@@ -24,7 +24,7 @@ End Sub
         (newline)
         (block
           (call_statement
-            (member_expression
+            (qualified_member_expression
               (identifier)
               (identifier))
             (argument_list
@@ -59,7 +59,7 @@ End Sub
         (newline)
         (block
           (call_statement
-            (member_expression
+            (qualified_member_expression
               (identifier)
               (identifier))
             (argument_list
@@ -94,7 +94,7 @@ End Sub
         (newline)
         (block
           (call_statement
-            (member_expression
+            (qualified_member_expression
               (identifier)
               (identifier))
             (argument_list
@@ -129,7 +129,7 @@ End Sub
         (newline)
         (block
           (call_statement
-            (member_expression
+            (qualified_member_expression
               (identifier)
               (identifier))
             (argument_list

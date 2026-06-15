@@ -20,7 +20,7 @@ Attribute Button.VB_VarHelpID = -1
             (identifier))))))
   (newline)
   (attribute_statement
-    (member_expression
+    (qualified_member_expression
       (identifier)
       (identifier))
     (number_literal))
