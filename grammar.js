@@ -29,9 +29,9 @@ module.exports = grammar({
     [$.elseif_clause],
     [$.else_clause],
     [$.case_clause],
-    [$._property_header, $._property_get_header],
-    [$._property_header, $._property_let_header],
-    [$._property_header, $._property_set_header],
+    [$.property_get_declaration, $._property_header],
+    [$.property_let_declaration, $._property_header],
+    [$.property_set_declaration, $._property_header],
   ],
 
   rules: {
@@ -364,14 +364,7 @@ module.exports = grammar({
       ),
 
     _property_header: ($) =>
-      seq(
-        optional($._procedure_modifier),
-        caseInsensitive("Property"),
-        field("accessor", choice($.get_accessor, $.let_accessor, $.set_accessor)),
-        field("name", $.identifier),
-        optional(field("parameters", $.parameter_list)),
-        optional(field("type", $.as_type_clause)),
-      ),
+      choice($._property_get_header, $._property_let_header, $._property_set_header),
 
     _property_get_header: ($) =>
       seq(
@@ -526,7 +519,13 @@ module.exports = grammar({
       ),
 
     _procedure_modifier: ($) =>
-      choice(field("visibility", $.visibility), field("static_modifier", $.static_modifier)),
+      choice(
+        seq(
+          field("visibility", $.visibility),
+          optional(field("static_modifier", $.static_modifier)),
+        ),
+        field("static_modifier", $.static_modifier),
+      ),
 
     static_modifier: (_) => caseInsensitive("Static"),
 

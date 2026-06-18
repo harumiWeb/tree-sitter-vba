@@ -15,36 +15,36 @@ End Function
 (source_file
   (newline)
   (conditional_function_declaration
-    (identifier)
+    condition: (identifier)
     (newline)
-    (visibility)
-    (identifier)
-    (parameter_list
+    visibility: (visibility)
+    name: (identifier)
+    parameters: (parameter_list
       (parameter
-        (byval_modifier)
-        (identifier)
-        (as_type_clause
-          (type_expression))))
-    (as_type_clause
-      (type_expression))
+        passing_mode: (byval_modifier)
+        name: (identifier)
+        type: (as_type_clause
+          type: (type_expression))))
+    type: (as_type_clause
+      type: (type_expression))
     (newline)
     (newline)
-    (visibility)
-    (identifier)
-    (parameter_list
+    visibility: (visibility)
+    name: (identifier)
+    parameters: (parameter_list
       (parameter
-        (byval_modifier)
-        (identifier)
-        (as_type_clause
-          (type_expression))))
-    (as_type_clause
-      (type_expression))
+        passing_mode: (byval_modifier)
+        name: (identifier)
+        type: (as_type_clause
+          type: (type_expression))))
+    type: (as_type_clause
+      type: (type_expression))
     (newline)
     (newline)
-    (block
+    body: (block
       (set_statement
-        (identifier)
-        (nothing_literal))
+        left: (identifier)
+        right: (nothing_literal))
       (newline)))
   (newline))
 
@@ -65,35 +65,115 @@ End Sub
 (source_file
   (newline)
   (conditional_sub_declaration
-    (identifier)
+    condition: (identifier)
     (newline)
-    (visibility)
-    (identifier)
-    (parameter_list
+    visibility: (visibility)
+    name: (identifier)
+    parameters: (parameter_list
       (parameter
-        (byval_modifier)
-        (identifier)
-        (as_type_clause
-          (type_expression))))
+        passing_mode: (byval_modifier)
+        name: (identifier)
+        type: (as_type_clause
+          type: (type_expression))))
     (newline)
     (newline)
-    (visibility)
-    (identifier)
-    (parameter_list
+    visibility: (visibility)
+    name: (identifier)
+    parameters: (parameter_list
       (parameter
-        (byval_modifier)
-        (identifier)
-        (as_type_clause
-          (type_expression))))
+        passing_mode: (byval_modifier)
+        name: (identifier)
+        type: (as_type_clause
+          type: (type_expression))))
     (newline)
     (newline)
-    (block
+    body: (block
       (call_statement
-        (identifier)
+        callee: (identifier)
         (argument_list
           (parenthesized_expression
             (identifier))))
       (newline)))
+  (newline))
+
+==================
+combined static procedure modifiers
+==================
+
+Private Static Sub Cache()
+End Sub
+
+Public Static Function CacheValue() As Long
+End Function
+
+Friend Static Property Get Value() As Variant
+End Property
+
+Friend Static Property Let Value(ByVal newValue As Variant)
+End Property
+
+Friend Static Property Set Item(ByVal newValue As Object)
+End Property
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    visibility: (visibility)
+    static_modifier: (static_modifier)
+    name: (identifier)
+    parameters: (parameter_list)
+    (newline))
+  (newline)
+  (newline)
+  (function_declaration
+    visibility: (visibility)
+    static_modifier: (static_modifier)
+    name: (identifier)
+    parameters: (parameter_list)
+    type: (as_type_clause
+      type: (type_expression))
+    (newline))
+  (newline)
+  (newline)
+  (property_get_declaration
+    visibility: (visibility)
+    static_modifier: (static_modifier)
+    accessor: (get_accessor)
+    name: (identifier)
+    parameters: (parameter_list)
+    type: (as_type_clause
+      type: (type_expression))
+    (newline))
+  (newline)
+  (newline)
+  (property_let_declaration
+    visibility: (visibility)
+    static_modifier: (static_modifier)
+    accessor: (let_accessor)
+    name: (identifier)
+    parameters: (parameter_list
+      (parameter
+        passing_mode: (byval_modifier)
+        name: (identifier)
+        type: (as_type_clause
+          type: (type_expression))))
+    (newline))
+  (newline)
+  (newline)
+  (property_set_declaration
+    visibility: (visibility)
+    static_modifier: (static_modifier)
+    accessor: (set_accessor)
+    name: (identifier)
+    parameters: (parameter_list
+      (parameter
+        passing_mode: (byval_modifier)
+        name: (identifier)
+        type: (as_type_clause
+          type: (type_expression))))
+    (newline))
   (newline))
 
 ==================
