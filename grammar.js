@@ -29,6 +29,9 @@ module.exports = grammar({
     [$.elseif_clause],
     [$.else_clause],
     [$.case_clause],
+    [$.property_get_declaration, $._property_header],
+    [$.property_let_declaration, $._property_header],
+    [$.property_set_declaration, $._property_header],
   ],
 
   rules: {
@@ -49,13 +52,16 @@ module.exports = grammar({
         $.def_type_statement,
         $.type_declaration,
         $.enum_declaration,
-        $.declare_statement,
+        $.declare_sub_statement,
+        $.declare_function_statement,
         $.conditional_sub_declaration,
         $.conditional_function_declaration,
         $.conditional_property_declaration,
         $.sub_declaration,
         $.function_declaration,
-        $.property_declaration,
+        $.property_get_declaration,
+        $.property_let_declaration,
+        $.property_set_declaration,
         $.event_declaration,
         $.const_declaration,
         $.variable_declaration,
@@ -147,11 +153,11 @@ module.exports = grammar({
       ),
 
     implements_statement: ($) =>
-      seq(caseInsensitive("Implements"), field("type", $.type_expression)),
+      seq(caseInsensitive("Implements"), field("name", $.type_expression)),
 
     type_declaration: ($) =>
       seq(
-        optional($.visibility),
+        optional(field("visibility", $.visibility)),
         caseInsensitive("Type"),
         field("name", $.identifier),
         $._statement_separator,
@@ -161,7 +167,11 @@ module.exports = grammar({
       ),
 
     type_member: ($) =>
-      seq(field("name", $.identifier), optional($.array_bounds), $.as_type_clause),
+      seq(
+        field("name", $.identifier),
+        optional(field("bounds", $.array_bounds)),
+        field("type", $.as_type_clause),
+      ),
 
     type_preprocessor_if: ($) =>
       seq(
@@ -193,7 +203,7 @@ module.exports = grammar({
 
     enum_declaration: ($) =>
       seq(
-        optional($.visibility),
+        optional(field("visibility", $.visibility)),
         caseInsensitive("Enum"),
         field("name", $.identifier),
         $._statement_separator,
@@ -205,19 +215,34 @@ module.exports = grammar({
     enum_member: ($) =>
       seq(field("name", $.identifier), optional(seq("=", field("value", $._expression)))),
 
-    declare_statement: ($) =>
+    declare_sub_statement: ($) =>
       prec.right(
         seq(
-          optional($.visibility),
+          optional(field("visibility", $.visibility)),
           caseInsensitive("Declare"),
-          optional(caseInsensitive("PtrSafe")),
-          field("kind", choice(caseInsensitive("Function"), caseInsensitive("Sub"))),
+          optional(field("ptrsafe_modifier", $.ptrsafe_modifier)),
+          caseInsensitive("Sub"),
           field("name", $.identifier),
           caseInsensitive("Lib"),
           field("library", $.string_literal),
           optional(seq(caseInsensitive("Alias"), field("alias", $.string_literal))),
-          optional($.parameter_list),
-          optional($.as_type_clause),
+          optional(field("parameters", $.parameter_list)),
+        ),
+      ),
+
+    declare_function_statement: ($) =>
+      prec.right(
+        seq(
+          optional(field("visibility", $.visibility)),
+          caseInsensitive("Declare"),
+          optional(field("ptrsafe_modifier", $.ptrsafe_modifier)),
+          caseInsensitive("Function"),
+          field("name", $.identifier),
+          caseInsensitive("Lib"),
+          field("library", $.string_literal),
+          optional(seq(caseInsensitive("Alias"), field("alias", $.string_literal))),
+          optional(field("parameters", $.parameter_list)),
+          optional(field("type", $.as_type_clause)),
         ),
       ),
 
@@ -248,7 +273,8 @@ module.exports = grammar({
       choice(
         $.newline,
         $._statement,
-        $.declare_statement,
+        $.declare_sub_statement,
+        $.declare_function_statement,
         $.type_declaration,
         $.enum_declaration,
         $.conditional_sub_declaration,
@@ -256,7 +282,9 @@ module.exports = grammar({
         $.conditional_property_declaration,
         $.sub_declaration,
         $.function_declaration,
-        $.property_declaration,
+        $.property_get_declaration,
+        $.property_let_declaration,
+        $.property_set_declaration,
         $.event_declaration,
         ":",
       ),
@@ -291,9 +319,27 @@ module.exports = grammar({
         caseInsensitive("Function"),
       ),
 
-    property_declaration: ($) =>
+    property_get_declaration: ($) =>
       seq(
-        $._property_header,
+        $._property_get_header,
+        $._statement_separator,
+        field("body", optional($.block)),
+        caseInsensitive("End"),
+        caseInsensitive("Property"),
+      ),
+
+    property_let_declaration: ($) =>
+      seq(
+        $._property_let_header,
+        $._statement_separator,
+        field("body", optional($.block)),
+        caseInsensitive("End"),
+        caseInsensitive("Property"),
+      ),
+
+    property_set_declaration: ($) =>
+      seq(
+        $._property_set_header,
         $._statement_separator,
         field("body", optional($.block)),
         caseInsensitive("End"),
@@ -302,32 +348,52 @@ module.exports = grammar({
 
     _sub_header: ($) =>
       seq(
-        optional($.procedure_modifier),
+        optional($._procedure_modifier),
         caseInsensitive("Sub"),
         field("name", $.identifier),
-        optional($.parameter_list),
+        optional(field("parameters", $.parameter_list)),
       ),
 
     _function_header: ($) =>
       seq(
-        optional($.procedure_modifier),
+        optional($._procedure_modifier),
         caseInsensitive("Function"),
         field("name", $.identifier),
-        optional($.parameter_list),
-        optional($.as_type_clause),
+        optional(field("parameters", $.parameter_list)),
+        optional(field("type", $.as_type_clause)),
       ),
 
     _property_header: ($) =>
+      choice($._property_get_header, $._property_let_header, $._property_set_header),
+
+    _property_get_header: ($) =>
       seq(
-        optional($.procedure_modifier),
+        optional($._procedure_modifier),
         caseInsensitive("Property"),
-        field(
-          "accessor",
-          choice(caseInsensitive("Get"), caseInsensitive("Let"), caseInsensitive("Set")),
-        ),
+        field("accessor", $.get_accessor),
         field("name", $.identifier),
-        optional($.parameter_list),
-        optional($.as_type_clause),
+        optional(field("parameters", $.parameter_list)),
+        optional(field("type", $.as_type_clause)),
+      ),
+
+    _property_let_header: ($) =>
+      seq(
+        optional($._procedure_modifier),
+        caseInsensitive("Property"),
+        field("accessor", $.let_accessor),
+        field("name", $.identifier),
+        optional(field("parameters", $.parameter_list)),
+        optional(field("type", $.as_type_clause)),
+      ),
+
+    _property_set_header: ($) =>
+      seq(
+        optional($._procedure_modifier),
+        caseInsensitive("Property"),
+        field("accessor", $.set_accessor),
+        field("name", $.identifier),
+        optional(field("parameters", $.parameter_list)),
+        optional(field("type", $.as_type_clause)),
       ),
 
     conditional_sub_declaration: ($) =>
@@ -445,14 +511,41 @@ module.exports = grammar({
     event_declaration: ($) =>
       prec.right(
         seq(
-          optional($.visibility),
+          optional(field("visibility", $.visibility)),
           caseInsensitive("Event"),
           field("name", $.identifier),
-          optional($.parameter_list),
+          optional(field("parameters", $.parameter_list)),
         ),
       ),
 
-    procedure_modifier: ($) => choice($.visibility, caseInsensitive("Static")),
+    _procedure_modifier: ($) =>
+      choice(
+        seq(
+          field("visibility", $.visibility),
+          optional(field("static_modifier", $.static_modifier)),
+        ),
+        field("static_modifier", $.static_modifier),
+      ),
+
+    static_modifier: (_) => caseInsensitive("Static"),
+
+    with_events_modifier: (_) => caseInsensitive("WithEvents"),
+
+    ptrsafe_modifier: (_) => caseInsensitive("PtrSafe"),
+
+    byval_modifier: (_) => caseInsensitive("ByVal"),
+
+    byref_modifier: (_) => caseInsensitive("ByRef"),
+
+    optional_modifier: (_) => caseInsensitive("Optional"),
+
+    paramarray_modifier: (_) => caseInsensitive("ParamArray"),
+
+    get_accessor: (_) => caseInsensitive("Get"),
+
+    let_accessor: (_) => caseInsensitive("Let"),
+
+    set_accessor: (_) => caseInsensitive("Set"),
 
     block: ($) => repeat1(choice($._statement_separator, $._statement)),
 
@@ -507,18 +600,29 @@ module.exports = grammar({
 
     variable_declaration: ($) =>
       choice(
-        seq($.visibility, caseInsensitive("WithEvents"), commaSep1($.variable_declarator)),
+        seq(
+          field("visibility", $.visibility),
+          field("with_events_modifier", $.with_events_modifier),
+          commaSep1($.variable_declarator),
+        ),
         seq(
           choice(
-            seq(optional($.visibility), choice(caseInsensitive("Dim"), caseInsensitive("Static"))),
-            $.visibility,
+            seq(
+              optional(field("visibility", $.visibility)),
+              choice(caseInsensitive("Dim"), field("static_modifier", $.static_modifier)),
+            ),
+            field("visibility", $.visibility),
           ),
           commaSep1($.variable_declarator),
         ),
       ),
 
     const_declaration: ($) =>
-      seq(optional($.visibility), caseInsensitive("Const"), commaSep1($.const_declarator)),
+      seq(
+        optional(field("visibility", $.visibility)),
+        caseInsensitive("Const"),
+        commaSep1($.const_declarator),
+      ),
 
     variable_declarator: ($) =>
       choice(
@@ -526,19 +630,23 @@ module.exports = grammar({
           1,
           seq(
             field("name", $.identifier),
-            $.array_bounds,
-            optional($.as_type_clause),
-            optional($.initializer),
+            field("bounds", $.array_bounds),
+            optional(field("type", $.as_type_clause)),
+            optional(field("initializer", $.initializer)),
           ),
         ),
-        seq(field("name", $.identifier), optional($.as_type_clause), optional($.initializer)),
+        seq(
+          field("name", $.identifier),
+          optional(field("type", $.as_type_clause)),
+          optional(field("initializer", $.initializer)),
+        ),
       ),
 
     const_declarator: ($) =>
       seq(
         field("name", $.identifier),
-        optional($.as_type_clause),
-        optional(seq("=", field("value", $._expression))),
+        optional(field("type", $.as_type_clause)),
+        optional(field("initializer", $.initializer)),
       ),
 
     initializer: ($) => seq("=", field("value", choice($.comparison_expression, $._expression))),
@@ -547,14 +655,13 @@ module.exports = grammar({
 
     parameter: ($) =>
       seq(
-        repeat(
-          choice(caseInsensitive("ByVal"), caseInsensitive("ByRef"), caseInsensitive("Optional")),
-        ),
-        optional(caseInsensitive("ParamArray")),
+        optional(field("optional_modifier", $.optional_modifier)),
+        optional(field("passing_mode", choice($.byval_modifier, $.byref_modifier))),
+        optional(field("paramarray_modifier", $.paramarray_modifier)),
         field("name", $.identifier),
-        optional($.array_bounds),
-        optional($.as_type_clause),
-        optional($.initializer),
+        optional(field("bounds", $.array_bounds)),
+        optional(field("type", $.as_type_clause)),
+        optional(field("default_value", $.initializer)),
       ),
 
     as_type_clause: ($) =>

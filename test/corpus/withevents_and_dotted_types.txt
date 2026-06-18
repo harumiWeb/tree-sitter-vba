@@ -10,20 +10,21 @@ Attribute Button.VB_VarHelpID = -1
 (source_file
   (newline)
   (variable_declaration
-    (visibility)
+    visibility: (visibility)
+    with_events_modifier: (with_events_modifier)
     (variable_declarator
-      (identifier)
-      (as_type_clause
-        (type_expression
+      name: (identifier)
+      type: (as_type_clause
+        type: (type_expression
           (dotted_type_expression
             (identifier)
             (identifier))))))
   (newline)
   (attribute_statement
-    (qualified_member_expression
-      (identifier)
-      (identifier))
-    (number_literal))
+    name: (qualified_member_expression
+      object: (identifier)
+      property: (identifier))
+    value: (number_literal))
   (newline))
 
 ==================
@@ -38,11 +39,11 @@ End Sub
 (source_file
   (newline)
   (sub_declaration
-    (procedure_modifier
-      (visibility))
+    (visibility)
     (identifier)
     (parameter_list
       (parameter
+        (byval_modifier)
         (identifier)
         (as_type_clause
           (type_expression
@@ -65,8 +66,7 @@ End Function
 (source_file
   (newline)
   (function_declaration
-    (procedure_modifier
-      (visibility))
+    (visibility)
     (identifier)
     (parameter_list)
     (as_type_clause

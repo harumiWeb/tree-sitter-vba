@@ -12,22 +12,23 @@ Static cache As Object
   (newline)
   (variable_declaration
     (variable_declarator
-      (identifier)
-      (as_type_clause
-        (type_expression))))
+      name: (identifier)
+      type: (as_type_clause
+        type: (type_expression))))
   (newline)
   (variable_declaration
-    (visibility)
+    visibility: (visibility)
     (variable_declarator
-      (identifier)
-      (as_type_clause
-        (type_expression))))
+      name: (identifier)
+      type: (as_type_clause
+        type: (type_expression))))
   (newline)
   (variable_declaration
+    static_modifier: (static_modifier)
     (variable_declarator
-      (identifier)
-      (as_type_clause
-        (type_expression))))
+      name: (identifier)
+      type: (as_type_clause
+        type: (type_expression))))
   (newline))
 
 ==================
@@ -41,12 +42,13 @@ Public Const MaxCount As Long = 10
 (source_file
   (newline)
   (const_declaration
-    (visibility)
+    visibility: (visibility)
     (const_declarator
-      (identifier)
-      (as_type_clause
-        (type_expression))
-      (number_literal)))
+      name: (identifier)
+      type: (as_type_clause
+        type: (type_expression))
+      initializer: (initializer
+        value: (number_literal))))
   (newline))
 
 ==================

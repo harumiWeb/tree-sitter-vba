@@ -15,14 +15,14 @@ End Function
   (newline)
   (sub_declaration
     name: (identifier)
-    (parameter_list)
+    parameters: (parameter_list)
     (newline))
   (newline)
   (newline)
   (function_declaration
     name: (identifier)
-    (parameter_list)
-    (as_type_clause
+    parameters: (parameter_list)
+    type: (as_type_clause
       type: (type_expression))
     (newline)
     body: (block

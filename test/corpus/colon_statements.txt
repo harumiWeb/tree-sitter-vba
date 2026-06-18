@@ -9,8 +9,7 @@ Public Function UfoWidth() As Long: UfoWidth = P_UFO_WIDTH: End Function
 (source_file
   (newline)
   (function_declaration
-    (procedure_modifier
-      (visibility))
+    (visibility)
     (identifier)
     (parameter_list)
     (as_type_clause
@@ -83,11 +82,11 @@ End Function
 (source_file
   (newline)
   (function_declaration
-    (procedure_modifier
-      (visibility))
+    (visibility)
     (identifier)
     (parameter_list
       (parameter
+        (byval_modifier)
         (identifier)
         (as_type_clause
           (type_expression))))

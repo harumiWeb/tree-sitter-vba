@@ -40,6 +40,11 @@ for (const file of files) {
   const result = spawnSync(process.execPath, [treeSitterCli, "parse", file], {
     encoding: "utf8",
     shell: false,
+    env: {
+      ...process.env,
+      CC: "gcc",
+      CXX: "g++",
+    },
     maxBuffer: 16 * 1024 * 1024,
   });
   const output = `${result.stdout ?? ""}\n${result.stderr ?? ""}`;

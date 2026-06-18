@@ -15,14 +15,24 @@
 (implements_statement) @keyword
 (type_declaration) @keyword
 (enum_declaration) @keyword
-(declare_statement) @keyword
+(declare_sub_statement) @keyword
+(declare_function_statement) @keyword
 (preprocessor_const) @keyword
 (preprocessor_if) @keyword
 (preprocessor_elseif) @keyword
 (preprocessor_else) @keyword
 (frm_begin_property_block) @keyword
 (visibility) @keyword
-(procedure_modifier) @keyword
+(static_modifier) @keyword
+(with_events_modifier) @keyword
+(ptrsafe_modifier) @keyword
+(byval_modifier) @keyword
+(byref_modifier) @keyword
+(optional_modifier) @keyword
+(paramarray_modifier) @keyword
+(get_accessor) @keyword
+(let_accessor) @keyword
+(set_accessor) @keyword
 (as_type_clause) @keyword
 (line_continuation) @punctuation.special
 
@@ -91,7 +101,10 @@
 (addressof_expression
   target: (identifier) @function)
 
-(declare_statement
+(declare_sub_statement
+  name: (identifier) @function)
+
+(declare_function_statement
   name: (identifier) @function)
 
 (sub_declaration
@@ -100,7 +113,13 @@
 (function_declaration
   name: (identifier) @function)
 
-(property_declaration
+(property_get_declaration
+  name: (identifier) @function)
+
+(property_let_declaration
+  name: (identifier) @function)
+
+(property_set_declaration
   name: (identifier) @function)
 
 (call_statement

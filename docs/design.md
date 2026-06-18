@@ -155,7 +155,9 @@ Prefer clear snake_case node names, for example:
 ```text
 sub_declaration
 function_declaration
-property_declaration
+property_get_declaration
+property_let_declaration
+property_set_declaration
 variable_declaration
 const_declaration
 type_declaration
@@ -176,6 +178,15 @@ argument_list
 trees expose `qualified_member_expression` for member access with an object
 child, such as `obj.Property` and `obj!Field`, and `implicit_member_expression`
 for leading-dot or leading-bang access, such as `.Property` and `!Field`.
+
+Declaration node shapes should expose syntactic metadata structurally for
+downstream symbol indexers, linters, formatters, and LSP-style tools. Prefer
+dedicated declaration nodes such as `property_get_declaration`,
+`property_let_declaration`, `property_set_declaration`,
+`declare_sub_statement`, and `declare_function_statement` over requiring
+consumers to inspect raw signature text. Use stable fields such as `visibility`,
+`name`, `parameters`, `type`, `initializer`, `passing_mode`, and
+`default_value` where the syntax provides those values.
 
 ### 8. Keep queries in sync
 

@@ -4,7 +4,13 @@
 (function_declaration
   body: (block) @fold)
 
-(property_declaration
+(property_get_declaration
+  body: (block) @fold)
+
+(property_let_declaration
+  body: (block) @fold)
+
+(property_set_declaration
   body: (block) @fold)
 
 (type_declaration) @fold

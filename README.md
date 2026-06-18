@@ -193,6 +193,31 @@ The grammar currently supports:
   `.frx` blob references
 - initial `highlights.scm`, `folds.scm`, and `tags.scm` queries
 
+## Declaration node API
+
+This release line is still pre-`1.0.0`, and declaration node shapes may change
+when doing so makes syntactic metadata more directly available to downstream
+tools.
+
+Declaration consumers should prefer these structural nodes and fields over
+source-text scanning:
+
+- `property_get_declaration`, `property_let_declaration`, and
+  `property_set_declaration` distinguish property accessors directly.
+- `declare_sub_statement` and `declare_function_statement` distinguish external
+  declaration kind directly.
+- declaration headers expose stable fields such as `visibility`, `name`,
+  `parameters`, `type`, `library`, `alias`, `ptrsafe_modifier`, and `body`
+  where applicable.
+- variable, constant, type-member, and parameter declarations expose stable
+  `name`, `bounds`, `type`, `initializer`, `passing_mode`, `optional_modifier`,
+  `paramarray_modifier`, and `default_value` fields where syntactically valid.
+- `with_events_modifier`, `static_modifier`, `byval_modifier`, `byref_modifier`,
+  `optional_modifier`, `paramarray_modifier`, and `ptrsafe_modifier` are
+  explicit modifier nodes.
+- `implements_statement` exposes its target as `name`, and
+  `attribute_statement` exposes `name` and `value`.
+
 ## Known limitations
 
 This grammar parses VBA syntax only.

@@ -10,10 +10,9 @@ End Sub
 (source_file
   (newline)
   (sub_declaration
-    (procedure_modifier
-      (visibility))
+    visibility: (visibility)
     name: (identifier)
-    (parameter_list)
+    parameters: (parameter_list)
     (newline))
   (newline))
 
@@ -30,19 +29,20 @@ End Function
 (source_file
   (newline)
   (function_declaration
-    (procedure_modifier
-      (visibility))
+    visibility: (visibility)
     name: (identifier)
-    (parameter_list
+    parameters: (parameter_list
       (parameter
+        passing_mode: (byval_modifier)
         name: (identifier)
-        (as_type_clause
+        type: (as_type_clause
           type: (type_expression)))
       (parameter
+        passing_mode: (byval_modifier)
         name: (identifier)
-        (as_type_clause
+        type: (as_type_clause
           type: (type_expression))))
-    (as_type_clause
+    type: (as_type_clause
       type: (type_expression))
     (newline)
     body: (block
@@ -66,12 +66,12 @@ End Property
 
 (source_file
   (newline)
-  (property_declaration
-    (procedure_modifier
-      (visibility))
+  (property_get_declaration
+    visibility: (visibility)
+    accessor: (get_accessor)
     name: (identifier)
-    (parameter_list)
-    (as_type_clause
+    parameters: (parameter_list)
+    type: (as_type_clause
       type: (type_expression))
     (newline)
     body: (block
@@ -92,14 +92,15 @@ End Property
 
 (source_file
   (newline)
-  (property_declaration
-    (procedure_modifier
-      (visibility))
+  (property_let_declaration
+    visibility: (visibility)
+    accessor: (let_accessor)
     name: (identifier)
-    (parameter_list
+    parameters: (parameter_list
       (parameter
+        passing_mode: (byval_modifier)
         name: (identifier)
-        (as_type_clause
+        type: (as_type_clause
           type: (type_expression))))
     (newline))
   (newline))
@@ -115,14 +116,15 @@ End Property
 
 (source_file
   (newline)
-  (property_declaration
-    (procedure_modifier
-      (visibility))
-    (identifier)
-    (parameter_list
+  (property_set_declaration
+    visibility: (visibility)
+    accessor: (set_accessor)
+    name: (identifier)
+    parameters: (parameter_list
       (parameter
-        (identifier)
-        (as_type_clause
-          (type_expression))))
+        passing_mode: (byval_modifier)
+        name: (identifier)
+        type: (as_type_clause
+          type: (type_expression))))
     (newline))
   (newline))
