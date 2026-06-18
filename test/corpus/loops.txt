@@ -251,7 +251,8 @@ End Property
       (newline)))
   (newline)
   (newline)
-  (property_declaration
+  (property_get_declaration
+    (get_accessor)
     (identifier)
     (parameter_list)
     (as_type_clause

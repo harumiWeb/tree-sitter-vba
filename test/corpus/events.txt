@@ -19,10 +19,12 @@ Private Event Changed(ByVal oldValue As String, ByRef newValue As String)
     (identifier)
     (parameter_list
       (parameter
+        (byval_modifier)
         (identifier)
         (as_type_clause
           (type_expression)))
       (parameter
+        (byref_modifier)
         (identifier)
         (as_type_clause
           (type_expression)))))

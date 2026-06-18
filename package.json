@@ -1,6 +1,6 @@
 {
   "name": "tree-sitter-vba",
-  "version": "0.5.1",
+  "version": "0.6.0",
   "description": "Tree-sitter grammar for Visual Basic for Applications (VBA).",
   "keywords": [
     "excel",
@@ -43,7 +43,7 @@
     "install": "node-gyp-build",
     "generate": "tree-sitter generate --abi 14",
     "build:binding": "node-gyp rebuild",
-    "test": "pnpm generate && tree-sitter test",
+    "test": "pnpm generate && node scripts/run-tree-sitter.mjs test",
     "test:binding": "node scripts/ensure-binding.mjs && node --test bindings/node/*_test.js",
     "parse:examples": "node scripts/parse-examples.mjs",
     "query:examples": "node scripts/query-examples.mjs",

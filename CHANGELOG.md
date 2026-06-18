@@ -4,6 +4,25 @@ All notable changes to tree-sitter-vba will be documented in this file.
 
 ## Unreleased
 
+## [v0.6.0] - 2026-06-18
+
+### Changed
+
+- Split property declarations into `property_get_declaration`,
+  `property_let_declaration`, and `property_set_declaration` nodes.
+- Split external declarations into `declare_sub_statement` and
+  `declare_function_statement` nodes.
+- Add structural declaration fields and modifier nodes for downstream symbol
+  extraction, including visibility, static, `WithEvents`, `PtrSafe`,
+  parameter passing mode, optional/default parameter metadata, type clauses,
+  and initializers.
+- Expose `Implements` targets through a stable `name` field.
+- Update bundled highlight, fold, and tag queries for the new declaration node
+  shapes.
+- Configure the Tree-sitter corpus test npm script to run with `CC=gcc` and
+  `CXX=g++`, avoiding Windows parser compilation failures from the wrong
+  compiler selection.
+
 ## [v0.5.1] - 2026-06-15
 
 ### Added

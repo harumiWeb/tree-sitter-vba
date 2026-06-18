@@ -16,7 +16,7 @@ End Sub
   (newline)
   (sub_declaration
     name: (identifier)
-    (parameter_list)
+    parameters: (parameter_list)
     (newline)
     body: (block
       (assignment_statement
@@ -49,7 +49,7 @@ End Sub
   (newline)
   (sub_declaration
     name: (identifier)
-    (parameter_list)
+    parameters: (parameter_list)
     (newline)
     body: (block
       (assignment_statement

@@ -4,7 +4,13 @@
 (function_declaration
   name: (identifier) @name) @definition.function
 
-(property_declaration
+(property_get_declaration
+  name: (identifier) @name) @definition.method
+
+(property_let_declaration
+  name: (identifier) @name) @definition.method
+
+(property_set_declaration
   name: (identifier) @name) @definition.method
 
 (type_declaration
@@ -13,7 +19,10 @@
 (enum_declaration
   name: (identifier) @name) @definition.enum
 
-(declare_statement
+(declare_sub_statement
+  name: (identifier) @name) @definition.function
+
+(declare_function_statement
   name: (identifier) @name) @definition.function
 
 (label_statement

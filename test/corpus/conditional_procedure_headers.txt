@@ -17,11 +17,11 @@ End Function
   (conditional_function_declaration
     (identifier)
     (newline)
-    (procedure_modifier
-      (visibility))
+    (visibility)
     (identifier)
     (parameter_list
       (parameter
+        (byval_modifier)
         (identifier)
         (as_type_clause
           (type_expression))))
@@ -29,11 +29,11 @@ End Function
       (type_expression))
     (newline)
     (newline)
-    (procedure_modifier
-      (visibility))
+    (visibility)
     (identifier)
     (parameter_list
       (parameter
+        (byval_modifier)
         (identifier)
         (as_type_clause
           (type_expression))))
@@ -67,21 +67,21 @@ End Sub
   (conditional_sub_declaration
     (identifier)
     (newline)
-    (procedure_modifier
-      (visibility))
+    (visibility)
     (identifier)
     (parameter_list
       (parameter
+        (byval_modifier)
         (identifier)
         (as_type_clause
           (type_expression))))
     (newline)
     (newline)
-    (procedure_modifier
-      (visibility))
+    (visibility)
     (identifier)
     (parameter_list
       (parameter
+        (byval_modifier)
         (identifier)
         (as_type_clause
           (type_expression))))
@@ -113,27 +113,27 @@ End Property
 (source_file
   (newline)
   (conditional_property_declaration
-    (identifier)
+    condition: (identifier)
     (newline)
-    (procedure_modifier
-      (visibility))
-    (identifier)
-    (parameter_list)
-    (as_type_clause
-      (type_expression))
-    (newline)
-    (newline)
-    (procedure_modifier
-      (visibility))
-    (identifier)
-    (parameter_list)
-    (as_type_clause
-      (type_expression))
+    visibility: (visibility)
+    accessor: (get_accessor)
+    name: (identifier)
+    parameters: (parameter_list)
+    type: (as_type_clause
+      type: (type_expression))
     (newline)
     (newline)
-    (block
+    visibility: (visibility)
+    accessor: (get_accessor)
+    name: (identifier)
+    parameters: (parameter_list)
+    type: (as_type_clause
+      type: (type_expression))
+    (newline)
+    (newline)
+    body: (block
       (assignment_statement
-        (identifier)
-        (number_literal))
+        left: (identifier)
+        right: (number_literal))
       (newline)))
   (newline))

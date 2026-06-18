@@ -17,13 +17,13 @@ End Sub
 (source_file
   (sub_declaration
     name: (identifier)
-    (parameter_list)
+    parameters: (parameter_list)
     (newline)
     body: (block
       (variable_declaration
         (variable_declarator
           name: (identifier)
-          (as_type_clause
+          type: (as_type_clause
             type: (type_expression))))
       (newline)
       (open_statement
@@ -90,7 +90,7 @@ End Sub
   (newline)
   (sub_declaration
     name: (identifier)
-    (parameter_list)
+    parameters: (parameter_list)
     (newline)
     body: (block
       (assignment_statement
@@ -152,7 +152,7 @@ End Sub
   (newline)
   (sub_declaration
     name: (identifier)
-    (parameter_list)
+    parameters: (parameter_list)
     (newline)
     body: (block
       (line_input_statement

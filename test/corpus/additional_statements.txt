@@ -13,7 +13,7 @@ End Sub
   (newline)
   (sub_declaration
     name: (identifier)
-    (parameter_list)
+    parameters: (parameter_list)
     (newline)
     body: (block
       (raise_event_statement
@@ -48,7 +48,7 @@ End Sub
   (newline)
   (sub_declaration
     name: (identifier)
-    (parameter_list)
+    parameters: (parameter_list)
     (newline)
     body: (block
       (get_statement
@@ -111,7 +111,7 @@ End Sub
   (newline)
   (sub_declaration
     name: (identifier)
-    (parameter_list)
+    parameters: (parameter_list)
     (newline)
     body: (block
       (stop_statement)
@@ -155,7 +155,7 @@ End Sub
   (newline)
   (sub_declaration
     name: (identifier)
-    (parameter_list)
+    parameters: (parameter_list)
     (newline))
   (newline))
 
@@ -177,7 +177,7 @@ End Sub
   (newline)
   (sub_declaration
     name: (identifier)
-    (parameter_list)
+    parameters: (parameter_list)
     (newline)
     body: (block
       (assignment_statement

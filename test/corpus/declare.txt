@@ -8,13 +8,13 @@ Private Declare Function GetTickCount Lib "kernel32" () As Long
 
 (source_file
   (newline)
-  (declare_statement
-    (visibility)
-    (identifier)
-    (string_literal)
-    (parameter_list)
-    (as_type_clause
-      (type_expression)))
+  (declare_function_statement
+    visibility: (visibility)
+    name: (identifier)
+    library: (string_literal)
+    parameters: (parameter_list)
+    type: (as_type_clause
+      type: (type_expression)))
   (newline))
 
 ==================
@@ -27,15 +27,17 @@ Private Declare PtrSafe Sub Sleep Lib "kernel32" (ByVal milliseconds As LongPtr)
 
 (source_file
   (newline)
-  (declare_statement
-    (visibility)
-    (identifier)
-    (string_literal)
-    (parameter_list
+  (declare_sub_statement
+    visibility: (visibility)
+    ptrsafe_modifier: (ptrsafe_modifier)
+    name: (identifier)
+    library: (string_literal)
+    parameters: (parameter_list
       (parameter
-        (identifier)
-        (as_type_clause
-          (type_expression)))))
+        passing_mode: (byval_modifier)
+        name: (identifier)
+        type: (as_type_clause
+          type: (type_expression)))))
   (newline))
 
 ==================
@@ -48,13 +50,14 @@ Private Declare PtrSafe Function GetTickCount Lib "kernel32" () As LongPtr
 
 (source_file
   (newline)
-  (declare_statement
-    (visibility)
-    (identifier)
-    (string_literal)
-    (parameter_list)
-    (as_type_clause
-      (type_expression)))
+  (declare_function_statement
+    visibility: (visibility)
+    ptrsafe_modifier: (ptrsafe_modifier)
+    name: (identifier)
+    library: (string_literal)
+    parameters: (parameter_list)
+    type: (as_type_clause
+      type: (type_expression)))
   (newline))
 
 ==================
@@ -70,23 +73,26 @@ Private Declare PtrSafe Function FindWindow Lib "user32" Alias "FindWindowA" ( _
 
 (source_file
   (newline)
-  (declare_statement
-    (visibility)
-    (identifier)
-    (string_literal)
-    (string_literal)
-    (parameter_list
+  (declare_function_statement
+    visibility: (visibility)
+    ptrsafe_modifier: (ptrsafe_modifier)
+    name: (identifier)
+    library: (string_literal)
+    alias: (string_literal)
+    parameters: (parameter_list
       (line_continuation)
       (parameter
-        (identifier)
-        (as_type_clause
-          (type_expression)))
+        passing_mode: (byval_modifier)
+        name: (identifier)
+        type: (as_type_clause
+          type: (type_expression)))
       (line_continuation)
       (parameter
-        (identifier)
-        (as_type_clause
-          (type_expression)))
+        passing_mode: (byval_modifier)
+        name: (identifier)
+        type: (as_type_clause
+          type: (type_expression)))
       (line_continuation))
-    (as_type_clause
-      (type_expression)))
+    type: (as_type_clause
+      type: (type_expression)))
   (newline))
