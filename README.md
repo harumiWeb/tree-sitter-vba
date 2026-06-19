@@ -63,6 +63,9 @@ console.log(tree.rootNode.toString());
 
 ## Go Usage
 
+The Go binding is self-contained when installed through Go modules; its package
+directory includes the generated C parser needed by cgo.
+
 ```go
 package main
 
@@ -284,6 +287,13 @@ Generate the parser:
 
 ```bash
 pnpm generate
+```
+
+After grammar changes, keep the Go module artifact in sync:
+
+```bash
+cp src/parser.c bindings/go/parser.c
+pnpm check:go-parser
 ```
 
 Run corpus tests:

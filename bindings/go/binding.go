@@ -1,10 +1,9 @@
 package tree_sitter_vba
 
-// #cgo CFLAGS: -std=c11 -fPIC
-// #include "../../src/parser.c"
-// #if __has_include("../../src/scanner.c")
-// #include "../../src/scanner.c"
-// #endif
+// #cgo CFLAGS: -std=c11 -I../../src
+// #cgo !windows CFLAGS: -fPIC
+// #include "tree_sitter/parser.h"
+// const TSLanguage *tree_sitter_vba(void);
 import "C"
 import "unsafe"
 

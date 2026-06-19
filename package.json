@@ -28,7 +28,7 @@
     "tree-sitter.json",
     "binding.gyp",
     "bindings/node/*",
-    "bindings/go/*",
+    "bindings/go/*.go",
     "src/**",
     "queries/*",
     "scripts/install.mjs",
@@ -49,9 +49,10 @@
     "test:binding": "node scripts/ensure-binding.mjs && node --test bindings/node/*_test.js",
     "parse:examples": "node scripts/parse-examples.mjs",
     "query:examples": "node scripts/query-examples.mjs",
+    "check:go-parser": "node scripts/check-go-parser-artifact.mjs",
     "bench": "node scripts/ensure-binding.mjs && node scripts/bench.mjs",
     "fmt": "oxfmt",
-    "check": "pnpm test && pnpm test:binding && pnpm parse:examples && pnpm query:examples"
+    "check": "pnpm test && pnpm check:go-parser && pnpm test:binding && pnpm parse:examples && pnpm query:examples"
   },
   "dependencies": {
     "node-addon-api": "^8.8.0",

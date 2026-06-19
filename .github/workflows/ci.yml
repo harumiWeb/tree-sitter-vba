@@ -27,6 +27,12 @@ jobs:
           node-version: 22
           cache: pnpm
 
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+          cache: true
+
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
@@ -35,6 +41,12 @@ jobs:
 
       - name: Run corpus tests
         run: pnpm test
+
+      - name: Check Go parser artifact
+        run: pnpm check:go-parser
+
+      - name: Run Go binding tests
+        run: go test ./bindings/go
 
       - name: Run binding tests
         run: pnpm test:binding
