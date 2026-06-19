@@ -11,8 +11,10 @@ make ordinary pull request review and merge checks unreliable. Keeping it in
 Git causes huge diffs for small grammar changes and makes the review surface
 less useful.
 
-The generated parser is still required for native binding builds and npm
-packages.
+The generated parser is still required for native binding builds, npm packages,
+and Go module consumers. Unlike npm packages, Go modules are resolved from Git
+tags and do not run npm `prepack`, so a Go package that includes
+`../../src/parser.c` cannot build when `src/parser.c` is ignored.
 
 ## Decision
 
@@ -23,6 +25,11 @@ public AST shape consumed by downstream tools.
 Generate parser artifacts in CI before tests and during npm packaging through
 `prepack`. Keep `src/**` in the npm package file list so generated artifacts are
 included in published tarballs.
+
+Track a Go-specific generated parser copy at `bindings/go/parser.c`. The Go
+binding must compile the parser from its own package directory instead of
+including `../../src/parser.c`, because Go module consumers only receive files
+present in the Git tag.
 
 ## Consequences
 
@@ -35,3 +42,9 @@ parser before binding tests.
 
 Published npm packages still contain the generated parser artifacts needed by
 consumers that install from the package tarball.
+
+Go module tags contain one generated parser copy under `bindings/go/` for cgo
+builds. Grammar changes must regenerate `src/parser.c` and sync that file to
+`bindings/go/parser.c`; CI checks that the two copies match. The npm package
+file list excludes `bindings/go/parser.c` to avoid duplicating the generated
+parser in npm tarballs.

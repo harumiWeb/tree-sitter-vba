@@ -19,6 +19,9 @@ All notable changes to tree-sitter-vba will be documented in this file.
 - Stop tracking generated `src/parser.c` and `src/grammar.json` in Git. They
   are ignored locally, generated in CI, and generated during npm `prepack` so
   package tarballs still include the parser artifacts.
+- Keep a Go-specific generated parser copy under `bindings/go/parser.c` so Go
+  module consumers can build the Go binding from Git tags without relying on
+  npm packaging artifacts.
 - Skip the native binding install build when generated parser artifacts are not
   present in a development checkout; explicit test and package flows generate
   the parser before building.
