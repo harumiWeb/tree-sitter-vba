@@ -96,10 +96,10 @@ Example output:
     body: (block
       (call_statement
         callee: (qualified_member_expression
-          object: (identifier)
+          receiver: (identifier)
           operator: "."
-          property: (identifier))
-        (argument_list
+          member: (identifier))
+        arguments: (unparenthesized_argument_list
           (string_literal))))))
 ```
 
@@ -207,8 +207,12 @@ source-text scanning:
 - `declare_sub_statement` and `declare_function_statement` distinguish external
   declaration kind directly.
 - declaration headers expose stable fields such as `visibility`, `name`,
-  `parameters`, `type`, `library`, `alias`, `ptrsafe_modifier`, and `body`
-  where applicable.
+  `parameters`, `type`, `library`, `alias`, `ptrsafe_modifier`, `body`, and
+  `end` where applicable. Procedure terminators are exposed through
+  `end_sub_statement`, `end_function_statement`, and `end_property_statement`
+  nodes.
+- procedure declarations expose additional procedure modifiers through a
+  `modifiers` field, separate from `visibility`.
 - variable, constant, type-member, and parameter declarations expose stable
   `name`, `bounds`, `type`, `initializer`, `passing_mode`, `optional_modifier`,
   `paramarray_modifier`, and `default_value` fields where syntactically valid.
@@ -217,6 +221,19 @@ source-text scanning:
   explicit modifier nodes.
 - `implements_statement` exposes its target as `name`, and
   `attribute_statement` exposes `name` and `value`.
+
+## Expression node API
+
+Member access and calls expose stable fields for analysis tools:
+
+- `qualified_member_expression` uses `receiver`, `operator`, and `member`.
+- `implicit_member_expression` uses `operator` and `member`; it has no
+  `receiver`, matching leading-dot and leading-bang VBA syntax.
+- `call_expression` uses `function` and `arguments`, where `arguments` is an
+  `argument_list`.
+- `call_statement` uses `callee` and, when arguments are present, `arguments`.
+  Parenthesized arguments use `argument_list`; statement-style arguments use
+  `unparenthesized_argument_list`.
 
 ## Known limitations
 

@@ -20,5 +20,6 @@ End Sub
         (identifier)
         (identifier)
         (line_number_literal))
-      (newline)))
+      (newline))
+    (end_sub_statement))
   (newline))

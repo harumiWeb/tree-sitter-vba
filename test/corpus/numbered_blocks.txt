@@ -36,7 +36,7 @@ End Sub
               (qualified_member_expression
                 (identifier)
                 (identifier))
-              (argument_list
+              (unparenthesized_argument_list
                 (string_literal))))
           (newline))
         (elseif_clause
@@ -54,7 +54,7 @@ End Sub
                 (qualified_member_expression
                   (identifier)
                   (identifier))
-                (argument_list
+                (unparenthesized_argument_list
                   (string_literal))))
             (newline)))
         (else_clause
@@ -68,12 +68,13 @@ End Sub
                 (qualified_member_expression
                   (identifier)
                   (identifier))
-                (argument_list
+                (unparenthesized_argument_list
                   (string_literal))))
             (newline)))
         (line_number_prefix
           (line_number_literal)))
-      (newline)))
+      (newline))
+    (end_sub_statement))
   (newline))
 
 ==================
@@ -109,7 +110,7 @@ End Sub
             (qualified_member_expression
               (identifier)
               (identifier))
-            (argument_list
+            (unparenthesized_argument_list
               (identifier)))
           (newline))
         (else_clause
@@ -123,12 +124,13 @@ End Sub
               (qualified_member_expression
                 (identifier)
                 (identifier))
-              (argument_list
+              (unparenthesized_argument_list
                 (string_literal)))
             (newline)))
         (line_number_prefix
           (line_number_literal)))
-      (newline)))
+      (newline))
+    (end_sub_statement))
   (newline))
 
 ==================
@@ -171,7 +173,7 @@ End Sub
                 (qualified_member_expression
                   (identifier)
                   (identifier))
-                (argument_list
+                (unparenthesized_argument_list
                   (string_literal))))
             (newline)))
         (case_clause
@@ -185,12 +187,13 @@ End Sub
                 (qualified_member_expression
                   (identifier)
                   (identifier))
-                (argument_list
+                (unparenthesized_argument_list
                   (string_literal))))))
         (newline)
         (line_number_prefix
           (line_number_literal)))
-      (newline)))
+      (newline))
+    (end_sub_statement))
   (newline))
 
 ==================
@@ -229,7 +232,7 @@ End Sub
             (qualified_member_expression
               (identifier)
               (identifier))
-            (argument_list
+            (unparenthesized_argument_list
               (identifier)))
           (newline))
         (line_number_prefix
@@ -249,13 +252,14 @@ End Sub
             (qualified_member_expression
               (identifier)
               (identifier))
-            (argument_list
+            (unparenthesized_argument_list
               (identifier)))
           (newline))
         (line_number_prefix
           (line_number_literal))
         (identifier))
-      (newline)))
+      (newline))
+    (end_sub_statement))
   (newline))
 
 ==================
@@ -339,5 +343,6 @@ End Sub
           (newline))
         (line_number_prefix
           (line_number_literal)))
-      (newline)))
+      (newline))
+    (end_sub_statement))
   (newline))

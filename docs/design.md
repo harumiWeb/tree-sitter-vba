@@ -175,9 +175,16 @@ argument_list
 ```
 
 `member_expression` is a hidden supertype for member access. Concrete syntax
-trees expose `qualified_member_expression` for member access with an object
-child, such as `obj.Property` and `obj!Field`, and `implicit_member_expression`
-for leading-dot or leading-bang access, such as `.Property` and `!Field`.
+trees expose `qualified_member_expression` for member access with a `receiver`
+child and a `member` child, such as `obj.Property` and `obj!Field`, and
+`implicit_member_expression` with a `member` child but no `receiver` for
+leading-dot or leading-bang access, such as `.Property` and `!Field`.
+
+Calls expose the callable expression through `function` and the argument node
+through `arguments`. Parenthesized call expressions use `argument_list`.
+Statement-style calls with whitespace-separated arguments use
+`unparenthesized_argument_list` so downstream tools can distinguish VBA call
+forms without source-text fallback.
 
 Declaration node shapes should expose syntactic metadata structurally for
 downstream symbol indexers, linters, formatters, and LSP-style tools. Prefer
@@ -185,8 +192,8 @@ dedicated declaration nodes such as `property_get_declaration`,
 `property_let_declaration`, `property_set_declaration`,
 `declare_sub_statement`, and `declare_function_statement` over requiring
 consumers to inspect raw signature text. Use stable fields such as `visibility`,
-`name`, `parameters`, `type`, `initializer`, `passing_mode`, and
-`default_value` where the syntax provides those values.
+`modifiers`, `name`, `parameters`, `type`, `initializer`, `passing_mode`,
+`default_value`, `body`, and `end` where the syntax provides those values.
 
 ### 8. Keep queries in sync
 

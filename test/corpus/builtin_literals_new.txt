@@ -28,7 +28,8 @@ End Sub
       (assignment_statement
         (identifier)
         (empty_literal))
-      (newline)))
+      (newline))
+    (end_sub_statement))
   (newline))
 
 ==================
@@ -52,5 +53,6 @@ End Sub
         (identifier)
         (new_expression
           (identifier)))
-      (newline)))
+      (newline))
+    (end_sub_statement))
   (newline))

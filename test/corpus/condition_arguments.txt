@@ -19,16 +19,20 @@ End Sub
         (identifier)
         (call_expression
           (identifier)
-          (identifier)
-          (comparison_expression
-            (call_expression
-              (identifier)
-              (identifier))
-            (comparison_operator)
-            (call_expression
-              (identifier)
-              (identifier)))))
-      (newline)))
+          (argument_list
+            (identifier)
+            (comparison_expression
+              (call_expression
+                (identifier)
+                (argument_list
+                  (identifier)))
+              (comparison_operator)
+              (call_expression
+                (identifier)
+                (argument_list
+                  (identifier)))))))
+      (newline))
+    (end_sub_statement))
   (newline))
 
 ==================
@@ -59,7 +63,8 @@ End Sub
             (identifier)
             (comparison_operator)
             (string_literal))))
-      (newline)))
+      (newline))
+    (end_sub_statement))
   (newline))
 
 ==================
@@ -95,7 +100,8 @@ End Sub
             (identifier)
             (comparison_operator)
             (string_literal))))
-      (newline)))
+      (newline))
+    (end_sub_statement))
   (newline))
 
 ==================
@@ -149,7 +155,8 @@ End Sub
             (identifier)
             (boolean_literal))
           (newline)))
-      (newline)))
+      (newline))
+    (end_sub_statement))
   (newline))
 
 ==================
@@ -205,7 +212,8 @@ End Sub
             (identifier)
             (boolean_literal))
           (newline)))
-      (newline)))
+      (newline))
+    (end_sub_statement))
   (newline))
 
 ==================
@@ -231,12 +239,14 @@ End Sub
         (condition_binary_expression
           (comparison_expression
             (call_expression
-              (identifier))
+              (identifier)
+              (argument_list))
             (comparison_operator)
             (string_literal))
           (comparison_expression
             (call_expression
-              (identifier))
+              (identifier)
+              (argument_list))
             (comparison_operator)
             (string_literal)))
         (newline)
@@ -245,7 +255,8 @@ End Sub
             (identifier)
             (boolean_literal))
           (newline)))
-      (newline)))
+      (newline))
+    (end_sub_statement))
   (newline))
 
 ==================
@@ -271,7 +282,8 @@ End Function
     (as_type_clause
       (type_expression)
       (array_bounds))
-    (newline))
+    (newline)
+    (end_function_statement))
   (newline))
 
 ==================
@@ -322,5 +334,6 @@ End Sub
             (identifier)
             (boolean_literal))
           (newline)))
-      (newline)))
+      (newline))
+    (end_sub_statement))
   (newline))

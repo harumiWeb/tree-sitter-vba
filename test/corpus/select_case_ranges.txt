@@ -47,7 +47,8 @@ End Sub
                 (identifier)
                 (identifier)))
             (newline))))
-      (newline)))
+      (newline))
+    (end_sub_statement))
   (newline))
 
 ==================
@@ -95,7 +96,8 @@ End Sub
               (identifier)
               (boolean_literal))
             (newline))))
-      (newline)))
+      (newline))
+    (end_sub_statement))
   (newline))
 
 ==================
@@ -130,8 +132,9 @@ End Sub
               (qualified_member_expression
                 (identifier)
                 (identifier))
-              (argument_list
+              (unparenthesized_argument_list
                 (identifier)))
             (newline))))
-      (newline)))
+      (newline))
+    (end_sub_statement))
   (newline))

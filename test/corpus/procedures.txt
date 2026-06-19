@@ -13,7 +13,8 @@ End Sub
     visibility: (visibility)
     name: (identifier)
     parameters: (parameter_list)
-    (newline))
+    (newline)
+    end: (end_sub_statement))
   (newline))
 
 ==================
@@ -51,7 +52,8 @@ End Function
         right: (binary_expression
           (identifier)
           (identifier)))
-      (newline)))
+      (newline))
+    end: (end_function_statement))
   (newline))
 
 ==================
@@ -78,7 +80,8 @@ End Property
       (assignment_statement
         left: (identifier)
         right: (string_literal))
-      (newline)))
+      (newline))
+    end: (end_property_statement))
   (newline))
 
 ==================
@@ -102,7 +105,8 @@ End Property
         name: (identifier)
         type: (as_type_clause
           type: (type_expression))))
-    (newline))
+    (newline)
+    end: (end_property_statement))
   (newline))
 
 ==================
@@ -126,5 +130,6 @@ End Property
         name: (identifier)
         type: (as_type_clause
           type: (type_expression))))
-    (newline))
+    (newline)
+    end: (end_property_statement))
   (newline))

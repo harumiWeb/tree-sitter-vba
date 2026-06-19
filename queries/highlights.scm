@@ -127,22 +127,22 @@
 
 (call_statement
   callee: (qualified_member_expression
-    property: (identifier) @function.method.call))
+    member: (identifier) @function.method.call))
 
 (call_statement
   callee: (implicit_member_expression
-    property: (identifier) @function.method.call))
+    member: (identifier) @function.method.call))
 
 (call_expression
   function: (identifier) @function.call)
 
 (call_expression
   function: (qualified_member_expression
-    property: (identifier) @function.method.call))
+    member: (identifier) @function.method.call))
 
 (call_expression
   function: (implicit_member_expression
-    property: (identifier) @function.method.call))
+    member: (identifier) @function.method.call))
 
 (parameter
   name: (identifier) @variable.parameter)
@@ -154,10 +154,10 @@
   name: (identifier) @constant)
 
 (qualified_member_expression
-  property: (identifier) @property)
+  member: (identifier) @property)
 
 (implicit_member_expression
-  property: (identifier) @property)
+  member: (identifier) @property)
 
 (attribute_statement
   name: (identifier) @property)

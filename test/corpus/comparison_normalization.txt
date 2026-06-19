@@ -31,7 +31,7 @@ End Sub
           (qualified_member_expression
             (identifier)
             (identifier))
-          (argument_list
+          (unparenthesized_argument_list
             (identifier))))
       (newline)
       (single_line_if_statement
@@ -43,7 +43,7 @@ End Sub
           (qualified_member_expression
             (identifier)
             (identifier))
-          (argument_list
+          (unparenthesized_argument_list
             (identifier))))
       (newline)
       (single_line_if_statement
@@ -55,7 +55,7 @@ End Sub
           (qualified_member_expression
             (identifier)
             (identifier))
-          (argument_list
+          (unparenthesized_argument_list
             (identifier))))
       (newline)
       (single_line_if_statement
@@ -67,7 +67,7 @@ End Sub
           (qualified_member_expression
             (identifier)
             (identifier))
-          (argument_list
+          (unparenthesized_argument_list
             (identifier))))
       (newline)
       (single_line_if_statement
@@ -79,7 +79,7 @@ End Sub
           (qualified_member_expression
             (identifier)
             (identifier))
-          (argument_list
+          (unparenthesized_argument_list
             (identifier))))
       (newline)
       (single_line_if_statement
@@ -91,7 +91,7 @@ End Sub
           (qualified_member_expression
             (identifier)
             (identifier))
-          (argument_list
+          (unparenthesized_argument_list
             (identifier))))
       (newline)
       (single_line_if_statement
@@ -103,7 +103,7 @@ End Sub
           (qualified_member_expression
             (identifier)
             (identifier))
-          (argument_list
+          (unparenthesized_argument_list
             (string_literal))))
       (newline)
       (single_line_if_statement
@@ -115,9 +115,10 @@ End Sub
           (qualified_member_expression
             (identifier)
             (identifier))
-          (argument_list
+          (unparenthesized_argument_list
             (identifier))))
-      (newline)))
+      (newline))
+    (end_sub_statement))
   (newline))
 
 ==================
@@ -152,7 +153,7 @@ End Sub
           (qualified_member_expression
             (identifier)
             (identifier))
-          (argument_list
+          (unparenthesized_argument_list
             (string_literal))))
       (newline)
       (single_line_if_statement
@@ -171,9 +172,10 @@ End Sub
           (qualified_member_expression
             (identifier)
             (identifier))
-          (argument_list
+          (unparenthesized_argument_list
             (string_literal))))
-      (newline)))
+      (newline))
+    (end_sub_statement))
   (newline))
 
 ==================
@@ -248,7 +250,8 @@ End Sub
               (identifier)
               (number_literal)))
           (newline)))
-      (newline)))
+      (newline))
+    (end_sub_statement))
   (newline))
 
 ==================
@@ -278,7 +281,7 @@ End Sub
         (qualified_member_expression
           (identifier)
           (identifier))
-        (argument_list
+        (unparenthesized_argument_list
           (comparison_expression
             (identifier)
             (comparison_operator)
@@ -288,7 +291,7 @@ End Sub
         (qualified_member_expression
           (identifier)
           (identifier))
-        (argument_list
+        (unparenthesized_argument_list
           (comparison_expression
             (identifier)
             (comparison_operator)
@@ -303,7 +306,7 @@ End Sub
       (newline)
       (call_statement
         (identifier)
-        (argument_list
+        (unparenthesized_argument_list
           (comparison_expression
             (identifier)
             (comparison_operator)
@@ -311,7 +314,7 @@ End Sub
       (newline)
       (call_statement
         (identifier)
-        (argument_list
+        (unparenthesized_argument_list
           (parenthesized_expression
             (comparison_expression
               (identifier)
@@ -320,7 +323,7 @@ End Sub
       (newline)
       (call_statement
         (identifier)
-        (argument_list
+        (unparenthesized_argument_list
           (named_argument
             (identifier)
             (comparison_expression
@@ -330,7 +333,7 @@ End Sub
       (newline)
       (call_statement
         (identifier)
-        (argument_list
+        (unparenthesized_argument_list
           (named_argument
             (identifier)
             (logical_value_expression
@@ -342,7 +345,8 @@ End Sub
                 (identifier)
                 (comparison_operator)
                 (identifier))))))
-      (newline)))
+      (newline))
+    (end_sub_statement))
   (newline))
 
 ==================
@@ -385,7 +389,7 @@ End Sub
           (qualified_member_expression
             (identifier)
             (identifier))
-          (argument_list
+          (unparenthesized_argument_list
             (string_literal))))
       (newline)
       (single_line_if_statement
@@ -397,7 +401,7 @@ End Sub
           (qualified_member_expression
             (identifier)
             (identifier))
-          (argument_list
+          (unparenthesized_argument_list
             (string_literal))))
       (newline)
       (single_line_if_statement
@@ -410,7 +414,7 @@ End Sub
           (qualified_member_expression
             (identifier)
             (identifier))
-          (argument_list
+          (unparenthesized_argument_list
             (string_literal))))
       (newline)
       (newline)
@@ -426,7 +430,7 @@ End Sub
               (qualified_member_expression
                 (identifier)
                 (identifier))
-              (argument_list
+              (unparenthesized_argument_list
                 (string_literal)))
             (newline)))
         (case_clause
@@ -439,7 +443,7 @@ End Sub
               (qualified_member_expression
                 (identifier)
                 (identifier))
-              (argument_list
+              (unparenthesized_argument_list
                 (string_literal)))
             (newline))))
       (newline)
@@ -451,5 +455,6 @@ End Sub
       (set_statement
         (identifier)
         (identifier))
-      (newline)))
+      (newline))
+    (end_sub_statement))
   (newline))

@@ -4,6 +4,17 @@ All notable changes to tree-sitter-vba will be documented in this file.
 
 ## Unreleased
 
+### Changed
+
+- Stabilize downstream-facing AST fields for editor and LSP integrations:
+  procedure declarations now expose named `end` terminator nodes, procedure
+  static modifiers use the `modifiers` field, member access uses
+  `receiver`/`member`, and calls expose arguments through an `arguments` field.
+- Split statement-style call arguments into `unparenthesized_argument_list`
+  while keeping parenthesized call-expression arguments under `argument_list`.
+  This is a breaking tree-shape change for consumers that relied on positional
+  call argument traversal or the previous `object`/`property` member fields.
+
 ## [v0.7.0] - 2026-06-19
 
 ### Added

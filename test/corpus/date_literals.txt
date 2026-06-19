@@ -23,5 +23,6 @@ End Sub
       (assignment_statement
         (identifier)
         (date_literal))
-      (newline)))
+      (newline))
+    (end_sub_statement))
   (newline))

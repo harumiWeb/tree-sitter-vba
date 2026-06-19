@@ -29,9 +29,10 @@ End Sub
             (qualified_member_expression
               (identifier)
               (identifier))
-            (argument_list
+            (unparenthesized_argument_list
               (string_literal))))
-        (newline))))
+        (newline))
+      (end_sub_statement)))
   (newline))
 
 ========================================
@@ -67,9 +68,10 @@ End Sub
         (qualified_member_expression
           (identifier)
           (identifier))
-        (argument_list
+        (unparenthesized_argument_list
           (string_literal)))
-      (newline)))
+      (newline))
+    (end_sub_statement))
   (newline))
 
 ================================
@@ -116,7 +118,8 @@ End Sub
             (identifier)
             (comparison_operator)
             (number_literal))))
-      (newline)))
+      (newline))
+    (end_sub_statement))
   (newline))
 
 =================================
@@ -147,7 +150,7 @@ End Sub
             (qualified_member_expression
               (identifier)
               (identifier))
-            (argument_list
+            (unparenthesized_argument_list
               (identifier))))
         (identifier))
       (newline)
@@ -159,10 +162,11 @@ End Sub
             (qualified_member_expression
               (identifier)
               (identifier))
-            (argument_list
+            (unparenthesized_argument_list
               (identifier))))
         (identifier))
-      (newline)))
+      (newline))
+    (end_sub_statement))
   (newline))
 
 ==============================
@@ -191,10 +195,12 @@ End Sub
               (call_expression
                 (implicit_member_expression
                   (identifier))
-                (string_literal))
+                (argument_list
+                  (string_literal)))
               (identifier))
             (number_literal))))
-      (newline)))
+      (newline))
+    (end_sub_statement))
   (newline))
 
 ====================================
@@ -223,7 +229,8 @@ End Sub
           (qualified_member_expression
             (identifier)
             (identifier))
-          (argument_list
+          (unparenthesized_argument_list
             (string_literal))))
-      (newline)))
+      (newline))
+    (end_sub_statement))
   (newline))

@@ -929,6 +929,16 @@
     "type": "call_expression",
     "named": true,
     "fields": {
+      "arguments": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "argument_list",
+            "named": true
+          }
+        ]
+      },
       "function": {
         "multiple": false,
         "required": true,
@@ -947,102 +957,30 @@
           }
         ]
       }
-    },
-    "children": {
-      "multiple": true,
-      "required": false,
-      "types": [
-        {
-          "type": "addressof_expression",
-          "named": true
-        },
-        {
-          "type": "binary_expression",
-          "named": true
-        },
-        {
-          "type": "boolean_literal",
-          "named": true
-        },
-        {
-          "type": "byval_argument",
-          "named": true
-        },
-        {
-          "type": "call_expression",
-          "named": true
-        },
-        {
-          "type": "comparison_expression",
-          "named": true
-        },
-        {
-          "type": "date_literal",
-          "named": true
-        },
-        {
-          "type": "empty_literal",
-          "named": true
-        },
-        {
-          "type": "file_number_literal",
-          "named": true
-        },
-        {
-          "type": "identifier",
-          "named": true
-        },
-        {
-          "type": "logical_value_expression",
-          "named": true
-        },
-        {
-          "type": "member_expression",
-          "named": true
-        },
-        {
-          "type": "named_argument",
-          "named": true
-        },
-        {
-          "type": "new_expression",
-          "named": true
-        },
-        {
-          "type": "nothing_literal",
-          "named": true
-        },
-        {
-          "type": "null_literal",
-          "named": true
-        },
-        {
-          "type": "number_literal",
-          "named": true
-        },
-        {
-          "type": "parenthesized_expression",
-          "named": true
-        },
-        {
-          "type": "string_literal",
-          "named": true
-        },
-        {
-          "type": "type_of_expression",
-          "named": true
-        },
-        {
-          "type": "unary_expression",
-          "named": true
-        }
-      ]
     }
   },
   {
     "type": "call_statement",
     "named": true,
     "fields": {
+      "arguments": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "argument_list",
+            "named": true
+          },
+          {
+            "type": "line_range_argument_list",
+            "named": true
+          },
+          {
+            "type": "unparenthesized_argument_list",
+            "named": true
+          }
+        ]
+      },
       "callee": {
         "multiple": false,
         "required": true,
@@ -1061,20 +999,6 @@
           }
         ]
       }
-    },
-    "children": {
-      "multiple": false,
-      "required": false,
-      "types": [
-        {
-          "type": "argument_list",
-          "named": true
-        },
-        {
-          "type": "line_range_argument_list",
-          "named": true
-        }
-      ]
     }
   },
   {
@@ -1631,6 +1555,16 @@
           }
         ]
       },
+      "modifiers": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "static_modifier",
+            "named": true
+          }
+        ]
+      },
       "name": {
         "multiple": true,
         "required": true,
@@ -1647,16 +1581,6 @@
         "types": [
           {
             "type": "parameter_list",
-            "named": true
-          }
-        ]
-      },
-      "static_modifier": {
-        "multiple": true,
-        "required": false,
-        "types": [
-          {
-            "type": "static_modifier",
             "named": true
           }
         ]
@@ -1887,6 +1811,16 @@
           }
         ]
       },
+      "modifiers": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "static_modifier",
+            "named": true
+          }
+        ]
+      },
       "name": {
         "multiple": true,
         "required": true,
@@ -1903,16 +1837,6 @@
         "types": [
           {
             "type": "parameter_list",
-            "named": true
-          }
-        ]
-      },
-      "static_modifier": {
-        "multiple": true,
-        "required": false,
-        "types": [
-          {
-            "type": "static_modifier",
             "named": true
           }
         ]
@@ -2093,6 +2017,16 @@
           }
         ]
       },
+      "modifiers": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "static_modifier",
+            "named": true
+          }
+        ]
+      },
       "name": {
         "multiple": true,
         "required": true,
@@ -2109,16 +2043,6 @@
         "types": [
           {
             "type": "parameter_list",
-            "named": true
-          }
-        ]
-      },
-      "static_modifier": {
-        "multiple": true,
-        "required": false,
-        "types": [
-          {
-            "type": "static_modifier",
             "named": true
           }
         ]
@@ -2961,6 +2885,21 @@
         }
       ]
     }
+  },
+  {
+    "type": "end_function_statement",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "end_property_statement",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "end_sub_statement",
+    "named": true,
+    "fields": {}
   },
   {
     "type": "enum_declaration",
@@ -4296,6 +4235,26 @@
           }
         ]
       },
+      "end": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "end_function_statement",
+            "named": true
+          }
+        ]
+      },
+      "modifiers": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "static_modifier",
+            "named": true
+          }
+        ]
+      },
       "name": {
         "multiple": false,
         "required": true,
@@ -4312,16 +4271,6 @@
         "types": [
           {
             "type": "parameter_list",
-            "named": true
-          }
-        ]
-      },
-      "static_modifier": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "static_modifier",
             "named": true
           }
         ]
@@ -4651,6 +4600,16 @@
     "type": "implicit_member_expression",
     "named": true,
     "fields": {
+      "member": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
       "operator": {
         "multiple": false,
         "required": true,
@@ -4662,16 +4621,6 @@
           {
             "type": ".",
             "named": false
-          }
-        ]
-      },
-      "property": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "identifier",
-            "named": true
           }
         ]
       }
@@ -6819,6 +6768,26 @@
           }
         ]
       },
+      "end": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "end_property_statement",
+            "named": true
+          }
+        ]
+      },
+      "modifiers": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "static_modifier",
+            "named": true
+          }
+        ]
+      },
       "name": {
         "multiple": false,
         "required": true,
@@ -6835,16 +6804,6 @@
         "types": [
           {
             "type": "parameter_list",
-            "named": true
-          }
-        ]
-      },
-      "static_modifier": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "static_modifier",
             "named": true
           }
         ]
@@ -6905,6 +6864,26 @@
           }
         ]
       },
+      "end": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "end_property_statement",
+            "named": true
+          }
+        ]
+      },
+      "modifiers": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "static_modifier",
+            "named": true
+          }
+        ]
+      },
       "name": {
         "multiple": false,
         "required": true,
@@ -6921,16 +6900,6 @@
         "types": [
           {
             "type": "parameter_list",
-            "named": true
-          }
-        ]
-      },
-      "static_modifier": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "static_modifier",
             "named": true
           }
         ]
@@ -6991,6 +6960,26 @@
           }
         ]
       },
+      "end": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "end_property_statement",
+            "named": true
+          }
+        ]
+      },
+      "modifiers": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "static_modifier",
+            "named": true
+          }
+        ]
+      },
       "name": {
         "multiple": false,
         "required": true,
@@ -7007,16 +6996,6 @@
         "types": [
           {
             "type": "parameter_list",
-            "named": true
-          }
-        ]
-      },
-      "static_modifier": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "static_modifier",
             "named": true
           }
         ]
@@ -7221,20 +7200,12 @@
     "type": "qualified_member_expression",
     "named": true,
     "fields": {
-      "object": {
+      "member": {
         "multiple": false,
         "required": true,
         "types": [
           {
-            "type": "call_expression",
-            "named": true
-          },
-          {
             "type": "identifier",
-            "named": true
-          },
-          {
-            "type": "member_expression",
             "named": true
           }
         ]
@@ -7253,12 +7224,20 @@
           }
         ]
       },
-      "property": {
+      "receiver": {
         "multiple": false,
         "required": true,
         "types": [
           {
+            "type": "call_expression",
+            "named": true
+          },
+          {
             "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "member_expression",
             "named": true
           }
         ]
@@ -8252,6 +8231,26 @@
           }
         ]
       },
+      "end": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "end_sub_statement",
+            "named": true
+          }
+        ]
+      },
+      "modifiers": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "static_modifier",
+            "named": true
+          }
+        ]
+      },
       "name": {
         "multiple": false,
         "required": true,
@@ -8268,16 +8267,6 @@
         "types": [
           {
             "type": "parameter_list",
-            "named": true
-          }
-        ]
-      },
-      "static_modifier": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "static_modifier",
             "named": true
           }
         ]
@@ -8905,6 +8894,101 @@
           }
         ]
       }
+    }
+  },
+  {
+    "type": "unparenthesized_argument_list",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "addressof_expression",
+          "named": true
+        },
+        {
+          "type": "binary_expression",
+          "named": true
+        },
+        {
+          "type": "boolean_literal",
+          "named": true
+        },
+        {
+          "type": "byval_argument",
+          "named": true
+        },
+        {
+          "type": "call_expression",
+          "named": true
+        },
+        {
+          "type": "comparison_expression",
+          "named": true
+        },
+        {
+          "type": "date_literal",
+          "named": true
+        },
+        {
+          "type": "empty_literal",
+          "named": true
+        },
+        {
+          "type": "file_number_literal",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "logical_value_expression",
+          "named": true
+        },
+        {
+          "type": "member_expression",
+          "named": true
+        },
+        {
+          "type": "named_argument",
+          "named": true
+        },
+        {
+          "type": "new_expression",
+          "named": true
+        },
+        {
+          "type": "nothing_literal",
+          "named": true
+        },
+        {
+          "type": "null_literal",
+          "named": true
+        },
+        {
+          "type": "number_literal",
+          "named": true
+        },
+        {
+          "type": "parenthesized_expression",
+          "named": true
+        },
+        {
+          "type": "string_literal",
+          "named": true
+        },
+        {
+          "type": "type_of_expression",
+          "named": true
+        },
+        {
+          "type": "unary_expression",
+          "named": true
+        }
+      ]
     }
   },
   {

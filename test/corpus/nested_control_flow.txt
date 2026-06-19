@@ -46,7 +46,8 @@ End Sub
               (newline))
             (identifier))
           (newline)))
-      (newline)))
+      (newline))
+    (end_sub_statement))
   (newline))
 
 ==================
@@ -85,7 +86,7 @@ End Sub
             (qualified_member_expression
               (identifier)
               (identifier))
-            (argument_list
+            (unparenthesized_argument_list
               (string_literal)))
           (newline))
         (elseif_clause
@@ -99,7 +100,7 @@ End Sub
               (qualified_member_expression
                 (identifier)
                 (identifier))
-              (argument_list
+              (unparenthesized_argument_list
                 (string_literal)))
             (newline)))
         (elseif_clause
@@ -113,7 +114,7 @@ End Sub
               (qualified_member_expression
                 (identifier)
                 (identifier))
-              (argument_list
+              (unparenthesized_argument_list
                 (string_literal)))
             (newline)))
         (else_clause
@@ -123,10 +124,11 @@ End Sub
               (qualified_member_expression
                 (identifier)
                 (identifier))
-              (argument_list
+              (unparenthesized_argument_list
                 (string_literal)))
             (newline))))
-      (newline)))
+      (newline))
+    (end_sub_statement))
   (newline))
 
 ==================
@@ -159,11 +161,12 @@ End Sub
             (qualified_member_expression
               (identifier)
               (identifier))
-            (argument_list
+            (unparenthesized_argument_list
               (qualified_member_expression
                 (identifier)
                 (identifier))))
           (newline))
         (identifier))
-      (newline)))
+      (newline))
+    (end_sub_statement))
   (newline))

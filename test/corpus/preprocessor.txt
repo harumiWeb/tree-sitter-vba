@@ -100,8 +100,9 @@ End Sub
             (identifier)
             (call_expression
               (identifier)
-              (addressof_expression
-                (identifier))))
+              (argument_list
+                (addressof_expression
+                  (identifier)))))
           (newline))
         (preprocessor_else
           (newline)
@@ -110,10 +111,12 @@ End Sub
               (identifier)
               (call_expression
                 (identifier)
-                (addressof_expression
-                  (identifier))))
+                (argument_list
+                  (addressof_expression
+                    (identifier)))))
             (newline))))
-      (newline)))
+      (newline))
+    (end_sub_statement))
   (newline))
 
 ==================

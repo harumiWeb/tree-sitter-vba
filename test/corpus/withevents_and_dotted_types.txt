@@ -22,8 +22,8 @@ Attribute Button.VB_VarHelpID = -1
   (newline)
   (attribute_statement
     name: (qualified_member_expression
-      object: (identifier)
-      property: (identifier))
+      receiver: (identifier)
+      member: (identifier))
     value: (number_literal))
   (newline))
 
@@ -50,7 +50,8 @@ End Sub
             (dotted_type_expression
               (identifier)
               (identifier))))))
-    (newline))
+    (newline)
+    (end_sub_statement))
   (newline))
 
 ==================
@@ -78,8 +79,10 @@ End Function
         (parenthesized_expression
           (comparison_expression
             (call_expression
-              (identifier))
+              (identifier)
+              (argument_list))
             (comparison_operator)
             (identifier))))
-      (newline)))
+      (newline))
+    (end_function_statement))
   (newline))

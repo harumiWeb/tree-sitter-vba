@@ -71,9 +71,10 @@ End Sub
       (erase_statement
         target: (identifier)
         target: (qualified_member_expression
-          object: (identifier)
-          property: (identifier)))
-      (newline)))
+          receiver: (identifier)
+          member: (identifier)))
+      (newline))
+    end: (end_sub_statement))
   (newline))
 
 ==================
@@ -97,12 +98,15 @@ End Sub
         left: (identifier)
         right: (call_expression
           function: (identifier)
-          (call_expression
-            function: (identifier)
-            (number_literal))
-          (file_number_literal
-            number: (number_literal))))
-      (newline)))
+          arguments: (argument_list
+            (call_expression
+              function: (identifier)
+              arguments: (argument_list
+                (number_literal)))
+            (file_number_literal
+              number: (number_literal)))))
+      (newline))
+    end: (end_sub_statement))
   (newline))
 
 ==================
@@ -128,13 +132,17 @@ End Sub
           (qualified_member_expression
             (call_expression
               (identifier)
-              (identifier))
-            (identifier))))
+              (argument_list
+                (identifier)))
+            (identifier))
+          (argument_list)))
       (newline)
       (erase_statement
         (call_expression
-          (identifier)))
-      (newline)))
+          (identifier)
+          (argument_list)))
+      (newline))
+    (end_sub_statement))
   (newline))
 
 ==================
@@ -165,10 +173,12 @@ End Sub
         left: (identifier)
         right: (call_expression
           function: (qualified_member_expression
-            object: (identifier)
-            property: (identifier))
-          (identifier)
-          (identifier)
-          (string_literal)))
-      (newline)))
+            receiver: (identifier)
+            member: (identifier))
+          arguments: (argument_list
+            (identifier)
+            (identifier)
+            (string_literal))))
+      (newline))
+    end: (end_sub_statement))
   (newline))

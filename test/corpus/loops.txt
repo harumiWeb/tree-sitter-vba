@@ -31,7 +31,8 @@ End Sub
               (identifier)
               (number_literal)))
           (newline)))
-      (newline)))
+      (newline))
+    (end_sub_statement))
   (newline))
 
 ==================
@@ -53,8 +54,10 @@ End Sub
     (block
       (while_statement
         (call_expression
-          (identifier)))
-      (newline)))
+          (identifier)
+          (argument_list)))
+      (newline))
+    (end_sub_statement))
   (newline))
 
 ==================
@@ -90,7 +93,8 @@ End Sub
               (identifier)
               (number_literal)))
           (newline)))
-      (newline)))
+      (newline))
+    (end_sub_statement))
   (newline))
 
 ==================
@@ -126,7 +130,8 @@ End Sub
             (identifier)
             (comparison_operator)
             (number_literal))))
-      (newline)))
+      (newline))
+    (end_sub_statement))
   (newline))
 
 ==================
@@ -161,7 +166,8 @@ End Sub
               (identifier)
               (number_literal)))
           (newline)))
-      (newline)))
+      (newline))
+    (end_sub_statement))
   (newline))
 
 ==================
@@ -208,7 +214,8 @@ End Sub
         (block
           (exit_statement)
           (newline)))
-      (newline)))
+      (newline))
+    (end_sub_statement))
   (newline))
 
 ==================
@@ -237,7 +244,8 @@ End Property
     (newline)
     (block
       (exit_statement)
-      (newline)))
+      (newline))
+    (end_sub_statement))
   (newline)
   (newline)
   (function_declaration
@@ -248,7 +256,8 @@ End Property
     (newline)
     (block
       (exit_statement)
-      (newline)))
+      (newline))
+    (end_function_statement))
   (newline)
   (newline)
   (property_get_declaration
@@ -260,5 +269,6 @@ End Property
     (newline)
     (block
       (exit_statement)
-      (newline)))
+      (newline))
+    (end_property_statement))
   (newline))

@@ -17,7 +17,8 @@ Public Function UfoWidth() As Long: UfoWidth = P_UFO_WIDTH: End Function
     (block
       (assignment_statement
         (identifier)
-        (identifier))))
+        (identifier)))
+    (end_function_statement))
   (newline))
 
 ==================
@@ -50,23 +51,27 @@ End Sub
             (assignment_statement
               (identifier)
               (call_expression
-                (identifier)))
+                (identifier)
+                (argument_list)))
             (assignment_statement
               (identifier)
               (call_expression
                 (identifier)
-                (number_literal)
-                (number_literal)
-                (number_literal)))
+                (argument_list
+                  (number_literal)
+                  (number_literal)
+                  (number_literal))))
             (newline)))
         (case_clause
           (block
             (assignment_statement
               (identifier)
               (call_expression
-                (identifier)))
+                (identifier)
+                (argument_list)))
             (newline))))
-      (newline)))
+      (newline))
+    (end_sub_statement))
   (newline))
 
 ==================
@@ -99,16 +104,19 @@ End Function
         (comparison_expression
           (call_expression
             (identifier)
-            (call_expression
-              (identifier)
-              (identifier)
+            (argument_list
+              (call_expression
+                (identifier)
+                (argument_list
+                  (identifier)
+                  (string_literal)
+                  (string_literal)))
               (string_literal)
-              (string_literal))
-            (string_literal)
-            (identifier))
+              (identifier)))
           (comparison_operator)
           (number_literal)))
-      (newline)))
+      (newline))
+    (end_function_statement))
   (newline))
 
 ==================
@@ -135,11 +143,13 @@ End Sub
             (binary_expression
               (call_expression
                 (identifier)
-                (identifier))
+                (argument_list
+                  (identifier)))
               (parenthesized_expression
                 (binary_expression
                   (number_literal)
                   (identifier)))))
           (number_literal)))
-      (newline)))
+      (newline))
+    (end_sub_statement))
   (newline))

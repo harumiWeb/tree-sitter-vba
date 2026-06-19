@@ -25,7 +25,8 @@ End Sub
       (name_statement
         old_path: (identifier)
         new_path: (identifier))
-      (newline)))
+      (newline))
+    end: (end_sub_statement))
   (newline))
 
 ==================
@@ -91,7 +92,8 @@ End Sub
         position: (number_literal))
       (newline)
       (reset_statement)
-      (newline)))
+      (newline))
+    end: (end_sub_statement))
   (newline))
 
 ==================
@@ -123,7 +125,8 @@ End Sub
       (newline)
       (unload_statement
         target: (identifier))
-      (newline)))
+      (newline))
+    end: (end_sub_statement))
   (newline))
 
 ==================
@@ -156,7 +159,8 @@ End Sub
   (sub_declaration
     name: (identifier)
     parameters: (parameter_list)
-    (newline))
+    (newline)
+    end: (end_sub_statement))
   (newline))
 
 ==================
@@ -199,5 +203,6 @@ End Sub
       (assignment_statement
         left: (identifier)
         right: (number_literal))
-      (newline)))
+      (newline))
+    end: (end_sub_statement))
   (newline))
