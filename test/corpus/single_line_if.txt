@@ -24,9 +24,10 @@ End Sub
           (qualified_member_expression
             (identifier)
             (identifier))
-          (argument_list
+          (unparenthesized_argument_list
             (identifier))))
-      (newline)))
+      (newline))
+    (end_sub_statement))
   (newline))
 
 ==================
@@ -57,7 +58,8 @@ End Sub
         (identifier))
       (newline)
       (exit_statement)
-      (newline)))
+      (newline))
+    (end_sub_statement))
   (newline))
 
 ==================
@@ -80,7 +82,8 @@ End Sub
       (single_line_if_statement
         (identifier)
         (resume_statement))
-      (newline)))
+      (newline))
+    (end_sub_statement))
   (newline))
 
 ==================
@@ -109,7 +112,8 @@ End Sub
               (array_bound
                 (number_literal)
                 (identifier))))))
-      (newline)))
+      (newline))
+    (end_sub_statement))
   (newline))
 
 ==================
@@ -133,7 +137,8 @@ End Sub
         (identifier)
         (on_error_statement
           (line_number_literal)))
-      (newline)))
+      (newline))
+    (end_sub_statement))
   (newline))
 
 ==================
@@ -164,7 +169,8 @@ End Sub
         (assignment_statement
           (identifier)
           (number_literal)))
-      (newline)))
+      (newline))
+    (end_sub_statement))
   (newline))
 
 ==================
@@ -190,5 +196,6 @@ End Sub
           (comparison_operator)
           (number_literal))
         (exit_statement))
-      (newline)))
+      (newline))
+    (end_sub_statement))
   (newline))

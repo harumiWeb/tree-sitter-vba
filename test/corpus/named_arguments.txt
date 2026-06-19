@@ -23,18 +23,21 @@ End Sub
               (identifier)
               (identifier))
             (identifier))
-          (named_argument
-            (identifier)
-            (call_expression
-              (qualified_member_expression
-                (identifier)
-                (identifier))
-              (qualified_member_expression
+          (argument_list
+            (named_argument
+              (identifier)
+              (call_expression
                 (qualified_member_expression
                   (identifier)
                   (identifier))
-                (identifier))))))
-      (newline)))
+                (argument_list
+                  (qualified_member_expression
+                    (qualified_member_expression
+                      (identifier)
+                      (identifier))
+                    (identifier))))))))
+      (newline))
+    (end_sub_statement))
   (newline))
 
 ==================
@@ -59,24 +62,28 @@ End Sub
         (identifier)
         (call_expression
           (identifier)
-          (byval_argument
-            (number_literal))
-          (byval_argument
-            (call_expression
-              (identifier)
-              (identifier)))))
+          (argument_list
+            (byval_argument
+              (number_literal))
+            (byval_argument
+              (call_expression
+                (identifier)
+                (argument_list
+                  (identifier)))))))
       (newline)
       (call_statement
         (identifier)
-        (argument_list
+        (unparenthesized_argument_list
           (byval_argument
             (call_expression
               (identifier)
-              (identifier)))
+              (argument_list
+                (identifier))))
           (byval_argument
             (identifier))
           (identifier)))
-      (newline)))
+      (newline))
+    (end_sub_statement))
   (newline))
 
 ==================
@@ -98,9 +105,10 @@ End Sub
     (block
       (call_statement
         (identifier)
-        (argument_list
+        (unparenthesized_argument_list
           (named_argument
             (identifier)
             (identifier))))
-      (newline)))
+      (newline))
+    (end_sub_statement))
   (newline))

@@ -30,6 +30,9 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Generate parser artifacts
+        run: pnpm generate
+
       - name: Run corpus tests
         run: pnpm test
 

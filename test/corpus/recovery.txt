@@ -23,12 +23,14 @@ End Sub
         left: (identifier)
         right: (call_expression
           function: (identifier)
-          (MISSING ")")))
+          arguments: (argument_list
+            (MISSING ")"))))
       (newline)
       (assignment_statement
         left: (identifier)
         right: (number_literal))
-      (newline)))
+      (newline))
+    end: (end_sub_statement))
   (newline))
 
 ==================
@@ -61,5 +63,6 @@ End Sub
           left: (identifier)
           operator: (comparison_operator)
           right: (number_literal)))
-      (newline)))
+      (newline))
+    end: (end_sub_statement))
   (newline))

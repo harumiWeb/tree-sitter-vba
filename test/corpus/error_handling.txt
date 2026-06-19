@@ -29,7 +29,8 @@ End Sub
         (identifier))
       (newline)
       (resume_statement)
-      (newline)))
+      (newline))
+    (end_sub_statement))
   (newline))
 
 ==================
@@ -49,7 +50,8 @@ End Sub
     (parameter_list)
     (newline)
     (block
-      (end_statement)))
+      (end_statement))
+    (end_sub_statement))
   (newline))
 
 ==================
@@ -82,7 +84,8 @@ End Sub
       (newline)
       (resume_statement
         (identifier))
-      (newline)))
+      (newline))
+    (end_sub_statement))
   (newline))
 
 ==================
@@ -111,5 +114,6 @@ End Sub
         (identifier))
       (newline)
       (exit_statement)
-      (newline)))
+      (newline))
+    (end_sub_statement))
   (newline))

@@ -23,7 +23,8 @@ End Sub
       (assignment_statement
         (identifier)
         (string_literal))
-      (newline)))
+      (newline))
+    (end_sub_statement))
   (newline))
 
 ==================
@@ -53,5 +54,6 @@ End Sub
           (identifier)
           (comparison_operator)
           (number_literal)))
-      (newline)))
+      (newline))
+    (end_sub_statement))
   (newline))

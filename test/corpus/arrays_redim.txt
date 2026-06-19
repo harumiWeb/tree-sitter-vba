@@ -67,5 +67,6 @@ End Sub
             (array_bound
               (number_literal)
               (identifier)))))
-      (newline)))
+      (newline))
+    (end_sub_statement))
   (newline))

@@ -90,9 +90,8 @@ End Sub
     body: (block
       (call_statement
         callee: (identifier)
-        (argument_list
-          (parenthesized_expression
-            (identifier))))
+        arguments: (argument_list
+          (identifier)))
       (newline)))
   (newline))
 
@@ -121,36 +120,39 @@ End Property
   (newline)
   (sub_declaration
     visibility: (visibility)
-    static_modifier: (static_modifier)
+    modifiers: (static_modifier)
     name: (identifier)
     parameters: (parameter_list)
-    (newline))
+    (newline)
+    end: (end_sub_statement))
   (newline)
   (newline)
   (function_declaration
     visibility: (visibility)
-    static_modifier: (static_modifier)
+    modifiers: (static_modifier)
     name: (identifier)
     parameters: (parameter_list)
     type: (as_type_clause
       type: (type_expression))
-    (newline))
+    (newline)
+    end: (end_function_statement))
   (newline)
   (newline)
   (property_get_declaration
     visibility: (visibility)
-    static_modifier: (static_modifier)
+    modifiers: (static_modifier)
     accessor: (get_accessor)
     name: (identifier)
     parameters: (parameter_list)
     type: (as_type_clause
       type: (type_expression))
-    (newline))
+    (newline)
+    end: (end_property_statement))
   (newline)
   (newline)
   (property_let_declaration
     visibility: (visibility)
-    static_modifier: (static_modifier)
+    modifiers: (static_modifier)
     accessor: (let_accessor)
     name: (identifier)
     parameters: (parameter_list
@@ -159,12 +161,13 @@ End Property
         name: (identifier)
         type: (as_type_clause
           type: (type_expression))))
-    (newline))
+    (newline)
+    end: (end_property_statement))
   (newline)
   (newline)
   (property_set_declaration
     visibility: (visibility)
-    static_modifier: (static_modifier)
+    modifiers: (static_modifier)
     accessor: (set_accessor)
     name: (identifier)
     parameters: (parameter_list
@@ -173,7 +176,8 @@ End Property
         name: (identifier)
         type: (as_type_clause
           type: (type_expression))))
-    (newline))
+    (newline)
+    end: (end_property_statement))
   (newline))
 
 ==================

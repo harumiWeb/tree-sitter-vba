@@ -1,0 +1,142 @@
+==================
+procedure declaration stable fields
+==================
+
+Public Static Function Add(ByVal a As Long, Optional b As Long = 1) As Long
+    Add = a + b
+End Function
+
+---
+
+(source_file
+  (newline)
+  (function_declaration
+    visibility: (visibility)
+    modifiers: (static_modifier)
+    name: (identifier)
+    parameters: (parameter_list
+      (parameter
+        passing_mode: (byval_modifier)
+        name: (identifier)
+        type: (as_type_clause
+          type: (type_expression)))
+      (parameter
+        optional_modifier: (optional_modifier)
+        name: (identifier)
+        type: (as_type_clause
+          type: (type_expression))
+        default_value: (initializer
+          value: (number_literal))))
+    type: (as_type_clause
+      type: (type_expression))
+    (newline)
+    body: (block
+      (assignment_statement
+        left: (identifier)
+        right: (binary_expression
+          (identifier)
+          (identifier)))
+      (newline))
+    end: (end_function_statement))
+  (newline))
+
+==================
+member and call expression stable fields
+==================
+
+Sub Chain()
+    Worksheets(1).Range(1).Value = 1
+    Me.txtName.Text = x
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    name: (identifier)
+    parameters: (parameter_list)
+    (newline)
+    body: (block
+      (assignment_statement
+        left: (qualified_member_expression
+          receiver: (call_expression
+            function: (qualified_member_expression
+              receiver: (call_expression
+                function: (identifier)
+                arguments: (argument_list
+                  (number_literal)))
+              member: (identifier))
+            arguments: (argument_list
+              (number_literal)))
+          member: (identifier))
+        right: (number_literal))
+      (newline)
+      (assignment_statement
+        left: (qualified_member_expression
+          receiver: (qualified_member_expression
+            receiver: (identifier)
+            member: (identifier))
+          member: (identifier))
+        right: (identifier))
+      (newline))
+    end: (end_sub_statement))
+  (newline))
+
+==================
+with implicit member stable fields
+==================
+
+Sub WithBlock()
+    With ws
+        .Range(1).Value = New CellValue
+    End With
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    name: (identifier)
+    parameters: (parameter_list)
+    (newline)
+    body: (block
+      (with_statement
+        value: (identifier)
+        (newline)
+        body: (block
+          (assignment_statement
+            left: (qualified_member_expression
+              receiver: (call_expression
+                function: (implicit_member_expression
+                  member: (identifier))
+                arguments: (argument_list
+                  (number_literal)))
+              member: (identifier))
+            right: (new_expression
+              type: (identifier)))
+          (newline)))
+      (newline))
+    end: (end_sub_statement))
+  (newline))
+
+==================
+declare ptrsafe stable fields
+==================
+
+Private Declare PtrSafe Function GetTickCount Lib "kernel32" () As LongPtr
+
+---
+
+(source_file
+  (newline)
+  (declare_function_statement
+    visibility: (visibility)
+    ptrsafe_modifier: (ptrsafe_modifier)
+    name: (identifier)
+    library: (string_literal)
+    parameters: (parameter_list)
+    type: (as_type_clause
+      type: (type_expression)))
+  (newline))

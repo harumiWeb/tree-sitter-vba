@@ -24,7 +24,6 @@ module.exports = grammar({
     [$._argument, $.parenthesized_expression],
     [$._condition_expression, $.parenthesized_expression],
     [$._argument_sequence],
-    [$.qualified_member_expression, $.implicit_member_expression],
     [$.block],
     [$.elseif_clause],
     [$.else_clause],
@@ -307,8 +306,7 @@ module.exports = grammar({
         $._sub_header,
         $._statement_separator,
         field("body", optional($.block)),
-        caseInsensitive("End"),
-        caseInsensitive("Sub"),
+        field("end", $.end_sub_statement),
       ),
 
     function_declaration: ($) =>
@@ -316,8 +314,7 @@ module.exports = grammar({
         $._function_header,
         $._statement_separator,
         field("body", optional($.block)),
-        caseInsensitive("End"),
-        caseInsensitive("Function"),
+        field("end", $.end_function_statement),
       ),
 
     property_get_declaration: ($) =>
@@ -325,8 +322,7 @@ module.exports = grammar({
         $._property_get_header,
         $._statement_separator,
         field("body", optional($.block)),
-        caseInsensitive("End"),
-        caseInsensitive("Property"),
+        field("end", $.end_property_statement),
       ),
 
     property_let_declaration: ($) =>
@@ -334,8 +330,7 @@ module.exports = grammar({
         $._property_let_header,
         $._statement_separator,
         field("body", optional($.block)),
-        caseInsensitive("End"),
-        caseInsensitive("Property"),
+        field("end", $.end_property_statement),
       ),
 
     property_set_declaration: ($) =>
@@ -343,8 +338,7 @@ module.exports = grammar({
         $._property_set_header,
         $._statement_separator,
         field("body", optional($.block)),
-        caseInsensitive("End"),
-        caseInsensitive("Property"),
+        field("end", $.end_property_statement),
       ),
 
     _sub_header: ($) =>
@@ -523,10 +517,16 @@ module.exports = grammar({
       choice(
         seq(
           field("visibility", $.visibility),
-          optional(field("static_modifier", $.static_modifier)),
+          optional(field("modifiers", $.static_modifier)),
         ),
-        field("static_modifier", $.static_modifier),
+        field("modifiers", $.static_modifier),
       ),
+
+    end_sub_statement: ($) => seq(caseInsensitive("End"), caseInsensitive("Sub")),
+
+    end_function_statement: ($) => seq(caseInsensitive("End"), caseInsensitive("Function")),
+
+    end_property_statement: ($) => seq(caseInsensitive("End"), caseInsensitive("Property")),
 
     static_modifier: (_) => caseInsensitive("Static"),
 
@@ -1317,22 +1317,26 @@ module.exports = grammar({
           seq(
             caseInsensitive("Call"),
             field("callee", choice($.identifier, $.member_expression)),
-            optional($.argument_list),
+            optional(field("arguments", $.argument_list)),
           ),
           seq(
             field("callee", alias($._line_method_expression, $.qualified_member_expression)),
-            $.line_range_argument_list,
+            field("arguments", $.line_range_argument_list),
           ),
           field("callee", $._callable_expression),
-          seq(field("callee", $._callable_expression), $.argument_list),
+          seq(
+            field("callee", $._callable_expression),
+            field("arguments", choice($.argument_list, $.unparenthesized_argument_list)),
+          ),
           field("callee", $.call_expression),
         ),
       ),
 
     expression_statement: ($) => $._expression,
 
-    argument_list: ($) =>
-      choice(seq("(", optional($._argument_sequence), ")"), $._unparenthesized_argument_sequence),
+    argument_list: ($) => seq("(", optional($._argument_sequence), ")"),
+
+    unparenthesized_argument_list: ($) => $._unparenthesized_argument_sequence,
 
     line_range_argument_list: ($) =>
       seq(
@@ -1518,9 +1522,9 @@ module.exports = grammar({
       prec(
         7,
         seq(
-          field("object", choice($.identifier, $.call_expression, $.member_expression)),
+          field("receiver", choice($.identifier, $.call_expression, $.member_expression)),
           field("operator", "."),
-          field("property", alias(caseInsensitive("Line"), $.identifier)),
+          field("member", alias(caseInsensitive("Line"), $.identifier)),
         ),
       ),
 
@@ -1530,9 +1534,12 @@ module.exports = grammar({
         choice(
           seq(
             field("function", $._callable_expression),
-            seq("(", optional($._argument_sequence), ")"),
+            field("arguments", $.argument_list),
           ),
-          seq(field("function", $.call_expression), seq("(", optional($._argument_sequence), ")")),
+          seq(
+            field("function", $.call_expression),
+            field("arguments", $.argument_list),
+          ),
         ),
       ),
 
@@ -1558,14 +1565,14 @@ module.exports = grammar({
       prec.left(
         3,
         seq(
-          field("object", choice($.identifier, $.call_expression, $.member_expression)),
+          field("receiver", choice($.identifier, $.call_expression, $.member_expression)),
           field("operator", choice(".", "!")),
-          field("property", $._member_property),
+          field("member", $._member_property),
         ),
       ),
 
     implicit_member_expression: ($) =>
-      prec.left(3, seq(field("operator", choice(".", "!")), field("property", $._member_property))),
+      prec.left(3, seq(field("operator", choice(".", "!")), field("member", $._member_property))),
 
     _member_property: ($) =>
       prec(6, choice($.identifier, alias(caseInsensitive("Line"), $.identifier))),

@@ -18,7 +18,8 @@ End Sub
       (assignment_statement
         (identifier)
         (identifier))
-      (newline)))
+      (newline))
+    (end_sub_statement))
   (newline))
 
 ==================
@@ -41,7 +42,8 @@ End Sub
       (assignment_statement
         (identifier)
         (identifier))
-      (newline)))
+      (newline))
+    (end_sub_statement))
   (newline))
 
 ==================
@@ -64,9 +66,11 @@ End Sub
       (assignment_statement
         (call_expression
           (identifier)
-          (identifier))
+          (argument_list
+            (identifier)))
         (identifier))
-      (newline)))
+      (newline))
+    (end_sub_statement))
   (newline))
 
 ==================
@@ -92,10 +96,12 @@ End Sub
             (qualified_member_expression
               (identifier)
               (identifier))
-            (string_literal))
+            (argument_list
+              (string_literal)))
           (identifier))
         (identifier))
-      (newline)))
+      (newline))
+    (end_sub_statement))
   (newline))
 
 ==================
@@ -120,10 +126,12 @@ End Sub
           (call_expression
             (implicit_member_expression
               (identifier))
-            (string_literal))
+            (argument_list
+              (string_literal)))
           (identifier))
         (identifier))
-      (newline)))
+      (newline))
+    (end_sub_statement))
   (newline))
 
 ==================
@@ -147,9 +155,11 @@ End Sub
         (qualified_member_expression
           (call_expression
             (identifier)
-            (identifier)
-            (number_literal))
+            (argument_list
+              (identifier)
+              (number_literal)))
           (identifier))
         (identifier))
-      (newline)))
+      (newline))
+    (end_sub_statement))
   (newline))

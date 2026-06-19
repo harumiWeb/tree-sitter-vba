@@ -21,9 +21,11 @@ End Sub
         (identifier)
         (call_expression
           (identifier)
-          (line_continuation)
-          (number_literal)
-          (line_continuation)
-          (number_literal)))
-      (newline)))
+          (argument_list
+            (line_continuation)
+            (number_literal)
+            (line_continuation)
+            (number_literal))))
+      (newline))
+    (end_sub_statement))
   (newline))

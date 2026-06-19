@@ -16,7 +16,8 @@ End Function
   (sub_declaration
     name: (identifier)
     parameters: (parameter_list)
-    (newline))
+    (newline)
+    end: (end_sub_statement))
   (newline)
   (newline)
   (function_declaration
@@ -29,5 +30,6 @@ End Function
       (assignment_statement
         left: (identifier)
         right: (number_literal))
-      (newline)))
+      (newline))
+    end: (end_function_statement))
   (newline))

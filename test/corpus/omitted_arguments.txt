@@ -17,10 +17,11 @@ End Sub
     (block
       (call_statement
         (identifier)
-        (argument_list
+        (unparenthesized_argument_list
           (number_literal)
           (number_literal)))
-      (newline)))
+      (newline))
+    (end_sub_statement))
   (newline))
 
 ==================
@@ -44,8 +45,10 @@ End Sub
         (identifier)
         (call_expression
           (identifier)
-          (number_literal)))
-      (newline)))
+          (argument_list
+            (number_literal))))
+      (newline))
+    (end_sub_statement))
   (newline))
 
 ==================
@@ -70,5 +73,6 @@ End Sub
         (argument_list
           (number_literal)
           (number_literal)))
-      (newline)))
+      (newline))
+    (end_sub_statement))
   (newline))

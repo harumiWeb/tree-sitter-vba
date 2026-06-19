@@ -4,6 +4,25 @@ All notable changes to tree-sitter-vba will be documented in this file.
 
 ## Unreleased
 
+## [v0.8.0] - 2026-06-19
+
+### Changed
+
+- Stabilize downstream-facing AST fields for editor and LSP integrations:
+  procedure declarations now expose named `end` terminator nodes, procedure
+  static modifiers use the `modifiers` field, member access uses
+  `receiver`/`member`, and calls expose arguments through an `arguments` field.
+- Split statement-style call arguments into `unparenthesized_argument_list`
+  while keeping parenthesized call-expression arguments under `argument_list`.
+  This is a breaking tree-shape change for consumers that relied on positional
+  call argument traversal or the previous `object`/`property` member fields.
+- Stop tracking generated `src/parser.c` and `src/grammar.json` in Git. They
+  are ignored locally, generated in CI, and generated during npm `prepack` so
+  package tarballs still include the parser artifacts.
+- Skip the native binding install build when generated parser artifacts are not
+  present in a development checkout; explicit test and package flows generate
+  the parser before building.
+
 ## [v0.7.0] - 2026-06-19
 
 ### Added

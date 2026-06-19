@@ -28,7 +28,8 @@ End Sub
         (assignment_statement
           (identifier)
           (call_expression
-            (identifier))))
+            (identifier)
+            (argument_list))))
       (newline)
       (line_number_statement
         (line_number_literal)
@@ -40,9 +41,10 @@ End Sub
           (qualified_member_expression
             (identifier)
             (identifier))
-          (argument_list
+          (unparenthesized_argument_list
             (identifier))))
-      (newline)))
+      (newline))
+    (end_sub_statement))
   (newline))
 
 ==================
@@ -79,5 +81,6 @@ End Sub
         (line_number_literal))
       (newline)
       (exit_statement)
-      (newline)))
+      (newline))
+    (end_sub_statement))
   (newline))
