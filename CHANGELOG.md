@@ -4,6 +4,17 @@ All notable changes to tree-sitter-vba will be documented in this file.
 
 ## Unreleased
 
+## [v0.7.0] - 2026-06-19
+
+### Added
+
+- Add parser support for legacy numeric line labels on comment-only and empty
+  statement lines, including numbered top-level procedure declarations.
+- Add parser support for colon-separated single-line `Do ... Loop`,
+  `For ... Next`, `For Each ... Next`, and `With ... End With` blocks.
+- Add regression coverage for single-line `If ... Then _` statements continued
+  across physical lines.
+
 ## [v0.6.0] - 2026-06-18
 
 ### Changed
