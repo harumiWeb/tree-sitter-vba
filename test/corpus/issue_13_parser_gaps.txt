@@ -1,0 +1,229 @@
+=====================================
+numbered top level procedure comments
+=====================================
+
+10  ' legacy comment
+20  Public Sub Sample()
+30      Debug.Print "hello"
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (line_number_top_level_item
+    (line_number_literal))
+  (comment)
+  (newline)
+  (line_number_top_level_item
+    (line_number_literal)
+    (sub_declaration
+      (visibility)
+      (identifier)
+      (parameter_list)
+      (newline)
+      (block
+        (line_number_statement
+          (line_number_literal)
+          (call_statement
+            (qualified_member_expression
+              (identifier)
+              (identifier))
+            (argument_list
+              (string_literal))))
+        (newline))))
+  (newline))
+
+========================================
+numbered comment and empty procedure lines
+========================================
+
+Public Sub Sample()
+10  ' legacy comment
+20
+30: Debug.Print "hello"
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (visibility)
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (line_number_statement
+        (line_number_literal))
+      (comment)
+      (newline)
+      (line_number_statement
+        (line_number_literal))
+      (newline)
+      (label_statement
+        (line_number_literal))
+      (call_statement
+        (qualified_member_expression
+          (identifier)
+          (identifier))
+        (argument_list
+          (string_literal)))
+      (newline)))
+  (newline))
+
+================================
+single line do loop with colons
+================================
+
+Public Sub Sample()
+    Do While i < 10: i = i + 1: Loop
+    Do: i = i + 1: Loop While i < 20
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (visibility)
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (do_statement
+        (do_condition
+          (comparison_expression
+            (identifier)
+            (comparison_operator)
+            (number_literal)))
+        (single_line_block
+          (assignment_statement
+            (identifier)
+            (binary_expression
+              (identifier)
+              (number_literal)))))
+      (newline)
+      (do_statement
+        (single_line_block
+          (assignment_statement
+            (identifier)
+            (binary_expression
+              (identifier)
+              (number_literal))))
+        (do_condition
+          (comparison_expression
+            (identifier)
+            (comparison_operator)
+            (number_literal))))
+      (newline)))
+  (newline))
+
+=================================
+single line for loops with colons
+=================================
+
+Public Sub Sample()
+    For i = 1 To 10: Debug.Print i: Next i
+    For Each item In items: Debug.Print item: Next item
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (visibility)
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (for_statement
+        (identifier)
+        (number_literal)
+        (number_literal)
+        (single_line_block
+          (call_statement
+            (qualified_member_expression
+              (identifier)
+              (identifier))
+            (argument_list
+              (identifier))))
+        (identifier))
+      (newline)
+      (for_each_statement
+        (identifier)
+        (identifier)
+        (single_line_block
+          (call_statement
+            (qualified_member_expression
+              (identifier)
+              (identifier))
+            (argument_list
+              (identifier))))
+        (identifier))
+      (newline)))
+  (newline))
+
+==============================
+single line with with colons
+==============================
+
+Public Sub Sample()
+    With ws: .Range("A1").Value = 1: End With
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (visibility)
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (with_statement
+        (identifier)
+        (single_line_block
+          (assignment_statement
+            (qualified_member_expression
+              (call_expression
+                (implicit_member_expression
+                  (identifier))
+                (string_literal))
+              (identifier))
+            (number_literal))))
+      (newline)))
+  (newline))
+
+====================================
+single line if with line continuation
+====================================
+
+Public Sub Sample()
+    If condition Then _
+        Debug.Print "yes"
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (visibility)
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (single_line_if_statement
+        (identifier)
+        (line_continuation)
+        (call_statement
+          (qualified_member_expression
+            (identifier)
+            (identifier))
+          (argument_list
+            (string_literal))))
+      (newline)))
+  (newline))
