@@ -31,6 +31,7 @@
     "bindings/go/*",
     "src/**",
     "queries/*",
+    "scripts/install.mjs",
     "README.md",
     "LICENSE"
   ],
@@ -40,7 +41,7 @@
     "access": "public"
   },
   "scripts": {
-    "install": "node-gyp-build",
+    "install": "node scripts/install.mjs",
     "generate": "tree-sitter generate --abi 14",
     "prepack": "pnpm generate",
     "build:binding": "node-gyp rebuild",

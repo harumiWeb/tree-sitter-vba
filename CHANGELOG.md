@@ -19,6 +19,9 @@ All notable changes to tree-sitter-vba will be documented in this file.
 - Stop tracking generated `src/parser.c` and `src/grammar.json` in Git. They
   are ignored locally, generated in CI, and generated during npm `prepack` so
   package tarballs still include the parser artifacts.
+- Skip the native binding install build when generated parser artifacts are not
+  present in a development checkout; explicit test and package flows generate
+  the parser before building.
 
 ## [v0.7.0] - 2026-06-19
 
