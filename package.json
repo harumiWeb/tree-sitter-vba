@@ -1,6 +1,6 @@
 {
   "name": "tree-sitter-vba",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "description": "Tree-sitter grammar for Visual Basic for Applications (VBA).",
   "keywords": [
     "excel",
