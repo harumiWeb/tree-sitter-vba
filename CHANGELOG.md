@@ -16,6 +16,9 @@ All notable changes to tree-sitter-vba will be documented in this file.
   while keeping parenthesized call-expression arguments under `argument_list`.
   This is a breaking tree-shape change for consumers that relied on positional
   call argument traversal or the previous `object`/`property` member fields.
+- Stop tracking generated `src/parser.c` and `src/grammar.json` in Git. They
+  are ignored locally, generated in CI, and generated during npm `prepack` so
+  package tarballs still include the parser artifacts.
 
 ## [v0.7.0] - 2026-06-19
 

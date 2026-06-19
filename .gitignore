@@ -5,6 +5,8 @@ build/
 
 # Tree-sitter generated artifacts
 *.wasm
+src/grammar.json
+src/parser.c
 
 # Logs
 npm-debug.log*

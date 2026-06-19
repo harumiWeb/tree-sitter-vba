@@ -42,6 +42,7 @@
   "scripts": {
     "install": "node-gyp-build",
     "generate": "tree-sitter generate --abi 14",
+    "prepack": "pnpm generate",
     "build:binding": "node-gyp rebuild",
     "test": "pnpm generate && node scripts/run-tree-sitter.mjs test",
     "test:binding": "node scripts/ensure-binding.mjs && node --test bindings/node/*_test.js",
