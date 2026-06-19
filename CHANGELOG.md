@@ -4,6 +4,10 @@ All notable changes to tree-sitter-vba will be documented in this file.
 
 ## Unreleased
 
+## [v0.8.1] - 2026-06-19
+
+- Upgrade for cache refresh
+
 ## [v0.8.0] - 2026-06-19
 
 ### Changed
