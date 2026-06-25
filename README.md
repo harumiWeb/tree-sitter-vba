@@ -385,7 +385,7 @@ Recommended interpretation of the current release line:
 ## Related projects
 
 This grammar is intended to support practical VBA tooling, including the
-`xlflow` ecosystem for AI-assisted Excel/VBA development.
+[harumiWeb/xlflow](https://github.com/harumiWeb/xlflow) ecosystem for AI-assisted Excel/VBA development.
 
 ## License
 
