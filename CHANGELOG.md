@@ -4,6 +4,22 @@ All notable changes to tree-sitter-vba will be documented in this file.
 
 ## Unreleased
 
+## [v0.9.0] - 2026-07-26
+
+### Added
+
+- Add permanent community regression fixtures for hexadecimal `ChrW` arguments,
+  large `Select Case` blocks, inline `ElseIf` branches, and `Mid`/`Mid$`
+  assignment and expression forms.
+- Add generated `Select Case` parser stress coverage for 10, 50, 100, and 500
+  clauses. The test checks recovery nodes and expected tree structure and runs
+  as part of `pnpm test`.
+
+### Fixed
+
+- Parse inline statement bodies on `ElseIf` branches within block `If`
+  statements.
+
 ## [v0.8.1] - 2026-06-19
 
 - Upgrade for cache refresh
