@@ -780,13 +780,23 @@ module.exports = grammar({
       ),
 
     elseif_clause: ($) =>
-      seq(
-        optional(field("line", $.line_number_prefix)),
-        caseInsensitive("ElseIf"),
-        field("condition", $._condition_expression),
-        caseInsensitive("Then"),
-        $.newline,
-        field("body", optional($.block)),
+      choice(
+        seq(
+          optional(field("line", $.line_number_prefix)),
+          caseInsensitive("ElseIf"),
+          field("condition", $._condition_expression),
+          caseInsensitive("Then"),
+          $.newline,
+          field("body", optional($.block)),
+        ),
+        seq(
+          optional(field("line", $.line_number_prefix)),
+          caseInsensitive("ElseIf"),
+          field("condition", $._condition_expression),
+          caseInsensitive("Then"),
+          field("body", $._single_line_statement),
+          $.newline,
+        ),
       ),
 
     else_clause: ($) =>
