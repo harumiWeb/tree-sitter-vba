@@ -1,10 +1,16 @@
 ===============================================================
-community report #21: Mid assignment (supported before #21)
+community report #23: Mid assignment targets and function expressions
 ===============================================================
 
 Sub Test()
     Mid$(buf, i, 1) = "A"
-    Mid(buf, i, 1) = "A"
+    Mid(buf, i, 1) = "B"
+
+    Mid$(buf, 2) = replacement
+    Mid(buf, 2, 3) = replacement
+
+    result = Mid$(buf, 1, 3)
+    Debug.Print Mid$(buf, 1, 3)
 End Sub
 
 ---
@@ -33,6 +39,46 @@ End Sub
             (identifier)
             (number_literal)))
         (string_literal))
+      (newline)
+      (newline)
+      (assignment_statement
+        (call_expression
+          (identifier)
+          (argument_list
+            (identifier)
+            (number_literal)))
+        (identifier))
+      (newline)
+      (assignment_statement
+        (call_expression
+          (identifier)
+          (argument_list
+            (identifier)
+            (number_literal)
+            (number_literal)))
+        (identifier))
+      (newline)
+      (newline)
+      (assignment_statement
+        (identifier)
+        (call_expression
+          (identifier)
+          (argument_list
+            (identifier)
+            (number_literal)
+            (number_literal))))
+      (newline)
+      (call_statement
+        (qualified_member_expression
+          (identifier)
+          (identifier))
+        (unparenthesized_argument_list
+          (call_expression
+            (identifier)
+            (argument_list
+              (identifier)
+              (number_literal)
+              (number_literal)))))
       (newline))
     (end_sub_statement))
   (newline))
