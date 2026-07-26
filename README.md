@@ -32,7 +32,7 @@ This is a `v0.x` public release.
 
 The grammar is already usable for syntax-aware tooling such as highlighting,
 folding, tags, outline extraction, and initial symbol analysis. The current test
-suite covers 189 focused corpus cases and 343 checked-in VBA example files
+suite covers 193 focused corpus cases and 343 checked-in VBA example files
 without `ERROR` or `MISSING` recovery nodes.
 
 It is not yet a complete VBA grammar. Node names and tree shapes may still change before `v1.0.0`.
@@ -343,6 +343,10 @@ Tree-sitter grammar behavior is tested with corpus files under:
 ```text
 test/corpus/
 ```
+
+Community-reported production syntax regressions are kept permanently under
+`test/corpus/regressions/`; each fixture records whether it was already
+supported or required a grammar change.
 
 When changing `grammar.js`, always add or update focused corpus tests. Do not
 weaken existing expectations just to make a grammar change pass.

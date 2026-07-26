@@ -1,0 +1,38 @@
+===============================================================
+community report #21: Mid assignment (supported before #21)
+===============================================================
+
+Sub Test()
+    Mid$(buf, i, 1) = "A"
+    Mid(buf, i, 1) = "A"
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (assignment_statement
+        (call_expression
+          (identifier)
+          (argument_list
+            (identifier)
+            (identifier)
+            (number_literal)))
+        (string_literal))
+      (newline)
+      (assignment_statement
+        (call_expression
+          (identifier)
+          (argument_list
+            (identifier)
+            (identifier)
+            (number_literal)))
+        (string_literal))
+      (newline))
+    (end_sub_statement))
+  (newline))
