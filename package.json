@@ -1,6 +1,6 @@
 {
   "name": "tree-sitter-vba",
-  "version": "0.8.1",
+  "version": "0.9.0",
   "description": "Tree-sitter grammar for Visual Basic for Applications (VBA).",
   "keywords": [
     "excel",
@@ -45,7 +45,9 @@
     "generate": "tree-sitter generate --abi 14",
     "prepack": "pnpm generate",
     "build:binding": "node-gyp rebuild",
-    "test": "pnpm generate && node scripts/run-tree-sitter.mjs test",
+    "test:corpus": "pnpm generate && node scripts/run-tree-sitter.mjs test",
+    "test:stress": "pnpm generate && node scripts/ensure-binding.mjs && node scripts/stress-select-case.mjs",
+    "test": "pnpm test:corpus && pnpm test:stress",
     "test:binding": "node scripts/ensure-binding.mjs && node --test bindings/node/*_test.js",
     "parse:examples": "node scripts/parse-examples.mjs",
     "query:examples": "node scripts/query-examples.mjs",
