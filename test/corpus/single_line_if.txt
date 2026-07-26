@@ -30,6 +30,43 @@ End Sub
     (end_sub_statement))
   (newline))
 
+======================================================
+single line if ElseIf suffix stays outside the If statement
+======================================================
+
+Sub Test()
+    If a Then x = 1 ElseIf b Then x = 2
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (single_line_if_statement
+        (identifier)
+        (assignment_statement
+          (identifier)
+          (number_literal)))
+      (call_statement
+        (identifier)
+        (unparenthesized_argument_list
+          (identifier)))
+      (call_statement
+        (identifier)
+        (unparenthesized_argument_list
+          (comparison_expression
+            (identifier)
+            (comparison_operator)
+            (number_literal))))
+      (newline))
+    (end_sub_statement))
+  (newline))
+
 ==================
 single line if goto
 ==================
