@@ -152,7 +152,8 @@ End Sub
               (identifier))
             (unparenthesized_argument_list
               (identifier))))
-        (identifier))
+        (next_variable_list
+          (identifier)))
       (newline)
       (for_each_statement
         (identifier)
@@ -164,7 +165,8 @@ End Sub
               (identifier))
             (unparenthesized_argument_list
               (identifier))))
-        (identifier))
+        (next_variable_list
+          (identifier)))
       (newline))
     (end_sub_statement))
   (newline))

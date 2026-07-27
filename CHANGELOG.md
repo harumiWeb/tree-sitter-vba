@@ -4,6 +4,23 @@ All notable changes to tree-sitter-vba will be documented in this file.
 
 ## Unreleased
 
+## [v0.10.0] - 2026-07-27
+
+### Added
+
+- Parse nested colon-separated single-line `For`, `For Each`, `Do`, `While`,
+  and `With` control-flow statements.
+- Parse shared `Next` counter lists such as `Next inner, outer` and preserve
+  their nested loop structure.
+- Preserve every colon-separated statement in a single-line `If` branch through
+  `inline_statement_sequence` nodes.
+
+### Changed
+
+- Replace the singular `next_variable` field on `For` and `For Each` with
+  `next_variables: next_variable_list`. This is an intentional pre-1.0 CST
+  breaking change for downstream consumers.
+
 ## [v0.9.0] - 2026-07-26
 
 ### Added

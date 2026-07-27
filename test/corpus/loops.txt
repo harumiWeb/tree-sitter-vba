@@ -201,7 +201,8 @@ End Sub
         (block
           (exit_statement)
           (newline))
-        (identifier))
+        (next_variable_list
+          (identifier)))
       (newline)
       (newline)
       (do_statement
