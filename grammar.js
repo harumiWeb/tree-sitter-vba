@@ -34,6 +34,7 @@ module.exports = grammar({
     [$._statement, $.for_statement],
     [$._statement, $.for_each_statement],
     [$._inline_statement, $.shared_next_for_body],
+    [$.goto_statement],
   ],
 
   rules: {
@@ -1056,7 +1057,11 @@ module.exports = grammar({
       ),
 
     goto_statement: ($) =>
-      seq(caseInsensitive("GoTo"), field("target", choice($.identifier, lineNumber($)))),
+      seq(
+        caseInsensitive("GoTo"),
+        field("target", choice($.identifier, lineNumber($))),
+        optional(seq(":", $.newline)),
+      ),
 
     label_statement: ($) => prec(5, seq(field("name", choice($.identifier, lineNumber($))), ":")),
 

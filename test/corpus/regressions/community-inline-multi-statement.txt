@@ -159,6 +159,70 @@ End Sub
   (newline))
 
 ====================================================
+community report: inline If accepts a trailing GoTo separator
+====================================================
+
+Public Sub InlineIfTrailingSeparator()
+    If forced Then GoTo ContinueHere:
+    ContinueHere:
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (visibility)
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (single_line_if_statement
+        (identifier)
+        (goto_statement
+          (identifier)
+          (newline)))
+      (label_statement
+        (identifier))
+      (newline))
+    (end_sub_statement))
+  (newline))
+
+====================================================
+community report: inline If keeps a following statement after GoTo
+====================================================
+
+Public Sub InlineIfGotoSequence()
+    If forced Then GoTo ContinueHere: result = 1
+ContinueHere:
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (visibility)
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (single_line_if_statement
+        (identifier)
+        (inline_statement_sequence
+          (goto_statement
+            (identifier))
+          (assignment_statement
+            (identifier)
+            (number_literal))))
+      (newline)
+      (label_statement
+        (identifier))
+      (newline))
+    (end_sub_statement))
+  (newline))
+
+====================================================
 community report: inline control statements can nest
 ====================================================
 
