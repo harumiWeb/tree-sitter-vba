@@ -175,8 +175,10 @@ The grammar currently supports:
 - common VBA operator precedence for arithmetic, concatenation, comparison, and
   logical operators; `=`, `<>`, `<`, `<=`, `>`, `>=`, `Is`, and `Like`
   comparisons are represented as `comparison_expression`
-- block `If`, single-line `If`, `Select Case`, `For`, `For Each`, `Do`,
-  `While/Wend`, and `With`
+- block `If`, including colon-separated multi-statement single-line branches;
+  `Select Case`; and nested single-line `For`, `For Each`, `Do`, `While/Wend`,
+  and `With`
+- `Next` counter lists such as `Next i` and `Next j, i`
 - `On Error`, computed `On ... GoTo`/`GoSub`, `Resume`, `GoTo`, labels,
   standalone `End`, and `Exit` statements
 - common file I/O statements: `Open`, `Input #`, `Line Input #`, `Print #`,
@@ -238,6 +240,18 @@ Member access and calls expose stable fields for analysis tools:
 - `call_statement` uses `callee` and, when arguments are present, `arguments`.
   Parenthesized arguments use `argument_list`; statement-style arguments use
   `unparenthesized_argument_list`.
+
+## Control-flow node API
+
+- `for_statement` and `for_each_statement` expose optional terminator counters
+  through `next_variables: next_variable_list`; `next_variable` is no longer
+  emitted.
+- `next_variable_list` always contains the ordered identifiers from `Next`,
+  whether there is one counter or several.
+- A colon-separated single-line `If` branch with multiple statements is an
+  `inline_statement_sequence`; one-statement branches keep their direct child.
+- `shared_next_for_body` represents an enclosing loop whose nested loop is
+  closed by the same `Next ...` counter list.
 
 ## Known limitations
 

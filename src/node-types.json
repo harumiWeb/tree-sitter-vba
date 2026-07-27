@@ -2793,7 +2793,19 @@
             "named": true
           },
           {
+            "type": "const_declaration",
+            "named": true
+          },
+          {
             "type": "debug_print_statement",
+            "named": true
+          },
+          {
+            "type": "do_statement",
+            "named": true
+          },
+          {
+            "type": "end_statement",
             "named": true
           },
           {
@@ -2806,6 +2818,14 @@
           },
           {
             "type": "expression_statement",
+            "named": true
+          },
+          {
+            "type": "for_each_statement",
+            "named": true
+          },
+          {
+            "type": "for_statement",
             "named": true
           },
           {
@@ -2877,6 +2897,10 @@
             "named": true
           },
           {
+            "type": "single_line_if_statement",
+            "named": true
+          },
+          {
             "type": "stop_statement",
             "named": true
           },
@@ -2886,6 +2910,18 @@
           },
           {
             "type": "unlock_statement",
+            "named": true
+          },
+          {
+            "type": "variable_declaration",
+            "named": true
+          },
+          {
+            "type": "while_statement",
+            "named": true
+          },
+          {
+            "type": "with_statement",
             "named": true
           }
         ]
@@ -3712,6 +3748,18 @@
             "named": true
           },
           {
+            "type": "for_each_statement",
+            "named": true
+          },
+          {
+            "type": "for_statement",
+            "named": true
+          },
+          {
+            "type": "shared_next_for_body",
+            "named": true
+          },
+          {
             "type": "single_line_block",
             "named": true
           }
@@ -3801,12 +3849,12 @@
           }
         ]
       },
-      "next_variable": {
+      "next_variables": {
         "multiple": false,
         "required": false,
         "types": [
           {
-            "type": "identifier",
+            "type": "next_variable_list",
             "named": true
           }
         ]
@@ -3853,6 +3901,18 @@
         "types": [
           {
             "type": "block",
+            "named": true
+          },
+          {
+            "type": "for_each_statement",
+            "named": true
+          },
+          {
+            "type": "for_statement",
+            "named": true
+          },
+          {
+            "type": "shared_next_for_body",
             "named": true
           },
           {
@@ -3945,12 +4005,12 @@
           }
         ]
       },
-      "next_variable": {
+      "next_variables": {
         "multiple": false,
         "required": false,
         "types": [
           {
-            "type": "identifier",
+            "type": "next_variable_list",
             "named": true
           }
         ]
@@ -4823,6 +4883,165 @@
     }
   },
   {
+    "type": "inline_statement_sequence",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "assignment_statement",
+          "named": true
+        },
+        {
+          "type": "beep_statement",
+          "named": true
+        },
+        {
+          "type": "call_statement",
+          "named": true
+        },
+        {
+          "type": "close_statement",
+          "named": true
+        },
+        {
+          "type": "const_declaration",
+          "named": true
+        },
+        {
+          "type": "debug_print_statement",
+          "named": true
+        },
+        {
+          "type": "do_statement",
+          "named": true
+        },
+        {
+          "type": "end_statement",
+          "named": true
+        },
+        {
+          "type": "erase_statement",
+          "named": true
+        },
+        {
+          "type": "exit_statement",
+          "named": true
+        },
+        {
+          "type": "expression_statement",
+          "named": true
+        },
+        {
+          "type": "for_each_statement",
+          "named": true
+        },
+        {
+          "type": "for_statement",
+          "named": true
+        },
+        {
+          "type": "get_statement",
+          "named": true
+        },
+        {
+          "type": "goto_statement",
+          "named": true
+        },
+        {
+          "type": "input_statement",
+          "named": true
+        },
+        {
+          "type": "line_input_statement",
+          "named": true
+        },
+        {
+          "type": "load_statement",
+          "named": true
+        },
+        {
+          "type": "lock_statement",
+          "named": true
+        },
+        {
+          "type": "name_statement",
+          "named": true
+        },
+        {
+          "type": "on_error_statement",
+          "named": true
+        },
+        {
+          "type": "open_statement",
+          "named": true
+        },
+        {
+          "type": "print_statement",
+          "named": true
+        },
+        {
+          "type": "put_statement",
+          "named": true
+        },
+        {
+          "type": "raise_event_statement",
+          "named": true
+        },
+        {
+          "type": "redim_statement",
+          "named": true
+        },
+        {
+          "type": "reset_statement",
+          "named": true
+        },
+        {
+          "type": "resume_statement",
+          "named": true
+        },
+        {
+          "type": "seek_statement",
+          "named": true
+        },
+        {
+          "type": "set_statement",
+          "named": true
+        },
+        {
+          "type": "single_line_if_statement",
+          "named": true
+        },
+        {
+          "type": "stop_statement",
+          "named": true
+        },
+        {
+          "type": "unload_statement",
+          "named": true
+        },
+        {
+          "type": "unlock_statement",
+          "named": true
+        },
+        {
+          "type": "variable_declaration",
+          "named": true
+        },
+        {
+          "type": "while_statement",
+          "named": true
+        },
+        {
+          "type": "with_statement",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "input_statement",
     "named": true,
     "fields": {
@@ -5554,6 +5773,21 @@
           }
         ]
       }
+    }
+  },
+  {
+    "type": "next_variable_list",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "identifier",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -7759,6 +7993,25 @@
     }
   },
   {
+    "type": "shared_next_for_body",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "for_each_statement",
+          "named": true
+        },
+        {
+          "type": "for_statement",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "single_line_block",
     "named": true,
     "fields": {},
@@ -7783,7 +8036,19 @@
           "named": true
         },
         {
+          "type": "const_declaration",
+          "named": true
+        },
+        {
           "type": "debug_print_statement",
+          "named": true
+        },
+        {
+          "type": "do_statement",
+          "named": true
+        },
+        {
+          "type": "end_statement",
           "named": true
         },
         {
@@ -7796,6 +8061,14 @@
         },
         {
           "type": "expression_statement",
+          "named": true
+        },
+        {
+          "type": "for_each_statement",
+          "named": true
+        },
+        {
+          "type": "for_statement",
           "named": true
         },
         {
@@ -7867,6 +8140,10 @@
           "named": true
         },
         {
+          "type": "single_line_if_statement",
+          "named": true
+        },
+        {
           "type": "stop_statement",
           "named": true
         },
@@ -7876,6 +8153,18 @@
         },
         {
           "type": "unlock_statement",
+          "named": true
+        },
+        {
+          "type": "variable_declaration",
+          "named": true
+        },
+        {
+          "type": "while_statement",
+          "named": true
+        },
+        {
+          "type": "with_statement",
           "named": true
         }
       ]
@@ -7906,7 +8195,19 @@
             "named": true
           },
           {
+            "type": "const_declaration",
+            "named": true
+          },
+          {
             "type": "debug_print_statement",
+            "named": true
+          },
+          {
+            "type": "do_statement",
+            "named": true
+          },
+          {
+            "type": "end_statement",
             "named": true
           },
           {
@@ -7922,11 +8223,23 @@
             "named": true
           },
           {
+            "type": "for_each_statement",
+            "named": true
+          },
+          {
+            "type": "for_statement",
+            "named": true
+          },
+          {
             "type": "get_statement",
             "named": true
           },
           {
             "type": "goto_statement",
+            "named": true
+          },
+          {
+            "type": "inline_statement_sequence",
             "named": true
           },
           {
@@ -7990,6 +8303,10 @@
             "named": true
           },
           {
+            "type": "single_line_if_statement",
+            "named": true
+          },
+          {
             "type": "stop_statement",
             "named": true
           },
@@ -7999,6 +8316,18 @@
           },
           {
             "type": "unlock_statement",
+            "named": true
+          },
+          {
+            "type": "variable_declaration",
+            "named": true
+          },
+          {
+            "type": "while_statement",
+            "named": true
+          },
+          {
+            "type": "with_statement",
             "named": true
           }
         ]
@@ -8110,7 +8439,19 @@
             "named": true
           },
           {
+            "type": "const_declaration",
+            "named": true
+          },
+          {
             "type": "debug_print_statement",
+            "named": true
+          },
+          {
+            "type": "do_statement",
+            "named": true
+          },
+          {
+            "type": "end_statement",
             "named": true
           },
           {
@@ -8126,11 +8467,23 @@
             "named": true
           },
           {
+            "type": "for_each_statement",
+            "named": true
+          },
+          {
+            "type": "for_statement",
+            "named": true
+          },
+          {
             "type": "get_statement",
             "named": true
           },
           {
             "type": "goto_statement",
+            "named": true
+          },
+          {
+            "type": "inline_statement_sequence",
             "named": true
           },
           {
@@ -8194,6 +8547,10 @@
             "named": true
           },
           {
+            "type": "single_line_if_statement",
+            "named": true
+          },
+          {
             "type": "stop_statement",
             "named": true
           },
@@ -8203,6 +8560,18 @@
           },
           {
             "type": "unlock_statement",
+            "named": true
+          },
+          {
+            "type": "variable_declaration",
+            "named": true
+          },
+          {
+            "type": "while_statement",
+            "named": true
+          },
+          {
+            "type": "with_statement",
             "named": true
           }
         ]

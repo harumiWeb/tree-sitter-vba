@@ -1,0 +1,205 @@
+====================================================
+community report: nested inline For closes multiple counters
+====================================================
+
+Public Sub InlineNestedFor()
+    For row = 1 To 2: For column = 1 To 2: value = row + column: Next column, row
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (visibility)
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (for_statement
+        (identifier)
+        (number_literal)
+        (number_literal)
+        (shared_next_for_body
+          (for_statement
+            (identifier)
+            (number_literal)
+            (number_literal)
+            (single_line_block
+              (assignment_statement
+                (identifier)
+                (binary_expression
+                  (identifier)
+                  (identifier))))
+            (next_variable_list
+              (identifier)
+              (identifier)))))
+      (newline))
+    (end_sub_statement))
+  (newline))
+
+====================================================
+community report: nested inline For Each closes multiple counters
+====================================================
+
+Public Sub InlineNestedForEach()
+    For Each group In groups: For Each item In group: Call Consume(item): Next item, group
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (visibility)
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (for_each_statement
+        (identifier)
+        (identifier)
+        (shared_next_for_body
+          (for_each_statement
+            (identifier)
+            (identifier)
+            (single_line_block
+              (call_statement
+                (identifier)
+                (argument_list
+                  (identifier))))
+            (next_variable_list
+              (identifier)
+              (identifier)))))
+      (newline))
+    (end_sub_statement))
+  (newline))
+
+====================================================
+community report: multiline Next closes multiple counters
+====================================================
+
+Public Sub MultilineNextList()
+    For row = 1 To 2
+        For column = 1 To 2
+            value = row + column
+        Next column, row
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (visibility)
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (for_statement
+        (identifier)
+        (number_literal)
+        (number_literal)
+        (newline)
+        (for_statement
+          (identifier)
+          (number_literal)
+          (number_literal)
+          (newline)
+          (block
+            (assignment_statement
+              (identifier)
+              (binary_expression
+                (identifier)
+                (identifier)))
+            (newline))
+          (next_variable_list
+            (identifier)
+            (identifier))))
+      (newline))
+    (end_sub_statement))
+  (newline))
+
+====================================================
+community report: inline If keeps statement sequences in each branch
+====================================================
+
+Public Sub InlineIfSequences()
+    If ready Then first = 1: second = 2 Else first = 3: second = 4
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (visibility)
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (single_line_if_statement
+        (identifier)
+        (inline_statement_sequence
+          (assignment_statement
+            (identifier)
+            (number_literal))
+          (assignment_statement
+            (identifier)
+            (number_literal)))
+        (inline_statement_sequence
+          (assignment_statement
+            (identifier)
+            (number_literal))
+          (assignment_statement
+            (identifier)
+            (number_literal))))
+      (newline))
+    (end_sub_statement))
+  (newline))
+
+====================================================
+community report: inline control statements can nest
+====================================================
+
+Public Sub InlineControlNesting()
+    With sheet: For i = 1 To 2: Do: If ready Then total = total + 1: count = count + 1: Loop: Next i: End With
+End Sub
+
+---
+(source_file
+  (newline)
+  (sub_declaration
+    (visibility)
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (with_statement
+        (identifier)
+        (single_line_block
+          (for_statement
+            (identifier)
+            (number_literal)
+            (number_literal)
+            (single_line_block
+              (do_statement
+                (single_line_block
+                  (single_line_if_statement
+                    (identifier)
+                    (inline_statement_sequence
+                      (assignment_statement
+                        (identifier)
+                        (binary_expression
+                          (identifier)
+                          (number_literal)))
+                      (assignment_statement
+                        (identifier)
+                        (binary_expression
+                          (identifier)
+                          (number_literal))))))))
+            (next_variable_list
+              (identifier)))))
+      (newline))
+    (end_sub_statement))
+  (newline))

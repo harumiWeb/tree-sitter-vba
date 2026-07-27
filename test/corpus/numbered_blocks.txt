@@ -237,7 +237,8 @@ End Sub
           (newline))
         (line_number_prefix
           (line_number_literal))
-        (identifier))
+        (next_variable_list
+          (identifier)))
       (newline)
       (for_each_statement
         (line_number_prefix
@@ -257,7 +258,8 @@ End Sub
           (newline))
         (line_number_prefix
           (line_number_literal))
-        (identifier))
+        (next_variable_list
+          (identifier)))
       (newline))
     (end_sub_statement))
   (newline))

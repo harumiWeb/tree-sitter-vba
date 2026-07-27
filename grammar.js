@@ -31,6 +31,9 @@ module.exports = grammar({
     [$.property_get_declaration, $._property_header],
     [$.property_let_declaration, $._property_header],
     [$.property_set_declaration, $._property_header],
+    [$._statement, $.for_statement],
+    [$._statement, $.for_each_statement],
+    [$._inline_statement, $.shared_next_for_body],
   ],
 
   rules: {
@@ -742,14 +745,29 @@ module.exports = grammar({
           field("condition", $._condition_expression),
           caseInsensitive("Then"),
           optional(":"),
-          field("consequence", $._single_line_statement),
-          optional(seq(caseInsensitive("Else"), field("alternative", $._single_line_statement))),
+          field("consequence", choice($.inline_statement_sequence, $._inline_statement)),
+          optional(
+            seq(
+              caseInsensitive("Else"),
+              field("alternative", choice($.inline_statement_sequence, $._inline_statement)),
+            ),
+          ),
         ),
       ),
 
-    _single_line_statement: ($) =>
+    inline_statement_sequence: ($) =>
+      prec.left(seq($._inline_statement, repeat1(seq(":", $._inline_statement)))),
+
+    _inline_statement: ($) =>
       choice(
+        $.single_line_if_statement,
+        $.for_statement,
+        $.for_each_statement,
+        $.do_statement,
+        $.while_statement,
+        $.with_statement,
         $.exit_statement,
+        $.end_statement,
         $.on_error_statement,
         $.resume_statement,
         $.goto_statement,
@@ -773,6 +791,8 @@ module.exports = grammar({
         $.beep_statement,
         $.load_statement,
         $.unload_statement,
+        $.const_declaration,
+        $.variable_declaration,
         $.set_statement,
         $.assignment_statement,
         $.call_statement,
@@ -794,7 +814,7 @@ module.exports = grammar({
           caseInsensitive("ElseIf"),
           field("condition", $._condition_expression),
           caseInsensitive("Then"),
-          field("body", $._single_line_statement),
+          field("body", $._inline_statement),
           $.newline,
         ),
       ),
@@ -840,34 +860,29 @@ module.exports = grammar({
       prec.right(
         choice(
           seq(
-            optional(field("start_line", $.line_number_prefix)),
-            caseInsensitive("For"),
-            field("variable", $.identifier),
-            "=",
-            field("start", $._expression),
-            caseInsensitive("To"),
-            field("end", $._expression),
-            optional(seq(caseInsensitive("Step"), field("step", $._expression))),
+            $._for_header,
+            $.newline,
+            field("body", choice($.for_statement, $.for_each_statement)),
+          ),
+          seq(
+            $._for_header,
+            field("body", $.shared_next_for_body),
+          ),
+          seq(
+            $._for_header,
             $.newline,
             field("body", optional($.block)),
             optional(field("end_line", $.line_number_prefix)),
             caseInsensitive("Next"),
-            optional(field("next_variable", $.identifier)),
+            optional(field("next_variables", $.next_variable_list)),
           ),
           seq(
-            optional(field("start_line", $.line_number_prefix)),
-            caseInsensitive("For"),
-            field("variable", $.identifier),
-            "=",
-            field("start", $._expression),
-            caseInsensitive("To"),
-            field("end", $._expression),
-            optional(seq(caseInsensitive("Step"), field("step", $._expression))),
+            $._for_header,
             field("body", optional($.single_line_block)),
             optional(field("end_line", $.line_number_prefix)),
             ":",
             caseInsensitive("Next"),
-            optional(field("next_variable", $.identifier)),
+            optional(field("next_variables", $.next_variable_list)),
           ),
         ),
       ),
@@ -876,32 +891,53 @@ module.exports = grammar({
       prec.right(
         choice(
           seq(
-            optional(field("start_line", $.line_number_prefix)),
-            caseInsensitive("For"),
-            caseInsensitive("Each"),
-            field("variable", $.identifier),
-            caseInsensitive("In"),
-            field("collection", $._expression),
+            $._for_each_header,
+            $.newline,
+            field("body", choice($.for_statement, $.for_each_statement)),
+          ),
+          seq(
+            $._for_each_header,
+            field("body", $.shared_next_for_body),
+          ),
+          seq(
+            $._for_each_header,
             $.newline,
             field("body", optional($.block)),
             optional(field("end_line", $.line_number_prefix)),
             caseInsensitive("Next"),
-            optional(field("next_variable", $.identifier)),
+            optional(field("next_variables", $.next_variable_list)),
           ),
           seq(
-            optional(field("start_line", $.line_number_prefix)),
-            caseInsensitive("For"),
-            caseInsensitive("Each"),
-            field("variable", $.identifier),
-            caseInsensitive("In"),
-            field("collection", $._expression),
+            $._for_each_header,
             field("body", optional($.single_line_block)),
             optional(field("end_line", $.line_number_prefix)),
             ":",
             caseInsensitive("Next"),
-            optional(field("next_variable", $.identifier)),
+            optional(field("next_variables", $.next_variable_list)),
           ),
         ),
+      ),
+
+    _for_header: ($) =>
+      seq(
+        optional(field("start_line", $.line_number_prefix)),
+        caseInsensitive("For"),
+        field("variable", $.identifier),
+        "=",
+        field("start", $._expression),
+        caseInsensitive("To"),
+        field("end", $._expression),
+        optional(seq(caseInsensitive("Step"), field("step", $._expression))),
+      ),
+
+    _for_each_header: ($) =>
+      seq(
+        optional(field("start_line", $.line_number_prefix)),
+        caseInsensitive("For"),
+        caseInsensitive("Each"),
+        field("variable", $.identifier),
+        caseInsensitive("In"),
+        field("collection", $._expression),
       ),
 
     do_statement: ($) =>
@@ -971,7 +1007,11 @@ module.exports = grammar({
         ),
       ),
 
-    single_line_block: ($) => prec.left(repeat1(seq(":", $._single_line_statement))),
+    single_line_block: ($) => prec.left(repeat1(seq(":", $._inline_statement))),
+
+    shared_next_for_body: ($) => seq(":", choice($.for_statement, $.for_each_statement)),
+
+    next_variable_list: ($) => commaSep1($.identifier),
 
     exit_statement: ($) =>
       seq(

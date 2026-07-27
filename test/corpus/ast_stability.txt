@@ -140,3 +140,41 @@ Private Declare PtrSafe Function GetTickCount Lib "kernel32" () As LongPtr
     type: (as_type_clause
       type: (type_expression)))
   (newline))
+
+==================
+loop terminator counter list field
+==================
+
+Sub LoopCounters()
+    For i = 1 To 2
+        Debug.Print i
+    Next i
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    name: (identifier)
+    parameters: (parameter_list)
+    (newline)
+    body: (block
+      (for_statement
+        variable: (identifier)
+        start: (number_literal)
+        end: (number_literal)
+        (newline)
+        body: (block
+          (call_statement
+            callee: (qualified_member_expression
+              receiver: (identifier)
+              member: (identifier))
+            arguments: (unparenthesized_argument_list
+              (identifier)))
+          (newline))
+        next_variables: (next_variable_list
+          (identifier)))
+      (newline))
+    end: (end_sub_statement))
+  (newline))

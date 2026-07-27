@@ -10,6 +10,7 @@ root: .
 ├── docs/
 │   ├── adr/
 │   ├── specs/
+│   │   └── inline-statement-sequences.md
 │   └── design.md
 ├── examples/
 │   ├── realworld/
