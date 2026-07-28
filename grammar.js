@@ -17,10 +17,9 @@ module.exports = grammar({
   supertypes: ($) => [$.member_expression],
 
   conflicts: ($) => [
-    [$._expression, $._callable_expression],
+    [$._primary_expression, $._callable_expression],
     [$._expression, $._comparison_operand],
     [$._comparison_operand, $.unary_expression],
-    [$._assignable_expression, $._callable_expression],
     [$._argument, $.parenthesized_expression],
     [$._condition_expression, $.parenthesized_expression],
     [$._argument_sequence],
@@ -1464,7 +1463,7 @@ module.exports = grammar({
         $._expression,
       ),
 
-    _expression: ($) =>
+    _primary_expression: ($) =>
       choice(
         $._literal,
         $.file_number_literal,
@@ -1477,6 +1476,11 @@ module.exports = grammar({
         $.addressof_expression,
         $.type_of_expression,
         $.parenthesized_expression,
+      ),
+
+    _expression: ($) =>
+      choice(
+        $._primary_expression,
         $.binary_expression,
         $.unary_expression,
       ),
@@ -1496,17 +1500,7 @@ module.exports = grammar({
 
     _comparison_operand: ($) =>
       choice(
-        $._literal,
-        $.file_number_literal,
-        $.call_expression,
-        $.member_expression,
-        alias(caseInsensitive("Line"), $.identifier),
-        alias(caseInsensitive("Name"), $.identifier),
-        $.identifier,
-        $.new_expression,
-        $.addressof_expression,
-        $.type_of_expression,
-        $.parenthesized_expression,
+        $._primary_expression,
         $._signed_unary_expression,
         $.binary_expression,
       ),
@@ -1563,9 +1557,7 @@ module.exports = grammar({
 
     _assignable_expression: ($) =>
       choice(
-        $.identifier,
-        alias(caseInsensitive("Name"), $.identifier),
-        $.member_expression,
+        $._callable_expression,
         $.call_expression,
         alias(caseInsensitive("Line"), $.identifier),
       ),
