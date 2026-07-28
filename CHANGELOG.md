@@ -4,6 +4,20 @@ All notable changes to tree-sitter-vba will be documented in this file.
 
 ## Unreleased
 
+## [v0.10.1] - 2026-07-28
+
+### Added
+
+- Add regression coverage for factored expression rules and equivalent inline
+  and multiline control-flow forms, including mixed shared `Next` chains.
+
+### Changed
+
+- Factor common expression, assignable, and control-flow grammar alternatives
+  without changing the public CST or reducing the existing clean-parse range.
+- Reduce the generated `parser.c` size from 66,446,096 bytes to 63,339,156
+  bytes (4.68%), with 927 fewer parser states and 622 fewer large states.
+
 ## [v0.10.0] - 2026-07-27
 
 ### Added

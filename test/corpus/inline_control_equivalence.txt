@@ -1,0 +1,456 @@
+=====================================
+nested inline controls keep ownership
+=====================================
+
+Public Sub NestedInlineControls()
+    Do: Do: value = 1: Loop: Loop
+    While outerReady: While innerReady: value = 2: Wend: Wend
+    With first: With .Second: value = 3: End With: End With
+    If outerReady Then If innerReady Then value = 4 Else value = 5 Else value = 6
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (visibility)
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (do_statement
+        (single_line_block
+          (do_statement
+            (single_line_block
+              (assignment_statement
+                (identifier)
+                (number_literal))))))
+      (newline)
+      (while_statement
+        (identifier)
+        (block
+          (while_statement
+            (identifier)
+            (block
+              (assignment_statement
+                (identifier)
+                (number_literal))))))
+      (newline)
+      (with_statement
+        (identifier)
+        (single_line_block
+          (with_statement
+            (implicit_member_expression
+              (identifier))
+            (single_line_block
+              (assignment_statement
+                (identifier)
+                (number_literal))))))
+      (newline)
+      (single_line_if_statement
+        (identifier)
+        (single_line_if_statement
+          (identifier)
+          (assignment_statement
+            (identifier)
+            (number_literal))
+          (assignment_statement
+            (identifier)
+            (number_literal)))
+        (assignment_statement
+          (identifier)
+          (number_literal)))
+      (newline))
+    (end_sub_statement))
+  (newline))
+
+==========================================
+mixed shared Next chain keeps loop nesting
+==========================================
+
+Public Sub MixedSharedNextChain()
+    For i = 1 To 2: For Each item In items: For j = 1 To 2: value = j: Next j, item, i
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (visibility)
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (for_statement
+        (identifier)
+        (number_literal)
+        (number_literal)
+        (shared_next_for_body
+          (for_each_statement
+            (identifier)
+            (identifier)
+            (shared_next_for_body
+              (for_statement
+                (identifier)
+                (number_literal)
+                (number_literal)
+                (single_line_block
+                  (assignment_statement
+                    (identifier)
+                    (identifier)))
+                (next_variable_list
+                  (identifier)
+                  (identifier)
+                  (identifier)))))))
+      (newline))
+    (end_sub_statement))
+  (newline))
+
+===================================================
+shared Next accepts a multiline nested loop
+===================================================
+
+Public Sub SharedNextWithMultilineChild()
+    For i = 1 To 2: For j = 1 To 2
+        value = j
+    Next j, i
+    For Each group In groups: For Each item In group
+        value = item
+    Next item, group
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (visibility)
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (for_statement
+        (identifier)
+        (number_literal)
+        (number_literal)
+        (shared_next_for_body
+          (for_statement
+            (identifier)
+            (number_literal)
+            (number_literal)
+            (newline)
+            (block
+              (assignment_statement
+                (identifier)
+                (identifier))
+              (newline))
+            (next_variable_list
+              (identifier)
+              (identifier)))))
+      (newline)
+      (for_each_statement
+        (identifier)
+        (identifier)
+        (shared_next_for_body
+          (for_each_statement
+            (identifier)
+            (identifier)
+            (newline)
+            (block
+              (assignment_statement
+                (identifier)
+                (identifier))
+              (newline))
+            (next_variable_list
+              (identifier)
+              (identifier)))))
+      (newline))
+    (end_sub_statement))
+  (newline))
+
+=========================================
+asymmetric inline If branches keep owners
+=========================================
+
+Public Sub AsymmetricInlineIfBranches()
+    If ready Then value = 1 Else first = 2: second = 3
+    If ready Then first = 1: second = 2 Else value = 3
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (visibility)
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (single_line_if_statement
+        (identifier)
+        (assignment_statement
+          (identifier)
+          (number_literal))
+        (inline_statement_sequence
+          (assignment_statement
+            (identifier)
+            (number_literal))
+          (assignment_statement
+            (identifier)
+            (number_literal))))
+      (newline)
+      (single_line_if_statement
+        (identifier)
+        (inline_statement_sequence
+          (assignment_statement
+            (identifier)
+            (number_literal))
+          (assignment_statement
+            (identifier)
+            (number_literal)))
+        (assignment_statement
+          (identifier)
+          (number_literal)))
+      (newline))
+    (end_sub_statement))
+  (newline))
+
+=========================================
+empty inline bodies and Do Until variants
+=========================================
+
+Public Sub EmptyInlineBodiesAndUntil()
+    For i = 1 To 2: Next
+    For Each item In items: Next
+    Do: Loop
+    With target: End With
+    Do Until ready: value = 1: Loop
+    Do: value = 2: Loop Until ready
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (visibility)
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (for_statement
+        (identifier)
+        (number_literal)
+        (number_literal))
+      (newline)
+      (for_each_statement
+        (identifier)
+        (identifier))
+      (newline)
+      (do_statement)
+      (newline)
+      (with_statement
+        (identifier))
+      (newline)
+      (do_statement
+        (do_condition
+          (identifier))
+        (single_line_block
+          (assignment_statement
+            (identifier)
+            (number_literal))))
+      (newline)
+      (do_statement
+        (single_line_block
+          (assignment_statement
+            (identifier)
+            (number_literal)))
+        (do_condition
+          (identifier)))
+      (newline))
+    (end_sub_statement))
+  (newline))
+
+==================================================
+individually terminated loops preserve current CST
+==================================================
+
+Public Sub IndividuallyTerminatedInlineLoops()
+    For i = 1 To 2: For j = 1 To 2: value = j: Next j: value = i: Next i
+    For Each group In groups: For Each item In group: value = item: Next item: value = group: Next group
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (visibility)
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (for_statement
+        (identifier)
+        (number_literal)
+        (number_literal)
+        (shared_next_for_body
+          (for_statement
+            (identifier)
+            (number_literal)
+            (number_literal)
+            (single_line_block
+              (assignment_statement
+                (identifier)
+                (identifier)))
+            (next_variable_list
+              (identifier)))))
+      (assignment_statement
+        (identifier)
+        (identifier))
+      (call_statement
+        (identifier)
+        (unparenthesized_argument_list
+          (identifier)))
+      (newline)
+      (for_each_statement
+        (identifier)
+        (identifier)
+        (shared_next_for_body
+          (for_each_statement
+            (identifier)
+            (identifier)
+            (single_line_block
+              (assignment_statement
+                (identifier)
+                (identifier)))
+            (next_variable_list
+              (identifier)))))
+      (assignment_statement
+        (identifier)
+        (identifier))
+      (call_statement
+        (identifier)
+        (unparenthesized_argument_list
+          (identifier)))
+      (newline))
+    (end_sub_statement))
+  (newline))
+
+=================================================
+inline owner accepts a multiline control child
+=================================================
+
+Public Sub HybridInlineMultiline()
+    Do: For i = 1 To 2
+        value = i
+    Next i: Loop
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (visibility)
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (do_statement
+        (single_line_block
+          (for_statement
+            (identifier)
+            (number_literal)
+            (number_literal)
+            (newline)
+            (block
+              (assignment_statement
+                (identifier)
+                (identifier))
+              (newline))
+            (next_variable_list
+              (identifier)))))
+      (newline))
+    (end_sub_statement))
+  (newline))
+
+====================================
+numbered inline control entry points
+====================================
+
+Public Sub NumberedInlineControls()
+10  For i = 1 To 2: value = i: Next i
+20  For Each item In items: value = item: Next item
+30  Do: value = 1: Loop
+40  While ready: value = 2: Wend
+50  With target: .Value = 3: End With
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (visibility)
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (for_statement
+        (line_number_prefix
+          (line_number_literal))
+        (identifier)
+        (number_literal)
+        (number_literal)
+        (single_line_block
+          (assignment_statement
+            (identifier)
+            (identifier)))
+        (next_variable_list
+          (identifier)))
+      (newline)
+      (for_each_statement
+        (line_number_prefix
+          (line_number_literal))
+        (identifier)
+        (identifier)
+        (single_line_block
+          (assignment_statement
+            (identifier)
+            (identifier)))
+        (next_variable_list
+          (identifier)))
+      (newline)
+      (do_statement
+        (line_number_prefix
+          (line_number_literal))
+        (single_line_block
+          (assignment_statement
+            (identifier)
+            (number_literal))))
+      (newline)
+      (while_statement
+        (line_number_prefix
+          (line_number_literal))
+        (identifier)
+        (block
+          (assignment_statement
+            (identifier)
+            (number_literal))))
+      (newline)
+      (with_statement
+        (line_number_prefix
+          (line_number_literal))
+        (identifier)
+        (single_line_block
+          (assignment_statement
+            (implicit_member_expression
+              (identifier))
+            (number_literal))))
+      (newline))
+    (end_sub_statement))
+  (newline))
