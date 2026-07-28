@@ -17,10 +17,9 @@ module.exports = grammar({
   supertypes: ($) => [$.member_expression],
 
   conflicts: ($) => [
-    [$._expression, $._callable_expression],
+    [$._primary_expression, $._callable_expression],
     [$._expression, $._comparison_operand],
     [$._comparison_operand, $.unary_expression],
-    [$._assignable_expression, $._callable_expression],
     [$._argument, $.parenthesized_expression],
     [$._condition_expression, $.parenthesized_expression],
     [$._argument_sequence],
@@ -31,8 +30,7 @@ module.exports = grammar({
     [$.property_get_declaration, $._property_header],
     [$.property_let_declaration, $._property_header],
     [$.property_set_declaration, $._property_header],
-    [$._statement, $.for_statement],
-    [$._statement, $.for_each_statement],
+    [$._statement, $._multiline_for_tail],
     [$._inline_statement, $.shared_next_for_body],
     [$.goto_statement],
   ],
@@ -560,10 +558,14 @@ module.exports = grammar({
         $.if_statement,
         $.select_statement,
         $.for_statement,
+        alias($._inline_for_statement, $.for_statement),
         $.for_each_statement,
+        alias($._inline_for_each_statement, $.for_each_statement),
         $.do_statement,
+        alias($._inline_do_statement, $.do_statement),
         $.while_statement,
         $.with_statement,
+        alias($._inline_with_statement, $.with_statement),
         $.on_goto_statement,
         $.on_error_statement,
         $.resume_statement,
@@ -763,10 +765,14 @@ module.exports = grammar({
       choice(
         $.single_line_if_statement,
         $.for_statement,
+        alias($._inline_for_statement, $.for_statement),
         $.for_each_statement,
+        alias($._inline_for_each_statement, $.for_each_statement),
         $.do_statement,
+        alias($._inline_do_statement, $.do_statement),
         $.while_statement,
         $.with_statement,
+        alias($._inline_with_statement, $.with_statement),
         $.exit_statement,
         $.end_statement,
         $.on_error_statement,
@@ -857,59 +863,46 @@ module.exports = grammar({
         $._expression,
       ),
 
-    for_statement: ($) =>
+    // Separate inline and multiline control forms, then alias them at use sites.
+    // This preserves the public CST while limiting recursive parse-state expansion.
+    for_statement: ($) => prec.right(seq($._for_header, $._multiline_for_tail)),
+
+    _inline_for_statement: ($) => prec.right(seq($._for_header, $._inline_for_tail)),
+
+    for_each_statement: ($) => prec.right(seq($._for_each_header, $._multiline_for_tail)),
+
+    _inline_for_each_statement: ($) => prec.right(seq($._for_each_header, $._inline_for_tail)),
+
+    _multiline_for_tail: ($) =>
       prec.right(
         choice(
           seq(
-            $._for_header,
             $.newline,
-            field("body", choice($.for_statement, $.for_each_statement)),
+            field(
+              "body",
+              choice(
+                $.for_statement,
+                alias($._inline_for_statement, $.for_statement),
+                $.for_each_statement,
+                alias($._inline_for_each_statement, $.for_each_statement),
+              ),
+            ),
           ),
           seq(
-            $._for_header,
-            field("body", $.shared_next_for_body),
-          ),
-          seq(
-            $._for_header,
             $.newline,
             field("body", optional($.block)),
             optional(field("end_line", $.line_number_prefix)),
-            caseInsensitive("Next"),
-            optional(field("next_variables", $.next_variable_list)),
-          ),
-          seq(
-            $._for_header,
-            field("body", optional($.single_line_block)),
-            optional(field("end_line", $.line_number_prefix)),
-            ":",
             caseInsensitive("Next"),
             optional(field("next_variables", $.next_variable_list)),
           ),
         ),
       ),
 
-    for_each_statement: ($) =>
+    _inline_for_tail: ($) =>
       prec.right(
         choice(
+          field("body", $.shared_next_for_body),
           seq(
-            $._for_each_header,
-            $.newline,
-            field("body", choice($.for_statement, $.for_each_statement)),
-          ),
-          seq(
-            $._for_each_header,
-            field("body", $.shared_next_for_body),
-          ),
-          seq(
-            $._for_each_header,
-            $.newline,
-            field("body", optional($.block)),
-            optional(field("end_line", $.line_number_prefix)),
-            caseInsensitive("Next"),
-            optional(field("next_variables", $.next_variable_list)),
-          ),
-          seq(
-            $._for_each_header,
             field("body", optional($.single_line_block)),
             optional(field("end_line", $.line_number_prefix)),
             ":",
@@ -943,27 +936,29 @@ module.exports = grammar({
 
     do_statement: ($) =>
       prec.right(
-        choice(
-          seq(
-            optional(field("start_line", $.line_number_prefix)),
-            caseInsensitive("Do"),
-            optional($.do_condition),
-            $.newline,
-            field("body", optional($.block)),
-            optional(field("end_line", $.line_number_prefix)),
-            caseInsensitive("Loop"),
-            optional($.do_condition),
-          ),
-          seq(
-            optional(field("start_line", $.line_number_prefix)),
-            caseInsensitive("Do"),
-            optional($.do_condition),
-            field("body", optional($.single_line_block)),
-            optional(field("end_line", $.line_number_prefix)),
-            ":",
-            caseInsensitive("Loop"),
-            optional($.do_condition),
-          ),
+        seq(
+          optional(field("start_line", $.line_number_prefix)),
+          caseInsensitive("Do"),
+          optional($.do_condition),
+          $.newline,
+          field("body", optional($.block)),
+          optional(field("end_line", $.line_number_prefix)),
+          caseInsensitive("Loop"),
+          optional($.do_condition),
+        ),
+      ),
+
+    _inline_do_statement: ($) =>
+      prec.right(
+        seq(
+          optional(field("start_line", $.line_number_prefix)),
+          caseInsensitive("Do"),
+          optional($.do_condition),
+          field("body", optional($.single_line_block)),
+          optional(field("end_line", $.line_number_prefix)),
+          ":",
+          caseInsensitive("Loop"),
+          optional($.do_condition),
         ),
       ),
 
@@ -985,32 +980,41 @@ module.exports = grammar({
       ),
 
     with_statement: ($) =>
-      choice(
-        seq(
-          optional(field("start_line", $.line_number_prefix)),
-          caseInsensitive("With"),
-          field("value", $._expression),
-          $.newline,
-          field("body", optional($.block)),
-          optional(field("end_line", $.line_number_prefix)),
-          caseInsensitive("End"),
-          caseInsensitive("With"),
-        ),
-        seq(
-          optional(field("start_line", $.line_number_prefix)),
-          caseInsensitive("With"),
-          field("value", $._expression),
-          field("body", optional($.single_line_block)),
-          optional(field("end_line", $.line_number_prefix)),
-          ":",
-          caseInsensitive("End"),
-          caseInsensitive("With"),
-        ),
+      seq(
+        optional(field("start_line", $.line_number_prefix)),
+        caseInsensitive("With"),
+        field("value", $._expression),
+        $.newline,
+        field("body", optional($.block)),
+        optional(field("end_line", $.line_number_prefix)),
+        caseInsensitive("End"),
+        caseInsensitive("With"),
+      ),
+
+    _inline_with_statement: ($) =>
+      seq(
+        optional(field("start_line", $.line_number_prefix)),
+        caseInsensitive("With"),
+        field("value", $._expression),
+        field("body", optional($.single_line_block)),
+        optional(field("end_line", $.line_number_prefix)),
+        ":",
+        caseInsensitive("End"),
+        caseInsensitive("With"),
       ),
 
     single_line_block: ($) => prec.left(repeat1(seq(":", $._inline_statement))),
 
-    shared_next_for_body: ($) => seq(":", choice($.for_statement, $.for_each_statement)),
+    shared_next_for_body: ($) =>
+      seq(
+        ":",
+        choice(
+          $.for_statement,
+          alias($._inline_for_statement, $.for_statement),
+          $.for_each_statement,
+          alias($._inline_for_each_statement, $.for_each_statement),
+        ),
+      ),
 
     next_variable_list: ($) => commaSep1($.identifier),
 
@@ -1464,7 +1468,7 @@ module.exports = grammar({
         $._expression,
       ),
 
-    _expression: ($) =>
+    _primary_expression: ($) =>
       choice(
         $._literal,
         $.file_number_literal,
@@ -1477,6 +1481,11 @@ module.exports = grammar({
         $.addressof_expression,
         $.type_of_expression,
         $.parenthesized_expression,
+      ),
+
+    _expression: ($) =>
+      choice(
+        $._primary_expression,
         $.binary_expression,
         $.unary_expression,
       ),
@@ -1496,17 +1505,7 @@ module.exports = grammar({
 
     _comparison_operand: ($) =>
       choice(
-        $._literal,
-        $.file_number_literal,
-        $.call_expression,
-        $.member_expression,
-        alias(caseInsensitive("Line"), $.identifier),
-        alias(caseInsensitive("Name"), $.identifier),
-        $.identifier,
-        $.new_expression,
-        $.addressof_expression,
-        $.type_of_expression,
-        $.parenthesized_expression,
+        $._primary_expression,
         $._signed_unary_expression,
         $.binary_expression,
       ),
@@ -1563,9 +1562,7 @@ module.exports = grammar({
 
     _assignable_expression: ($) =>
       choice(
-        $.identifier,
-        alias(caseInsensitive("Name"), $.identifier),
-        $.member_expression,
+        $._callable_expression,
         $.call_expression,
         alias(caseInsensitive("Line"), $.identifier),
       ),
