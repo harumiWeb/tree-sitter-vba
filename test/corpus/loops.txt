@@ -36,6 +36,41 @@ End Sub
   (newline))
 
 ==================
+for each assignable array element
+==================
+
+Sub Test()
+    For Each values(0) In items
+    Next values(0)
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (for_each_statement
+        (call_expression
+          (identifier)
+          (argument_list
+            (number_literal)))
+        (identifier)
+        (newline)
+        (next_variable_list
+          (call_expression
+            (identifier)
+            (argument_list
+              (number_literal)))))
+      (newline))
+    (end_sub_statement))
+  (newline))
+
+
+==================
 single line empty while
 ==================
 

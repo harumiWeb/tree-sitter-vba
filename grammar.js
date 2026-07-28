@@ -163,7 +163,7 @@ module.exports = grammar({
         caseInsensitive("Type"),
         field("name", $.identifier),
         $._statement_separator,
-        repeat(choice($.newline, $.type_member, $.type_preprocessor_if)),
+        repeat(choice($._statement_separator, $.type_member, $.type_preprocessor_if)),
         caseInsensitive("End"),
         caseInsensitive("Type"),
       ),
@@ -916,7 +916,7 @@ module.exports = grammar({
       seq(
         optional(field("start_line", $.line_number_prefix)),
         caseInsensitive("For"),
-        field("variable", $.identifier),
+        field("variable", $._assignable_expression),
         "=",
         field("start", $._expression),
         caseInsensitive("To"),
@@ -929,7 +929,7 @@ module.exports = grammar({
         optional(field("start_line", $.line_number_prefix)),
         caseInsensitive("For"),
         caseInsensitive("Each"),
-        field("variable", $.identifier),
+        field("variable", $._assignable_expression),
         caseInsensitive("In"),
         field("collection", $._expression),
       ),
@@ -1016,7 +1016,7 @@ module.exports = grammar({
         ),
       ),
 
-    next_variable_list: ($) => commaSep1($.identifier),
+    next_variable_list: ($) => commaSep1($._assignable_expression),
 
     exit_statement: ($) =>
       seq(
@@ -1555,6 +1555,9 @@ module.exports = grammar({
       choice(
         prec.left(5, seq($._condition_expression, caseInsensitive("And"), $._condition_expression)),
         prec.left(4, seq($._condition_expression, caseInsensitive("Or"), $._condition_expression)),
+        prec.left(3, seq($._condition_expression, caseInsensitive("Xor"), $._condition_expression)),
+        prec.left(2, seq($._condition_expression, caseInsensitive("Eqv"), $._condition_expression)),
+        prec.left(1, seq($._condition_expression, caseInsensitive("Imp"), $._condition_expression)),
       ),
 
     parenthesized_condition_expression: ($) =>
