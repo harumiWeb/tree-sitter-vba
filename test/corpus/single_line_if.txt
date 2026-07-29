@@ -52,17 +52,11 @@ End Sub
         (assignment_statement
           (identifier)
           (number_literal)))
-      (call_statement
+      (elseif_fragment
+        (identifier))
+      (assignment_statement
         (identifier)
-        (unparenthesized_argument_list
-          (identifier)))
-      (call_statement
-        (identifier)
-        (unparenthesized_argument_list
-          (comparison_expression
-            (identifier)
-            (comparison_operator)
-            (number_literal))))
+        (number_literal))
       (newline))
     (end_sub_statement))
   (newline))

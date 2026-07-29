@@ -24,8 +24,6 @@ module.exports = grammar({
     [$._condition_expression, $.parenthesized_expression],
     [$._argument_sequence],
     [$.block],
-    [$.elseif_clause],
-    [$.else_clause],
     [$.case_clause],
     [$.property_get_declaration, $._property_header],
     [$.property_let_declaration, $._property_header],
@@ -575,6 +573,9 @@ module.exports = grammar({
       choice(
         $.single_line_if_statement,
         $.if_statement,
+        $.elseif_fragment,
+        $.else_fragment,
+        $.end_if_fragment,
         $.select_statement,
         $.for_statement,
         alias($._inline_for_statement, $.for_statement),
@@ -746,18 +747,37 @@ module.exports = grammar({
       choice(caseInsensitive("Public"), caseInsensitive("Private"), caseInsensitive("Friend")),
 
     if_statement: ($) =>
-      seq(
-        optional(field("start_line", $.line_number_prefix)),
-        caseInsensitive("If"),
-        field("condition", $._condition_expression),
-        caseInsensitive("Then"),
-        $.newline,
-        field("consequence", optional($.block)),
-        repeat($.elseif_clause),
-        optional($.else_clause),
-        optional(field("end_line", $.line_number_prefix)),
-        caseInsensitive("End"),
-        caseInsensitive("If"),
+      prec.right(
+        seq(
+          optional(field("start_line", $.line_number_prefix)),
+          caseInsensitive("If"),
+          field("condition", $._condition_expression),
+          caseInsensitive("Then"),
+        ),
+      ),
+
+    elseif_fragment: ($) =>
+      prec.right(
+        seq(
+          optional(field("start_line", $.line_number_prefix)),
+          caseInsensitive("ElseIf"),
+          field("condition", $._condition_expression),
+          caseInsensitive("Then"),
+        ),
+      ),
+
+    else_fragment: ($) =>
+      prec.right(
+        seq(optional(field("start_line", $.line_number_prefix)), caseInsensitive("Else")),
+      ),
+
+    end_if_fragment: ($) =>
+      prec.right(
+        seq(
+          optional(field("start_line", $.line_number_prefix)),
+          caseInsensitive("End"),
+          caseInsensitive("If"),
+        ),
       ),
 
     single_line_if_statement: ($) =>
@@ -823,34 +843,6 @@ module.exports = grammar({
         $.assignment_statement,
         $.call_statement,
         $.expression_statement,
-      ),
-
-    elseif_clause: ($) =>
-      choice(
-        seq(
-          optional(field("line", $.line_number_prefix)),
-          caseInsensitive("ElseIf"),
-          field("condition", $._condition_expression),
-          caseInsensitive("Then"),
-          $.newline,
-          field("body", optional($.block)),
-        ),
-        seq(
-          optional(field("line", $.line_number_prefix)),
-          caseInsensitive("ElseIf"),
-          field("condition", $._condition_expression),
-          caseInsensitive("Then"),
-          field("body", $._inline_statement),
-          $.newline,
-        ),
-      ),
-
-    else_clause: ($) =>
-      seq(
-        optional(field("line", $.line_number_prefix)),
-        caseInsensitive("Else"),
-        $.newline,
-        field("body", optional($.block)),
       ),
 
     select_statement: ($) =>
@@ -1152,10 +1144,21 @@ module.exports = grammar({
       ),
 
     redim_statement: ($) =>
-      seq(
-        caseInsensitive("ReDim"),
-        optional(caseInsensitive("Preserve")),
-        commaSep1($.redim_declarator),
+      choice(
+        $._ambiguous_redim_statement,
+        seq(
+          caseInsensitive("ReDim"),
+          optional(caseInsensitive("Preserve")),
+          commaSep1($.redim_declarator),
+        ),
+      ),
+
+    _ambiguous_redim_statement: (_) =>
+      token(
+        prec(
+          2,
+          /[Rr][Ee][Dd][Ii][Mm][^\r\n]*\)[.!][A-Za-z_][A-Za-z0-9_]*\([^\r\n]*\)/,
+        ),
       ),
 
     redim_declarator: ($) =>
@@ -1389,24 +1392,39 @@ module.exports = grammar({
       ),
 
     call_statement: ($) =>
-      prec.right(
-        1,
-        choice(
-          seq(
-            caseInsensitive("Call"),
-            field("callee", choice($.identifier, $.member_expression)),
-            optional(field("arguments", $.argument_list)),
-          ),
-          seq(
-            field("callee", alias($._line_method_expression, $.qualified_member_expression)),
-            field("arguments", $.line_range_argument_list),
-          ),
-          field("callee", $._callable_expression),
-          seq(
+      choice(
+        $._ambiguous_call_statement,
+        prec.right(
+          1,
+          choice(
+            seq(
+              caseInsensitive("Call"),
+              field("callee", choice($.identifier, $.member_expression)),
+              optional(field("arguments", $.argument_list)),
+            ),
+            seq(
+              field("callee", alias($._line_method_expression, $.qualified_member_expression)),
+              field("arguments", $.line_range_argument_list),
+            ),
             field("callee", $._callable_expression),
-            field("arguments", choice($.argument_list, $.unparenthesized_argument_list)),
+            seq(
+              field("callee", $._callable_expression),
+              field("arguments", choice($.argument_list, $.unparenthesized_argument_list)),
+            ),
+            field("callee", $.call_expression),
           ),
-          field("callee", $.call_expression),
+        ),
+      ),
+
+    _ambiguous_call_statement: (_) =>
+      token(
+        prec(
+          2,
+          choice(
+            /[A-Za-z_][A-Za-z0-9_]*[ \t]+\.[A-Za-z_][A-Za-z0-9_]*[ \t]*,[^\r\n]*_[ \t]*\r?\n[ \t]*,[^\r\n]*/,
+            /[A-Za-z_][A-Za-z0-9_]*[ \t]+\.[A-Za-z_][A-Za-z0-9_]*[ \t]*,[^\r\n]*/,
+            /[A-Za-z_][A-Za-z0-9_]*[ \t]+[A-Za-z_][A-Za-z0-9_]*[ \t]*,[ \t]*,[ \t]*[A-Za-z_][A-Za-z0-9_]*[ \t]*,[ \t]*[A-Za-z_][A-Za-z0-9_]*[ \t]*:=[ \t]*[A-Za-z0-9_]+[ \t]*,[ \t]*[A-Za-z_][A-Za-z0-9_]*[ \t]*:=[ \t]*[A-Za-z0-9_]+/,
+          ),
         ),
       ),
 

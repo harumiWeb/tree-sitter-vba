@@ -21,16 +21,16 @@ End Sub
         (comparison_expression
           (identifier)
           (comparison_operator)
+          (identifier)))
+      (newline)
+      (call_statement
+        (qualified_member_expression
+          (identifier)
           (identifier))
-        (newline)
-        (block
-          (call_statement
-            (qualified_member_expression
-              (identifier)
-              (identifier))
-            (unparenthesized_argument_list
-              (identifier)))
-          (newline)))
+        (unparenthesized_argument_list
+          (identifier)))
+      (newline)
+      (end_if_fragment)
       (newline))
     (end_sub_statement))
   (newline))
@@ -65,12 +65,12 @@ End Sub
                 (identifier)
                 (comparison_operator)
                 (identifier))))
-          (identifier))
-        (newline))
+          (identifier)))
+      (newline)
+      (end_if_fragment)
       (newline))
     (end_sub_statement))
   (newline))
-
 
 ==================
 if not equal comparison
@@ -95,16 +95,16 @@ End Sub
         (comparison_expression
           (identifier)
           (comparison_operator)
+          (identifier)))
+      (newline)
+      (call_statement
+        (qualified_member_expression
+          (identifier)
           (identifier))
-        (newline)
-        (block
-          (call_statement
-            (qualified_member_expression
-              (identifier)
-              (identifier))
-            (unparenthesized_argument_list
-              (identifier)))
-          (newline)))
+        (unparenthesized_argument_list
+          (identifier)))
+      (newline)
+      (end_if_fragment)
       (newline))
     (end_sub_statement))
   (newline))
@@ -132,16 +132,16 @@ End Sub
         (comparison_expression
           (identifier)
           (comparison_operator)
+          (identifier)))
+      (newline)
+      (call_statement
+        (qualified_member_expression
+          (identifier)
           (identifier))
-        (newline)
-        (block
-          (call_statement
-            (qualified_member_expression
-              (identifier)
-              (identifier))
-            (unparenthesized_argument_list
-              (identifier)))
-          (newline)))
+        (unparenthesized_argument_list
+          (identifier)))
+      (newline)
+      (end_if_fragment)
       (newline))
     (end_sub_statement))
   (newline))
@@ -169,16 +169,16 @@ End Sub
         (comparison_expression
           (identifier)
           (comparison_operator)
+          (identifier)))
+      (newline)
+      (call_statement
+        (qualified_member_expression
+          (identifier)
           (identifier))
-        (newline)
-        (block
-          (call_statement
-            (qualified_member_expression
-              (identifier)
-              (identifier))
-            (unparenthesized_argument_list
-              (identifier)))
-          (newline)))
+        (unparenthesized_argument_list
+          (identifier)))
+      (newline)
+      (end_if_fragment)
       (newline))
     (end_sub_statement))
   (newline))

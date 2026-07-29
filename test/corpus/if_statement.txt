@@ -25,40 +25,38 @@ End Sub
         (comparison_expression
           (identifier)
           (comparison_operator)
+          (identifier)))
+      (newline)
+      (call_statement
+        (qualified_member_expression
+          (identifier)
           (identifier))
-        (newline)
-        (block
-          (call_statement
-            (qualified_member_expression
-              (identifier)
-              (identifier))
-            (unparenthesized_argument_list
-              (identifier)))
-          (newline))
-        (elseif_clause
-          (comparison_expression
-            (identifier)
-            (comparison_operator)
-            (identifier))
-          (newline)
-          (block
-            (call_statement
-              (qualified_member_expression
-                (identifier)
-                (identifier))
-              (unparenthesized_argument_list
-                (identifier)))
-            (newline)))
-        (else_clause
-          (newline)
-          (block
-            (call_statement
-              (qualified_member_expression
-                (identifier)
-                (identifier))
-              (unparenthesized_argument_list
-                (string_literal)))
-            (newline))))
+        (unparenthesized_argument_list
+          (identifier)))
+      (newline)
+      (elseif_fragment
+        (comparison_expression
+          (identifier)
+          (comparison_operator)
+          (identifier)))
+      (newline)
+      (call_statement
+        (qualified_member_expression
+          (identifier)
+          (identifier))
+        (unparenthesized_argument_list
+          (identifier)))
+      (newline)
+      (else_fragment)
+      (newline)
+      (call_statement
+        (qualified_member_expression
+          (identifier)
+          (identifier))
+        (unparenthesized_argument_list
+          (string_literal)))
+      (newline)
+      (end_if_fragment)
       (newline))
     (end_sub_statement))
   (newline))

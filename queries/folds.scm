@@ -19,15 +19,6 @@
 
 (preprocessor_if) @fold
 
-(if_statement
-  consequence: (block) @fold)
-
-(elseif_clause
-  body: (block) @fold)
-
-(else_clause
-  body: (block) @fold)
-
 (select_statement) @fold
 
 (for_statement

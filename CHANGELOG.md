@@ -4,6 +4,45 @@ All notable changes to tree-sitter-vba will be documented in this file.
 
 ## Unreleased
 
+## [v0.11.0] - 2026-07-29
+
+### Added
+
+- Parse conditionally selected procedure headers with branch-local declarations
+  and statements through `conditional_branch_body`.
+- Parse `Xor`, `Eqv`, and `Imp` condition expressions, assignable `For` and
+  `For Each` control variables, assignable `Next` variables, and
+  colon-separated inline `Type` members.
+- Add regression coverage for conditional-compilation-split `If` constructs,
+  indexed-member `ReDim`, whitespace-sensitive and continued implicit-member
+  calls, and calls that combine omitted positional arguments with named
+  arguments.
+- Expand the checked-in real-world corpus to 477 VBA source files.
+
+### Changed
+
+- Represent multiline `If` constructs as the flat `if_statement`,
+  `elseif_fragment`, `else_fragment`, and `end_if_fragment` sequence. This is
+  an intentional breaking CST change for downstream consumers.
+- Allow whitespace-sensitive and omitted-then-named ambiguous calls to use a
+  fieldless `call_statement`; consumers must treat `callee` and `arguments` as
+  optional for these forms.
+- Allow indexed-member `ReDim` targets to use a fieldless `redim_statement`
+  while retaining structured declarators for ordinary forms.
+- Update highlight queries for the flat `If` fragment nodes and remove
+  nested-node `If` folding queries that no longer have a structural range.
+- Increase focused corpus coverage from 212 to 222 cases and checked-in
+  clean-parse coverage from 343 to 477 files.
+
+### Fixed
+
+- Cleanly parse conditional compilation that selects alternative multiline
+  `If` headers while sharing the body and `End If`.
+- Cleanly parse real-world implicit calls such as
+  `QuickSortKeys .arrKeys, .arrItems, 0, .ub`.
+- Cleanly parse omitted positional arguments followed by multiple named
+  arguments without producing recovery nodes.
+
 ## [v0.10.1] - 2026-07-28
 
 ### Added

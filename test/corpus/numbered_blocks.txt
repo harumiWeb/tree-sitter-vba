@@ -27,50 +27,48 @@ End Sub
         (comparison_expression
           (identifier)
           (comparison_operator)
-          (number_literal))
-        (newline)
-        (block
-          (line_number_statement
-            (line_number_literal)
-            (call_statement
-              (qualified_member_expression
-                (identifier)
-                (identifier))
-              (unparenthesized_argument_list
-                (string_literal))))
-          (newline))
-        (elseif_clause
-          (line_number_prefix
-            (line_number_literal))
-          (comparison_expression
+          (number_literal)))
+      (newline)
+      (line_number_statement
+        (line_number_literal)
+        (call_statement
+          (qualified_member_expression
             (identifier)
-            (comparison_operator)
-            (number_literal))
-          (newline)
-          (block
-            (line_number_statement
-              (line_number_literal)
-              (call_statement
-                (qualified_member_expression
-                  (identifier)
-                  (identifier))
-                (unparenthesized_argument_list
-                  (string_literal))))
-            (newline)))
-        (else_clause
-          (line_number_prefix
-            (line_number_literal))
-          (newline)
-          (block
-            (line_number_statement
-              (line_number_literal)
-              (call_statement
-                (qualified_member_expression
-                  (identifier)
-                  (identifier))
-                (unparenthesized_argument_list
-                  (string_literal))))
-            (newline)))
+            (identifier))
+          (unparenthesized_argument_list
+            (string_literal))))
+      (newline)
+      (elseif_fragment
+        (line_number_prefix
+          (line_number_literal))
+        (comparison_expression
+          (identifier)
+          (comparison_operator)
+          (number_literal)))
+      (newline)
+      (line_number_statement
+        (line_number_literal)
+        (call_statement
+          (qualified_member_expression
+            (identifier)
+            (identifier))
+          (unparenthesized_argument_list
+            (string_literal))))
+      (newline)
+      (else_fragment
+        (line_number_prefix
+          (line_number_literal)))
+      (newline)
+      (line_number_statement
+        (line_number_literal)
+        (call_statement
+          (qualified_member_expression
+            (identifier)
+            (identifier))
+          (unparenthesized_argument_list
+            (string_literal))))
+      (newline)
+      (end_if_fragment
         (line_number_prefix
           (line_number_literal)))
       (newline))
@@ -101,32 +99,31 @@ End Sub
       (if_statement
         (line_number_prefix
           (line_number_literal))
-        (identifier)
-        (newline)
-        (block
-          (label_statement
-            (line_number_literal))
-          (call_statement
-            (qualified_member_expression
-              (identifier)
-              (identifier))
-            (unparenthesized_argument_list
-              (identifier)))
-          (newline))
-        (else_clause
-          (line_number_prefix
-            (line_number_literal))
-          (newline)
-          (block
-            (label_statement
-              (line_number_literal))
-            (call_statement
-              (qualified_member_expression
-                (identifier)
-                (identifier))
-              (unparenthesized_argument_list
-                (string_literal)))
-            (newline)))
+        (identifier))
+      (newline)
+      (label_statement
+        (line_number_literal))
+      (call_statement
+        (qualified_member_expression
+          (identifier)
+          (identifier))
+        (unparenthesized_argument_list
+          (identifier)))
+      (newline)
+      (else_fragment
+        (line_number_prefix
+          (line_number_literal)))
+      (newline)
+      (label_statement
+        (line_number_literal))
+      (call_statement
+        (qualified_member_expression
+          (identifier)
+          (identifier))
+        (unparenthesized_argument_list
+          (string_literal)))
+      (newline)
+      (end_if_fragment
         (line_number_prefix
           (line_number_literal)))
       (newline))

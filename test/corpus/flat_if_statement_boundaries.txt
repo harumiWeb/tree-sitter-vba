@@ -1,0 +1,87 @@
+==================
+redim indexed member inside flat if
+==================
+
+Sub Test()
+    If ready Then
+        ReDim items(i).buffer(0 To size - 1)
+    End If
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (if_statement
+        (identifier))
+      (newline)
+      (redim_statement)
+      (newline)
+      (end_if_fragment)
+      (newline))
+    (end_sub_statement))
+  (newline))
+
+==================
+continued implicit member call inside flat if
+==================
+
+Sub Test()
+    If ready Then
+        FillItems .items, values(0), bounds _
+                         , count, pointers(0)
+    End If
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (if_statement
+        (identifier))
+      (newline)
+      (call_statement)
+      (newline)
+      (end_if_fragment)
+      (newline))
+    (end_sub_statement))
+  (newline))
+
+==================
+four argument call inside flat if
+==================
+
+Sub Test()
+    If ready Then
+        SendValue .Socket, handle, 0, 0
+    End If
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (if_statement
+        (identifier))
+      (newline)
+      (call_statement)
+      (newline)
+      (end_if_fragment)
+      (newline))
+    (end_sub_statement))
+  (newline))

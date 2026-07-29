@@ -444,8 +444,8 @@ End Sub
                 (identifier)
                 (identifier))
               (unparenthesized_argument_list
-                (string_literal)))
-            (newline))))
+                (string_literal)))))
+        (newline))
       (newline)
       (newline)
       (assignment_statement

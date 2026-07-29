@@ -21,26 +21,25 @@ End Sub
     (newline)
     (block
       (if_statement
+        (identifier))
+      (newline)
+      (assignment_statement
         (identifier)
-        (newline)
-        (block
-          (assignment_statement
-            (identifier)
-            (number_literal))
-          (newline))
-        (elseif_clause
-          (identifier)
-          (assignment_statement
-            (identifier)
-            (number_literal))
-          (newline))
-        (else_clause
-          (newline)
-          (block
-            (assignment_statement
-              (identifier)
-              (number_literal))
-            (newline))))
+        (number_literal))
+      (newline)
+      (elseif_fragment
+        (identifier))
+      (assignment_statement
+        (identifier)
+        (number_literal))
+      (newline)
+      (else_fragment)
+      (newline)
+      (assignment_statement
+        (identifier)
+        (number_literal))
+      (newline)
+      (end_if_fragment)
       (newline))
     (end_sub_statement))
   (newline))
@@ -69,30 +68,29 @@ End Sub
     (newline)
     (block
       (if_statement
+        (identifier))
+      (newline)
+      (assignment_statement
         (identifier)
-        (newline)
-        (block
-          (assignment_statement
-            (identifier)
-            (number_literal))
-          (newline))
-        (elseif_clause
-          (identifier)
-          (call_statement
-            (identifier)
-            (argument_list))
-          (newline))
-        (elseif_clause
-          (identifier)
-          (exit_statement)
-          (newline))
-        (else_clause
-          (newline)
-          (block
-            (assignment_statement
-              (identifier)
-              (number_literal))
-            (newline))))
+        (number_literal))
+      (newline)
+      (elseif_fragment
+        (identifier))
+      (call_statement
+        (identifier)
+        (argument_list))
+      (newline)
+      (elseif_fragment
+        (identifier))
+      (exit_statement)
+      (newline)
+      (else_fragment)
+      (newline)
+      (assignment_statement
+        (identifier)
+        (number_literal))
+      (newline)
+      (end_if_fragment)
       (newline))
     (end_sub_statement))
   (newline))

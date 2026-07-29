@@ -202,8 +202,8 @@ End Sub
           (block
             (assignment_statement
               (identifier)
-              (number_literal))
-            (newline))))
+              (number_literal))))
+        (newline))
       (newline))
     (end_sub_statement))
   (newline))
