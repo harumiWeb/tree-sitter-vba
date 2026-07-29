@@ -33,6 +33,8 @@ module.exports = grammar({
     [$._statement, $._multiline_for_tail],
     [$._inline_statement, $.shared_next_for_body],
     [$.goto_statement],
+    [$._statement_separator, $._conditional_sub_headers],
+    [$._statement_separator, $._conditional_function_headers],
   ],
 
   rules: {
@@ -428,6 +430,7 @@ module.exports = grammar({
         $.newline,
         field("consequence", $._sub_header),
         $.newline,
+        field("consequence_body", optional($.conditional_branch_body)),
         repeat(
           seq(
             caseInsensitive("#ElseIf"),
@@ -436,10 +439,17 @@ module.exports = grammar({
             $.newline,
             field("alternative", $._sub_header),
             $.newline,
+            field("alternative_body", optional($.conditional_branch_body)),
           ),
         ),
         optional(
-          seq(caseInsensitive("#Else"), $.newline, field("alternative", $._sub_header), $.newline),
+          seq(
+            caseInsensitive("#Else"),
+            $.newline,
+            field("alternative", $._sub_header),
+            $.newline,
+            field("alternative_body", optional($.conditional_branch_body)),
+          ),
         ),
         caseInsensitive("#End"),
         caseInsensitive("If"),
@@ -453,6 +463,7 @@ module.exports = grammar({
         $.newline,
         field("consequence", $._function_header),
         $.newline,
+        field("consequence_body", optional($.conditional_branch_body)),
         repeat(
           seq(
             caseInsensitive("#ElseIf"),
@@ -461,6 +472,7 @@ module.exports = grammar({
             $.newline,
             field("alternative", $._function_header),
             $.newline,
+            field("alternative_body", optional($.conditional_branch_body)),
           ),
         ),
         optional(
@@ -469,6 +481,7 @@ module.exports = grammar({
             $.newline,
             field("alternative", $._function_header),
             $.newline,
+            field("alternative_body", optional($.conditional_branch_body)),
           ),
         ),
         caseInsensitive("#End"),
@@ -483,6 +496,7 @@ module.exports = grammar({
         $.newline,
         field("consequence", $._property_header),
         $.newline,
+        field("consequence_body", optional($.conditional_branch_body)),
         repeat(
           seq(
             caseInsensitive("#ElseIf"),
@@ -491,6 +505,7 @@ module.exports = grammar({
             $.newline,
             field("alternative", $._property_header),
             $.newline,
+            field("alternative_body", optional($.conditional_branch_body)),
           ),
         ),
         optional(
@@ -499,6 +514,7 @@ module.exports = grammar({
             $.newline,
             field("alternative", $._property_header),
             $.newline,
+            field("alternative_body", optional($.conditional_branch_body)),
           ),
         ),
         caseInsensitive("#End"),
@@ -551,6 +567,9 @@ module.exports = grammar({
     set_accessor: (_) => caseInsensitive("Set"),
 
     block: ($) => repeat1(choice($._statement_separator, $._statement)),
+
+    conditional_branch_body: ($) =>
+      seq($._statement, repeat(choice($._statement_separator, $._statement))),
 
     _statement: ($) =>
       choice(

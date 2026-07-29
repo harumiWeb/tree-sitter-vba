@@ -42,6 +42,11 @@ for (const queryFile of queryFiles) {
     encoding: "utf8",
     shell: false,
     maxBuffer: 64 * 1024 * 1024,
+    env: {
+      ...process.env,
+      CC: "gcc",
+      CXX: "g++",
+    },
   });
 
   if (result.status !== 0 || result.error != null) {

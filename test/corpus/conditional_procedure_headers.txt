@@ -49,6 +49,76 @@ End Function
   (newline))
 
 ==================
+conditional function header with branch-local declarations
+==================
+
+#If VBA7 Then
+Private Function LoadThunk(ByRef opcodes() As Byte) As LongPtr
+    Dim pMem As LongPtr
+#Else
+Private Function LoadThunk(ByRef opcodes() As Byte) As Long
+    Dim pMem As Long
+#End If
+    Dim size As Long
+End Function
+
+---
+
+(source_file
+  (newline)
+  (conditional_function_declaration
+    (identifier)
+    (newline)
+    (visibility)
+    (identifier)
+    (parameter_list
+      (parameter
+        (byref_modifier)
+        (identifier)
+        (array_bounds)
+        (as_type_clause
+          (type_expression))))
+    (as_type_clause
+      (type_expression))
+    (newline)
+    (conditional_branch_body
+      (variable_declaration
+        (variable_declarator
+          (identifier)
+          (as_type_clause
+            (type_expression))))
+      (newline))
+    (newline)
+    (visibility)
+    (identifier)
+    (parameter_list
+      (parameter
+        (byref_modifier)
+        (identifier)
+        (array_bounds)
+        (as_type_clause
+          (type_expression))))
+    (as_type_clause
+      (type_expression))
+    (newline)
+    (conditional_branch_body
+      (variable_declaration
+        (variable_declarator
+          (identifier)
+          (as_type_clause
+            (type_expression))))
+      (newline))
+    (newline)
+    (block
+      (variable_declaration
+        (variable_declarator
+          (identifier)
+          (as_type_clause
+            (type_expression))))
+      (newline)))
+  (newline))
+
+==================
 conditional sub header
 ==================
 
