@@ -18,16 +18,16 @@ End Sub
     (newline)
     (block
       (if_statement
-        (identifier)
-        (newline)
-        (block
-          (call_statement
-            (qualified_member_expression
-              (identifier)
-              (identifier))
-            (unparenthesized_argument_list
-              (identifier)))
-          (newline)))
+        (identifier))
+      (newline)
+      (call_statement
+        (qualified_member_expression
+          (identifier)
+          (identifier))
+        (unparenthesized_argument_list
+          (identifier)))
+      (newline)
+      (end_if_fragment)
       (newline))
     (end_sub_statement))
   (newline))
@@ -77,8 +77,8 @@ End Sub
                 (identifier)
                 (identifier))
               (unparenthesized_argument_list
-                (string_literal)))
-            (newline))))
+                (string_literal)))))
+        (newline))
       (newline))
     (end_sub_statement))
   (newline))

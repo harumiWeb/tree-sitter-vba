@@ -25,28 +25,28 @@ End Sub
         (comparison_expression
           (identifier)
           (comparison_operator)
-          (identifier))
+          (identifier)))
+      (newline)
+      (for_statement
+        (identifier)
+        (number_literal)
+        (number_literal)
         (newline)
         (block
-          (for_statement
-            (identifier)
-            (number_literal)
-            (number_literal)
-            (newline)
-            (block
-              (if_statement
-                (comparison_expression
-                  (identifier)
-                  (comparison_operator)
-                  (number_literal))
-                (newline)
-                (block
-                  (exit_statement)
-                  (newline)))
-              (newline))
-            (next_variable_list
-              (identifier)))
-          (newline)))
+          (if_statement
+            (comparison_expression
+              (identifier)
+              (comparison_operator)
+              (number_literal)))
+          (newline)
+          (exit_statement)
+          (newline)
+          (end_if_fragment)
+          (newline))
+        (next_variable_list
+          (identifier)))
+      (newline)
+      (end_if_fragment)
       (newline))
     (end_sub_statement))
   (newline))
@@ -80,54 +80,51 @@ End Sub
         (comparison_expression
           (identifier)
           (comparison_operator)
-          (number_literal))
-        (newline)
-        (block
-          (call_statement
-            (qualified_member_expression
-              (identifier)
-              (identifier))
-            (unparenthesized_argument_list
-              (string_literal)))
-          (newline))
-        (elseif_clause
-          (comparison_expression
-            (identifier)
-            (comparison_operator)
-            (number_literal))
-          (newline)
-          (block
-            (call_statement
-              (qualified_member_expression
-                (identifier)
-                (identifier))
-              (unparenthesized_argument_list
-                (string_literal)))
-            (newline)))
-        (elseif_clause
-          (comparison_expression
-            (identifier)
-            (comparison_operator)
-            (number_literal))
-          (newline)
-          (block
-            (call_statement
-              (qualified_member_expression
-                (identifier)
-                (identifier))
-              (unparenthesized_argument_list
-                (string_literal)))
-            (newline)))
-        (else_clause
-          (newline)
-          (block
-            (call_statement
-              (qualified_member_expression
-                (identifier)
-                (identifier))
-              (unparenthesized_argument_list
-                (string_literal)))
-            (newline))))
+          (number_literal)))
+      (newline)
+      (call_statement
+        (qualified_member_expression
+          (identifier)
+          (identifier))
+        (unparenthesized_argument_list
+          (string_literal)))
+      (newline)
+      (elseif_fragment
+        (comparison_expression
+          (identifier)
+          (comparison_operator)
+          (number_literal)))
+      (newline)
+      (call_statement
+        (qualified_member_expression
+          (identifier)
+          (identifier))
+        (unparenthesized_argument_list
+          (string_literal)))
+      (newline)
+      (elseif_fragment
+        (comparison_expression
+          (identifier)
+          (comparison_operator)
+          (number_literal)))
+      (newline)
+      (call_statement
+        (qualified_member_expression
+          (identifier)
+          (identifier))
+        (unparenthesized_argument_list
+          (string_literal)))
+      (newline)
+      (else_fragment)
+      (newline)
+      (call_statement
+        (qualified_member_expression
+          (identifier)
+          (identifier))
+        (unparenthesized_argument_list
+          (string_literal)))
+      (newline)
+      (end_if_fragment)
       (newline))
     (end_sub_statement))
   (newline))

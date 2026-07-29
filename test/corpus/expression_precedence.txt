@@ -106,16 +106,16 @@ End Sub
           (comparison_expression
             (identifier)
             (comparison_operator)
-            (nothing_literal)))
-        (newline)
-        (block
-          (call_statement
-            (qualified_member_expression
-              (identifier)
-              (identifier))
-            (unparenthesized_argument_list
-              (identifier)))
-          (newline)))
+            (nothing_literal))))
+      (newline)
+      (call_statement
+        (qualified_member_expression
+          (identifier)
+          (identifier))
+        (unparenthesized_argument_list
+          (identifier)))
+      (newline)
+      (end_if_fragment)
       (newline))
     (end_sub_statement))
   (newline))

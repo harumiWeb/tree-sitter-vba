@@ -34,6 +34,30 @@ End Type
   (newline))
 
 ==================
+inline type members
+==================
+
+Private Type Pair: LeftValue As Long: RightValue As Long: End Type
+
+---
+
+(source_file
+  (newline)
+  (type_declaration
+    (visibility)
+    (identifier)
+    (type_member
+      (identifier)
+      (as_type_clause
+        (type_expression)))
+    (type_member
+      (identifier)
+      (as_type_clause
+        (type_expression))))
+  (newline))
+
+
+==================
 colon separated enum members
 ==================
 

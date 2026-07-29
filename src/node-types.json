@@ -677,6 +677,18 @@
           "named": true
         },
         {
+          "type": "else_fragment",
+          "named": true
+        },
+        {
+          "type": "elseif_fragment",
+          "named": true
+        },
+        {
+          "type": "end_if_fragment",
+          "named": true
+        },
+        {
           "type": "end_statement",
           "named": true
         },
@@ -983,7 +995,7 @@
       },
       "callee": {
         "multiple": false,
-        "required": true,
+        "required": false,
         "types": [
           {
             "type": "call_expression",
@@ -1404,6 +1416,213 @@
     }
   },
   {
+    "type": "conditional_branch_body",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "assignment_statement",
+          "named": true
+        },
+        {
+          "type": "beep_statement",
+          "named": true
+        },
+        {
+          "type": "call_statement",
+          "named": true
+        },
+        {
+          "type": "close_statement",
+          "named": true
+        },
+        {
+          "type": "const_declaration",
+          "named": true
+        },
+        {
+          "type": "debug_print_statement",
+          "named": true
+        },
+        {
+          "type": "def_type_statement",
+          "named": true
+        },
+        {
+          "type": "do_statement",
+          "named": true
+        },
+        {
+          "type": "else_fragment",
+          "named": true
+        },
+        {
+          "type": "elseif_fragment",
+          "named": true
+        },
+        {
+          "type": "end_if_fragment",
+          "named": true
+        },
+        {
+          "type": "end_statement",
+          "named": true
+        },
+        {
+          "type": "erase_statement",
+          "named": true
+        },
+        {
+          "type": "exit_statement",
+          "named": true
+        },
+        {
+          "type": "expression_statement",
+          "named": true
+        },
+        {
+          "type": "for_each_statement",
+          "named": true
+        },
+        {
+          "type": "for_statement",
+          "named": true
+        },
+        {
+          "type": "get_statement",
+          "named": true
+        },
+        {
+          "type": "goto_statement",
+          "named": true
+        },
+        {
+          "type": "if_statement",
+          "named": true
+        },
+        {
+          "type": "input_statement",
+          "named": true
+        },
+        {
+          "type": "label_statement",
+          "named": true
+        },
+        {
+          "type": "line_input_statement",
+          "named": true
+        },
+        {
+          "type": "line_number_statement",
+          "named": true
+        },
+        {
+          "type": "load_statement",
+          "named": true
+        },
+        {
+          "type": "lock_statement",
+          "named": true
+        },
+        {
+          "type": "name_statement",
+          "named": true
+        },
+        {
+          "type": "newline",
+          "named": true
+        },
+        {
+          "type": "on_error_statement",
+          "named": true
+        },
+        {
+          "type": "on_goto_statement",
+          "named": true
+        },
+        {
+          "type": "open_statement",
+          "named": true
+        },
+        {
+          "type": "preprocessor_const",
+          "named": true
+        },
+        {
+          "type": "preprocessor_if",
+          "named": true
+        },
+        {
+          "type": "print_statement",
+          "named": true
+        },
+        {
+          "type": "put_statement",
+          "named": true
+        },
+        {
+          "type": "raise_event_statement",
+          "named": true
+        },
+        {
+          "type": "redim_statement",
+          "named": true
+        },
+        {
+          "type": "reset_statement",
+          "named": true
+        },
+        {
+          "type": "resume_statement",
+          "named": true
+        },
+        {
+          "type": "seek_statement",
+          "named": true
+        },
+        {
+          "type": "select_statement",
+          "named": true
+        },
+        {
+          "type": "set_statement",
+          "named": true
+        },
+        {
+          "type": "single_line_if_statement",
+          "named": true
+        },
+        {
+          "type": "stop_statement",
+          "named": true
+        },
+        {
+          "type": "unload_statement",
+          "named": true
+        },
+        {
+          "type": "unlock_statement",
+          "named": true
+        },
+        {
+          "type": "variable_declaration",
+          "named": true
+        },
+        {
+          "type": "while_statement",
+          "named": true
+        },
+        {
+          "type": "with_statement",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "conditional_function_declaration",
     "named": true,
     "fields": {
@@ -1429,6 +1648,16 @@
           },
           {
             "type": "visibility",
+            "named": true
+          }
+        ]
+      },
+      "alternative_body": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "conditional_branch_body",
             "named": true
           }
         ]
@@ -1551,6 +1780,16 @@
           },
           {
             "type": "visibility",
+            "named": true
+          }
+        ]
+      },
+      "consequence_body": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "conditional_branch_body",
             "named": true
           }
         ]
@@ -1677,6 +1916,16 @@
           }
         ]
       },
+      "alternative_body": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "conditional_branch_body",
+            "named": true
+          }
+        ]
+      },
       "body": {
         "multiple": false,
         "required": false,
@@ -1811,6 +2060,16 @@
           }
         ]
       },
+      "consequence_body": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "conditional_branch_body",
+            "named": true
+          }
+        ]
+      },
       "modifiers": {
         "multiple": true,
         "required": false,
@@ -1895,6 +2154,16 @@
           },
           {
             "type": "visibility",
+            "named": true
+          }
+        ]
+      },
+      "alternative_body": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "conditional_branch_body",
             "named": true
           }
         ]
@@ -2013,6 +2282,16 @@
           },
           {
             "type": "visibility",
+            "named": true
+          }
+        ]
+      },
+      "consequence_body": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "conditional_branch_body",
             "named": true
           }
         ]
@@ -2729,20 +3008,10 @@
     }
   },
   {
-    "type": "else_clause",
+    "type": "else_fragment",
     "named": true,
     "fields": {
-      "body": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "block",
-            "named": true
-          }
-        ]
-      },
-      "line": {
+      "start_line": {
         "multiple": false,
         "required": false,
         "types": [
@@ -2752,180 +3021,12 @@
           }
         ]
       }
-    },
-    "children": {
-      "multiple": false,
-      "required": true,
-      "types": [
-        {
-          "type": "newline",
-          "named": true
-        }
-      ]
     }
   },
   {
-    "type": "elseif_clause",
+    "type": "elseif_fragment",
     "named": true,
     "fields": {
-      "body": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "assignment_statement",
-            "named": true
-          },
-          {
-            "type": "beep_statement",
-            "named": true
-          },
-          {
-            "type": "block",
-            "named": true
-          },
-          {
-            "type": "call_statement",
-            "named": true
-          },
-          {
-            "type": "close_statement",
-            "named": true
-          },
-          {
-            "type": "const_declaration",
-            "named": true
-          },
-          {
-            "type": "debug_print_statement",
-            "named": true
-          },
-          {
-            "type": "do_statement",
-            "named": true
-          },
-          {
-            "type": "end_statement",
-            "named": true
-          },
-          {
-            "type": "erase_statement",
-            "named": true
-          },
-          {
-            "type": "exit_statement",
-            "named": true
-          },
-          {
-            "type": "expression_statement",
-            "named": true
-          },
-          {
-            "type": "for_each_statement",
-            "named": true
-          },
-          {
-            "type": "for_statement",
-            "named": true
-          },
-          {
-            "type": "get_statement",
-            "named": true
-          },
-          {
-            "type": "goto_statement",
-            "named": true
-          },
-          {
-            "type": "input_statement",
-            "named": true
-          },
-          {
-            "type": "line_input_statement",
-            "named": true
-          },
-          {
-            "type": "load_statement",
-            "named": true
-          },
-          {
-            "type": "lock_statement",
-            "named": true
-          },
-          {
-            "type": "name_statement",
-            "named": true
-          },
-          {
-            "type": "on_error_statement",
-            "named": true
-          },
-          {
-            "type": "open_statement",
-            "named": true
-          },
-          {
-            "type": "print_statement",
-            "named": true
-          },
-          {
-            "type": "put_statement",
-            "named": true
-          },
-          {
-            "type": "raise_event_statement",
-            "named": true
-          },
-          {
-            "type": "redim_statement",
-            "named": true
-          },
-          {
-            "type": "reset_statement",
-            "named": true
-          },
-          {
-            "type": "resume_statement",
-            "named": true
-          },
-          {
-            "type": "seek_statement",
-            "named": true
-          },
-          {
-            "type": "set_statement",
-            "named": true
-          },
-          {
-            "type": "single_line_if_statement",
-            "named": true
-          },
-          {
-            "type": "stop_statement",
-            "named": true
-          },
-          {
-            "type": "unload_statement",
-            "named": true
-          },
-          {
-            "type": "unlock_statement",
-            "named": true
-          },
-          {
-            "type": "variable_declaration",
-            "named": true
-          },
-          {
-            "type": "while_statement",
-            "named": true
-          },
-          {
-            "type": "with_statement",
-            "named": true
-          }
-        ]
-      },
       "condition": {
         "multiple": false,
         "required": true,
@@ -3012,7 +3113,7 @@
           }
         ]
       },
-      "line": {
+      "start_line": {
         "multiple": false,
         "required": false,
         "types": [
@@ -3022,22 +3123,28 @@
           }
         ]
       }
-    },
-    "children": {
-      "multiple": false,
-      "required": true,
-      "types": [
-        {
-          "type": "newline",
-          "named": true
-        }
-      ]
     }
   },
   {
     "type": "end_function_statement",
     "named": true,
     "fields": {}
+  },
+  {
+    "type": "end_if_fragment",
+    "named": true,
+    "fields": {
+      "start_line": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "line_number_prefix",
+            "named": true
+          }
+        ]
+      }
+    }
   },
   {
     "type": "end_property_statement",
@@ -3874,7 +3981,15 @@
         "required": true,
         "types": [
           {
+            "type": "call_expression",
+            "named": true
+          },
+          {
             "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "member_expression",
             "named": true
           }
         ]
@@ -4178,7 +4293,15 @@
         "required": true,
         "types": [
           {
+            "type": "call_expression",
+            "named": true
+          },
+          {
             "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "member_expression",
             "named": true
           }
         ]
@@ -4712,26 +4835,6 @@
           }
         ]
       },
-      "consequence": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "block",
-            "named": true
-          }
-        ]
-      },
-      "end_line": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "line_number_prefix",
-            "named": true
-          }
-        ]
-      },
       "start_line": {
         "multiple": false,
         "required": false,
@@ -4742,24 +4845,6 @@
           }
         ]
       }
-    },
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "else_clause",
-          "named": true
-        },
-        {
-          "type": "elseif_clause",
-          "named": true
-        },
-        {
-          "type": "newline",
-          "named": true
-        }
-      ]
     }
   },
   {
@@ -5794,7 +5879,15 @@
       "required": true,
       "types": [
         {
+          "type": "call_expression",
+          "named": true
+        },
+        {
           "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "member_expression",
           "named": true
         }
       ]
@@ -6454,6 +6547,18 @@
         },
         {
           "type": "do_statement",
+          "named": true
+        },
+        {
+          "type": "else_fragment",
+          "named": true
+        },
+        {
+          "type": "elseif_fragment",
+          "named": true
+        },
+        {
+          "type": "end_if_fragment",
           "named": true
         },
         {
@@ -7662,7 +7767,7 @@
     "fields": {},
     "children": {
       "multiple": true,
-      "required": true,
+      "required": false,
       "types": [
         {
           "type": "redim_declarator",

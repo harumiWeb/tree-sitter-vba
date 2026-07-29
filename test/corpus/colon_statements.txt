@@ -68,8 +68,8 @@ End Sub
               (identifier)
               (call_expression
                 (identifier)
-                (argument_list)))
-            (newline))))
+                (argument_list)))))
+        (newline))
       (newline))
     (end_sub_statement))
   (newline))

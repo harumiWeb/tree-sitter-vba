@@ -148,13 +148,13 @@ End Sub
               (comparison_expression
                 (identifier)
                 (comparison_operator)
-                (identifier)))))
-        (newline)
-        (block
-          (assignment_statement
-            (identifier)
-            (boolean_literal))
-          (newline)))
+                (identifier))))))
+      (newline)
+      (assignment_statement
+        (identifier)
+        (boolean_literal))
+      (newline)
+      (end_if_fragment)
       (newline))
     (end_sub_statement))
   (newline))
@@ -205,13 +205,13 @@ End Sub
                 (comparison_operator)
                 (qualified_member_expression
                   (identifier)
-                  (identifier))))))
-        (newline)
-        (block
-          (assignment_statement
-            (identifier)
-            (boolean_literal))
-          (newline)))
+                  (identifier)))))))
+      (newline)
+      (assignment_statement
+        (identifier)
+        (boolean_literal))
+      (newline)
+      (end_if_fragment)
       (newline))
     (end_sub_statement))
   (newline))
@@ -248,13 +248,13 @@ End Sub
               (identifier)
               (argument_list))
             (comparison_operator)
-            (string_literal)))
-        (newline)
-        (block
-          (assignment_statement
-            (identifier)
-            (boolean_literal))
-          (newline)))
+            (string_literal))))
+      (newline)
+      (assignment_statement
+        (identifier)
+        (boolean_literal))
+      (newline)
+      (end_if_fragment)
       (newline))
     (end_sub_statement))
   (newline))
@@ -312,13 +312,13 @@ End Sub
         (type_of_expression
           (identifier)
           (type_expression
-            (identifier)))
-        (newline)
-        (block
-          (assignment_statement
-            (identifier)
-            (boolean_literal))
-          (newline)))
+            (identifier))))
+      (newline)
+      (assignment_statement
+        (identifier)
+        (boolean_literal))
+      (newline)
+      (end_if_fragment)
       (newline)
       (if_statement
         (unary_expression
@@ -327,13 +327,13 @@ End Sub
             (type_expression
               (dotted_type_expression
                 (identifier)
-                (identifier)))))
-        (newline)
-        (block
-          (assignment_statement
-            (identifier)
-            (boolean_literal))
-          (newline)))
+                (identifier))))))
+      (newline)
+      (assignment_statement
+        (identifier)
+        (boolean_literal))
+      (newline)
+      (end_if_fragment)
       (newline))
     (end_sub_statement))
   (newline))

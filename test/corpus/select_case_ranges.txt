@@ -94,8 +94,8 @@ End Sub
           (block
             (assignment_statement
               (identifier)
-              (boolean_literal))
-            (newline))))
+              (boolean_literal))))
+        (newline))
       (newline))
     (end_sub_statement))
   (newline))

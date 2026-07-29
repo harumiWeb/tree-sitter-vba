@@ -38,8 +38,9 @@
 
 (if_statement) @keyword
 (single_line_if_statement) @keyword
-(elseif_clause) @keyword
-(else_clause) @keyword
+(elseif_fragment) @keyword
+(else_fragment) @keyword
+(end_if_fragment) @keyword
 (select_statement) @keyword
 (case_clause) @keyword
 (for_statement) @keyword

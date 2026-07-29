@@ -2,6 +2,7 @@
 
 - VBA call forms such as `Foo (x)` and `Foo(x)` can be semantically different, but this grammar treats whitespace as `extras`; document that limitation whenever call syntax behavior is changed.
 - When changing call, expression, or member access parsing, add neighboring corpus tests for implicit calls, `Call` calls, member calls, call expressions, and assignable indexed/member expressions before considering the change stable.
+- When xlflow can migrate with the parser, preserve lint behavior rather than raw CST shape. A field-optional syntax node plus an xlflow source-range fallback is preferable to leaving valid VBA in parser recovery solely for third-party CST compatibility.
 
 ## Real-world example coverage
 
