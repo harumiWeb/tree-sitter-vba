@@ -20,6 +20,7 @@ import {
   formatTreeText,
   initialExpandedNodeKeys,
 } from "./parser-presentation.mjs";
+import { createSourcePositionIndex } from "./source-positions.mjs";
 
 const exampleSelect = document.querySelector("#example-select");
 const fileInput = document.querySelector("#file-input");
@@ -129,7 +130,6 @@ function makeDecorations(highlights, recovery) {
     }
   }
 
-  decorations.sort((left, right) => left.from - right.from || right.to - left.to);
   return Decoration.set(decorations, true);
 }
 
@@ -277,28 +277,40 @@ function parseSource() {
   const text = sourceText();
   const startedAt = performance.now();
   const tree = parser.parse(text);
-  const model = buildTreeModel(tree.rootNode, text);
-  const recovery = collectRecoveryNodes(model);
-  const highlights = buildHighlightRanges(highlightQuery, tree.rootNode, text);
-  const elapsed = performance.now() - startedAt;
+  if (!tree) {
+    setStatus("Parser did not return a syntax tree", "failed");
+    return;
+  }
 
-  currentModel = model;
-  activeNodeKey = undefined;
-  expandedNodeKeys.clear();
-  for (const key of initialExpandedNodeKeys(model)) expandedNodeKeys.add(key);
+  try {
+    const positions = createSourcePositionIndex(text);
+    const model = buildTreeModel(tree.rootNode, positions);
+    const recovery = collectRecoveryNodes(model);
+    const highlights = buildHighlightRanges(highlightQuery, tree.rootNode, positions);
+    const elapsed = performance.now() - startedAt;
 
-  editor.dispatch({ effects: replaceDecorations.of(makeDecorations(highlights, recovery)) });
-  errorCount.textContent = String(recovery.filter((node) => node.recovery === "ERROR").length);
-  missingCount.textContent = String(recovery.filter((node) => node.recovery === "MISSING").length);
-  parseTime.textContent = `${elapsed.toFixed(1)} ms`;
-  renderTree();
-  renderRecovery(recovery);
-  updateTreeModeButtons();
-  setStatus(
-    recovery.length === 0 ? "Clean parse" : "Recovery nodes detected",
-    recovery.length === 0 ? "clean" : "recovery",
-  );
-  tree.delete();
+    currentModel = model;
+    activeNodeKey = undefined;
+    expandedNodeKeys.clear();
+    for (const key of initialExpandedNodeKeys(model)) expandedNodeKeys.add(key);
+
+    editor.dispatch({ effects: replaceDecorations.of(makeDecorations(highlights, recovery)) });
+    errorCount.textContent = String(recovery.filter((node) => node.recovery === "ERROR").length);
+    missingCount.textContent = String(recovery.filter((node) => node.recovery === "MISSING").length);
+    parseTime.textContent = `${elapsed.toFixed(1)} ms`;
+    renderTree();
+    renderRecovery(recovery);
+    updateTreeModeButtons();
+    setStatus(
+      recovery.length === 0 ? "Clean parse" : "Recovery nodes detected",
+      recovery.length === 0 ? "clean" : "recovery",
+    );
+  } catch (error) {
+    setStatus("Could not display parse result", "failed");
+    treeOutput.textContent = error instanceof Error ? error.message : String(error);
+  } finally {
+    tree.delete();
+  }
 }
 
 function scheduleParse() {
@@ -360,6 +372,7 @@ function resetSource() {
 
 async function copyCurrentTree() {
   if (!currentModel) return;
+  copyStatus.textContent = "";
   const text =
     treeMode === "sexpr"
       ? formatSExpression(currentModel)

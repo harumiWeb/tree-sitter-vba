@@ -1,4 +1,4 @@
-import { byteOffsetToCodeUnitIndex, textPositionFromByteOffset } from "./source-positions.mjs";
+import { createSourcePositionIndex } from "./source-positions.mjs";
 
 const capturePriorities = new Map([
   ["function.method.call", 100],
@@ -24,13 +24,20 @@ export function captureClassName(name) {
   return `ts-${name.replaceAll(".", "-")}`;
 }
 
-export function buildHighlightRanges(query, rootNode, source) {
+function positionsFor(sourceOrPositions) {
+  return typeof sourceOrPositions === "string"
+    ? createSourcePositionIndex(sourceOrPositions)
+    : sourceOrPositions;
+}
+
+export function buildHighlightRanges(query, rootNode, sourceOrPositions) {
+  const positions = positionsFor(sourceOrPositions);
   const rangesBySpan = new Map();
 
   for (const capture of query.captures(rootNode)) {
-    const from = byteOffsetToCodeUnitIndex(source, capture.node.startIndex);
-    const to = byteOffsetToCodeUnitIndex(source, capture.node.endIndex);
-    if (from >= to || to > source.length) continue;
+    const from = positions.byteOffsetToCodeUnitIndex(capture.node.startIndex);
+    const to = positions.byteOffsetToCodeUnitIndex(capture.node.endIndex);
+    if (from >= to) continue;
 
     const range = {
       from,
@@ -51,12 +58,13 @@ export function buildHighlightRanges(query, rootNode, source) {
   );
 }
 
-export function buildTreeModel(rootNode, source) {
+export function buildTreeModel(rootNode, sourceOrPositions) {
+  const positions = positionsFor(sourceOrPositions);
   let nextKey = 0;
 
   function visit(node, fieldName, depth) {
-    const start = textPositionFromByteOffset(source, node.startIndex);
-    const end = textPositionFromByteOffset(source, node.endIndex);
+    const start = positions.textPositionFromByteOffset(node.startIndex);
+    const end = positions.textPositionFromByteOffset(node.endIndex);
     const model = {
       key: String(nextKey++),
       type: node.type,
@@ -110,15 +118,6 @@ export function initialExpandedNodeKeys(node) {
   return new Set([node.key, ...node.children.map((child) => child.key)]);
 }
 
-export function findNodeByKey(node, key) {
-  if (node.key === key) return node;
-  for (const child of node.children) {
-    const match = findNodeByKey(child, key);
-    if (match) return match;
-  }
-  return null;
-}
-
 export function findSmallestContainingNode(node, from, to = from) {
   if (from < node.startIndex || to > node.endIndex) return null;
 
@@ -127,8 +126,13 @@ export function findSmallestContainingNode(node, from, to = from) {
     if (missingNode) return missingNode;
   }
 
+  return findSmallestContainingNonMissingNode(node, from, to);
+}
+
+function findSmallestContainingNonMissingNode(node, from, to) {
   for (const child of node.children) {
-    const match = findSmallestContainingNode(child, from, to);
+    if (from < child.startIndex || to > child.endIndex) continue;
+    const match = findSmallestContainingNonMissingNode(child, from, to);
     if (match) return match;
   }
   return node;

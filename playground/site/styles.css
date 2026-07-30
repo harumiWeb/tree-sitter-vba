@@ -257,6 +257,7 @@ h2 {
 }
 
 .cm-recovery-error {
+  background: #40222a;
   background: color-mix(in srgb, #d95c70 28%, transparent);
   text-decoration: wavy underline #ff899c 1.5px;
 }

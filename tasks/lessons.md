@@ -20,6 +20,11 @@
 
 - VBA string tokens must exclude `\r` and `\n`; otherwise an unterminated quote can consume later source lines and hide malformed input.
 
+## Browser parser UI
+
+- Treat `web-tree-sitter` parse results as nullable and release every returned `Tree` in a `finally` block, so a rendering failure cannot retain Wasm memory across debounced parses.
+- Keep a shared UTF-8 byte-offset to UTF-16 code-unit index for each browser parse, and cover offset zero and leading-newline positions in tests.
+
 ## Third-party fixtures
 
 - When a third-party example contains an obvious source typo or incomplete construct and is not intentionally an error fixture, fix the vendored example instead of weakening the grammar to accept invalid VBA.

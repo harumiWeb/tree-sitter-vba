@@ -32,7 +32,10 @@ for (const requiredPath of [siteRoot, examplesRoot, queriesRoot]) {
 
 rmSync(distRoot, { recursive: true, force: true });
 mkdirSync(vendorRoot, { recursive: true });
-cpSync(siteRoot, distRoot, { recursive: true });
+cpSync(siteRoot, distRoot, {
+  recursive: true,
+  filter: (source) => !source.endsWith(".mjs"),
+});
 cpSync(examplesRoot, join(distRoot, "examples"), { recursive: true });
 mkdirSync(join(distRoot, "queries"), { recursive: true });
 cpSync(join(queriesRoot, "highlights.scm"), join(distRoot, "queries", "highlights.scm"));
@@ -101,9 +104,5 @@ await build({
   target: "es2022",
   external: ["./vendor/web-tree-sitter.js"],
 });
-
-for (const sourceModule of ["parser-presentation.mjs", "source-positions.mjs"]) {
-  rmSync(join(distRoot, sourceModule), { force: true });
-}
 
 console.log(`Built playground assets in ${distRoot}`);

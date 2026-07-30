@@ -16,6 +16,7 @@ import {
 } from "../../playground/site/parser-presentation.mjs";
 import {
   byteOffsetToCodeUnitIndex,
+  createSourcePositionIndex,
   textPositionFromByteOffset,
 } from "../../playground/site/source-positions.mjs";
 
@@ -61,6 +62,8 @@ test("playground build includes its local bundle, Wasm assets, query, examples, 
   const bundle = readFileSync(join(dist, "app.js"), "utf8");
   assert.doesNotMatch(index, /<script[^>]+https?:/i);
   assert.doesNotMatch(bundle, /from\s+["']https?:/i);
+  assert.equal(existsSync(join(dist, "parser-presentation.mjs")), false);
+  assert.equal(existsSync(join(dist, "source-positions.mjs")), false);
 
   const version = JSON.parse(readFileSync(join(dist, "version.json"), "utf8"));
   const packageJson = JSON.parse(readFileSync(join(root, "package.json"), "utf8"));
@@ -70,9 +73,15 @@ test("playground build includes its local bundle, Wasm assets, query, examples, 
 
 test("source position conversion maps UTF-8 parser offsets to CodeMirror indices", () => {
   const source = "' あ😀\nSub Test()\n";
+  const positions = createSourcePositionIndex(source);
+  assert.equal(byteOffsetToCodeUnitIndex(source, 0), 0);
+  assert.deepEqual(textPositionFromByteOffset(source, 0), { index: 0, row: 0, column: 0 });
+  assert.deepEqual(textPositionFromByteOffset("\nSub", 0), { index: 0, row: 0, column: 0 });
   assert.equal(byteOffsetToCodeUnitIndex(source, 5), 3);
   assert.deepEqual(textPositionFromByteOffset(source, 5), { index: 3, row: 0, column: 3 });
   assert.equal(byteOffsetToCodeUnitIndex("😀", 4), 2);
+  assert.equal(positions.byteOffsetToCodeUnitIndex(5), 3);
+  assert.deepEqual(positions.textPositionFromByteOffset(5), { index: 3, row: 0, column: 3 });
 });
 
 test("generated WebAssembly parser cleanly parses every bundled example", async () => {
