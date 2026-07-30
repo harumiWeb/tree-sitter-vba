@@ -10,8 +10,9 @@ exported Excel/VBA source files such as `.bas`, `.cls`, and `.frm`.
 [Try tree-sitter-vba online](https://harumiweb.github.io/tree-sitter-vba/)
 
 The playground runs this parser through WebAssembly entirely in your browser.
-Use it to test parser compatibility and inspect syntax trees; source code is
-not uploaded or sent to a parsing service.
+Use it to test parser compatibility, inspect synchronized concrete syntax trees,
+and see the official `highlights.scm` query in action; source code is not
+uploaded or sent to a parsing service.
 
 This grammar is designed as a parsing foundation for editor and tooling use
 cases, including syntax highlighting, folding, tags, outline extraction, symbol

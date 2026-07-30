@@ -12,16 +12,18 @@ import { createRequire } from "node:module";
 import { tmpdir } from "node:os";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import { build } from "esbuild";
 
 const require = createRequire(import.meta.url);
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const playgroundRoot = join(root, "playground");
 const siteRoot = join(playgroundRoot, "site");
 const examplesRoot = join(playgroundRoot, "examples");
+const queriesRoot = join(root, "queries");
 const distRoot = join(playgroundRoot, "dist");
 const vendorRoot = join(distRoot, "vendor");
 
-for (const requiredPath of [siteRoot, examplesRoot]) {
+for (const requiredPath of [siteRoot, examplesRoot, queriesRoot]) {
   if (!existsSync(requiredPath)) {
     console.error(`Missing playground source directory: ${requiredPath}`);
     process.exit(1);
@@ -32,6 +34,8 @@ rmSync(distRoot, { recursive: true, force: true });
 mkdirSync(vendorRoot, { recursive: true });
 cpSync(siteRoot, distRoot, { recursive: true });
 cpSync(examplesRoot, join(distRoot, "examples"), { recursive: true });
+mkdirSync(join(distRoot, "queries"), { recursive: true });
+cpSync(join(queriesRoot, "highlights.scm"), join(distRoot, "queries", "highlights.scm"));
 
 const webTreeSitterRoot = dirname(require.resolve("web-tree-sitter"));
 cpSync(join(webTreeSitterRoot, "web-tree-sitter.js"), join(vendorRoot, "web-tree-sitter.js"));
@@ -87,5 +91,19 @@ writeFileSync(
   `${JSON.stringify({ version: packageJson.version, commit }, null, 2)}\n`,
 );
 writeFileSync(join(distRoot, ".nojekyll"), "");
+
+await build({
+  entryPoints: [join(siteRoot, "app.js")],
+  outfile: join(distRoot, "app.js"),
+  bundle: true,
+  format: "esm",
+  platform: "browser",
+  target: "es2022",
+  external: ["./vendor/web-tree-sitter.js"],
+});
+
+for (const sourceModule of ["parser-presentation.mjs", "source-positions.mjs"]) {
+  rmSync(join(distRoot, sourceModule), { force: true });
+}
 
 console.log(`Built playground assets in ${distRoot}`);
