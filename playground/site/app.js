@@ -1,4 +1,4 @@
-import { Parser } from "./vendor/web-tree-sitter.js";
+import { Language, Parser } from "./vendor/web-tree-sitter.js";
 import { textPositionFromByteOffset } from "./source-positions.js";
 
 const source = document.querySelector("#source");
@@ -185,7 +185,7 @@ async function initialize() {
     }
 
     await Parser.init({ locateFile: (fileName) => asset(`./vendor/${fileName}`) });
-    const language = await Parser.Language.load(asset("./tree-sitter-vba.wasm"));
+  const language = await Language.load(asset("./tree-sitter-vba.wasm"));
     parser = new Parser();
     parser.setLanguage(language);
     if (source.value.length === 0) {

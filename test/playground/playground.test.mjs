@@ -3,7 +3,7 @@ import { existsSync, readFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
-import { Parser } from "web-tree-sitter";
+import { Language, Parser } from "web-tree-sitter";
 import {
   byteOffsetToCodeUnitIndex,
   textPositionFromByteOffset,
@@ -45,7 +45,7 @@ async function createParser() {
   await Parser.init({
     locateFile: (fileName) => join(dist, "vendor", fileName),
   });
-  const language = await Parser.Language.load(join(dist, "tree-sitter-vba.wasm"));
+  const language = await Language.load(join(dist, "tree-sitter-vba.wasm"));
   const parser = new Parser();
   parser.setLanguage(language);
   return parser;
