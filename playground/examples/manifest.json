@@ -1,0 +1,13 @@
+{
+  "examples": [
+    { "id": "basic", "label": "Basic Sub and Function", "file": "basic-sub-function.bas" },
+    { "id": "properties", "label": "Property Get, Let, and Set", "file": "properties.cls" },
+    { "id": "conditional", "label": "Conditional compilation", "file": "conditional-compilation.bas" },
+    { "id": "declare", "label": "WinAPI Declare", "file": "winapi-declare.bas" },
+    { "id": "userform", "label": "UserForm metadata", "file": "userform.frm" },
+    { "id": "errors", "label": "Error handling and labels", "file": "error-handling.bas" },
+    { "id": "file-io", "label": "File I/O", "file": "file-io.bas" },
+    { "id": "inline", "label": "Inline statements and numbered lines", "file": "inline-numbered.bas" },
+    { "id": "excel", "label": "Excel member access and calls", "file": "excel-member-access.bas" }
+  ]
+}

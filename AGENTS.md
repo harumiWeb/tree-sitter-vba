@@ -7,6 +7,10 @@
 
 ```txt
 root: .
+├── .github/
+│   └── workflows/
+│       ├── ci.yml
+│       └── pages.yml
 ├── docs/
 │   ├── adr/
 │   ├── specs/
@@ -29,13 +33,18 @@ root: .
 │   ├── unsupported-or-ambiguous-syntax.md
 │   └── vba-syntax-checklist.md
 ├── scripts/
+│   ├── build-playground.mjs
 │   └── parse-examples.mjs
+├── playground/
+│   ├── examples/
+│   └── site/
 ├── tasks/
 │   ├── feature_spec.md
 │   ├── lessons.md
 │   └── todo.md
 ├── test/
-│   └── corpus/
+│   ├── corpus/
+│   └── playground/
 ├── AGENTS.md
 ├── CLAUDE.md
 ├── grammar.js

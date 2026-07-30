@@ -1,0 +1,224 @@
+:root {
+  color-scheme: dark;
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+  background: #10141f;
+  color: #e7edf7;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+.page-shell {
+  max-width: 1500px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.hero h1 {
+  margin: 0.2rem 0 0.5rem;
+  font-size: clamp(2rem, 5vw, 3.25rem);
+}
+.hero p {
+  max-width: 60rem;
+  color: #b9c5d6;
+}
+.eyebrow {
+  color: #78c7ff;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.version,
+.muted {
+  color: #9aabc2;
+  font-size: 0.9rem;
+}
+
+.notice,
+.reporting,
+.panel {
+  border: 1px solid #293548;
+  border-radius: 0.75rem;
+  background: #171d2b;
+}
+.notice {
+  margin: 1.5rem 0;
+  padding: 0.9rem 1rem;
+  color: #b8e8ce;
+}
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin: 1rem 0;
+}
+.controls label {
+  display: grid;
+  gap: 0.35rem;
+  color: #b9c5d6;
+  font-size: 0.9rem;
+}
+select,
+input,
+textarea {
+  font: inherit;
+}
+select,
+input[type="file"] {
+  max-width: 22rem;
+  color: inherit;
+}
+select {
+  border: 1px solid #42536d;
+  border-radius: 0.35rem;
+  background: #10141f;
+  padding: 0.4rem;
+}
+
+.workspace {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 1rem;
+}
+.panel {
+  min-width: 0;
+  padding: 1rem;
+}
+.panel-heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+}
+h2 {
+  margin: 0 0 0.75rem;
+  font-size: 1.05rem;
+}
+.editor-panel textarea {
+  width: 100%;
+  min-height: 34rem;
+  resize: vertical;
+  border: 1px solid #42536d;
+  border-radius: 0.4rem;
+  background: #0c111b;
+  color: #eef5ff;
+  padding: 0.8rem;
+  font:
+    0.9rem/1.45 ui-monospace,
+    SFMono-Regular,
+    Consolas,
+    monospace;
+  tab-size: 4;
+}
+.metrics {
+  display: flex;
+  gap: 1rem;
+  margin: 0 0 0.75rem;
+}
+.metrics div {
+  display: flex;
+  gap: 0.35rem;
+}
+.metrics dt {
+  color: #9aabc2;
+}
+.metrics dd {
+  margin: 0;
+  font-variant-numeric: tabular-nums;
+}
+#tree-output {
+  min-height: 28rem;
+  max-height: 34rem;
+  overflow: auto;
+  margin: 0;
+  padding: 0.8rem;
+  border-radius: 0.4rem;
+  background: #0c111b;
+  color: #d4e5ff;
+  white-space: pre-wrap;
+  font:
+    0.85rem/1.45 ui-monospace,
+    SFMono-Regular,
+    Consolas,
+    monospace;
+}
+.status {
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+.status.clean {
+  color: #7ce0a4;
+}
+.status.recovery,
+.status.failed {
+  color: #ff9d9d;
+}
+.status.loading {
+  color: #f4ca77;
+}
+
+.recovery-panel {
+  margin-top: 1rem;
+}
+.recovery-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.recovery-list li + li {
+  margin-top: 0.45rem;
+}
+.recovery-list button {
+  width: 100%;
+  border: 1px solid #4e3945;
+  border-radius: 0.35rem;
+  background: #251a21;
+  color: #ffdce1;
+  padding: 0.6rem;
+  text-align: left;
+  cursor: pointer;
+}
+.recovery-list button:hover,
+.recovery-list button:focus-visible {
+  background: #3b2530;
+  outline: 2px solid #ffb8c3;
+}
+.empty {
+  color: #9aabc2;
+}
+.reporting {
+  margin-top: 1rem;
+  padding: 1rem;
+}
+.reporting p {
+  margin: 0.5rem 0;
+  color: #c7d2e2;
+}
+a {
+  color: #78c7ff;
+}
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}
+
+@media (max-width: 900px) {
+  .page-shell {
+    padding: 1rem;
+  }
+  .workspace {
+    grid-template-columns: 1fr;
+  }
+  .editor-panel textarea {
+    min-height: 22rem;
+  }
+}

@@ -56,3 +56,6 @@ jobs:
 
       - name: Run query validation
         run: pnpm query:examples
+
+      - name: Test playground build
+        run: pnpm test:playground
