@@ -7,8 +7,16 @@
 
 ```txt
 root: .
+├── .github/
+│   └── workflows/
+│       ├── ci.yml
+│       └── pages.yml
 ├── docs/
 │   ├── adr/
+│   │   ├── 0001-stable-ast-field-contract.md
+│   │   ├── 0002-generated-parser-artifacts.md
+│   │   ├── 0003-conditional-procedure-branch-bodies.md
+│   │   └── 0004-xlflow-lint-compatible-cst-evolution.md
 │   ├── specs/
 │   │   └── inline-statement-sequences.md
 │   └── design.md
@@ -29,13 +37,18 @@ root: .
 │   ├── unsupported-or-ambiguous-syntax.md
 │   └── vba-syntax-checklist.md
 ├── scripts/
+│   ├── build-playground.mjs
 │   └── parse-examples.mjs
+├── playground/
+│   ├── examples/
+│   └── site/
 ├── tasks/
 │   ├── feature_spec.md
 │   ├── lessons.md
 │   └── todo.md
 ├── test/
-│   └── corpus/
+│   ├── corpus/
+│   └── playground/
 ├── AGENTS.md
 ├── CLAUDE.md
 ├── grammar.js

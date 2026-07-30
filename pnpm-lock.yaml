@@ -24,6 +24,9 @@ importers:
       tree-sitter-cli:
         specifier: ^0.26.9
         version: 0.26.9
+      web-tree-sitter:
+        specifier: 0.26.9
+        version: 0.26.9
 
 packages:
 
@@ -182,6 +185,9 @@ packages:
   tree-sitter@0.25.0:
     resolution: {integrity: sha512-PGZZzFW63eElZJDe/b/R/LbsjDDYJa5UEjLZJB59RQsMX+fo0j54fqBPn1MGKav/QNa0JR0zBiVaikYDWCj5KQ==}
 
+  web-tree-sitter@0.26.9:
+    resolution: {integrity: sha512-YJwSHANl6XFgeEjB8nitgj0qZYt5gkIesJ4w2srS2wcLB4GUa4xcOkM0YaMsU6WNR53YVIkDSY7Ej4pf3IXtCA==}
+
 snapshots:
 
   '@oxfmt/binding-android-arm-eabi@0.54.0':
@@ -277,3 +283,5 @@ snapshots:
     dependencies:
       node-addon-api: 8.8.0
       node-gyp-build: 4.8.4
+
+  web-tree-sitter@0.26.9: {}
