@@ -1,44 +1,52 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Parse VBA source locally in your browser with tree-sitter-vba.">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Parse and highlight VBA source locally in your browser with tree-sitter-vba."
+    />
     <title>tree-sitter-vba playground</title>
-    <link rel="stylesheet" href="./styles.css">
+    <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
     <main class="page-shell">
       <header class="hero">
-        <p class="eyebrow">tree-sitter-vba</p>
-        <h1>VBA parser playground</h1>
-        <p>Inspect the concrete syntax tree for VBA without installing local tools.</p>
-        <p id="version" class="version" aria-live="polite">Loading parser version…</p>
+        <div>
+          <p class="eyebrow">tree-sitter-vba</p>
+          <h1>VBA parser playground</h1>
+          <p class="hero-copy">Paste VBA source and inspect its concrete syntax tree.</p>
+        </div>
+        <div class="hero-meta">
+          <span class="privacy-badge"
+            ><span aria-hidden="true">🔒</span> Runs locally in your browser</span
+          >
+          <span id="version" class="version" aria-live="polite">Loading parser version…</span>
+        </div>
       </header>
 
-      <section class="notice" aria-label="Privacy notice">
-        Your VBA source code is parsed locally in your browser and is not uploaded to a server.
-      </section>
-
-      <section class="controls" aria-label="Source controls">
-        <label>
-          Example
-          <select id="example-select">
+      <section class="toolbar" aria-label="Source controls">
+        <label class="toolbar-select">
+          <span class="sr-only">Example</span>
+          <select id="example-select" aria-label="Example">
             <option value="">Loading examples…</option>
           </select>
         </label>
-        <label>
-          Load local file
-          <input id="file-input" type="file" accept=".bas,.cls,.frm">
-        </label>
-        <label>
-          File encoding
-          <select id="encoding-select">
+        <button id="load-file-button" class="file-button" type="button">
+          Load .bas / .cls / .frm
+        </button>
+        <input id="file-input" class="sr-only" type="file" accept=".bas,.cls,.frm" />
+        <span id="file-status" class="file-status" aria-live="polite">No file selected</span>
+        <label class="toolbar-select encoding-select">
+          <span class="sr-only">File encoding</span>
+          <select id="encoding-select" aria-label="File encoding">
             <option value="utf-8">UTF-8</option>
             <option value="shift_jis">Shift_JIS</option>
             <option value="windows-1252">Windows-1252</option>
           </select>
         </label>
+        <button id="reset-button" class="secondary-button" type="button">Reset</button>
       </section>
 
       <section class="workspace" aria-label="Parser workspace">
@@ -47,42 +55,63 @@
             <h2>VBA source</h2>
             <span id="source-name" class="muted">Example</span>
           </div>
-          <label class="sr-only" for="source">VBA source code</label>
-          <textarea id="source" spellcheck="false" autocapitalize="off" autocomplete="off" wrap="off"></textarea>
+          <div id="editor" class="editor"></div>
         </section>
 
         <section class="panel tree-panel">
-          <div class="panel-heading">
+          <div class="panel-heading tree-heading">
             <h2>Syntax tree</h2>
             <span id="parse-status" class="status loading" aria-live="polite">Loading parser…</span>
           </div>
+          <div class="tree-controls">
+            <div class="mode-switch" aria-label="Syntax tree display mode">
+              <button id="tree-mode-button" type="button" aria-pressed="true">Tree</button>
+              <button id="sexpr-mode-button" type="button" aria-pressed="false">
+                S-expression
+              </button>
+            </div>
+            <div class="tree-actions">
+              <button id="expand-tree-button" type="button" disabled>Expand all</button>
+              <button id="collapse-tree-button" type="button" disabled>Collapse all</button>
+              <button id="copy-tree-button" type="button" disabled>Copy tree</button>
+              <span id="copy-status" class="sr-only" aria-live="polite"></span>
+            </div>
+          </div>
           <dl class="metrics" aria-label="Parse metrics">
-            <div><dt>ERROR</dt><dd id="error-count">—</dd></div>
-            <div><dt>MISSING</dt><dd id="missing-count">—</dd></div>
-            <div><dt>Time</dt><dd id="parse-time">—</dd></div>
+            <div>
+              <dt>ERROR</dt>
+              <dd id="error-count">—</dd>
+            </div>
+            <div>
+              <dt>MISSING</dt>
+              <dd id="missing-count">—</dd>
+            </div>
+            <div>
+              <dt>Time</dt>
+              <dd id="parse-time">—</dd>
+            </div>
           </dl>
-          <pre id="tree-output" tabindex="0">Parser is loading…</pre>
+          <p id="recovery-summary" class="recovery-summary">No recovery nodes</p>
+          <div id="tree-output" class="tree-output" tabindex="0">Parser is loading…</div>
         </section>
       </section>
 
-      <section class="panel recovery-panel">
+      <section id="recovery-panel" class="panel recovery-panel" hidden>
         <div class="panel-heading">
           <h2>Recovery nodes</h2>
           <span class="muted">Select an item to highlight its source range.</span>
         </div>
-        <ul id="recovery-list" class="recovery-list" aria-live="polite">
-          <li class="empty">No parse result yet.</li>
-        </ul>
+        <ul id="recovery-list" class="recovery-list" aria-live="polite"></ul>
       </section>
 
-      <section class="reporting" aria-labelledby="reporting-title">
-        <h2 id="reporting-title">Found unsupported syntax?</h2>
-        <p>
-          Reduce it to a minimal reproducible example, remove proprietary or confidential code,
-          and include the displayed version plus the relevant ERROR or MISSING range.
-        </p>
-        <p><a href="https://github.com/harumiWeb/tree-sitter-vba/issues/new/choose">Create a GitHub issue</a></p>
-      </section>
+      <footer id="reporting" class="reporting" hidden>
+        <span>Found unsupported syntax?</span>
+        Reduce it to a minimal reproducible example, remove confidential code, and include the
+        version and recovery range.
+        <a href="https://github.com/harumiWeb/tree-sitter-vba/issues/new/choose"
+          >Create a GitHub issue</a
+        >
+      </footer>
     </main>
     <script type="module" src="./app.js"></script>
   </body>

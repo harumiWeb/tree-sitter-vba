@@ -64,6 +64,10 @@
     "node-gyp-build": "^4.8.4"
   },
   "devDependencies": {
+    "@codemirror/commands": "6.10.4",
+    "@codemirror/state": "6.7.1",
+    "@codemirror/view": "6.43.7",
+    "esbuild": "0.28.1",
     "oxfmt": "^0.54.0",
     "tree-sitter": "^0.25.0",
     "tree-sitter-cli": "^0.26.9",
