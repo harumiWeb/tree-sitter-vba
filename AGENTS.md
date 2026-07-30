@@ -13,6 +13,10 @@ root: .
 │       └── pages.yml
 ├── docs/
 │   ├── adr/
+│   │   ├── 0001-stable-ast-field-contract.md
+│   │   ├── 0002-generated-parser-artifacts.md
+│   │   ├── 0003-conditional-procedure-branch-bodies.md
+│   │   └── 0004-xlflow-lint-compatible-cst-evolution.md
 │   ├── specs/
 │   │   └── inline-statement-sequences.md
 │   └── design.md

@@ -43,6 +43,7 @@ cpSync(
 const cli = require.resolve("tree-sitter-cli/cli.js");
 const parserOutput = join(distRoot, "tree-sitter-vba.wasm");
 const wasmBuildRoot = mkdtempSync(join(tmpdir(), "tree-sitter-vba-wasm-"));
+let buildExitCode = 0;
 
 try {
   // Build from a temporary parser copy. On Windows, the Wasm linker can retain
@@ -63,10 +64,14 @@ try {
     if (build.error) {
       console.error(build.error.message);
     }
-    process.exit(build.status ?? 1);
+    buildExitCode = build.status ?? 1;
   }
 } finally {
   rmSync(wasmBuildRoot, { recursive: true, force: true, maxRetries: 3, retryDelay: 100 });
+}
+
+if (buildExitCode !== 0) {
+  process.exit(buildExitCode);
 }
 
 const packageJson = JSON.parse(readFileSync(join(root, "package.json"), "utf8"));

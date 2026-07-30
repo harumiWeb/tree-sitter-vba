@@ -2,9 +2,11 @@ Attribute VB_Name = "FileIo"
 Option Explicit
 
 Public Sub ReadFirstLine(ByVal path As String)
+    Dim fileNumber As Integer
     Dim textLine As String
-    Open path For Input As #1
-    Line Input #1, textLine
+    fileNumber = FreeFile
+    Open path For Input As #fileNumber
+    Line Input #fileNumber, textLine
     Debug.Print textLine
-    Close #1
+    Close #fileNumber
 End Sub

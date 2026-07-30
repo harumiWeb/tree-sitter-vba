@@ -1,4 +1,5 @@
-import Parser from "./vendor/web-tree-sitter.js";
+import { Parser } from "./vendor/web-tree-sitter.js";
+import { textPositionFromByteOffset } from "./source-positions.js";
 
 const source = document.querySelector("#source");
 const sourceName = document.querySelector("#source-name");
@@ -16,6 +17,8 @@ const recoveryList = document.querySelector("#recovery-list");
 let parser;
 let examples = [];
 let parseTimer;
+let exampleLoadController;
+let contentRequestGeneration = 0;
 
 function asset(path) {
   return new URL(path, import.meta.url).href;
@@ -24,6 +27,13 @@ function asset(path) {
 function setStatus(message, kind) {
   status.textContent = message;
   status.className = `status ${kind}`;
+}
+
+function beginContentRequest() {
+  contentRequestGeneration += 1;
+  exampleLoadController?.abort();
+  exampleLoadController = undefined;
+  return contentRequestGeneration;
 }
 
 function inspectTree(rootNode) {
@@ -39,12 +49,14 @@ function inspectTree(rootNode) {
           ? "MISSING"
           : null;
     if (kind) {
+      const start = textPositionFromByteOffset(source.value, node.startIndex);
+      const end = textPositionFromByteOffset(source.value, node.endIndex);
       recovery.push({
         kind,
-        startIndex: node.startIndex,
-        endIndex: node.endIndex,
-        start: node.startPosition,
-        end: node.endPosition,
+        startIndex: start.index,
+        endIndex: end.index,
+        start,
+        end,
       });
     }
     for (let index = 0; index < node.childCount; index += 1) {
@@ -71,7 +83,7 @@ function renderRecovery(recovery) {
     const start = `${item.start.row + 1}:${item.start.column + 1}`;
     const end = `${item.end.row + 1}:${item.end.column + 1}`;
     button.type = "button";
-    button.textContent = `${item.kind} — ${start}–${end} (offset ${item.startIndex}–${item.endIndex})`;
+    button.textContent = `${item.kind} — ${start}–${end} (text offset ${item.startIndex}–${item.endIndex})`;
     button.addEventListener("click", () => {
       source.focus();
       source.setSelectionRange(item.startIndex, item.endIndex);
@@ -113,23 +125,42 @@ function scheduleParse() {
 async function loadExample(id) {
   const example = examples.find((item) => item.id === id);
   if (!example) return;
-  const response = await fetch(asset(`./examples/${example.file}`));
-  if (!response.ok) throw new Error(`Could not load ${example.file}`);
-  source.value = await response.text();
-  sourceName.textContent = example.label;
-  scheduleParse();
+  const requestGeneration = beginContentRequest();
+  const controller = new AbortController();
+  exampleLoadController = controller;
+
+  try {
+    const response = await fetch(asset(`./examples/${example.file}`), {
+      signal: controller.signal,
+    });
+    if (!response.ok) throw new Error(`Could not load ${example.file}`);
+    const text = await response.text();
+    if (requestGeneration !== contentRequestGeneration) return;
+    source.value = text;
+    sourceName.textContent = example.label;
+    scheduleParse();
+  } catch (error) {
+    if (error.name !== "AbortError") throw error;
+  } finally {
+    if (exampleLoadController === controller) {
+      exampleLoadController = undefined;
+    }
+  }
 }
 
 async function loadSelectedFile() {
   const [file] = fileInput.files;
   if (!file) return;
+  const requestGeneration = beginContentRequest();
   if (!/\.(bas|cls|frm)$/i.test(file.name)) {
     setStatus("Choose a .bas, .cls, or .frm file", "failed");
     fileInput.value = "";
     return;
   }
   try {
-    source.value = new TextDecoder(encodingSelect.value).decode(await file.arrayBuffer());
+    const text = new TextDecoder(encodingSelect.value).decode(await file.arrayBuffer());
+    if (requestGeneration !== contentRequestGeneration) return;
+    source.value = text;
     sourceName.textContent = file.name;
     scheduleParse();
   } catch (error) {
@@ -157,7 +188,11 @@ async function initialize() {
     const language = await Parser.Language.load(asset("./tree-sitter-vba.wasm"));
     parser = new Parser();
     parser.setLanguage(language);
-    await loadExample(examples[0].id);
+    if (source.value.length === 0) {
+      await loadExample(examples[0].id);
+    } else {
+      scheduleParse();
+    }
   } catch (error) {
     setStatus("Parser failed to load", "failed");
     treeOutput.textContent = error.stack || error.message;
@@ -165,7 +200,10 @@ async function initialize() {
   }
 }
 
-source.addEventListener("input", scheduleParse);
+source.addEventListener("input", () => {
+  beginContentRequest();
+  scheduleParse();
+});
 exampleSelect.addEventListener("change", () =>
   loadExample(exampleSelect.value).catch((error) => {
     setStatus(error.message, "failed");

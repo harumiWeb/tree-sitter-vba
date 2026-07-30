@@ -1,14 +1,16 @@
 import assert from "node:assert/strict";
 import { existsSync, readFileSync } from "node:fs";
-import { createRequire } from "node:module";
 import { dirname, join, resolve } from "node:path";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
+import { Parser } from "web-tree-sitter";
+import {
+  byteOffsetToCodeUnitIndex,
+  textPositionFromByteOffset,
+} from "../../playground/site/source-positions.js";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..", "..");
 const dist = join(root, "playground", "dist");
-const require = createRequire(import.meta.url);
-const { default: Parser } = require("web-tree-sitter");
 
 function inspectTree(rootNode) {
   const result = { errors: [], missing: [] };
@@ -53,6 +55,7 @@ test("playground build includes its required local assets and version metadata",
   for (const file of [
     "index.html",
     "app.js",
+    "source-positions.js",
     "styles.css",
     ".nojekyll",
     "tree-sitter-vba.wasm",
@@ -70,6 +73,13 @@ test("playground build includes its required local assets and version metadata",
   const packageJson = JSON.parse(readFileSync(join(root, "package.json"), "utf8"));
   assert.equal(version.version, packageJson.version);
   assert.match(version.commit, /^(?:[0-9a-f]{7,}|unknown)$/);
+});
+
+test("source position conversion maps UTF-8 parser offsets to textarea indices", () => {
+  const source = "' あ\nSub Test()\n";
+  assert.equal(byteOffsetToCodeUnitIndex(source, 5), 3);
+  assert.deepEqual(textPositionFromByteOffset(source, 5), { index: 3, row: 0, column: 3 });
+  assert.equal(byteOffsetToCodeUnitIndex("😀", 4), 2);
 });
 
 test("generated WebAssembly parser cleanly parses every bundled example", async () => {
