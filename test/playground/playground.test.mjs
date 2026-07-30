@@ -8,7 +8,7 @@ import { fileURLToPath } from "node:url";
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..", "..");
 const dist = join(root, "playground", "dist");
 const require = createRequire(import.meta.url);
-const Parser = require("web-tree-sitter");
+const { default: Parser } = require("web-tree-sitter");
 
 function inspectTree(rootNode) {
   const result = { errors: [], missing: [] };
