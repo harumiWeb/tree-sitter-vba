@@ -37,3 +37,52 @@ Attribute VB_PredeclaredId = True
     name: (identifier)
     value: (boolean_literal))
   (newline))
+
+==================
+procedure attribute with a keyword-named procedure
+==================
+
+Public Function Load() As String
+Attribute Load.VB_Description = "Loads a document."
+End Function
+
+Public Property Get Name() As String
+Attribute Name.VB_Description = "Returns a name."
+End Property
+
+---
+
+(source_file
+  (newline)
+  (function_declaration
+    visibility: (visibility)
+    name: (identifier)
+    parameters: (parameter_list)
+    type: (as_type_clause
+      type: (type_expression))
+    (newline)
+    (attribute_statement
+      name: (qualified_member_expression
+        receiver: (identifier)
+        member: (identifier))
+      value: (string_literal))
+    (newline)
+    end: (end_function_statement))
+  (newline)
+  (newline)
+  (property_get_declaration
+    visibility: (visibility)
+    accessor: (get_accessor)
+    name: (identifier)
+    parameters: (parameter_list)
+    type: (as_type_clause
+      type: (type_expression))
+    (newline)
+    (attribute_statement
+      name: (qualified_member_expression
+        receiver: (identifier)
+        member: (identifier))
+      value: (string_literal))
+    (newline)
+    end: (end_property_statement))
+  (newline))

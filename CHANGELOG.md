@@ -4,6 +4,20 @@ All notable changes to tree-sitter-vba will be documented in this file.
 
 ## Unreleased
 
+## [v0.11.1] - 2026-08-03
+
+### Added
+
+- Add the MIT-licensed ROneCOne exported class as a real-world parser fixture.
+
+### Fixed
+
+- Parse VBE-exported procedure `Attribute` statements immediately following
+  `Function`, `Sub`, and `Property` headers.
+- Accept contextual procedure names such as `Load` and `Name` in exported
+  attribute targets without changing ordinary identifier parsing. This prevents
+  recovery nodes and spurious `Attribute` call sites in downstream consumers.
+
 ## [v0.11.0] - 2026-07-29
 
 ### Added

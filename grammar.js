@@ -135,9 +135,35 @@ module.exports = grammar({
     attribute_statement: ($) =>
       seq(
         caseInsensitive("Attribute"),
-        field("name", choice($.identifier, $.member_expression)),
+        field("name", $._attribute_name),
         "=",
         field("value", $._literal),
+      ),
+
+    // VBE export attributes can target procedures named with a contextual
+    // keyword. Keep their identifiers local to Attribute syntax so ordinary
+    // statement parsing remains unchanged.
+    _attribute_name: ($) =>
+      choice(
+        $._attribute_identifier,
+        alias($._attribute_member_expression, $.qualified_member_expression),
+      ),
+
+    _attribute_member_expression: ($) =>
+      prec.left(
+        3,
+        seq(
+          field("receiver", $._attribute_identifier),
+          field("operator", choice(".", "!")),
+          field("member", $._attribute_identifier),
+        ),
+      ),
+
+    _attribute_identifier: ($) =>
+      choice(
+        $.identifier,
+        alias(caseInsensitive("Load"), $.identifier),
+        alias(caseInsensitive("Name"), $.identifier),
       ),
 
     option_statement: ($) =>
@@ -307,6 +333,7 @@ module.exports = grammar({
       seq(
         $._sub_header,
         $._statement_separator,
+        optional($._procedure_attributes),
         field("body", optional($.block)),
         field("end", $.end_sub_statement),
       ),
@@ -315,6 +342,7 @@ module.exports = grammar({
       seq(
         $._function_header,
         $._statement_separator,
+        optional($._procedure_attributes),
         field("body", optional($.block)),
         field("end", $.end_function_statement),
       ),
@@ -323,6 +351,7 @@ module.exports = grammar({
       seq(
         $._property_get_header,
         $._statement_separator,
+        optional($._procedure_attributes),
         field("body", optional($.block)),
         field("end", $.end_property_statement),
       ),
@@ -331,6 +360,7 @@ module.exports = grammar({
       seq(
         $._property_let_header,
         $._statement_separator,
+        optional($._procedure_attributes),
         field("body", optional($.block)),
         field("end", $.end_property_statement),
       ),
@@ -339,6 +369,7 @@ module.exports = grammar({
       seq(
         $._property_set_header,
         $._statement_separator,
+        optional($._procedure_attributes),
         field("body", optional($.block)),
         field("end", $.end_property_statement),
       ),
@@ -537,6 +568,8 @@ module.exports = grammar({
         ),
         field("modifiers", $.static_modifier),
       ),
+
+    _procedure_attributes: ($) => repeat1(seq($.attribute_statement, $.newline)),
 
     end_sub_statement: ($) => seq(caseInsensitive("End"), caseInsensitive("Sub")),
 
