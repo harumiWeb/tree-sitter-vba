@@ -36,6 +36,12 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Test third-party metadata checker
+        run: pnpm test:third-party
+
+      - name: Check third-party fixture metadata
+        run: pnpm check:third-party
+
       - name: Generate parser artifacts
         run: pnpm generate
 

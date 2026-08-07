@@ -422,3 +422,5 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 The `examples/third_party` directory may contain third-party fixture files under
 their original licenses. These files are provided for parser coverage only and
 are not licensed under this repository's MIT license unless explicitly stated.
+See [THIRD_PARTY_LICENSE.md](THIRD_PARTY_LICENSE.md) for the project inventory,
+upstream sources, acknowledgements, and local license records.

@@ -38,6 +38,7 @@ root: .
 │   └── vba-syntax-checklist.md
 ├── scripts/
 │   ├── build-playground.mjs
+│   ├── check-third-party-licenses.mjs
 │   └── parse-examples.mjs
 ├── playground/
 │   ├── examples/
@@ -53,12 +54,14 @@ root: .
 │   └── todo.md
 ├── test/
 │   ├── corpus/
-│   └── playground/
+│   ├── playground/
+│   └── third-party-licenses.test.mjs
 ├── AGENTS.md
 ├── CLAUDE.md
 ├── grammar.js
 ├── LICENSE
 ├── README.md
+├── THIRD_PARTY_LICENSE.md
 └── tree-sitter.json
 ```
 
