@@ -5,5 +5,5 @@
 - License: MIT
 - Imported for parser fixture coverage.
 - Modifications:
-  - None known
+  - None
   - Line endings may be normalized
