@@ -34,3 +34,38 @@ End Sub
 
   assert.equal(tree.rootNode.hasError, false);
 });
+
+test("rejects declaration keywords after a comma", () => {
+  const parser = new Parser();
+  const VBA = require(".");
+
+  parser.setLanguage(VBA);
+
+  const malformed = parser.parse(`
+Sub Test()
+    Dim x As Double, Dim i As Long
+    Dim b() As Byte, rEdIm b(10)
+End Sub
+`);
+  const declarators = malformed.rootNode.descendantsOfType("variable_declarator");
+
+  assert.equal(malformed.rootNode.hasError, true);
+  assert.equal(
+    declarators.some((node) => /^(dim|redim)$/i.test(node.childForFieldName("name").text)),
+    false,
+  );
+
+  const valid = parser.parse(`
+Sub Test()
+    Dim x As Double, i As Long
+    Dim b() As Byte: ReDim b(10)
+End Sub
+  `);
+  assert.equal(valid.rootNode.hasError, false);
+  const validDeclarators = valid.rootNode.descendantsOfType("variable_declarator");
+  assert.deepEqual(
+    validDeclarators.map((node) => node.childForFieldName("name").text),
+    ["x", "i", "b"],
+  );
+  assert.equal(valid.rootNode.descendantsOfType("redim_statement").length, 1);
+});

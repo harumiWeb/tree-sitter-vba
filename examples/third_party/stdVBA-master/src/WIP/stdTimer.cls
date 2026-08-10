@@ -153,7 +153,7 @@ Private Function derefObject(ByVal ptr as longptr) as  Object
   CopyMemory result, ByVal varPtr(memAddress), LenB(memAddress)
   Set derefObject = result                             'Set and add ref
   'Zero memory
-  Dim b() as Byte, Redim b(lenb(memAddress))
+  Dim b() as Byte: Redim b(lenb(memAddress))
   CopyMemory result, ByVal varPtr(b(0)), LenB(memAddress)
 End Function
 

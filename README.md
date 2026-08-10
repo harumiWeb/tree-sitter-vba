@@ -39,8 +39,8 @@ This is a `v0.x` public release.
 
 The grammar is already usable for syntax-aware tooling such as highlighting,
 folding, tags, outline extraction, and initial symbol analysis. The current test
-suite covers 222 focused corpus cases, generated `Select Case` stress coverage
-through 500 clauses, and 477 checked-in VBA example files without `ERROR` or
+suite covers 229 focused corpus cases, generated `Select Case` stress coverage
+through 500 clauses, and 478 checked-in VBA example files without `ERROR` or
 `MISSING` recovery nodes.
 
 It is not yet a complete VBA grammar. Node names and tree shapes may still change before `v1.0.0`.

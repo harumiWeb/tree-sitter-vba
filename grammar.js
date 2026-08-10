@@ -14,6 +14,13 @@ module.exports = grammar({
 
   word: ($) => $.identifier,
 
+  // Keep the permissive identifier vocabulary globally, but reserve
+  // declaration keywords where a variable declarator name is expected.
+  reserved: {
+    global: (_) => [],
+    variable_declarator: ($) => [$._dim_keyword, $._redim_keyword],
+  },
+
   supertypes: ($) => [$.member_expression],
 
   conflicts: ($) => [
@@ -579,6 +586,10 @@ module.exports = grammar({
 
     static_modifier: (_) => caseInsensitive("Static"),
 
+    _dim_keyword: (_) => caseInsensitive("Dim"),
+
+    _redim_keyword: (_) => caseInsensitive("ReDim"),
+
     with_events_modifier: (_) => caseInsensitive("WithEvents"),
 
     ptrsafe_modifier: (_) => caseInsensitive("PtrSafe"),
@@ -669,7 +680,7 @@ module.exports = grammar({
           choice(
             seq(
               optional(field("visibility", $.visibility)),
-              choice(caseInsensitive("Dim"), field("static_modifier", $.static_modifier)),
+              choice($._dim_keyword, field("static_modifier", $.static_modifier)),
             ),
             field("visibility", $.visibility),
           ),
@@ -689,14 +700,14 @@ module.exports = grammar({
         prec.right(
           1,
           seq(
-            field("name", $.identifier),
+            field("name", reserved("variable_declarator", $.identifier)),
             field("bounds", $.array_bounds),
             optional(field("type", $.as_type_clause)),
             optional(field("initializer", $.initializer)),
           ),
         ),
         seq(
-          field("name", $.identifier),
+          field("name", reserved("variable_declarator", $.identifier)),
           optional(field("type", $.as_type_clause)),
           optional(field("initializer", $.initializer)),
         ),
@@ -1180,7 +1191,7 @@ module.exports = grammar({
       choice(
         $._ambiguous_redim_statement,
         seq(
-          caseInsensitive("ReDim"),
+          $._redim_keyword,
           optional(caseInsensitive("Preserve")),
           commaSep1($.redim_declarator),
         ),
@@ -1771,6 +1782,7 @@ module.exports = grammar({
           /\[[^\]\r\n]+\]/,
         ),
       ),
+
   },
 });
 

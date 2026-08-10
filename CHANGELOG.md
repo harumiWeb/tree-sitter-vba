@@ -4,6 +4,25 @@ All notable changes to tree-sitter-vba will be documented in this file.
 
 ## Unreleased
 
+## [v0.12.0] - 2026-08-10
+
+### Added
+
+- Validate third-party fixture source and license metadata in CI.
+
+### Changed
+
+- Generate the parser with Tree-sitter ABI 15 for contextual reserved-word
+  handling.
+
+### Fixed
+
+- Reject `Dim` and `ReDim` as comma-separated variable declarator names and
+  expose the invalid remainder through parser recovery while preserving the
+  valid declaration prefix.
+- Correct three VBE-rejected stdVBA fixture statements to use colon-separated
+  VBA statements.
+
 ## [v0.11.1] - 2026-08-03
 
 ### Added
