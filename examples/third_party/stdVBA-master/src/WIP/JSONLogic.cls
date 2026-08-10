@@ -215,7 +215,7 @@ End Function
 
 'min
 Private Function Min_(arr() as variant) as double
-  Dim x as double, Dim i as long
+  Dim x as double: Dim i as long
   x = arr(lbound(arr))
   if ubound(arr)-lbound(arr)+1>0 then
     for i = lbound(arr)+1 to ubound(arr)
@@ -230,7 +230,7 @@ End Function
 
 'max
 Private Function Max_(arr() as variant) as double
-  Dim x as double, Dim i as long
+  Dim x as double: Dim i as long
   x = arr(lbound(arr))
   if ubound(arr)-lbound(arr)+1>0 then
     for i = lbound(arr)+1 to ubound(arr)

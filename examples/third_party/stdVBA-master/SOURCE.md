@@ -5,5 +5,6 @@
 - License: MIT
 - Imported for parser fixture coverage.
 - Modifications:
-  - None
+  - Corrected three VBE-rejected comma-separated `Dim`/`ReDim` statements to
+    use VBA's colon-separated statement syntax.
   - Line endings may be normalized
