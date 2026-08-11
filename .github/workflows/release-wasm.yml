@@ -1,0 +1,62 @@
+name: Release WebAssembly parser
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release-wasm-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  release:
+    name: Build and release WebAssembly parser
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout tag
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.28.1
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Validate release tag
+        shell: bash
+        run: |
+          expected_tag="v$(node -p 'require("./package.json").version')"
+          test "$GITHUB_REF_NAME" = "$expected_tag"
+
+      - name: Build and test WebAssembly parser
+        run: pnpm test:wasm
+
+      - name: Create checksum
+        run: sha256sum build/wasm/tree-sitter-vba.wasm > build/wasm/tree-sitter-vba.wasm.sha256
+
+      - name: Create or update GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if ! gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1; then
+            gh release create "$GITHUB_REF_NAME" --title "$GITHUB_REF_NAME" --generate-notes
+          fi
+          gh release upload "$GITHUB_REF_NAME" \
+            build/wasm/tree-sitter-vba.wasm \
+            build/wasm/tree-sitter-vba.wasm.sha256 \
+            --clobber

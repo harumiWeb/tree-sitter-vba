@@ -358,6 +358,31 @@ Run the full local check:
 pnpm check
 ```
 
+Build and test the standalone browser parser:
+
+```bash
+pnpm build:wasm
+pnpm test:wasm
+```
+
+The generated artifact is written to
+`build/wasm/tree-sitter-vba.wasm`. It is not committed or included in the npm
+package. Versioned releases attach the artifact and a SHA-256 checksum to the
+matching GitHub Release. The Wasm asset can be downloaded from
+`https://github.com/harumiWeb/tree-sitter-vba/releases/download/<version>/tree-sitter-vba.wasm`.
+A browser consumer can load the release asset with `web-tree-sitter@0.26.9`:
+
+```js
+import { Language, Parser } from "web-tree-sitter";
+
+await Parser.init();
+const language = await Language.load("./tree-sitter-vba.wasm");
+const parser = new Parser();
+parser.setLanguage(language);
+const tree = parser.parse("Sub Hello()\nEnd Sub\n");
+console.log(tree.rootNode.toString());
+```
+
 ## Testing
 
 Tree-sitter grammar behavior is tested with corpus files under:
