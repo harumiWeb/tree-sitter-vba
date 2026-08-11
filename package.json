@@ -60,7 +60,9 @@
     "test:wasm": "pnpm build:wasm && node --test test/wasm/wasm.test.mjs",
     "test:playground": "pnpm build:playground && node --test test/playground/playground.test.mjs",
     "build:browser-consumer": "pnpm generate && node scripts/build-browser-consumer.mjs",
-    "test:browser-consumer": "pnpm build:browser-consumer && node --test test/browser-consumer/browser-consumer.test.mjs",
+    "test:browser-consumer:node": "node --test test/browser-consumer/browser-consumer.test.mjs",
+    "test:browser-consumer:browser": "node --test test/browser-consumer/browser-smoke.test.mjs",
+    "test:browser-consumer": "pnpm build:browser-consumer && pnpm test:browser-consumer:node && pnpm test:browser-consumer:browser",
     "fmt": "oxfmt",
     "check": "pnpm test && pnpm test:third-party && pnpm check:third-party && pnpm check:go-parser && pnpm test:binding && pnpm parse:examples && pnpm query:examples && pnpm test:wasm && pnpm test:playground && pnpm test:browser-consumer"
   },
@@ -74,6 +76,7 @@
     "@codemirror/view": "6.43.7",
     "esbuild": "0.28.1",
     "oxfmt": "^0.54.0",
+    "playwright": "1.62.1",
     "tree-sitter": "^0.25.0",
     "tree-sitter-cli": "0.26.9",
     "web-tree-sitter": "0.26.9"
