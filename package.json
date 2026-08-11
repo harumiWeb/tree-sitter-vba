@@ -59,8 +59,10 @@
     "bench": "node scripts/ensure-binding.mjs && node scripts/bench.mjs",
     "test:wasm": "pnpm build:wasm && node --test test/wasm/wasm.test.mjs",
     "test:playground": "pnpm build:playground && node --test test/playground/playground.test.mjs",
+    "build:browser-consumer": "pnpm generate && node scripts/build-browser-consumer.mjs",
+    "test:browser-consumer": "pnpm build:browser-consumer && node --test test/browser-consumer/browser-consumer.test.mjs",
     "fmt": "oxfmt",
-    "check": "pnpm test && pnpm test:third-party && pnpm check:third-party && pnpm check:go-parser && pnpm test:binding && pnpm parse:examples && pnpm query:examples && pnpm test:wasm && pnpm test:playground"
+    "check": "pnpm test && pnpm test:third-party && pnpm check:third-party && pnpm check:go-parser && pnpm test:binding && pnpm parse:examples && pnpm query:examples && pnpm test:wasm && pnpm test:playground && pnpm test:browser-consumer"
   },
   "dependencies": {
     "node-addon-api": "^8.8.0",

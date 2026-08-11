@@ -68,3 +68,6 @@ jobs:
 
       - name: Test playground build
         run: pnpm test:playground
+
+      - name: Test browser consumer example
+        run: pnpm test:browser-consumer

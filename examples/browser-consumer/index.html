@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>tree-sitter-vba browser consumer</title>
+    <style>
+      :root {
+        color-scheme: light dark;
+        font-family: system-ui, sans-serif;
+      }
+
+      body {
+        max-width: 70rem;
+        margin: 0 auto;
+        padding: 2rem 1rem;
+      }
+
+      textarea,
+      pre {
+        box-sizing: border-box;
+        width: 100%;
+        border: 1px solid #888;
+        border-radius: 0.35rem;
+        padding: 0.75rem;
+        font: 0.95rem/1.45 ui-monospace, SFMono-Regular, Consolas, monospace;
+      }
+
+      textarea {
+        min-height: 14rem;
+        resize: vertical;
+      }
+
+      pre {
+        min-height: 10rem;
+        overflow: auto;
+        white-space: pre;
+      }
+
+      button {
+        margin: 0.75rem 0;
+        padding: 0.45rem 0.8rem;
+      }
+
+      .status {
+        font-weight: 700;
+      }
+
+      .status.error {
+        color: #c62828;
+      }
+
+      dl {
+        display: flex;
+        gap: 1.5rem;
+      }
+
+      dt {
+        font-weight: 700;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>tree-sitter-vba browser consumer</h1>
+      <p>VBA is parsed entirely in this browser using the WebAssembly grammar.</p>
+
+      <label for="source">VBA source</label>
+      <textarea id="source" spellcheck="false"></textarea>
+      <button id="parse" type="button">Parse source</button>
+
+      <p id="status" class="status" role="status">Loading parser…</p>
+      <dl>
+        <div>
+          <dt>ERROR</dt>
+          <dd id="error-count">—</dd>
+        </div>
+        <div>
+          <dt>MISSING</dt>
+          <dd id="missing-count">—</dd>
+        </div>
+      </dl>
+
+      <h2>Syntax tree</h2>
+      <pre id="tree" aria-live="polite">Parser is loading…</pre>
+    </main>
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>
