@@ -68,3 +68,9 @@ jobs:
 
       - name: Test playground build
         run: pnpm test:playground
+
+      - name: Install Chromium for browser consumer test
+        run: pnpm exec playwright install --with-deps chromium
+
+      - name: Test browser consumer example
+        run: pnpm test:browser-consumer

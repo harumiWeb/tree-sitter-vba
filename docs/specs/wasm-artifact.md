@@ -61,5 +61,12 @@ tree.delete();
 parser.delete();
 ```
 
+The repository also provides a self-contained minimal consumer fixture in
+[`examples/browser-consumer`](../../examples/browser-consumer/README.md). Its
+build output places the grammar Wasm and the matching `web-tree-sitter` runtime
+under one static directory so it can be served by any ordinary HTTP server.
+The fixture reports the syntax tree and counts `ERROR` and `MISSING` nodes; it
+does not add semantic analysis.
+
 The artifact is a syntax parser only. It does not add semantic analysis,
 syntax highlighting, or browser UI behavior.

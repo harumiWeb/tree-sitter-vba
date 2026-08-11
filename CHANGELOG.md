@@ -4,6 +4,11 @@ All notable changes to tree-sitter-vba will be documented in this file.
 
 ## Unreleased
 
+### Added
+
+- Add a minimal self-contained browser consumer example for the WebAssembly
+  parser, including `ERROR` and `MISSING` recovery reporting.
+
 ## [v0.12.1] - 2026-08-11
 
 ### Added

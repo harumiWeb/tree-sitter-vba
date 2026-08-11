@@ -385,6 +385,10 @@ tree.delete();
 parser.delete();
 ```
 
+For a complete minimal static example, including local WebAssembly runtime
+assets and `ERROR` / `MISSING` reporting, see
+[examples/browser-consumer](examples/browser-consumer/README.md).
+
 ## Testing
 
 Tree-sitter grammar behavior is tested with corpus files under:

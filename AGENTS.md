@@ -23,6 +23,7 @@ root: .
 │   │   └── wasm-artifact.md
 │   └── design.md
 ├── examples/
+│   ├── browser-consumer/
 │   ├── realworld/
 │   ├── basic.bas
 │   ├── class.cls
@@ -39,6 +40,7 @@ root: .
 │   ├── unsupported-or-ambiguous-syntax.md
 │   └── vba-syntax-checklist.md
 ├── scripts/
+│   ├── build-browser-consumer.mjs
 │   ├── build-playground.mjs
 │   ├── build-wasm.mjs
 │   ├── check-third-party-licenses.mjs
@@ -56,6 +58,7 @@ root: .
 │   ├── lessons.md
 │   └── todo.md
 ├── test/
+│   ├── browser-consumer/
 │   ├── corpus/
 │   ├── playground/
 │   ├── wasm/
