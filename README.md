@@ -369,7 +369,7 @@ The generated artifact is written to
 `build/wasm/tree-sitter-vba.wasm`. It is not committed or included in the npm
 package. Versioned releases attach the artifact and a SHA-256 checksum to the
 matching GitHub Release. The Wasm asset can be downloaded from
-`https://github.com/harumiWeb/tree-sitter-vba/releases/download/<version>/tree-sitter-vba.wasm`.
+`https://github.com/harumiWeb/tree-sitter-vba/releases/download/v<version>/tree-sitter-vba.wasm`.
 A browser consumer can load the release asset with `web-tree-sitter@0.26.9`:
 
 ```js
@@ -381,6 +381,8 @@ const parser = new Parser();
 parser.setLanguage(language);
 const tree = parser.parse("Sub Hello()\nEnd Sub\n");
 console.log(tree.rootNode.toString());
+tree.delete();
+parser.delete();
 ```
 
 ## Testing

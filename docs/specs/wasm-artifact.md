@@ -38,7 +38,7 @@ The checksum file verifies the exact bytes distributed for that release.
 The direct download URL is:
 
 ```text
-https://github.com/harumiWeb/tree-sitter-vba/releases/download/<version>/tree-sitter-vba.wasm
+https://github.com/harumiWeb/tree-sitter-vba/releases/download/v<version>/tree-sitter-vba.wasm
 ```
 
 ## Consumer loading

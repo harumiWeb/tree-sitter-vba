@@ -41,6 +41,18 @@ from the pinned dependencies with `pnpm build:wasm`. Version tags publish the
 standalone Wasm file and its SHA-256 checksum as GitHub Release assets; they are
 distribution outputs, not source files or npm package contents.
 
+Alternatives considered:
+
+- Track the generated `build/wasm/tree-sitter-vba.wasm` in Git: rejected because
+  it is a derived artifact, creates large review diffs, and can drift from the
+  tagged source and locked toolchain.
+- Publish the Wasm in the npm package: rejected for this release because npm
+  remains the native parser distribution; bundling a browser artifact would
+  expand package contents and couple the runtime asset to npm packaging. This
+  decision can be revisited if npm distribution becomes a requirement.
+- Keep generating the artifact only for the playground: rejected because
+  downstream browser consumers need an independently downloadable parser asset.
+
 ## Consequences
 
 Grammar pull requests focus on `grammar.js`, corpus tests, queries,
