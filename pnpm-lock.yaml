@@ -34,7 +34,7 @@ importers:
         specifier: ^0.25.0
         version: 0.25.0
       tree-sitter-cli:
-        specifier: ^0.26.9
+        specifier: 0.26.9
         version: 0.26.9
       web-tree-sitter:
         specifier: 0.26.9

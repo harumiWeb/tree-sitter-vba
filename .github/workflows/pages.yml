@@ -8,6 +8,7 @@ on:
       - tree-sitter.json
       - queries/**
       - playground/**
+      - scripts/build-wasm.mjs
       - scripts/build-playground.mjs
       - test/playground/**
       - package.json

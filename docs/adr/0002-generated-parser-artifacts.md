@@ -13,8 +13,8 @@ less useful. The browser playground also generates a grammar Wasm module and a
 static staging directory; these are deployment artifacts, not source files.
 
 The generated parser is still required for native binding builds, npm packages,
-and Go module consumers. Unlike npm packages, Go modules are resolved from Git
-tags and do not run npm `prepack`, so a Go package that includes
+Go module consumers, and browser consumers. Unlike npm packages, Go modules are
+resolved from Git tags and do not run npm `prepack`, so a Go package that includes
 `../../src/parser.c` cannot build when `src/parser.c` is ignored.
 
 ## Decision
@@ -36,6 +36,23 @@ Do not track `playground/dist/`, its `tree-sitter-vba.wasm`, or the copied
 `web-tree-sitter` runtime. Build them from the pinned dependencies and current
 Git revision for every local playground build and GitHub Pages deployment.
 
+Do not track the standalone `build/wasm/tree-sitter-vba.wasm` artifact. Build it
+from the pinned dependencies with `pnpm build:wasm`. Version tags publish the
+standalone Wasm file and its SHA-256 checksum as GitHub Release assets; they are
+distribution outputs, not source files or npm package contents.
+
+Alternatives considered:
+
+- Track the generated `build/wasm/tree-sitter-vba.wasm` in Git: rejected because
+  it is a derived artifact, creates large review diffs, and can drift from the
+  tagged source and locked toolchain.
+- Publish the Wasm in the npm package: rejected for this release because npm
+  remains the native parser distribution; bundling a browser artifact would
+  expand package contents and couple the runtime asset to npm packaging. This
+  decision can be revisited if npm distribution becomes a requirement.
+- Keep generating the artifact only for the playground: rejected because
+  downstream browser consumers need an independently downloadable parser asset.
+
 ## Consequences
 
 Grammar pull requests focus on `grammar.js`, corpus tests, queries,
@@ -56,4 +73,5 @@ parser in npm tarballs.
 
 GitHub Pages receives only the generated static artifact uploaded by its
 workflow. No generated playground asset is committed, published in the npm
-package, or manually maintained.
+package, or manually maintained. Standalone Wasm release assets follow the
+same generated-artifact policy and are rebuilt from the tagged source by CI.

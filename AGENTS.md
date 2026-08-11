@@ -10,7 +10,8 @@ root: .
 ├── .github/
 │   └── workflows/
 │       ├── ci.yml
-│       └── pages.yml
+│       ├── pages.yml
+│       └── release-wasm.yml
 ├── docs/
 │   ├── adr/
 │   │   ├── 0001-stable-ast-field-contract.md
@@ -18,7 +19,8 @@ root: .
 │   │   ├── 0003-conditional-procedure-branch-bodies.md
 │   │   └── 0004-xlflow-lint-compatible-cst-evolution.md
 │   ├── specs/
-│   │   └── inline-statement-sequences.md
+│   │   ├── inline-statement-sequences.md
+│   │   └── wasm-artifact.md
 │   └── design.md
 ├── examples/
 │   ├── realworld/
@@ -38,6 +40,7 @@ root: .
 │   └── vba-syntax-checklist.md
 ├── scripts/
 │   ├── build-playground.mjs
+│   ├── build-wasm.mjs
 │   ├── check-third-party-licenses.mjs
 │   └── parse-examples.mjs
 ├── playground/
@@ -55,6 +58,7 @@ root: .
 ├── test/
 │   ├── corpus/
 │   ├── playground/
+│   ├── wasm/
 │   └── third-party-licenses.test.mjs
 ├── AGENTS.md
 ├── CLAUDE.md

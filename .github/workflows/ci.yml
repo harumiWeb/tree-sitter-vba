@@ -48,6 +48,9 @@ jobs:
       - name: Run corpus tests
         run: pnpm test
 
+      - name: Test standalone WebAssembly build
+        run: pnpm test:wasm
+
       - name: Check Go parser artifact
         run: pnpm check:go-parser
 

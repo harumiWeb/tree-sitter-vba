@@ -4,6 +4,13 @@ All notable changes to tree-sitter-vba will be documented in this file.
 
 ## Unreleased
 
+## [v0.12.1] - 2026-08-11
+
+### Added
+
+- Add a standalone reproducible WebAssembly parser build and publish its Wasm
+  artifact with a SHA-256 checksum on versioned GitHub Releases.
+
 ## [v0.12.0] - 2026-08-10
 
 ### Added
