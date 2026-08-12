@@ -41,6 +41,11 @@ from the pinned dependencies with `pnpm build:wasm`. Version tags publish the
 standalone Wasm file and its SHA-256 checksum as GitHub Release assets; they are
 distribution outputs, not source files or npm package contents.
 
+The public browser loading and versioning contract for that release asset is
+defined in `docs/specs/wasm-artifact.md`. The artifact has no independent
+version: consumers select the `tree-sitter-vba` release tag and pair the asset
+with the exact `web-tree-sitter` runtime documented by the contract.
+
 Alternatives considered:
 
 - Track the generated `build/wasm/tree-sitter-vba.wasm` in Git: rejected because

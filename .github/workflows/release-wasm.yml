@@ -37,6 +37,9 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Check browser artifact contract
+        run: pnpm check:browser-artifact
+
       - name: Validate release tag
         shell: bash
         run: |

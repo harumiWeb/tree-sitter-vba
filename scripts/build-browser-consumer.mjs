@@ -10,6 +10,7 @@ const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const sourceRoot = join(root, "examples", "browser-consumer");
 const distRoot = join(root, "build", "browser-consumer");
 const vendorRoot = join(distRoot, "vendor");
+const wasmInput = process.argv[2] ? resolve(root, process.argv[2]) : null;
 
 for (const file of ["index.html", "app.js", "recovery.mjs"]) {
   if (!existsSync(join(sourceRoot, file))) {
@@ -40,5 +41,12 @@ cpSync(
   join(vendorRoot, "web-tree-sitter.wasm"),
 );
 
-buildWasm(join(distRoot, "tree-sitter-vba.wasm"));
+if (wasmInput) {
+  if (!existsSync(wasmInput)) {
+    throw new Error(`Missing browser parser artifact: ${wasmInput}`);
+  }
+  cpSync(wasmInput, join(distRoot, "tree-sitter-vba.wasm"));
+} else {
+  buildWasm(join(distRoot, "tree-sitter-vba.wasm"));
+}
 console.log(`Built browser consumer assets in ${distRoot}`);
