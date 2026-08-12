@@ -51,6 +51,9 @@ jobs:
       - name: Test standalone WebAssembly build
         run: pnpm test:wasm
 
+      - name: Test native and browser parser parity
+        run: pnpm test:parity
+
       - name: Check Go parser artifact
         run: pnpm check:go-parser
 

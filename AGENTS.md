@@ -60,6 +60,7 @@ root: .
 ├── test/
 │   ├── browser-consumer/
 │   ├── corpus/
+│   ├── parity/
 │   ├── playground/
 │   ├── wasm/
 │   └── third-party-licenses.test.mjs

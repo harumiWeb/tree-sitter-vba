@@ -365,6 +365,18 @@ pnpm build:wasm
 pnpm test:wasm
 ```
 
+Compare the native and browser parser targets on representative corpus and
+exported-module fixtures:
+
+```bash
+pnpm test:parity
+```
+
+The parity suite checks root node types, `ERROR` / `MISSING` recovery, and
+normalized syntax-tree structure. It uses the standalone Wasm parser through
+`web-tree-sitter`; the browser consumer smoke test separately covers loading
+and parsing in Chromium.
+
 The generated artifact is written to
 `build/wasm/tree-sitter-vba.wasm`. It is not committed or included in the npm
 package. Versioned releases attach the artifact and a SHA-256 checksum to the
