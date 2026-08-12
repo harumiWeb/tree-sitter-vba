@@ -377,24 +377,28 @@ normalized syntax-tree structure. It uses the standalone Wasm parser through
 `web-tree-sitter`; the browser consumer smoke test separately covers loading
 and parsing in Chromium.
 
-The generated artifact is written to
-`build/wasm/tree-sitter-vba.wasm`. It is not committed or included in the npm
-package. Versioned releases attach the artifact and a SHA-256 checksum to the
-matching GitHub Release. The Wasm asset can be downloaded from
-`https://github.com/harumiWeb/tree-sitter-vba/releases/download/v<version>/tree-sitter-vba.wasm`.
-A browser consumer can load the release asset with `web-tree-sitter@0.26.9`:
+The complete browser artifact, release, versioning, and loading contract is
+documented in [docs/specs/wasm-artifact.md](docs/specs/wasm-artifact.md).
+In brief, versioned releases attach `tree-sitter-vba.wasm` and its SHA-256
+checksum to the matching GitHub Release. The artifact is not committed or
+included in the npm package. A browser consumer uses the matching
+`web-tree-sitter@0.26.9` runtime:
 
 ```js
 import { Language, Parser } from "web-tree-sitter";
 
-await Parser.init();
-const language = await Language.load("./tree-sitter-vba.wasm");
+await Parser.init({ locateFile: () => "/assets/web-tree-sitter.wasm" });
+const language = await Language.load("/assets/tree-sitter-vba.wasm");
 const parser = new Parser();
 parser.setLanguage(language);
 const tree = parser.parse("Sub Hello()\nEnd Sub\n");
-console.log(tree.rootNode.toString());
-tree.delete();
-parser.delete();
+try {
+  if (!tree) throw new Error("Parser did not return a syntax tree");
+  console.log(tree.rootNode.toString());
+} finally {
+  tree?.delete();
+  parser.delete();
+}
 ```
 
 For a complete minimal static example, including local WebAssembly runtime

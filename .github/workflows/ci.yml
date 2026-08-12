@@ -36,6 +36,9 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Check browser artifact contract
+        run: pnpm check:browser-artifact
+
       - name: Test third-party metadata checker
         run: pnpm test:third-party
 

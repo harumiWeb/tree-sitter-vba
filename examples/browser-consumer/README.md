@@ -1,8 +1,14 @@
 # Minimal browser consumer
 
-This example loads the standalone `tree-sitter-vba.wasm` release artifact with
-`web-tree-sitter@0.26.9`, parses VBA entirely in the browser, displays the
-concrete syntax tree, and counts `ERROR` and `MISSING` recovery nodes.
+This example is the repository's external-consumer fixture. It loads the
+standalone `tree-sitter-vba.wasm` release artifact with the supported
+`web-tree-sitter@0.26.9` runtime, parses VBA entirely in the browser, displays
+the concrete syntax tree, and counts `ERROR` and `MISSING` recovery nodes.
+
+The normative contract is [docs/specs/wasm-artifact.md](../../docs/specs/wasm-artifact.md).
+The fixture's local build creates equivalent static assets for testing; an
+external project downloads the grammar Wasm from the GitHub Release and does
+not compile the grammar or use this repository's generated-file layout.
 
 ## Build and run this example
 
@@ -32,7 +38,7 @@ build/browser-consumer/
 
 ## Use from another web project
 
-Install the runtime version matching the current grammar artifact:
+Install the exact runtime version required by the artifact contract:
 
 ```text
 npm install web-tree-sitter@0.26.9
@@ -56,11 +62,11 @@ const parser = new Parser();
 parser.setLanguage(language);
 
 const tree = parser.parse("Sub Example()\nEnd Sub\n");
-if (!tree) throw new Error("Parser did not return a syntax tree");
 try {
+  if (!tree) throw new Error("Parser did not return a syntax tree");
   console.log(tree.rootNode.toString());
 } finally {
-  tree.delete();
+  tree?.delete();
   parser.delete();
 }
 ```
@@ -68,4 +74,5 @@ try {
 The public release asset is the only grammar-specific file a downstream
 project needs to obtain from this repository. The `web-tree-sitter` runtime
 Wasm file is supplied by the matching npm package and should be copied or
-served according to the consuming application's bundler.
+served according to the consuming application's bundler. The consumer must
+serve both Wasm files over HTTP and release each parsed `Tree` and `Parser`.

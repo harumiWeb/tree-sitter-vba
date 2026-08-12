@@ -9,6 +9,11 @@ All notable changes to tree-sitter-vba will be documented in this file.
 - Add a minimal self-contained browser consumer example for the WebAssembly
   parser, including `ERROR` and `MISSING` recovery reporting.
 
+### Documented
+
+- Define the supported browser Wasm artifact, release versioning, runtime
+  compatibility, and downstream loading contract.
+
 ## [v0.12.1] - 2026-08-11
 
 ### Added
