@@ -70,3 +70,30 @@ does not add semantic analysis.
 
 The artifact is a syntax parser only. It does not add semantic analysis,
 syntax highlighting, or browser UI behavior.
+
+## Native and browser parser parity
+
+The standalone Wasm parser is expected to preserve the native parser's behavior.
+Representative parity fixtures cover clean parses, nested control flow,
+multiline statements, procedure declarations, class and document modules,
+UserForm source, conditional compilation, and known recovery cases.
+
+Run the parity suite with:
+
+```text
+pnpm test:parity
+```
+
+The suite parses each fixture through both the native Node binding and
+`web-tree-sitter`, then compares the root node type, `ERROR` / `MISSING`
+counts, and a normalized CST containing node types, named status, missing
+status, field names, and child order. Source positions are intentionally
+excluded from the normalized CST. The normalizer also canonicalizes the native
+runtime's `undefined` and the Wasm runtime's `null` representation for an
+unassigned field; this is an API representation difference, not a parser
+behavior difference.
+
+There are currently no intentional parser-level platform-specific differences.
+Any future exception must document the affected fixture, the exact difference,
+the reason it is accepted, and the narrow comparison scope before it is added
+to the suite.

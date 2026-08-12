@@ -58,13 +58,14 @@
     "check:go-parser": "node scripts/check-go-parser-artifact.mjs",
     "bench": "node scripts/ensure-binding.mjs && node scripts/bench.mjs",
     "test:wasm": "pnpm build:wasm && node --test test/wasm/wasm.test.mjs",
+    "test:parity": "pnpm generate && node scripts/ensure-binding.mjs && node scripts/build-wasm.mjs && node --test test/parity/parser-parity.test.mjs",
     "test:playground": "pnpm build:playground && node --test test/playground/playground.test.mjs",
     "build:browser-consumer": "pnpm generate && node scripts/build-browser-consumer.mjs",
     "test:browser-consumer:node": "node --test test/browser-consumer/browser-consumer.test.mjs",
     "test:browser-consumer:browser": "node --test test/browser-consumer/browser-smoke.test.mjs",
     "test:browser-consumer": "pnpm build:browser-consumer && pnpm test:browser-consumer:node && pnpm test:browser-consumer:browser",
     "fmt": "oxfmt",
-    "check": "pnpm test && pnpm test:third-party && pnpm check:third-party && pnpm check:go-parser && pnpm test:binding && pnpm parse:examples && pnpm query:examples && pnpm test:wasm && pnpm test:playground && pnpm test:browser-consumer"
+    "check": "pnpm test && pnpm test:third-party && pnpm check:third-party && pnpm check:go-parser && pnpm test:binding && pnpm parse:examples && pnpm query:examples && pnpm test:wasm && pnpm test:parity && pnpm test:playground && pnpm test:browser-consumer"
   },
   "dependencies": {
     "node-addon-api": "^8.8.0",
