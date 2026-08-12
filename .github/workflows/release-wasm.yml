@@ -61,5 +61,4 @@ jobs:
           fi
           gh release upload "$GITHUB_REF_NAME" \
             build/wasm/tree-sitter-vba.wasm \
-            build/wasm/tree-sitter-vba.wasm.sha256 \
-            --clobber
+            build/wasm/tree-sitter-vba.wasm.sha256

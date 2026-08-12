@@ -109,12 +109,11 @@ const parser = new Parser();
 parser.setLanguage(language);
 
 const tree = parser.parse("Sub Hello()\nEnd Sub\n");
-if (!tree) throw new Error("Parser did not return a syntax tree");
-
 try {
+  if (!tree) throw new Error("Parser did not return a syntax tree");
   console.log(tree.rootNode.toString());
 } finally {
-  tree.delete();
+  tree?.delete();
   parser.delete();
 }
 ```

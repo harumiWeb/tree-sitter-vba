@@ -53,11 +53,7 @@ const runtimeVersion = packageJson.devDependencies?.["web-tree-sitter"];
 const abiMatch = packageJson.scripts?.generate?.match(/--abi\s+(\d+)/);
 const abi = abiMatch?.[1];
 
-if (
-  !/^\d+\.\d+\.\d+$/.test(cliVersion ?? "") ||
-  !/^\d+\.\d+\.\d+$/.test(runtimeVersion ?? "") ||
-  !abi
-) {
+if (cliVersion !== "0.26.9" || runtimeVersion !== "0.26.9" || abi !== "15") {
   fail("package.json must define exact browser generator, runtime, and ABI versions");
 }
 
@@ -69,6 +65,16 @@ assertEqual(
 );
 assertIncludes(packageJson.scripts["build:wasm"], "pnpm generate", "build:wasm generation step");
 assertIncludes(packageJson.scripts["build:wasm"], "scripts/build-wasm.mjs", "build:wasm builder");
+assertIncludes(
+  packageJson.scripts["build:browser-consumer"],
+  "scripts/build-browser-consumer.mjs",
+  "browser-consumer builder",
+);
+assertIncludes(
+  packageJson.scripts["build:browser-consumer"],
+  "build/wasm/tree-sitter-vba.wasm",
+  "browser-consumer artifact input",
+);
 assertIncludes(packageJson.files.join("\n"), "src/**", "npm parser source inclusion");
 if (packageJson.files.some((entry) => /(?:^|[\\/])build(?:[\\/]|$)|\.wasm$/i.test(entry))) {
   fail("npm package file list must not publish the standalone browser artifact");
@@ -88,7 +94,7 @@ for (const [value, description] of [
   ["releases/download/v<version>/tree-sitter-vba.wasm", "release URL"],
   ["Parser.init", "runtime initialization procedure"],
   ["Language.load", "grammar loading procedure"],
-  ["tree.delete()", "tree cleanup procedure"],
+  ["tree?.delete()", "tree cleanup procedure"],
   ["parser.delete()", "parser cleanup procedure"],
 ]) {
   assertIncludes(specification, value, description);
@@ -101,6 +107,9 @@ for (const [value, description] of [
   ["gh release upload", "GitHub Release upload"],
 ]) {
   assertIncludes(releaseWorkflow, value, description);
+}
+if (releaseWorkflow.includes("--clobber")) {
+  fail("release workflow must not replace versioned assets with --clobber");
 }
 
 console.log(
