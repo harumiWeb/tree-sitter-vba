@@ -86,3 +86,29 @@ End Property
     (newline)
     end: (end_property_statement))
   (newline))
+
+==================
+multi-segment procedure attribute
+==================
+
+Sub 精度()
+Attribute 精度.VB_ProcData.VB_Invoke_Func = " \n14"
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    name: (identifier)
+    parameters: (parameter_list)
+    (newline)
+    (attribute_statement
+      name: (qualified_member_expression
+        receiver: (identifier)
+        member: (identifier)
+        member: (identifier))
+      value: (string_literal))
+    (newline)
+    end: (end_sub_statement))
+  (newline))

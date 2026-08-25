@@ -4,6 +4,8 @@ All notable changes to tree-sitter-vba will be documented in this file.
 
 ## Unreleased
 
+## [v0.12.2] - 2026-08-25
+
 ### Added
 
 - Add a minimal self-contained browser consumer example for the WebAssembly
@@ -13,6 +15,11 @@ All notable changes to tree-sitter-vba will be documented in this file.
 
 - Define the supported browser Wasm artifact, release versioning, runtime
   compatibility, and downstream loading contract.
+
+### Fixed
+
+- Parse exported VBA procedure attributes with multi-segment names such as
+  `Foo.VB_ProcData.VB_Invoke_Func` without parser recovery nodes.
 
 ## [v0.12.1] - 2026-08-11
 
