@@ -55,7 +55,7 @@ The browser artifact is published as a GitHub Release asset. A release tag
 must exactly match the version in `package.json`:
 
 ```text
-tree-sitter-vba version 0.12.1 -> tag v0.12.1
+tree-sitter-vba version 0.12.2 -> tag v0.12.2
 ```
 
 Each matching release contains:

@@ -161,8 +161,12 @@ module.exports = grammar({
         3,
         seq(
           field("receiver", $._attribute_identifier),
-          field("operator", choice(".", "!")),
-          field("member", $._attribute_identifier),
+          repeat1(
+            seq(
+              field("operator", choice(".", "!")),
+              field("member", $._attribute_identifier),
+            ),
+          ),
         ),
       ),
 
