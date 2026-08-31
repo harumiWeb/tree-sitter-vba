@@ -72,7 +72,7 @@ End Sub
         (qualified_member_expression
           (identifier)
           (identifier))
-        (unparenthesized_argument_list
+        (output_list
           (call_expression
             (identifier)
             (argument_list

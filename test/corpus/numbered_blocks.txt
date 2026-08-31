@@ -35,7 +35,7 @@ End Sub
           (qualified_member_expression
             (identifier)
             (identifier))
-          (unparenthesized_argument_list
+          (output_list
             (string_literal))))
       (newline)
       (elseif_fragment
@@ -52,7 +52,7 @@ End Sub
           (qualified_member_expression
             (identifier)
             (identifier))
-          (unparenthesized_argument_list
+          (output_list
             (string_literal))))
       (newline)
       (else_fragment
@@ -65,7 +65,7 @@ End Sub
           (qualified_member_expression
             (identifier)
             (identifier))
-          (unparenthesized_argument_list
+          (output_list
             (string_literal))))
       (newline)
       (end_if_fragment
@@ -107,7 +107,7 @@ End Sub
         (qualified_member_expression
           (identifier)
           (identifier))
-        (unparenthesized_argument_list
+        (output_list
           (identifier)))
       (newline)
       (else_fragment
@@ -120,7 +120,7 @@ End Sub
         (qualified_member_expression
           (identifier)
           (identifier))
-        (unparenthesized_argument_list
+        (output_list
           (string_literal)))
       (newline)
       (end_if_fragment
@@ -170,7 +170,7 @@ End Sub
                 (qualified_member_expression
                   (identifier)
                   (identifier))
-                (unparenthesized_argument_list
+                (output_list
                   (string_literal))))
             (newline)))
         (case_clause
@@ -184,7 +184,7 @@ End Sub
                 (qualified_member_expression
                   (identifier)
                   (identifier))
-                (unparenthesized_argument_list
+                (output_list
                   (string_literal))))))
         (newline)
         (line_number_prefix
@@ -229,7 +229,7 @@ End Sub
             (qualified_member_expression
               (identifier)
               (identifier))
-            (unparenthesized_argument_list
+            (output_list
               (identifier)))
           (newline))
         (line_number_prefix
@@ -250,7 +250,7 @@ End Sub
             (qualified_member_expression
               (identifier)
               (identifier))
-            (unparenthesized_argument_list
+            (output_list
               (identifier)))
           (newline))
         (line_number_prefix

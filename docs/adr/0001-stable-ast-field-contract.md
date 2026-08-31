@@ -21,6 +21,14 @@ retain every branch statement beneath a single-line `If`; the former
 coverage in `test/corpus/regressions/community-inline-multi-statement.txt`
 defines the required CST ownership.
 
+VBA Print-family statements use `;` and `,` as output-position controls. They
+can occur between output expressions or after the final expression, so they
+are not ordinary procedure-call argument separators. The previous expression
+sequence required an expression after every separator and consequently put
+valid trailing controls such as `Debug.Print "foo";` into parser recovery.
+`Print #` and `Write #` share this output-list syntax, as do unparenthesized
+`Print` methods and the `?` shorthand.
+
 ## Decision
 
 Declaration nodes expose stable syntactic fields where the syntax provides
@@ -47,6 +55,20 @@ Single-line `If` branches retain their direct statement child for one statement
 and use `inline_statement_sequence` when a colon-separated branch has multiple
 statements. This keeps all branch statements structurally owned by the `If`.
 
+Print-family output lists use one shared `output_list` node. Each output
+expression is exposed through its `value` field, and each output-position
+control is exposed through its `position` field containing a named
+`char_position` node for `;` or `,`. A `char_position` may separate two values
+or trail the final value. The output list is optional on the `output` field of
+`debug_print_statement`, `print_statement`, and `write_statement`, preserving
+empty forms such as `Print #1,` and `Write #1,`.
+
+Unparenthesized `Print` methods, including `Debug.Print`, `object.Print`,
+leading-dot `.Print`, and unqualified `Print`, remain `call_statement` nodes
+with the existing `callee` field. Their `arguments` field may contain an
+`output_list`; ordinary calls continue to use their existing argument-list
+forms. `Write #` is represented by a dedicated `write_statement` node.
+
 ## Consequences
 
 Downstream tools can use field-based traversal for common LSP operations such as
@@ -60,6 +82,13 @@ procedure declarations without named terminator nodes.
 This also intentionally breaks consumers of `for_statement` and
 `for_each_statement` that read `next_variable`; they must read
 `next_variables` and traverse its `next_variable_list` children instead.
+
+Consumers that inspect Print-family calls must handle the `output_list`
+argument shape and read its named `value` and `position` fields instead of
+assuming that `;` and `,` always precede another expression. The punctuation
+remains scoped to Print-family output lists; it is not accepted as a general
+VBA statement separator, and ordinary procedure calls retain their existing
+argument contracts.
 
 The grammar remains syntactic only. Type inference, semantic validation, object
 model knowledge, loop-counter matching, and formatter policy remain downstream

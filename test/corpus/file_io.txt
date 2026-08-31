@@ -58,10 +58,12 @@ End Sub
         number: (file_number
           (file_number_literal
             number: (number_literal)))
-        (print_argument_sequence
-          (identifier)
-          (string_literal)
-          (identifier)))
+        output: (output_list
+          value: (identifier)
+          position: (char_position)
+          value: (string_literal)
+          position: (char_position)
+          value: (identifier)))
       (newline)
       (close_statement
         (file_number

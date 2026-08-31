@@ -174,8 +174,9 @@ The grammar currently supports:
 - `Name oldPath As newPath` file rename statements
 - calls, named arguments, omitted arguments, call-site `ByVal`, member access,
   bang member access, and leading-dot member access
-- `? expr` Debug.Print shorthand statements, including comma- and
-  semicolon-separated output arguments
+- `Debug.Print`, unparenthesized `Print` methods, and `? expr` Debug.Print
+  shorthand statements, including comma- and semicolon-separated output lists
+  with trailing output-position controls
 - `New` expressions and `As New` declarations
 - fixed-length string declarations
 - `AddressOf` expressions
@@ -189,8 +190,9 @@ The grammar currently supports:
 - `On Error`, computed `On ... GoTo`/`GoSub`, `Resume`, `GoTo`, labels,
   standalone `End`, and `Exit` statements
 - common file I/O statements: `Open`, `Input #`, `Line Input #`, `Print #`,
-  `Close`, `Get #`, `Put #`, `Lock`, `Unlock`, `Seek`, and `Reset`, including
-  common `Access ... Shared` locking clauses
+  `Write #`, `Close`, `Get #`, `Put #`, `Lock`, `Unlock`, `Seek`, and `Reset`,
+  including Print/Write output lists with trailing `;` or `,` and common
+  `Access ... Shared` locking clauses
 - simple runtime statements: `Stop`, `Beep`, `Load`, and `Unload`
 - Access report `Line` drawing calls that use coordinate ranges such as
   `Me.Line (x, y)-(x2, y2)`
@@ -246,7 +248,12 @@ Member access and calls expose stable fields for analysis tools:
   `argument_list`.
 - `call_statement` uses `callee` and, when arguments are present, `arguments`.
   Parenthesized arguments use `argument_list`; statement-style arguments use
-  `unparenthesized_argument_list`.
+  `unparenthesized_argument_list`. Unparenthesized `Print` methods are the
+  Print-family exception: their `arguments` field contains an `output_list`.
+- `output_list` is shared by `Debug.Print`, `?`, `Print #`, `Write #`, and
+  unparenthesized `Print` methods. Output expressions use the `value` field;
+  `;` and `,` output-position controls use the `position` field containing a
+  `char_position` node. A position may follow the final output expression.
 
 ## Control-flow node API
 

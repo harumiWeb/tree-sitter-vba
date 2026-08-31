@@ -56,7 +56,7 @@ End Sub
         (qualified_member_expression
           (identifier)
           (identifier))
-        (unparenthesized_argument_list
+        (output_list
           (qualified_member_expression
             (identifier)
             (identifier))))
@@ -65,7 +65,7 @@ End Sub
         (qualified_member_expression
           (identifier)
           (identifier))
-        (unparenthesized_argument_list
+        (output_list
           (qualified_member_expression
             (identifier)
             (identifier))))
@@ -74,7 +74,7 @@ End Sub
         (qualified_member_expression
           (identifier)
           (identifier))
-        (unparenthesized_argument_list
+        (output_list
           (qualified_member_expression
             (call_expression
               (identifier)

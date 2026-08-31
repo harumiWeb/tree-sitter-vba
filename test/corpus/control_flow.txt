@@ -24,7 +24,7 @@ End Sub
         (qualified_member_expression
           (identifier)
           (identifier))
-        (unparenthesized_argument_list
+        (output_list
           (identifier)))
       (newline)
       (end_if_fragment)
@@ -66,7 +66,7 @@ End Sub
               (qualified_member_expression
                 (identifier)
                 (identifier))
-              (unparenthesized_argument_list
+              (output_list
                 (string_literal)))
             (newline)))
         (case_clause
@@ -76,7 +76,7 @@ End Sub
               (qualified_member_expression
                 (identifier)
                 (identifier))
-              (unparenthesized_argument_list
+              (output_list
                 (string_literal)))))
         (newline))
       (newline))
@@ -112,7 +112,7 @@ End Sub
             (qualified_member_expression
               (identifier)
               (identifier))
-            (unparenthesized_argument_list
+            (output_list
               (identifier)))
           (newline))
         (next_variable_list
@@ -149,7 +149,7 @@ End Sub
             (qualified_member_expression
               (identifier)
               (identifier))
-            (unparenthesized_argument_list
+            (output_list
               (identifier)))
           (newline))
         (next_variable_list
