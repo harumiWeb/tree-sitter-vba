@@ -170,8 +170,8 @@ End Sub
             callee: (qualified_member_expression
               receiver: (identifier)
               member: (identifier))
-            arguments: (unparenthesized_argument_list
-              (identifier)))
+            arguments: (output_list
+              value: (identifier)))
           (newline))
         next_variables: (next_variable_list
           (identifier)))

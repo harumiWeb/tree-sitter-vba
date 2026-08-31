@@ -60,6 +60,7 @@
 (input_statement) @keyword
 (line_input_statement) @keyword
 (print_statement) @keyword
+(write_statement) @keyword
 (debug_print_statement) @keyword
 (close_statement) @keyword
 (set_statement) @keyword

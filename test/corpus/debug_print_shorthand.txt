@@ -19,31 +19,27 @@ End Sub
     (newline)
     (block
       (debug_print_statement
-        (debug_print_argument_sequence
-          (debug_print_argument
-            (string_literal))))
+        (output_list
+          (string_literal)))
       (newline)
       (debug_print_statement
-        (debug_print_argument_sequence
-          (debug_print_argument
+        (output_list
+          (identifier)))
+      (newline)
+      (debug_print_statement
+        (output_list
+          (qualified_member_expression
+            (identifier)
             (identifier))))
       (newline)
       (debug_print_statement
-        (debug_print_argument_sequence
-          (debug_print_argument
-            (qualified_member_expression
+        (output_list
+          (qualified_member_expression
+            (call_expression
               (identifier)
-              (identifier)))))
-      (newline)
-      (debug_print_statement
-        (debug_print_argument_sequence
-          (debug_print_argument
-            (qualified_member_expression
-              (call_expression
-                (identifier)
-                (argument_list
-                  (string_literal)))
-              (identifier)))))
+              (argument_list
+                (string_literal)))
+            (identifier))))
       (newline))
     (end_sub_statement))
   (newline))
@@ -68,25 +64,22 @@ End Sub
     (newline)
     (block
       (debug_print_statement
-        (debug_print_argument_sequence
-          (debug_print_argument
-            (identifier))
-          (debug_print_argument
-            (identifier))))
+        (output_list
+          (identifier)
+          (char_position)
+          (identifier)))
       (newline)
       (debug_print_statement
-        (debug_print_argument_sequence
-          (debug_print_argument
-            (identifier))
-          (debug_print_argument
-            (identifier))))
+        (output_list
+          (identifier)
+          (char_position)
+          (identifier)))
       (newline)
       (debug_print_statement
-        (debug_print_argument_sequence
-          (debug_print_argument
-            (string_literal))
-          (debug_print_argument
-            (identifier))))
+        (output_list
+          (string_literal)
+          (char_position)
+          (identifier)))
       (newline))
     (end_sub_statement))
   (newline))
@@ -112,36 +105,32 @@ End Sub
     (newline)
     (block
       (debug_print_statement
-        (debug_print_argument_sequence
-          (debug_print_argument
-            (comparison_expression
-              (identifier)
-              (comparison_operator)
-              (identifier)))))
+        (output_list
+          (comparison_expression
+            (identifier)
+            (comparison_operator)
+            (identifier))))
       (newline)
       (debug_print_statement
-        (debug_print_argument_sequence
-          (debug_print_argument
-            (comparison_expression
-              (identifier)
-              (comparison_operator)
-              (identifier)))))
+        (output_list
+          (comparison_expression
+            (identifier)
+            (comparison_operator)
+            (identifier))))
       (newline)
       (debug_print_statement
-        (debug_print_argument_sequence
-          (debug_print_argument
-            (comparison_expression
-              (identifier)
-              (comparison_operator)
-              (nothing_literal)))))
+        (output_list
+          (comparison_expression
+            (identifier)
+            (comparison_operator)
+            (nothing_literal))))
       (newline)
       (debug_print_statement
-        (debug_print_argument_sequence
-          (debug_print_argument
-            (comparison_expression
-              (identifier)
-              (comparison_operator)
-              (string_literal)))))
+        (output_list
+          (comparison_expression
+            (identifier)
+            (comparison_operator)
+            (string_literal))))
       (newline))
     (end_sub_statement))
   (newline))
@@ -167,16 +156,14 @@ End Sub
       (line_number_statement
         (line_number_literal)
         (debug_print_statement
-          (debug_print_argument_sequence
-            (debug_print_argument
-              (string_literal)))))
+          (output_list
+            (string_literal))))
       (newline)
       (line_number_statement
         (line_number_literal)
         (debug_print_statement
-          (debug_print_argument_sequence
-            (debug_print_argument
-              (identifier)))))
+          (output_list
+            (identifier))))
       (newline))
     (end_sub_statement))
   (newline))
@@ -205,9 +192,8 @@ End Sub
           (comparison_operator)
           (number_literal))
         (debug_print_statement
-          (debug_print_argument_sequence
-            (debug_print_argument
-              (identifier)))))
+          (output_list
+            (identifier))))
       (newline)
       (single_line_if_statement
         (comparison_expression
@@ -215,13 +201,11 @@ End Sub
           (comparison_operator)
           (number_literal))
         (debug_print_statement
-          (debug_print_argument_sequence
-            (debug_print_argument
-              (identifier))))
+          (output_list
+            (identifier)))
         (debug_print_statement
-          (debug_print_argument_sequence
-            (debug_print_argument
-              (string_literal)))))
+          (output_list
+            (string_literal))))
       (newline))
     (end_sub_statement))
   (newline))
@@ -248,18 +232,15 @@ End Sub
         (identifier)
         (number_literal))
       (debug_print_statement
-        (debug_print_argument_sequence
-          (debug_print_argument
-            (identifier))))
+        (output_list
+          (identifier)))
       (newline)
       (debug_print_statement
-        (debug_print_argument_sequence
-          (debug_print_argument
-            (string_literal))))
+        (output_list
+          (string_literal)))
       (debug_print_statement
-        (debug_print_argument_sequence
-          (debug_print_argument
-            (string_literal))))
+        (output_list
+          (string_literal)))
       (newline))
     (end_sub_statement))
   (newline))

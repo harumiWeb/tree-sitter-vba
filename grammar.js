@@ -40,6 +40,11 @@ module.exports = grammar({
     [$.goto_statement],
     [$._statement_separator, $._conditional_sub_headers],
     [$._statement_separator, $._conditional_function_headers],
+    [$._print_output_expression, $._primary_expression],
+    [$._unparenthesized_print_output_expression, $._callable_expression],
+    [$._unparenthesized_print_output_expression, $._primary_expression],
+    [$._unparenthesized_print_output_expression, $._expression],
+    [$._unparenthesized_print_output_expression, $._print_output_call_operand],
   ],
 
   rules: {
@@ -162,10 +167,7 @@ module.exports = grammar({
         seq(
           field("receiver", $._attribute_identifier),
           repeat1(
-            seq(
-              field("operator", choice(".", "!")),
-              field("member", $._attribute_identifier),
-            ),
+            seq(field("operator", choice(".", "!")), field("member", $._attribute_identifier)),
           ),
         ),
       ),
@@ -573,10 +575,7 @@ module.exports = grammar({
 
     _procedure_modifier: ($) =>
       choice(
-        seq(
-          field("visibility", $.visibility),
-          optional(field("modifiers", $.static_modifier)),
-        ),
+        seq(field("visibility", $.visibility), optional(field("modifiers", $.static_modifier))),
         field("modifiers", $.static_modifier),
       ),
 
@@ -648,6 +647,7 @@ module.exports = grammar({
         $.input_statement,
         $.line_input_statement,
         $.print_statement,
+        $.write_statement,
         $.debug_print_statement,
         $.close_statement,
         $.get_statement,
@@ -815,9 +815,7 @@ module.exports = grammar({
       ),
 
     else_fragment: ($) =>
-      prec.right(
-        seq(optional(field("start_line", $.line_number_prefix)), caseInsensitive("Else")),
-      ),
+      prec.right(seq(optional(field("start_line", $.line_number_prefix)), caseInsensitive("Else"))),
 
     end_if_fragment: ($) =>
       prec.right(
@@ -871,6 +869,7 @@ module.exports = grammar({
         $.input_statement,
         $.line_input_statement,
         $.print_statement,
+        $.write_statement,
         $.debug_print_statement,
         $.close_statement,
         $.get_statement,
@@ -1194,20 +1193,11 @@ module.exports = grammar({
     redim_statement: ($) =>
       choice(
         $._ambiguous_redim_statement,
-        seq(
-          $._redim_keyword,
-          optional(caseInsensitive("Preserve")),
-          commaSep1($.redim_declarator),
-        ),
+        seq($._redim_keyword, optional(caseInsensitive("Preserve")), commaSep1($.redim_declarator)),
       ),
 
     _ambiguous_redim_statement: (_) =>
-      token(
-        prec(
-          2,
-          /[Rr][Ee][Dd][Ii][Mm][^\r\n]*\)[.!][A-Za-z_][A-Za-z0-9_]*\([^\r\n]*\)/,
-        ),
-      ),
+      token(prec(2, /[Rr][Ee][Dd][Ii][Mm][^\r\n]*\)[.!][A-Za-z_][A-Za-z0-9_]*\([^\r\n]*\)/)),
 
     redim_declarator: ($) =>
       prec(4, seq(field("name", choice($.identifier, $.member_expression)), $.array_bounds)),
@@ -1286,23 +1276,172 @@ module.exports = grammar({
 
     print_statement: ($) =>
       prec.right(
+        3,
         seq(
           caseInsensitive("Print"),
-          field("number", $.file_number),
-          optional(seq(",", optional($.print_argument_sequence))),
+          field("number", alias($._required_file_number, $.file_number)),
+          optional(seq(",", optional(field("output", $.output_list)))),
         ),
       ),
+
+    write_statement: ($) =>
+      prec.right(
+        3,
+        seq(
+          caseInsensitive("Write"),
+          field("number", alias($._required_file_number, $.file_number)),
+          optional(seq(",", optional(field("output", $.output_list)))),
+        ),
+      ),
+
+    _required_file_number: ($) => $.file_number_literal,
+
+    output_list: ($) =>
+      prec.right(
+        seq(
+          field("value", $._print_output_expression),
+          repeat(
+            seq(field("position", $.char_position), field("value", $._print_output_expression)),
+          ),
+          optional(field("position", $.char_position)),
+        ),
+      ),
+
+    _print_method_output_list: ($) =>
+      prec.right(
+        seq(
+          field("value", $._unparenthesized_print_output_expression),
+          repeat(
+            seq(field("position", $.char_position), field("value", $._print_output_expression)),
+          ),
+          optional(field("position", $.char_position)),
+        ),
+      ),
+
+    _print_output_expression: ($) =>
+      choice($._unparenthesized_print_output_expression, $.parenthesized_expression),
+
+    _unparenthesized_print_output_expression: ($) =>
+      choice(
+        prec.dynamic(65, alias($._print_output_call_binary_expression, $.binary_expression)),
+        prec.dynamic(
+          60,
+          alias($._print_output_member_comparison_expression, $.comparison_expression),
+        ),
+        prec.dynamic(55, $.binary_expression),
+        prec.dynamic(50, $.logical_value_expression),
+        prec.dynamic(40, $.comparison_expression),
+        prec.dynamic(
+          30,
+          alias($._print_output_call_member_expression, $.qualified_member_expression),
+        ),
+        prec.dynamic(5, $.member_expression),
+        prec.dynamic(10, alias($._print_output_call_expression, $.call_expression)),
+        $._literal,
+        $.file_number_literal,
+        alias(caseInsensitive("Line"), $.identifier),
+        alias(caseInsensitive("Name"), $.identifier),
+        $.identifier,
+        $.new_expression,
+        $.addressof_expression,
+        $.type_of_expression,
+        $.unary_expression,
+      ),
+
+    _print_output_call_binary_expression: ($) =>
+      choice(
+        prec.right(14, seq($._print_output_call_operand, "^", $._expression)),
+        prec.left(12, seq($._print_output_call_operand, choice("*", "/"), $._expression)),
+        prec.left(11, seq($._print_output_call_operand, "\\", $._expression)),
+        prec.left(10, seq($._print_output_call_operand, caseInsensitive("Mod"), $._expression)),
+        prec.left(9, seq($._print_output_call_operand, choice("+", "-"), $._expression)),
+        prec.left(8, seq($._print_output_call_operand, "&", $._expression)),
+        prec.left(5, seq($._print_output_call_operand, caseInsensitive("And"), $._expression)),
+        prec.left(4, seq($._print_output_call_operand, caseInsensitive("Or"), $._expression)),
+        prec.left(3, seq($._print_output_call_operand, caseInsensitive("Xor"), $._expression)),
+        prec.left(2, seq($._print_output_call_operand, caseInsensitive("Eqv"), $._expression)),
+        prec.left(1, seq($._print_output_call_operand, caseInsensitive("Imp"), $._expression)),
+      ),
+
+    _print_output_call_operand: ($) =>
+      choice(
+        alias($._print_output_call_member_expression, $.qualified_member_expression),
+        alias($._print_output_call_expression, $.call_expression),
+      ),
+
+    _print_output_member_comparison_expression: ($) =>
+      prec.left(
+        7,
+        seq(
+          field(
+            "left",
+            alias($._print_output_call_member_expression, $.qualified_member_expression),
+          ),
+          field("operator", $.comparison_operator),
+          field("right", $._expression),
+        ),
+      ),
+
+    _print_output_call_member_expression: ($) =>
+      prec.left(
+        4,
+        seq(
+          field(
+            "receiver",
+            choice(
+              alias($._print_output_call_expression, $.call_expression),
+              alias($._print_output_call_member_expression, $.qualified_member_expression),
+            ),
+          ),
+          field("operator", choice(".", "!")),
+          field("member", $._member_property),
+        ),
+      ),
+
+    _print_output_call_expression: ($) =>
+      choice(
+        prec(
+          25,
+          seq(
+            field(
+              "function",
+              alias($._print_output_call_member_expression, $.qualified_member_expression),
+            ),
+            field("arguments", $.argument_list),
+          ),
+        ),
+        prec(
+          20,
+          seq(
+            field(
+              "function",
+              alias($._print_output_qualified_callable, $.qualified_member_expression),
+            ),
+            field("arguments", $.argument_list),
+          ),
+        ),
+        prec(
+          3,
+          seq(field("function", $._callable_expression), field("arguments", $.argument_list)),
+        ),
+      ),
+
+    _print_output_qualified_callable: ($) =>
+      prec.left(
+        20,
+        seq(
+          field("receiver", choice($.identifier, $.call_expression, $.member_expression)),
+          field("operator", choice(".", "!")),
+          field("member", $._member_property),
+        ),
+      ),
+
+    char_position: (_) => choice(";", ","),
 
     print_argument_sequence: ($) =>
       seq($._expression, repeat(seq(choice(",", ";"), $._expression))),
 
-    debug_print_statement: ($) => prec.right(seq("?", optional($.debug_print_argument_sequence))),
-
-    debug_print_argument_sequence: ($) =>
-      seq($.debug_print_argument, repeat(seq(choice(",", ";"), $.debug_print_argument))),
-
-    debug_print_argument: ($) =>
-      choice($.logical_value_expression, $.comparison_expression, $._expression),
+    debug_print_statement: ($) => prec.right(seq("?", optional(field("output", $.output_list)))),
 
     close_statement: ($) =>
       prec.right(seq(caseInsensitive("Close"), optional(commaSep1($.file_number)))),
@@ -1442,6 +1581,18 @@ module.exports = grammar({
     call_statement: ($) =>
       choice(
         $._ambiguous_call_statement,
+        prec.dynamic(4, field("callee", alias($._print_method_call_expression, $.call_expression))),
+        prec.dynamic(3, prec.right(field("callee", $._print_method_callee))),
+        prec.dynamic(
+          2,
+          prec.right(
+            1,
+            seq(
+              field("callee", $._print_method_callee),
+              field("arguments", alias($._print_method_output_list, $.output_list)),
+            ),
+          ),
+        ),
         prec.right(
           1,
           choice(
@@ -1568,12 +1719,7 @@ module.exports = grammar({
         $.parenthesized_expression,
       ),
 
-    _expression: ($) =>
-      choice(
-        $._primary_expression,
-        $.binary_expression,
-        $.unary_expression,
-      ),
+    _expression: ($) => choice($._primary_expression, $.binary_expression, $.unary_expression),
 
     comparison_expression: ($) =>
       prec.left(
@@ -1589,11 +1735,7 @@ module.exports = grammar({
       choice("=", "<>", "<", "<=", ">", ">=", caseInsensitive("Is"), caseInsensitive("Like")),
 
     _comparison_operand: ($) =>
-      choice(
-        $._primary_expression,
-        $._signed_unary_expression,
-        $.binary_expression,
-      ),
+      choice($._primary_expression, $._signed_unary_expression, $.binary_expression),
 
     logical_value_expression: ($) =>
       prec.dynamic(
@@ -1658,6 +1800,32 @@ module.exports = grammar({
     _callable_expression: ($) =>
       choice($.identifier, alias(caseInsensitive("Name"), $.identifier), $.member_expression),
 
+    _print_method_callee: ($) =>
+      choice(
+        alias(caseInsensitive("Print"), $.identifier),
+        alias($._qualified_print_method_expression, $.qualified_member_expression),
+        alias($._implicit_print_method_expression, $.implicit_member_expression),
+      ),
+
+    _print_method_call_expression: ($) =>
+      prec(7, seq(field("function", $._print_method_callee), field("arguments", $.argument_list))),
+
+    _qualified_print_method_expression: ($) =>
+      prec(
+        7,
+        seq(
+          field("receiver", choice($.identifier, $.call_expression, $.member_expression)),
+          field("operator", "."),
+          field("member", alias(caseInsensitive("Print"), $.identifier)),
+        ),
+      ),
+
+    _implicit_print_method_expression: ($) =>
+      prec(
+        7,
+        seq(field("operator", "."), field("member", alias(caseInsensitive("Print"), $.identifier))),
+      ),
+
     _line_method_expression: ($) =>
       prec(
         7,
@@ -1672,14 +1840,8 @@ module.exports = grammar({
       prec(
         2,
         choice(
-          seq(
-            field("function", $._callable_expression),
-            field("arguments", $.argument_list),
-          ),
-          seq(
-            field("function", $.call_expression),
-            field("arguments", $.argument_list),
-          ),
+          seq(field("function", $._callable_expression), field("arguments", $.argument_list)),
+          seq(field("function", $.call_expression), field("arguments", $.argument_list)),
         ),
       ),
 
@@ -1786,7 +1948,6 @@ module.exports = grammar({
           /\[[^\]\r\n]+\]/,
         ),
       ),
-
   },
 });
 

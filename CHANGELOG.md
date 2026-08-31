@@ -4,6 +4,34 @@ All notable changes to tree-sitter-vba will be documented in this file.
 
 ## Unreleased
 
+## [v0.13.0] - 2026-08-31
+
+### Added
+
+- Add explicit `Write #` statement support, including empty, single-value,
+  multi-value, and mixed-separator output lists.
+- Add shared public `output_list` and `char_position` CST nodes for
+  Print-family output syntax.
+
+### Changed
+
+- Represent output values for `Debug.Print`, `?`, unparenthesized `Print`
+  methods, `Print #`, and `Write #` through `output_list`. Print-method
+  `call_statement.arguments` may now contain this node instead of an ordinary
+  call argument list. This is an intentional pre-1.0 CST change.
+
+### Fixed
+
+- Parse trailing semicolon and comma output-position controls in Print-family
+  statements without allowing semicolons as general VBA statement separators.
+- Preserve call expressions, member chains, comparisons, binary expressions,
+  `Spc(...)`, and `Tab(...)` as output values.
+
+### Documented
+
+- Define the Print-family CST field contract and the corresponding xlflow
+  consumer migration requirements.
+
 ## [v0.12.2] - 2026-08-25
 
 ### Added

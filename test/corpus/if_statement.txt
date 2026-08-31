@@ -31,7 +31,7 @@ End Sub
         (qualified_member_expression
           (identifier)
           (identifier))
-        (unparenthesized_argument_list
+        (output_list
           (identifier)))
       (newline)
       (elseif_fragment
@@ -44,7 +44,7 @@ End Sub
         (qualified_member_expression
           (identifier)
           (identifier))
-        (unparenthesized_argument_list
+        (output_list
           (identifier)))
       (newline)
       (else_fragment)
@@ -53,7 +53,7 @@ End Sub
         (qualified_member_expression
           (identifier)
           (identifier))
-        (unparenthesized_argument_list
+        (output_list
           (string_literal)))
       (newline)
       (end_if_fragment)

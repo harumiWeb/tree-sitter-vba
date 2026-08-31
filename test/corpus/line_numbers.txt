@@ -41,7 +41,7 @@ End Sub
           (qualified_member_expression
             (identifier)
             (identifier))
-          (unparenthesized_argument_list
+          (output_list
             (identifier))))
       (newline))
     (end_sub_statement))
