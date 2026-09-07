@@ -28,6 +28,7 @@ imported.
 | `VBA-Web-master` | [VBA-Web](https://github.com/VBA-tools/VBA-Web) | MIT | Tim Hall and contributors | [LICENSE](examples/third_party/VBA-Web-master/LICENSE), [SOURCE.md](examples/third_party/VBA-Web-master/SOURCE.md) |
 | `VBA.Cryptography-main` | [VBA.Cryptography](https://github.com/GustavBrock/VBA.Cryptography) | MIT | Gustav Brock and contributors | [LICENSE](examples/third_party/VBA.Cryptography-main/LICENSE), [SOURCE.md](examples/third_party/VBA.Cryptography-main/SOURCE.md) |
 | `wasabi-main` | [Wasabi](https://github.com/vbacollective/wasabi) | MIT | Ueslei Paim and contributors | [LICENSE](examples/third_party/wasabi-main/LICENSE), [SOURCE.md](examples/third_party/wasabi-main/SOURCE.md) |
+| `WebDriver-BiDi-for-SeleniumVBA-main` | [WebDriver-BiDi-for-SeleniumVBA](https://github.com/hanamichi77777/WebDriver-BiDi-for-SeleniumVBA) | MIT | hanamichi77777 and contributors | [LICENSE](examples/third_party/WebDriver-BiDi-for-SeleniumVBA-main/LICENSE), [SOURCE.md](examples/third_party/WebDriver-BiDi-for-SeleniumVBA-main/SOURCE.md) |
 | `webxcel-master` | [webxcel](https://github.com/michaelneu/webxcel) | MIT | Michael Neu and contributors | [LICENSE](examples/third_party/webxcel-master/LICENSE), [SOURCE.md](examples/third_party/webxcel-master/SOURCE.md) |
 
 The fixture files may have normalized line endings, removed binary files, or
