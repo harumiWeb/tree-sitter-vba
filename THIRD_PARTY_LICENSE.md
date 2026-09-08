@@ -1,5 +1,10 @@
 # Third-party fixture licenses
 
+The VB6 acceptance corpus is not vendored; `scripts/fetch-corpus.mjs` reconstructs it
+from the projects listed in [corpus/MANIFEST.md](corpus/MANIFEST.md), which records
+repository, commit, licence and file counts per project. The table below is the VBA
+fixture inventory.
+
 The projects listed below are included under `examples/third_party` as
 third-party VBA fixtures for parser tests and real-world example coverage.
 They are not part of the `tree-sitter-vba` implementation and are not covered

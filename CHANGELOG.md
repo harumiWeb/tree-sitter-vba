@@ -396,3 +396,10 @@ Subsequent changes will be documented in CHANGELOG.md.
 
 - I have implemented the MVP.
 - I have published it as an npm package.
+
+## Unreleased: shared grammar core and the vb6 parser (2026-09-08)
+
+- Restructured into `common/define-grammar.js` with `vba/` and `vb6/` entry points.
+- Added the `vb6` parser: `.frm`/`.ctl`/`.cls` headers as written by the VB6 IDE, graphics statements, VB6-only comment continuation, and an external scanner distinguishing a spaced from an immediate member operator.
+- Shared statement additions that both dialects accept; the vba CST is unchanged (240/240 corpus cases).
+- Added the provenance of a 1,436-file VB6 acceptance corpus (`corpus/MANIFEST.md`, `corpus/FILES.tsv`, `scripts/fetch-corpus.mjs`) and `scripts/parse-corpus.mjs` to measure it.

@@ -47,10 +47,10 @@ Those belong in downstream projects such as `xlflow`, `xlflow-lsp`, or VSCode ex
 
 Every grammar change must include or update Tree-sitter corpus tests.
 
-Do not modify `grammar.js` without adding or updating a relevant file under:
+Do not modify `common/define-grammar.js` without adding or updating a relevant file under:
 
 ```text
-test/corpus/
+vba/test/corpus/
 ```
 
 Use small, focused test cases. Prefer many small tests over one large test.
@@ -239,21 +239,21 @@ A task is not complete until `npm test` passes.
 Use these files for focused tests:
 
 ```text
-test/corpus/attributes.txt
-test/corpus/options.txt
-test/corpus/declarations.txt
-test/corpus/procedures.txt
-test/corpus/properties.txt
-test/corpus/types_enums.txt
-test/corpus/control_flow.txt
-test/corpus/loops.txt
-test/corpus/expressions.txt
-test/corpus/calls.txt
-test/corpus/comments.txt
-test/corpus/line_continuation.txt
-test/corpus/colon_statements.txt
-test/corpus/preprocessor.txt
-test/corpus/forms.txt
+vba/test/corpus/attributes.txt
+vba/test/corpus/options.txt
+vba/test/corpus/declarations.txt
+vba/test/corpus/procedures.txt
+vba/test/corpus/properties.txt
+vba/test/corpus/types_enums.txt
+vba/test/corpus/control_flow.txt
+vba/test/corpus/loops.txt
+vba/test/corpus/expressions.txt
+vba/test/corpus/calls.txt
+vba/test/corpus/comments.txt
+vba/test/corpus/line_continuation.txt
+vba/test/corpus/colon_statements.txt
+vba/test/corpus/preprocessor.txt
+vba/test/corpus/forms.txt
 ```
 
 ## Initial Milestone

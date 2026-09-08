@@ -173,7 +173,7 @@ The repository's [minimal browser consumer](../../examples/browser-consumer/READ
 is a self-contained integration fixture. Its local build creates a static
 directory with the same two runtime assets and the grammar asset, and its
 Node and Chromium tests verify that the bundle does not depend on
-`src/`, `build/wasm/`, `node_modules/`, or the playground source tree.
+`vba/src/`, `build/wasm/`, `node_modules/`, or the playground source tree.
 
 ## Native and browser parser parity
 
