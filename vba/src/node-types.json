@@ -46,6 +46,10 @@
           "named": true
         },
         {
+          "type": "bang_identifier",
+          "named": true
+        },
+        {
           "type": "binary_expression",
           "named": true
         },
@@ -133,11 +137,15 @@
     "named": true,
     "fields": {
       "lower": {
-        "multiple": true,
+        "multiple": false,
         "required": false,
         "types": [
           {
             "type": "addressof_expression",
+            "named": true
+          },
+          {
+            "type": "bang_identifier",
             "named": true
           },
           {
@@ -207,11 +215,15 @@
         ]
       },
       "upper": {
-        "multiple": true,
+        "multiple": false,
         "required": false,
         "types": [
           {
             "type": "addressof_expression",
+            "named": true
+          },
+          {
+            "type": "bang_identifier",
             "named": true
           },
           {
@@ -282,11 +294,15 @@
       }
     },
     "children": {
-      "multiple": true,
+      "multiple": false,
       "required": false,
       "types": [
         {
           "type": "addressof_expression",
+          "named": true
+        },
+        {
+          "type": "bang_identifier",
           "named": true
         },
         {
@@ -406,9 +422,13 @@
     "named": true,
     "fields": {
       "left": {
-        "multiple": true,
+        "multiple": false,
         "required": true,
         "types": [
+          {
+            "type": "bang_identifier",
+            "named": true
+          },
           {
             "type": "call_expression",
             "named": true
@@ -424,11 +444,15 @@
         ]
       },
       "right": {
-        "multiple": true,
+        "multiple": false,
         "required": true,
         "types": [
           {
             "type": "addressof_expression",
+            "named": true
+          },
+          {
+            "type": "bang_identifier",
             "named": true
           },
           {
@@ -562,6 +586,21 @@
     }
   },
   {
+    "type": "bang_identifier",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "identifier",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "binary_expression",
     "named": true,
     "fields": {},
@@ -571,6 +610,10 @@
       "types": [
         {
           "type": "addressof_expression",
+          "named": true
+        },
+        {
+          "type": "bang_identifier",
           "named": true
         },
         {
@@ -881,11 +924,15 @@
     "named": true,
     "fields": {
       "value": {
-        "multiple": true,
+        "multiple": false,
         "required": true,
         "types": [
           {
             "type": "addressof_expression",
+            "named": true
+          },
+          {
+            "type": "bang_identifier",
             "named": true
           },
           {
@@ -980,9 +1027,13 @@
         ]
       },
       "function": {
-        "multiple": true,
+        "multiple": false,
         "required": true,
         "types": [
+          {
+            "type": "bang_identifier",
+            "named": true
+          },
           {
             "type": "call_expression",
             "named": true
@@ -1026,9 +1077,13 @@
         ]
       },
       "callee": {
-        "multiple": true,
+        "multiple": false,
         "required": false,
         "types": [
+          {
+            "type": "bang_identifier",
+            "named": true
+          },
           {
             "type": "call_expression",
             "named": true
@@ -1095,6 +1150,10 @@
       "types": [
         {
           "type": "addressof_expression",
+          "named": true
+        },
+        {
+          "type": "bang_identifier",
           "named": true
         },
         {
@@ -1178,6 +1237,10 @@
         "types": [
           {
             "type": "addressof_expression",
+            "named": true
+          },
+          {
+            "type": "bang_identifier",
             "named": true
           },
           {
@@ -1315,6 +1378,10 @@
             "named": true
           },
           {
+            "type": "bang_identifier",
+            "named": true
+          },
+          {
             "type": "binary_expression",
             "named": true
           },
@@ -1395,11 +1462,15 @@
         ]
       },
       "right": {
-        "multiple": true,
+        "multiple": false,
         "required": true,
         "types": [
           {
             "type": "addressof_expression",
+            "named": true
+          },
+          {
+            "type": "bang_identifier",
             "named": true
           },
           {
@@ -1485,6 +1556,10 @@
       "types": [
         {
           "type": "addressof_expression",
+          "named": true
+        },
+        {
+          "type": "bang_identifier",
           "named": true
         },
         {
@@ -1810,6 +1885,10 @@
             "named": true
           },
           {
+            "type": "bang_identifier",
+            "named": true
+          },
+          {
             "type": "identifier",
             "named": true
           },
@@ -1853,6 +1932,10 @@
         "types": [
           {
             "type": "addressof_expression",
+            "named": true
+          },
+          {
+            "type": "bang_identifier",
             "named": true
           },
           {
@@ -1942,6 +2025,10 @@
             "named": true
           },
           {
+            "type": "bang_identifier",
+            "named": true
+          },
+          {
             "type": "identifier",
             "named": true
           },
@@ -1983,6 +2070,10 @@
         "multiple": true,
         "required": true,
         "types": [
+          {
+            "type": "bang_identifier",
+            "named": true
+          },
           {
             "type": "identifier",
             "named": true
@@ -2117,6 +2208,10 @@
         "types": [
           {
             "type": "addressof_expression",
+            "named": true
+          },
+          {
+            "type": "bang_identifier",
             "named": true
           },
           {
@@ -2362,6 +2457,10 @@
             "named": true
           },
           {
+            "type": "bang_identifier",
+            "named": true
+          },
+          {
             "type": "binary_expression",
             "named": true
           },
@@ -2564,9 +2663,13 @@
         ]
       },
       "name": {
-        "multiple": true,
+        "multiple": false,
         "required": true,
         "types": [
+          {
+            "type": "bang_identifier",
+            "named": true
+          },
           {
             "type": "identifier",
             "named": true
@@ -2590,11 +2693,15 @@
     "named": true,
     "fields": {
       "x": {
-        "multiple": true,
+        "multiple": false,
         "required": true,
         "types": [
           {
             "type": "addressof_expression",
+            "named": true
+          },
+          {
+            "type": "bang_identifier",
             "named": true
           },
           {
@@ -2668,11 +2775,15 @@
         ]
       },
       "y": {
-        "multiple": true,
+        "multiple": false,
         "required": true,
         "types": [
           {
             "type": "addressof_expression",
+            "named": true
+          },
+          {
+            "type": "bang_identifier",
             "named": true
           },
           {
@@ -2925,11 +3036,15 @@
     "named": true,
     "fields": {
       "condition": {
-        "multiple": true,
+        "multiple": false,
         "required": true,
         "types": [
           {
             "type": "addressof_expression",
+            "named": true
+          },
+          {
+            "type": "bang_identifier",
             "named": true
           },
           {
@@ -3102,11 +3217,15 @@
     "named": true,
     "fields": {
       "condition": {
-        "multiple": true,
+        "multiple": false,
         "required": true,
         "types": [
           {
             "type": "addressof_expression",
+            "named": true
+          },
+          {
+            "type": "bang_identifier",
             "named": true
           },
           {
@@ -3289,11 +3408,15 @@
         ]
       },
       "value": {
-        "multiple": true,
+        "multiple": false,
         "required": false,
         "types": [
           {
             "type": "addressof_expression",
+            "named": true
+          },
+          {
+            "type": "bang_identifier",
             "named": true
           },
           {
@@ -3373,6 +3496,10 @@
         "required": true,
         "types": [
           {
+            "type": "bang_identifier",
+            "named": true
+          },
+          {
             "type": "call_expression",
             "named": true
           },
@@ -3434,11 +3561,15 @@
     "named": true,
     "fields": {},
     "children": {
-      "multiple": true,
+      "multiple": false,
       "required": true,
       "types": [
         {
           "type": "addressof_expression",
+          "named": true
+        },
+        {
+          "type": "bang_identifier",
           "named": true
         },
         {
@@ -3528,11 +3659,15 @@
     "named": true,
     "fields": {},
     "children": {
-      "multiple": true,
+      "multiple": false,
       "required": true,
       "types": [
         {
           "type": "addressof_expression",
+          "named": true
+        },
+        {
+          "type": "bang_identifier",
           "named": true
         },
         {
@@ -3607,11 +3742,15 @@
     "named": true,
     "fields": {
       "number": {
-        "multiple": true,
+        "multiple": false,
         "required": true,
         "types": [
           {
             "type": "addressof_expression",
+            "named": true
+          },
+          {
+            "type": "bang_identifier",
             "named": true
           },
           {
@@ -3687,11 +3826,15 @@
     "named": true,
     "fields": {
       "end": {
-        "multiple": true,
+        "multiple": false,
         "required": false,
         "types": [
           {
             "type": "addressof_expression",
+            "named": true
+          },
+          {
+            "type": "bang_identifier",
             "named": true
           },
           {
@@ -3761,11 +3904,15 @@
         ]
       },
       "start": {
-        "multiple": true,
+        "multiple": false,
         "required": true,
         "types": [
           {
             "type": "addressof_expression",
+            "named": true
+          },
+          {
+            "type": "bang_identifier",
             "named": true
           },
           {
@@ -3841,11 +3988,15 @@
     "named": true,
     "fields": {
       "length": {
-        "multiple": true,
+        "multiple": false,
         "required": true,
         "types": [
           {
             "type": "addressof_expression",
+            "named": true
+          },
+          {
+            "type": "bang_identifier",
             "named": true
           },
           {
@@ -3947,11 +4098,15 @@
         ]
       },
       "collection": {
-        "multiple": true,
+        "multiple": false,
         "required": true,
         "types": [
           {
             "type": "addressof_expression",
+            "named": true
+          },
+          {
+            "type": "bang_identifier",
             "named": true
           },
           {
@@ -4051,9 +4206,13 @@
         ]
       },
       "variable": {
-        "multiple": true,
+        "multiple": false,
         "required": true,
         "types": [
+          {
+            "type": "bang_identifier",
+            "named": true
+          },
           {
             "type": "call_expression",
             "named": true
@@ -4111,11 +4270,15 @@
         ]
       },
       "end": {
-        "multiple": true,
+        "multiple": false,
         "required": true,
         "types": [
           {
             "type": "addressof_expression",
+            "named": true
+          },
+          {
+            "type": "bang_identifier",
             "named": true
           },
           {
@@ -4205,11 +4368,15 @@
         ]
       },
       "start": {
-        "multiple": true,
+        "multiple": false,
         "required": true,
         "types": [
           {
             "type": "addressof_expression",
+            "named": true
+          },
+          {
+            "type": "bang_identifier",
             "named": true
           },
           {
@@ -4289,11 +4456,15 @@
         ]
       },
       "step": {
-        "multiple": true,
+        "multiple": false,
         "required": false,
         "types": [
           {
             "type": "addressof_expression",
+            "named": true
+          },
+          {
+            "type": "bang_identifier",
             "named": true
           },
           {
@@ -4363,9 +4534,13 @@
         ]
       },
       "variable": {
-        "multiple": true,
+        "multiple": false,
         "required": true,
         "types": [
+          {
+            "type": "bang_identifier",
+            "named": true
+          },
           {
             "type": "call_expression",
             "named": true
@@ -4625,9 +4800,13 @@
         ]
       },
       "name": {
-        "multiple": true,
+        "multiple": false,
         "required": true,
         "types": [
+          {
+            "type": "bang_identifier",
+            "named": true
+          },
           {
             "type": "identifier",
             "named": true
@@ -4700,11 +4879,15 @@
         ]
       },
       "record": {
-        "multiple": true,
+        "multiple": false,
         "required": false,
         "types": [
           {
             "type": "addressof_expression",
+            "named": true
+          },
+          {
+            "type": "bang_identifier",
             "named": true
           },
           {
@@ -4774,9 +4957,13 @@
         ]
       },
       "target": {
-        "multiple": true,
+        "multiple": false,
         "required": false,
         "types": [
+          {
+            "type": "bang_identifier",
+            "named": true
+          },
           {
             "type": "call_expression",
             "named": true
@@ -4848,11 +5035,15 @@
     "named": true,
     "fields": {
       "condition": {
-        "multiple": true,
+        "multiple": false,
         "required": true,
         "types": [
           {
             "type": "addressof_expression",
+            "named": true
+          },
+          {
+            "type": "bang_identifier",
             "named": true
           },
           {
@@ -4966,9 +5157,13 @@
     "named": true,
     "fields": {
       "member": {
-        "multiple": true,
+        "multiple": false,
         "required": true,
         "types": [
+          {
+            "type": "bang_identifier",
+            "named": true
+          },
           {
             "type": "identifier",
             "named": true
@@ -4996,11 +5191,15 @@
     "named": true,
     "fields": {
       "value": {
-        "multiple": true,
+        "multiple": false,
         "required": true,
         "types": [
           {
             "type": "addressof_expression",
+            "named": true
+          },
+          {
+            "type": "bang_identifier",
             "named": true
           },
           {
@@ -5277,6 +5476,10 @@
         "required": true,
         "types": [
           {
+            "type": "bang_identifier",
+            "named": true
+          },
+          {
             "type": "call_expression",
             "named": true
           },
@@ -5322,9 +5525,13 @@
     "named": true,
     "fields": {
       "left": {
-        "multiple": true,
+        "multiple": false,
         "required": true,
         "types": [
+          {
+            "type": "bang_identifier",
+            "named": true
+          },
           {
             "type": "call_expression",
             "named": true
@@ -5340,11 +5547,15 @@
         ]
       },
       "right": {
-        "multiple": true,
+        "multiple": false,
         "required": true,
         "types": [
           {
             "type": "addressof_expression",
+            "named": true
+          },
+          {
+            "type": "bang_identifier",
             "named": true
           },
           {
@@ -5464,9 +5675,13 @@
         ]
       },
       "target": {
-        "multiple": true,
+        "multiple": false,
         "required": true,
         "types": [
+          {
+            "type": "bang_identifier",
+            "named": true
+          },
           {
             "type": "identifier",
             "named": true
@@ -5723,9 +5938,13 @@
     "named": true,
     "fields": {
       "target": {
-        "multiple": true,
+        "multiple": false,
         "required": true,
         "types": [
+          {
+            "type": "bang_identifier",
+            "named": true
+          },
           {
             "type": "call_expression",
             "named": true
@@ -5778,6 +5997,10 @@
       "types": [
         {
           "type": "addressof_expression",
+          "named": true
+        },
+        {
+          "type": "bang_identifier",
           "named": true
         },
         {
@@ -5860,9 +6083,13 @@
     "named": true,
     "fields": {
       "left": {
-        "multiple": true,
+        "multiple": false,
         "required": true,
         "types": [
+          {
+            "type": "bang_identifier",
+            "named": true
+          },
           {
             "type": "call_expression",
             "named": true
@@ -5878,11 +6105,15 @@
         ]
       },
       "right": {
-        "multiple": true,
+        "multiple": false,
         "required": true,
         "types": [
           {
             "type": "addressof_expression",
+            "named": true
+          },
+          {
+            "type": "bang_identifier",
             "named": true
           },
           {
@@ -5958,11 +6189,15 @@
     "named": true,
     "fields": {
       "new_path": {
-        "multiple": true,
+        "multiple": false,
         "required": true,
         "types": [
           {
             "type": "addressof_expression",
+            "named": true
+          },
+          {
+            "type": "bang_identifier",
             "named": true
           },
           {
@@ -6032,11 +6267,15 @@
         ]
       },
       "old_path": {
-        "multiple": true,
+        "multiple": false,
         "required": true,
         "types": [
           {
             "type": "addressof_expression",
+            "named": true
+          },
+          {
+            "type": "bang_identifier",
             "named": true
           },
           {
@@ -6122,11 +6361,15 @@
         ]
       },
       "value": {
-        "multiple": true,
+        "multiple": false,
         "required": true,
         "types": [
           {
             "type": "addressof_expression",
+            "named": true
+          },
+          {
+            "type": "bang_identifier",
             "named": true
           },
           {
@@ -6234,6 +6477,10 @@
       "required": true,
       "types": [
         {
+          "type": "bang_identifier",
+          "named": true
+        },
+        {
           "type": "call_expression",
           "named": true
         },
@@ -6273,11 +6520,15 @@
     "named": true,
     "fields": {
       "selector": {
-        "multiple": true,
+        "multiple": false,
         "required": true,
         "types": [
           {
             "type": "addressof_expression",
+            "named": true
+          },
+          {
+            "type": "bang_identifier",
             "named": true
           },
           {
@@ -6407,11 +6658,15 @@
         ]
       },
       "path": {
-        "multiple": true,
+        "multiple": false,
         "required": true,
         "types": [
           {
             "type": "addressof_expression",
+            "named": true
+          },
+          {
+            "type": "bang_identifier",
             "named": true
           },
           {
@@ -6481,11 +6736,15 @@
         ]
       },
       "record_length": {
-        "multiple": true,
+        "multiple": false,
         "required": false,
         "types": [
           {
             "type": "addressof_expression",
+            "named": true
+          },
+          {
+            "type": "bang_identifier",
             "named": true
           },
           {
@@ -6594,6 +6853,10 @@
             "named": true
           },
           {
+            "type": "bang_identifier",
+            "named": true
+          },
+          {
             "type": "binary_expression",
             "named": true
           },
@@ -6694,9 +6957,13 @@
         ]
       },
       "name": {
-        "multiple": true,
+        "multiple": false,
         "required": true,
         "types": [
+          {
+            "type": "bang_identifier",
+            "named": true
+          },
           {
             "type": "identifier",
             "named": true
@@ -6769,11 +7036,15 @@
     "named": true,
     "fields": {},
     "children": {
-      "multiple": true,
+      "multiple": false,
       "required": true,
       "types": [
         {
           "type": "addressof_expression",
+          "named": true
+        },
+        {
+          "type": "bang_identifier",
           "named": true
         },
         {
@@ -6860,11 +7131,15 @@
     "named": true,
     "fields": {},
     "children": {
-      "multiple": true,
+      "multiple": false,
       "required": true,
       "types": [
         {
           "type": "addressof_expression",
+          "named": true
+        },
+        {
+          "type": "bang_identifier",
           "named": true
         },
         {
@@ -7240,11 +7515,15 @@
         ]
       },
       "value": {
-        "multiple": true,
+        "multiple": false,
         "required": true,
         "types": [
           {
             "type": "addressof_expression",
+            "named": true
+          },
+          {
+            "type": "bang_identifier",
             "named": true
           },
           {
@@ -7360,11 +7639,15 @@
         ]
       },
       "condition": {
-        "multiple": true,
+        "multiple": false,
         "required": true,
         "types": [
           {
             "type": "addressof_expression",
+            "named": true
+          },
+          {
+            "type": "bang_identifier",
             "named": true
           },
           {
@@ -7472,11 +7755,15 @@
         ]
       },
       "condition": {
-        "multiple": true,
+        "multiple": false,
         "required": true,
         "types": [
           {
             "type": "addressof_expression",
+            "named": true
+          },
+          {
+            "type": "bang_identifier",
             "named": true
           },
           {
@@ -7587,6 +7874,10 @@
       "types": [
         {
           "type": "addressof_expression",
+          "named": true
+        },
+        {
+          "type": "bang_identifier",
           "named": true
         },
         {
@@ -7997,11 +8288,15 @@
         ]
       },
       "record": {
-        "multiple": true,
+        "multiple": false,
         "required": false,
         "types": [
           {
             "type": "addressof_expression",
+            "named": true
+          },
+          {
+            "type": "bang_identifier",
             "named": true
           },
           {
@@ -8071,11 +8366,15 @@
         ]
       },
       "source": {
-        "multiple": true,
+        "multiple": false,
         "required": false,
         "types": [
           {
             "type": "addressof_expression",
+            "named": true
+          },
+          {
+            "type": "bang_identifier",
             "named": true
           },
           {
@@ -8155,6 +8454,10 @@
         "required": true,
         "types": [
           {
+            "type": "bang_identifier",
+            "named": true
+          },
+          {
             "type": "identifier",
             "named": true
           }
@@ -8225,9 +8528,13 @@
     "named": true,
     "fields": {
       "name": {
-        "multiple": true,
+        "multiple": false,
         "required": true,
         "types": [
+          {
+            "type": "bang_identifier",
+            "named": true
+          },
           {
             "type": "identifier",
             "named": true
@@ -8300,9 +8607,13 @@
     "named": true,
     "fields": {
       "left": {
-        "multiple": true,
+        "multiple": false,
         "required": true,
         "types": [
+          {
+            "type": "bang_identifier",
+            "named": true
+          },
           {
             "type": "call_expression",
             "named": true
@@ -8318,11 +8629,15 @@
         ]
       },
       "right": {
-        "multiple": true,
+        "multiple": false,
         "required": true,
         "types": [
           {
             "type": "addressof_expression",
+            "named": true
+          },
+          {
+            "type": "bang_identifier",
             "named": true
           },
           {
@@ -8408,11 +8723,15 @@
         ]
       },
       "position": {
-        "multiple": true,
+        "multiple": false,
         "required": true,
         "types": [
           {
             "type": "addressof_expression",
+            "named": true
+          },
+          {
+            "type": "bang_identifier",
             "named": true
           },
           {
@@ -8508,11 +8827,15 @@
         ]
       },
       "value": {
-        "multiple": true,
+        "multiple": false,
         "required": true,
         "types": [
           {
             "type": "addressof_expression",
+            "named": true
+          },
+          {
+            "type": "bang_identifier",
             "named": true
           },
           {
@@ -8615,9 +8938,13 @@
     "named": true,
     "fields": {
       "left": {
-        "multiple": true,
+        "multiple": false,
         "required": true,
         "types": [
+          {
+            "type": "bang_identifier",
+            "named": true
+          },
           {
             "type": "call_expression",
             "named": true
@@ -8633,11 +8960,15 @@
         ]
       },
       "right": {
-        "multiple": true,
+        "multiple": false,
         "required": true,
         "types": [
           {
             "type": "addressof_expression",
+            "named": true
+          },
+          {
+            "type": "bang_identifier",
             "named": true
           },
           {
@@ -9101,11 +9432,15 @@
         ]
       },
       "condition": {
-        "multiple": true,
+        "multiple": false,
         "required": true,
         "types": [
           {
             "type": "addressof_expression",
+            "named": true
+          },
+          {
+            "type": "bang_identifier",
             "named": true
           },
           {
@@ -9648,9 +9983,13 @@
         ]
       },
       "name": {
-        "multiple": true,
+        "multiple": false,
         "required": true,
         "types": [
+          {
+            "type": "bang_identifier",
+            "named": true
+          },
           {
             "type": "identifier",
             "named": true
@@ -9684,11 +10023,15 @@
         ]
       },
       "value": {
-        "multiple": true,
+        "multiple": false,
         "required": true,
         "types": [
           {
             "type": "addressof_expression",
+            "named": true
+          },
+          {
+            "type": "bang_identifier",
             "named": true
           },
           {
@@ -9823,11 +10166,15 @@
         ]
       },
       "condition": {
-        "multiple": true,
+        "multiple": false,
         "required": true,
         "types": [
           {
             "type": "addressof_expression",
+            "named": true
+          },
+          {
+            "type": "bang_identifier",
             "named": true
           },
           {
@@ -9935,11 +10282,15 @@
         ]
       },
       "condition": {
-        "multiple": true,
+        "multiple": false,
         "required": true,
         "types": [
           {
             "type": "addressof_expression",
+            "named": true
+          },
+          {
+            "type": "bang_identifier",
             "named": true
           },
           {
@@ -10045,11 +10396,15 @@
     "named": true,
     "fields": {},
     "children": {
-      "multiple": true,
+      "multiple": false,
       "required": true,
       "types": [
         {
           "type": "addressof_expression",
+          "named": true
+        },
+        {
+          "type": "bang_identifier",
           "named": true
         },
         {
@@ -10128,9 +10483,13 @@
     "named": true,
     "fields": {
       "target": {
-        "multiple": true,
+        "multiple": false,
         "required": true,
         "types": [
+          {
+            "type": "bang_identifier",
+            "named": true
+          },
           {
             "type": "call_expression",
             "named": true
@@ -10183,6 +10542,10 @@
       "types": [
         {
           "type": "addressof_expression",
+          "named": true
+        },
+        {
+          "type": "bang_identifier",
           "named": true
         },
         {
@@ -10339,9 +10702,13 @@
         ]
       },
       "name": {
-        "multiple": true,
+        "multiple": false,
         "required": true,
         "types": [
+          {
+            "type": "bang_identifier",
+            "named": true
+          },
           {
             "type": "identifier",
             "named": true
@@ -10380,11 +10747,15 @@
         ]
       },
       "condition": {
-        "multiple": true,
+        "multiple": false,
         "required": true,
         "types": [
           {
             "type": "addressof_expression",
+            "named": true
+          },
+          {
+            "type": "bang_identifier",
             "named": true
           },
           {
@@ -10536,11 +10907,15 @@
         ]
       },
       "value": {
-        "multiple": true,
+        "multiple": false,
         "required": true,
         "types": [
           {
             "type": "addressof_expression",
+            "named": true
+          },
+          {
+            "type": "bang_identifier",
             "named": true
           },
           {

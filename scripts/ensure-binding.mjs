@@ -30,8 +30,8 @@ const packageBindingOutputPath = join(root, "build", "Release", "tree_sitter_vba
 const packageBindingInputs = [
   join(root, "binding.gyp"),
   join(root, "bindings", "node", "binding.cc"),
-  join(root, "src", "parser.c"),
-  join(root, "src", "scanner.c"),
+  join(root, "vba", "src", "parser.c"),
+  join(root, "vba", "src", "scanner.c"),
 ].filter((path) => existsSync(path));
 
 if (isStale(packageBindingOutputPath, packageBindingInputs)) {

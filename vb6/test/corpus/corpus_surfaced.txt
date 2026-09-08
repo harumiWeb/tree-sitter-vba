@@ -19,34 +19,34 @@ End Sub
     (block
       (variable_declaration
         (variable_declarator
-          (identifier)
-          (identifier))
+          (bang_identifier
+            (identifier)))
         (variable_declarator
-          (identifier)
-          (identifier))
+          (bang_identifier
+            (identifier)))
         (variable_declarator
-          (identifier)
-          (identifier)))
+          (bang_identifier
+            (identifier))))
       (newline)
       (assignment_statement
-        (identifier)
-        (identifier)
+        (bang_identifier
+          (identifier))
         (number_literal))
       (newline)
       (single_line_if_statement
         (comparison_expression
           (qualified_member_expression
             (identifier)
-            (identifier)
-            (identifier))
+            (bang_identifier
+              (identifier)))
           (comparison_operator)
           (number_literal))
         (goto_statement
           (identifier)))
       (newline)
       (call_statement
-        (identifier)
-        (identifier)
+        (bang_identifier
+          (identifier))
         (unparenthesized_argument_list
           (comparison_expression
             (parenthesized_expression
@@ -54,8 +54,8 @@ End Sub
             (comparison_operator)
             (binary_expression
               (call_expression
-                (identifier)
-                (identifier)
+                (bang_identifier
+                  (identifier))
                 (argument_list
                   (identifier)))
               (number_literal)))))

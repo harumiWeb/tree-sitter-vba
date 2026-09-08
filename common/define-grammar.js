@@ -358,7 +358,7 @@ module.exports = function defineGrammar(dialect) {
             "name",
             choice(
               $.identifier,
-              $._bang_suffixed_identifier,
+              $.bang_identifier,
               alias(caseInsensitive("End"), $.identifier),
             ),
           ),
@@ -553,7 +553,7 @@ module.exports = function defineGrammar(dialect) {
         seq(
           optional($._procedure_modifier),
           caseInsensitive("Function"),
-          field("name", choice($.identifier, $._bang_suffixed_identifier)),
+          field("name", choice($.identifier, $.bang_identifier)),
           optional(field("parameters", $.parameter_list)),
           optional(field("type", $.as_type_clause)),
         ),
@@ -883,12 +883,15 @@ module.exports = function defineGrammar(dialect) {
       _declarator_name: ($) =>
         choice(
           reserved("variable_declarator", $.identifier),
-          alias(prec(2, seq(reserved("variable_declarator", $.identifier), bang($))), $.identifier),
+          alias($._declarator_bang_identifier, $.bang_identifier),
         ),
+
+      _declarator_bang_identifier: ($) =>
+        prec(2, seq(reserved("variable_declarator", $.identifier), bang($))),
 
       const_declarator: ($) =>
         seq(
-          field("name", choice($.identifier, $._bang_suffixed_identifier)),
+          field("name", choice($.identifier, $.bang_identifier)),
           optional(field("type", $.as_type_clause)),
           optional(field("initializer", $.initializer)),
         ),
@@ -902,7 +905,7 @@ module.exports = function defineGrammar(dialect) {
           optional(field("optional_modifier", $.optional_modifier)),
           optional(field("passing_mode", choice($.byval_modifier, $.byref_modifier))),
           optional(field("paramarray_modifier", $.paramarray_modifier)),
-          field("name", choice($.identifier, $._bang_suffixed_identifier)),
+          field("name", choice($.identifier, $.bang_identifier)),
           optional(field("bounds", $.array_bounds)),
           optional(field("type", $.as_type_clause)),
           optional(field("default_value", $.initializer)),
@@ -1469,7 +1472,7 @@ module.exports = function defineGrammar(dialect) {
         prec(
           4,
           seq(
-            field("name", choice($.identifier, $._bang_suffixed_identifier, $.member_expression)),
+            field("name", choice($.identifier, $.bang_identifier, $.member_expression)),
             $.array_bounds,
             optional(field("type", $.as_type_clause)),
           ),
@@ -1615,7 +1618,7 @@ module.exports = function defineGrammar(dialect) {
           alias(caseInsensitive("Line"), $.identifier),
           alias(caseInsensitive("Name"), $.identifier),
           $.identifier,
-          $._bang_suffixed_identifier,
+          $.bang_identifier,
           $.new_expression,
           $.addressof_expression,
           $.type_of_expression,
@@ -2225,7 +2228,7 @@ module.exports = function defineGrammar(dialect) {
           alias(caseInsensitive("Line"), $.identifier),
           alias(caseInsensitive("Name"), $.identifier),
           $.identifier,
-          $._bang_suffixed_identifier,
+          $.bang_identifier,
           $.new_expression,
           $.addressof_expression,
           $.type_of_expression,
@@ -2320,7 +2323,7 @@ module.exports = function defineGrammar(dialect) {
       _callable_expression: ($) =>
         choice(
           $.identifier,
-          $._bang_suffixed_identifier,
+          $.bang_identifier,
           alias(caseInsensitive("Name"), $.identifier),
           alias($._name_member_expression, $.qualified_member_expression),
           $.member_expression,
@@ -2329,10 +2332,12 @@ module.exports = function defineGrammar(dialect) {
       // `Dim X!, Y!` / `total! = 0#`: `!` as the Single type-declaration character.
       // The lexer cannot tell it from the bang member operator (`rs!Field`), so the
       // parser decides on the next token: an identifier after `!` is member access,
-      // anything else makes `!` a suffix. Aliased to identifier so `X!` reads like `X%`.
+      // anything else makes `!` a suffix. The result is a bang_identifier wrapping the
+      // identifier and the `!` (aliasing to `identifier` itself does not wrap, since
+      // identifier is the word token).
       // prec 2: prefer shifting the `!` over reducing the bare name, since a following
       // statement could otherwise begin with a bang implicit member (`!Field = 1`).
-      _bang_suffixed_identifier: ($) => alias(prec(2, seq($.identifier, bang($))), $.identifier),
+      bang_identifier: ($) => prec(2, seq($.identifier, bang($))),
 
       _print_method_callee: ($) =>
         choice(
@@ -2459,7 +2464,7 @@ module.exports = function defineGrammar(dialect) {
       _member_property: ($) =>
         choice(
           prec(6, choice($.identifier, alias(caseInsensitive("Line"), $.identifier))),
-          $._member_bang_suffixed_identifier,
+          alias($._member_bang_suffixed_identifier, $.bang_identifier),
         ),
 
       // `rec.Total! = 0#` versus `Ctl.Properties!Text`: after `a.b` the `!` is either
@@ -2469,7 +2474,7 @@ module.exports = function defineGrammar(dialect) {
       // carry both readings; prec.dynamic -1 makes the suffix reading lose whenever
       // both survive, which is exactly the case where an identifier follows the `!`.
       _member_bang_suffixed_identifier: ($) =>
-        alias(prec.dynamic(-1, prec.right(6, seq($.identifier, bang($)))), $.identifier),
+        prec.dynamic(-1, prec.right(6, seq($.identifier, bang($)))),
 
       parenthesized_expression: ($) =>
         seq("(", choice($._expression, $.comparison_expression, $.condition_binary_expression), ")"),
