@@ -10,7 +10,7 @@ const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const defaultOutput = join(root, "build", "wasm", "tree-sitter-vba.wasm");
 
 export function buildWasm(outputPath = defaultOutput) {
-  const parserSource = join(root, "src");
+  const parserSource = join(root, "vba", "src");
   const parserOutput = resolve(outputPath);
 
   if (!existsSync(parserSource)) {

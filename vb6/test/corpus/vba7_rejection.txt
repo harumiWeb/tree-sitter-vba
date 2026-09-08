@@ -1,0 +1,62 @@
+==================
+declare ptrsafe is not vb6
+:error
+==================
+Private Declare PtrSafe Function GetTickCount Lib "kernel32" () As Long
+
+---
+
+
+
+==================
+longptr is an ordinary user type name in vb6
+==================
+Dim h As LongPtr
+
+---
+
+(source_file
+  (variable_declaration
+    (variable_declarator
+      (identifier)
+      (as_type_clause
+        (type_expression
+          (identifier)))))
+  (newline))
+
+==================
+win32 conditional compilation
+==================
+#If Win32 Then
+    Private Declare Function GetTickCount Lib "kernel32" () As Long
+#Else
+    Private Declare Function GetTickCount Lib "kernel" () As Long
+#End If
+
+---
+
+(source_file
+  (preprocessor_if
+    (identifier)
+    (newline)
+    (preprocessor_block
+      (declare_function_statement
+        (visibility)
+        (identifier)
+        (string_literal)
+        (parameter_list)
+        (as_type_clause
+          (type_expression)))
+      (newline))
+    (preprocessor_else
+      (newline)
+      (preprocessor_block
+        (declare_function_statement
+          (visibility)
+          (identifier)
+          (string_literal)
+          (parameter_list)
+          (as_type_clause
+            (type_expression)))
+        (newline))))
+  (newline))

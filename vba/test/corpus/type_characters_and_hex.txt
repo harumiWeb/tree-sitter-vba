@@ -1,0 +1,103 @@
+==================
+identifier type characters and hex literals
+==================
+
+Sub Test()
+    text = ChrW$(&H2581)
+    value = Format$(amount, "0.00")
+    count& = &HFEEF
+    zero = 0&
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (assignment_statement
+        (identifier)
+        (call_expression
+          (identifier)
+          (argument_list
+            (number_literal))))
+      (newline)
+      (assignment_statement
+        (identifier)
+        (call_expression
+          (identifier)
+          (argument_list
+            (identifier)
+            (string_literal))))
+      (newline)
+      (assignment_statement
+        (identifier)
+        (number_literal))
+      (newline)
+      (assignment_statement
+        (identifier)
+        (number_literal))
+      (newline))
+    (end_sub_statement))
+  (newline))
+
+==================
+longlong literal type character
+==================
+
+Sub Test()
+    nullPtr = 0^
+    invalid = -1^
+    mask = &H8000000000000000^
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (assignment_statement
+        (identifier)
+        (number_literal))
+      (newline)
+      (assignment_statement
+        (identifier)
+        (number_literal))
+      (newline)
+      (assignment_statement
+        (identifier)
+        (number_literal))
+      (newline))
+    (end_sub_statement))
+  (newline))
+
+==================
+currency literal type character
+==================
+
+Sub Test()
+    thunk = 465203369712025.6232@
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (assignment_statement
+        (identifier)
+        (number_literal))
+      (newline))
+    (end_sub_statement))
+  (newline))

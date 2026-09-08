@@ -1,0 +1,108 @@
+==================
+user control header with ctx resource
+==================
+VERSION 5.00
+Begin VB.UserControl ucButton 
+   ClientHeight    =   375
+   ScaleHeight     =   375
+   ToolboxBitmap   =   "ucButton.ctx":0000
+   Begin VB.Label lblCaption 
+      Caption         =   "Button"
+   End
+End
+Attribute VB_Name = "ucButton"
+Attribute VB_GlobalNameSpace = False
+Attribute VB_Creatable = True
+Attribute VB_PredeclaredId = False
+Attribute VB_Exposed = True
+Option Explicit
+
+Public Event Click()
+
+Private Sub UserControl_Resize()
+    lblCaption.Width = UserControl.ScaleWidth
+End Sub
+
+---
+
+(source_file
+  (frm_version_statement
+    (number_literal))
+  (newline)
+  (frm_begin_block
+    (qualified_member_expression
+      (identifier)
+      (identifier))
+    (identifier)
+    (newline)
+    (frm_property_statement
+      (identifier)
+      (number_literal))
+    (newline)
+    (frm_property_statement
+      (identifier)
+      (number_literal))
+    (newline)
+    (frm_property_statement
+      (identifier)
+      (frm_blob_reference
+        (string_literal)
+        (frm_blob_offset)))
+    (newline)
+    (frm_begin_block
+      (qualified_member_expression
+        (identifier)
+        (identifier))
+      (identifier)
+      (newline)
+      (frm_property_statement
+        (identifier)
+        (string_literal))
+      (newline))
+    (newline))
+  (newline)
+  (attribute_statement
+    (identifier)
+    (string_literal))
+  (newline)
+  (attribute_statement
+    (identifier)
+    (boolean_literal))
+  (newline)
+  (attribute_statement
+    (identifier)
+    (boolean_literal))
+  (newline)
+  (attribute_statement
+    (identifier)
+    (boolean_literal))
+  (newline)
+  (attribute_statement
+    (identifier)
+    (boolean_literal))
+  (newline)
+  (option_statement)
+  (newline)
+  (newline)
+  (event_declaration
+    (visibility)
+    (identifier)
+    (parameter_list))
+  (newline)
+  (newline)
+  (sub_declaration
+    (visibility)
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (assignment_statement
+        (qualified_member_expression
+          (identifier)
+          (identifier))
+        (qualified_member_expression
+          (identifier)
+          (identifier)))
+      (newline))
+    (end_sub_statement))
+  (newline))

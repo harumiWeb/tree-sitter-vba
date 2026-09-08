@@ -1,0 +1,97 @@
+==================
+conditional compilation split if
+==================
+
+Sub Test()
+#If Win64 Then
+    If A Then
+#Else
+    If B Then
+#End If
+        value = 1
+    Else
+        value = 2
+    End If
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (preprocessor_if
+        (identifier)
+        (newline)
+        (preprocessor_block
+          (if_statement
+            (identifier))
+          (newline))
+        (preprocessor_else
+          (newline)
+          (preprocessor_block
+            (if_statement
+              (identifier))
+            (newline))))
+      (newline)
+      (assignment_statement
+        (identifier)
+        (number_literal))
+      (newline)
+      (else_fragment)
+      (newline)
+      (assignment_statement
+        (identifier)
+        (number_literal))
+      (newline)
+      (end_if_fragment)
+      (newline))
+    (end_sub_statement))
+  (newline))
+
+==================
+ambiguous implicit member call
+==================
+
+Sub Test()
+    QuickSortKeys .arrKeys, .arrItems, 0, .ub
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (call_statement)
+      (newline))
+    (end_sub_statement))
+  (newline))
+
+==================
+omitted then named implicit arguments
+==================
+
+Sub Test()
+    GetIndex Key, , HashVal, hashOnly:=True, IgnoreErrors:=IgnoreErrors
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (call_statement)
+      (newline))
+    (end_sub_statement))
+  (newline))

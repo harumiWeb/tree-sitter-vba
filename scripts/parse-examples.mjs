@@ -1,9 +1,13 @@
 import { readdirSync, statSync } from "node:fs";
-import { join } from "node:path";
+import { dirname, join, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
 import { spawnSync } from "node:child_process";
 import { createRequire } from "node:module";
 
-const root = "examples";
+// Files are parsed with the VBA grammar: tree-sitter picks the grammar from the
+// working directory, so the CLI runs inside vba/ with absolute file paths.
+const repoRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
+const root = join(repoRoot, "examples");
 const files = [];
 const ignoredSegments = new Set([".xlflow", "build", "broken"]);
 const require = createRequire(import.meta.url);
@@ -38,6 +42,7 @@ let failed = false;
 
 for (const file of files) {
   const result = spawnSync(process.execPath, [treeSitterCli, "parse", file], {
+    cwd: join(repoRoot, "vba"),
     encoding: "utf8",
     shell: false,
     env: {

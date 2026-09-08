@@ -1,0 +1,171 @@
+==================
+nested if for exit
+==================
+
+Sub Test()
+    If a = b Then
+        For i = 1 To 10
+            If i = 5 Then
+                Exit For
+            End If
+        Next i
+    End If
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (if_statement
+        (comparison_expression
+          (identifier)
+          (comparison_operator)
+          (identifier)))
+      (newline)
+      (for_statement
+        (identifier)
+        (number_literal)
+        (number_literal)
+        (newline)
+        (block
+          (if_statement
+            (comparison_expression
+              (identifier)
+              (comparison_operator)
+              (number_literal)))
+          (newline)
+          (exit_statement)
+          (newline)
+          (end_if_fragment)
+          (newline))
+        (next_variable_list
+          (identifier)))
+      (newline)
+      (end_if_fragment)
+      (newline))
+    (end_sub_statement))
+  (newline))
+
+==================
+multiple elseif clauses
+==================
+
+Sub Test()
+    If x = 1 Then
+        Debug.Print "one"
+    ElseIf x = 2 Then
+        Debug.Print "two"
+    ElseIf x = 3 Then
+        Debug.Print "three"
+    Else
+        Debug.Print "other"
+    End If
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (if_statement
+        (comparison_expression
+          (identifier)
+          (comparison_operator)
+          (number_literal)))
+      (newline)
+      (call_statement
+        (qualified_member_expression
+          (identifier)
+          (identifier))
+        (output_list
+          (string_literal)))
+      (newline)
+      (elseif_fragment
+        (comparison_expression
+          (identifier)
+          (comparison_operator)
+          (number_literal)))
+      (newline)
+      (call_statement
+        (qualified_member_expression
+          (identifier)
+          (identifier))
+        (output_list
+          (string_literal)))
+      (newline)
+      (elseif_fragment
+        (comparison_expression
+          (identifier)
+          (comparison_operator)
+          (number_literal)))
+      (newline)
+      (call_statement
+        (qualified_member_expression
+          (identifier)
+          (identifier))
+        (output_list
+          (string_literal)))
+      (newline)
+      (else_fragment)
+      (newline)
+      (call_statement
+        (qualified_member_expression
+          (identifier)
+          (identifier))
+        (output_list
+          (string_literal)))
+      (newline)
+      (end_if_fragment)
+      (newline))
+    (end_sub_statement))
+  (newline))
+
+==================
+for each member collection
+==================
+
+Sub Test()
+    For Each ws In ThisWorkbook.Worksheets
+        Debug.Print ws.Name
+    Next ws
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (for_each_statement
+        (identifier)
+        (qualified_member_expression
+          (identifier)
+          (identifier))
+        (newline)
+        (block
+          (call_statement
+            (qualified_member_expression
+              (identifier)
+              (identifier))
+            (output_list
+              (qualified_member_expression
+                (identifier)
+                (identifier))))
+          (newline))
+        (next_variable_list
+          (identifier)))
+      (newline))
+    (end_sub_statement))
+  (newline))

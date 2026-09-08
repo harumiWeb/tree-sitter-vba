@@ -1,0 +1,184 @@
+==================
+if equality comparison
+==================
+
+Sub Test()
+    If a = b Then
+        Debug.Print a
+    End If
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (if_statement
+        (comparison_expression
+          (identifier)
+          (comparison_operator)
+          (identifier)))
+      (newline)
+      (call_statement
+        (qualified_member_expression
+          (identifier)
+          (identifier))
+        (output_list
+          (identifier)))
+      (newline)
+      (end_if_fragment)
+      (newline))
+    (end_sub_statement))
+  (newline))
+
+==================
+comparison results combined with Eqv
+==================
+
+Sub Test()
+    If (leftValue = firstValue Eqv leftValue = secondValue) Or enabled Then
+    End If
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (if_statement
+        (condition_binary_expression
+          (parenthesized_condition_expression
+            (condition_binary_expression
+              (comparison_expression
+                (identifier)
+                (comparison_operator)
+                (identifier))
+              (comparison_expression
+                (identifier)
+                (comparison_operator)
+                (identifier))))
+          (identifier)))
+      (newline)
+      (end_if_fragment)
+      (newline))
+    (end_sub_statement))
+  (newline))
+
+==================
+if not equal comparison
+==================
+
+Sub Test()
+    If a <> b Then
+        Debug.Print a
+    End If
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (if_statement
+        (comparison_expression
+          (identifier)
+          (comparison_operator)
+          (identifier)))
+      (newline)
+      (call_statement
+        (qualified_member_expression
+          (identifier)
+          (identifier))
+        (output_list
+          (identifier)))
+      (newline)
+      (end_if_fragment)
+      (newline))
+    (end_sub_statement))
+  (newline))
+
+==================
+if less than or equal comparison
+==================
+
+Sub Test()
+    If a <= b Then
+        Debug.Print a
+    End If
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (if_statement
+        (comparison_expression
+          (identifier)
+          (comparison_operator)
+          (identifier)))
+      (newline)
+      (call_statement
+        (qualified_member_expression
+          (identifier)
+          (identifier))
+        (output_list
+          (identifier)))
+      (newline)
+      (end_if_fragment)
+      (newline))
+    (end_sub_statement))
+  (newline))
+
+==================
+if greater than or equal comparison
+==================
+
+Sub Test()
+    If a >= b Then
+        Debug.Print a
+    End If
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (if_statement
+        (comparison_expression
+          (identifier)
+          (comparison_operator)
+          (identifier)))
+      (newline)
+      (call_statement
+        (qualified_member_expression
+          (identifier)
+          (identifier))
+        (output_list
+          (identifier)))
+      (newline)
+      (end_if_fragment)
+      (newline))
+    (end_sub_statement))
+  (newline))

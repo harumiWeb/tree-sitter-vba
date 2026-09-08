@@ -4,7 +4,8 @@ on:
   push:
     branches: [main]
     paths:
-      - grammar.js
+      - common/define-grammar.js
+      - vba/grammar.js
       - tree-sitter.json
       - queries/**
       - playground/**

@@ -1,0 +1,98 @@
+==================
+basic declare function
+==================
+
+Private Declare Function GetTickCount Lib "kernel32" () As Long
+
+---
+
+(source_file
+  (newline)
+  (declare_function_statement
+    visibility: (visibility)
+    name: (identifier)
+    library: (string_literal)
+    parameters: (parameter_list)
+    type: (as_type_clause
+      type: (type_expression)))
+  (newline))
+
+==================
+declare ptrsafe sub
+==================
+
+Private Declare PtrSafe Sub Sleep Lib "kernel32" (ByVal milliseconds As LongPtr)
+
+---
+
+(source_file
+  (newline)
+  (declare_sub_statement
+    visibility: (visibility)
+    ptrsafe_modifier: (ptrsafe_modifier)
+    name: (identifier)
+    library: (string_literal)
+    parameters: (parameter_list
+      (parameter
+        passing_mode: (byval_modifier)
+        name: (identifier)
+        type: (as_type_clause
+          type: (type_expression)))))
+  (newline))
+
+==================
+ptrsafe declare function
+==================
+
+Private Declare PtrSafe Function GetTickCount Lib "kernel32" () As LongPtr
+
+---
+
+(source_file
+  (newline)
+  (declare_function_statement
+    visibility: (visibility)
+    ptrsafe_modifier: (ptrsafe_modifier)
+    name: (identifier)
+    library: (string_literal)
+    parameters: (parameter_list)
+    type: (as_type_clause
+      type: (type_expression)))
+  (newline))
+
+==================
+declare with alias and line continuation
+==================
+
+Private Declare PtrSafe Function FindWindow Lib "user32" Alias "FindWindowA" ( _
+    ByVal lpClassName As String, _
+    ByVal lpWindowName As String _
+) As LongPtr
+
+---
+
+(source_file
+  (newline)
+  (declare_function_statement
+    visibility: (visibility)
+    ptrsafe_modifier: (ptrsafe_modifier)
+    name: (identifier)
+    library: (string_literal)
+    alias: (string_literal)
+    parameters: (parameter_list
+      (line_continuation)
+      (parameter
+        passing_mode: (byval_modifier)
+        name: (identifier)
+        type: (as_type_clause
+          type: (type_expression)))
+      (line_continuation)
+      (parameter
+        passing_mode: (byval_modifier)
+        name: (identifier)
+        type: (as_type_clause
+          type: (type_expression)))
+      (line_continuation))
+    type: (as_type_clause
+      type: (type_expression)))
+  (newline))

@@ -1,0 +1,255 @@
+==================
+bare implicit call
+==================
+
+Sub Test()
+    Foo
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (call_statement
+        (identifier))
+      (newline))
+    (end_sub_statement))
+  (newline))
+
+==================
+empty parenthesized implicit call
+==================
+
+Sub Test()
+    Foo()
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (call_statement
+        (call_expression
+          (identifier)
+          (argument_list)))
+      (newline))
+    (end_sub_statement))
+  (newline))
+
+==================
+implicit call with one argument
+==================
+
+Sub Test()
+    Foo 1
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (call_statement
+        (identifier)
+        (unparenthesized_argument_list
+          (number_literal)))
+      (newline))
+    (end_sub_statement))
+  (newline))
+
+==================
+implicit call with arguments
+==================
+
+Sub Test()
+    Foo 1, 2
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (call_statement
+        (identifier)
+        (unparenthesized_argument_list
+          (number_literal)
+          (number_literal)))
+      (newline))
+    (end_sub_statement))
+  (newline))
+
+==================
+explicit call with empty parentheses
+==================
+
+Sub Test()
+    Call Foo()
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (call_statement
+        (identifier)
+        (argument_list))
+      (newline))
+    (end_sub_statement))
+  (newline))
+
+==================
+explicit call with parentheses
+==================
+
+Sub Test()
+    Call Foo(1, 2)
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (call_statement
+        (identifier)
+        (argument_list
+          (number_literal)
+          (number_literal)))
+      (newline))
+    (end_sub_statement))
+  (newline))
+
+==================
+implicit call with parenthesized argument
+==================
+
+Sub Test()
+    Foo (x)
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (call_statement
+        (call_expression
+          (identifier)
+          (argument_list
+            (identifier))))
+      (newline))
+    (end_sub_statement))
+  (newline))
+
+==================
+member call without arguments
+==================
+
+Sub Test()
+    Debug.Print
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (call_statement
+        (qualified_member_expression
+          (identifier)
+          (identifier)))
+      (newline))
+    (end_sub_statement))
+  (newline))
+
+==================
+member call statement
+==================
+
+Sub Test()
+    Debug.Print x
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (call_statement
+        (qualified_member_expression
+          (identifier)
+          (identifier))
+        (output_list
+          (identifier)))
+      (newline))
+    (end_sub_statement))
+  (newline))
+
+==================
+member call with multiple arguments
+==================
+
+Sub Test()
+    Debug.Print x, y
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (call_statement
+        (qualified_member_expression
+          (identifier)
+          (identifier))
+        (output_list
+          (identifier)
+          (char_position)
+          (identifier)))
+      (newline))
+    (end_sub_statement))
+  (newline))

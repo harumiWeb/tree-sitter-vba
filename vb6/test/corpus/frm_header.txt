@@ -1,0 +1,628 @@
+==================
+vb6 form header with component references, nested controls and code boundary
+==================
+VERSION 5.00
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
+Object = "*\A..\Common\ucFoo.vbp"
+Begin VB.Form frmMain 
+   Caption         =   "Main"
+   ClientHeight    =   3195
+   ClientLeft      =   -15
+   ScaleHeight     =   213.171
+   BackColor       =   &H80000005&
+   Icon            =   "frmMain.frx":0000
+   StartUpPosition =   3  'Windows Default
+   MDIChild        =   -1  'True
+   BeginProperty Font 
+      Name            =   "MS Sans Serif"
+      Size            =   8.25
+      Underline       =   0   'False
+   EndProperty
+   Begin VB.TextBox txtName 
+      Text            =   $"frmMain.frx":0A1C
+      TabIndex        =   1
+   End
+   Begin VB.Frame Frame1 
+      Begin VB.CommandButton cmdOK 
+         Caption         =   "OK"
+         Default         =   -1  'True
+      End
+   End
+End
+Attribute VB_Name = "frmMain"
+Attribute VB_GlobalNameSpace = False
+Attribute VB_Creatable = False
+Attribute VB_PredeclaredId = True
+Attribute VB_Exposed = False
+Option Explicit
+
+Private Sub cmdOK_Click()
+    Unload Me
+    End
+End Sub
+
+---
+
+(source_file
+  (frm_version_statement
+    (number_literal))
+  (newline)
+  (frm_property_statement
+    (identifier)
+    (frm_object_reference
+      (string_literal)
+      (string_literal)))
+  (newline)
+  (frm_property_statement
+    (identifier)
+    (string_literal))
+  (newline)
+  (frm_begin_block
+    (qualified_member_expression
+      (identifier)
+      (identifier))
+    (identifier)
+    (newline)
+    (frm_property_statement
+      (identifier)
+      (string_literal))
+    (newline)
+    (frm_property_statement
+      (identifier)
+      (number_literal))
+    (newline)
+    (frm_property_statement
+      (identifier)
+      (number_literal))
+    (newline)
+    (frm_property_statement
+      (identifier)
+      (number_literal))
+    (newline)
+    (frm_property_statement
+      (identifier)
+      (number_literal))
+    (newline)
+    (frm_property_statement
+      (identifier)
+      (frm_blob_reference
+        (string_literal)
+        (frm_blob_offset)))
+    (newline)
+    (frm_property_statement
+      (identifier)
+      (number_literal))
+    (comment)
+    (newline)
+    (frm_property_statement
+      (identifier)
+      (number_literal))
+    (comment)
+    (newline)
+    (frm_begin_property_block
+      (identifier)
+      (newline)
+      (frm_property_statement
+        (identifier)
+        (string_literal))
+      (newline)
+      (frm_property_statement
+        (identifier)
+        (number_literal))
+      (newline)
+      (frm_property_statement
+        (identifier)
+        (number_literal))
+      (comment)
+      (newline))
+    (newline)
+    (frm_begin_block
+      (qualified_member_expression
+        (identifier)
+        (identifier))
+      (identifier)
+      (newline)
+      (frm_property_statement
+        (identifier)
+        (frm_blob_reference
+          (string_literal)
+          (frm_blob_offset)))
+      (newline)
+      (frm_property_statement
+        (identifier)
+        (number_literal))
+      (newline))
+    (newline)
+    (frm_begin_block
+      (qualified_member_expression
+        (identifier)
+        (identifier))
+      (identifier)
+      (newline)
+      (frm_begin_block
+        (qualified_member_expression
+          (identifier)
+          (identifier))
+        (identifier)
+        (newline)
+        (frm_property_statement
+          (identifier)
+          (string_literal))
+        (newline)
+        (frm_property_statement
+          (identifier)
+          (number_literal))
+        (comment)
+        (newline))
+      (newline))
+    (newline))
+  (newline)
+  (attribute_statement
+    (identifier)
+    (string_literal))
+  (newline)
+  (attribute_statement
+    (identifier)
+    (boolean_literal))
+  (newline)
+  (attribute_statement
+    (identifier)
+    (boolean_literal))
+  (newline)
+  (attribute_statement
+    (identifier)
+    (boolean_literal))
+  (newline)
+  (attribute_statement
+    (identifier)
+    (boolean_literal))
+  (newline)
+  (option_statement)
+  (newline)
+  (newline)
+  (sub_declaration
+    (visibility)
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (unload_statement
+        (identifier))
+      (newline)
+      (end_statement))
+    (end_sub_statement))
+  (newline))
+
+==================
+ocx collection properties with guid and indexed BeginProperty
+==================
+VERSION 5.00
+Begin VB.Form Form1 
+   Begin MSComctlLib.ListView lvw 
+      _ExtentX        =   1005
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Tahoma"
+      EndProperty
+      NumItems        =   1
+      BeginProperty ColumnHeader(1) {BDD1F055-858B-11D1-B16A-00C0F0283628} 
+         Text            =   "Name"
+         Object.Width           =   2540
+      EndProperty
+   End
+End
+Attribute VB_Name = "Form1"
+
+---
+
+(source_file
+  (frm_version_statement
+    (number_literal))
+  (newline)
+  (frm_begin_block
+    (qualified_member_expression
+      (identifier)
+      (identifier))
+    (identifier)
+    (newline)
+    (frm_begin_block
+      (qualified_member_expression
+        (identifier)
+        (identifier))
+      (identifier)
+      (newline)
+      (frm_property_statement
+        (identifier)
+        (number_literal))
+      (newline)
+      (frm_begin_property_block
+        (identifier)
+        (guid_literal)
+        (newline)
+        (frm_property_statement
+          (identifier)
+          (string_literal))
+        (newline))
+      (newline)
+      (frm_property_statement
+        (identifier)
+        (number_literal))
+      (newline)
+      (frm_begin_property_block
+        (identifier)
+        (frm_property_index
+          (number_literal))
+        (guid_literal)
+        (newline)
+        (frm_property_statement
+          (identifier)
+          (string_literal))
+        (newline)
+        (frm_property_statement
+          (frm_property_name
+            (identifier)
+            (identifier))
+          (number_literal))
+        (newline))
+      (newline))
+    (newline))
+  (newline)
+  (attribute_statement
+    (identifier)
+    (string_literal))
+  (newline))
+
+==================
+menu shortcut values
+==================
+VERSION 5.00
+Begin VB.Form Form1 
+   Begin VB.Menu mnuFile 
+      Caption         =   "&File"
+      Begin VB.Menu mnuOpen 
+         Caption         =   "&Open"
+         Shortcut        =   ^O
+      End
+      Begin VB.Menu mnuRun 
+         Shortcut        =   {F5}
+      End
+      Begin VB.Menu mnuDel 
+         Shortcut        =   {DEL}
+      End
+      Begin VB.Menu mnuHelp 
+         Shortcut        =   +{F1}
+      End
+      Begin VB.Menu mnuUndo 
+         Shortcut        =   %{BKSP}
+      End
+   End
+End
+
+---
+
+(source_file
+  (frm_version_statement
+    (number_literal))
+  (newline)
+  (frm_begin_block
+    (qualified_member_expression
+      (identifier)
+      (identifier))
+    (identifier)
+    (newline)
+    (frm_begin_block
+      (qualified_member_expression
+        (identifier)
+        (identifier))
+      (identifier)
+      (newline)
+      (frm_property_statement
+        (identifier)
+        (string_literal))
+      (newline)
+      (frm_begin_block
+        (qualified_member_expression
+          (identifier)
+          (identifier))
+        (identifier)
+        (newline)
+        (frm_property_statement
+          (identifier)
+          (string_literal))
+        (newline)
+        (frm_property_statement
+          (identifier)
+          (frm_shortcut_value))
+        (newline))
+      (newline)
+      (frm_begin_block
+        (qualified_member_expression
+          (identifier)
+          (identifier))
+        (identifier)
+        (newline)
+        (frm_property_statement
+          (identifier)
+          (frm_shortcut_value))
+        (newline))
+      (newline)
+      (frm_begin_block
+        (qualified_member_expression
+          (identifier)
+          (identifier))
+        (identifier)
+        (newline)
+        (frm_property_statement
+          (identifier)
+          (frm_shortcut_value))
+        (newline))
+      (newline)
+      (frm_begin_block
+        (qualified_member_expression
+          (identifier)
+          (identifier))
+        (identifier)
+        (newline)
+        (frm_property_statement
+          (identifier)
+          (frm_shortcut_value))
+        (newline))
+      (newline)
+      (frm_begin_block
+        (qualified_member_expression
+          (identifier)
+          (identifier))
+        (identifier)
+        (newline)
+        (frm_property_statement
+          (identifier)
+          (frm_shortcut_value))
+        (newline))
+      (newline))
+    (newline))
+  (newline))
+
+==================
+mdi form header
+==================
+VERSION 5.00
+Begin VB.MDIForm mdiMain 
+   Caption         =   "Parent"
+   WindowState     =   2  'Maximized
+End
+Attribute VB_Name = "mdiMain"
+
+---
+
+(source_file
+  (frm_version_statement
+    (number_literal))
+  (newline)
+  (frm_begin_block
+    (qualified_member_expression
+      (identifier)
+      (identifier))
+    (identifier)
+    (newline)
+    (frm_property_statement
+      (identifier)
+      (string_literal))
+    (newline)
+    (frm_property_statement
+      (identifier)
+      (number_literal))
+    (comment)
+    (newline))
+  (newline)
+  (attribute_statement
+    (identifier)
+    (string_literal))
+  (newline))
+
+==================
+vb3 era header with bare form type
+==================
+VERSION 2.00
+Begin Form Form1 
+   Caption         =   "Form1"
+   Begin CommandButton Command1 
+      Caption         =   "Command1"
+   End
+End
+
+Sub Command1_Click ()
+    Beep
+End Sub
+
+---
+
+(source_file
+  (frm_version_statement
+    (number_literal))
+  (newline)
+  (frm_begin_block
+    (identifier)
+    (identifier)
+    (newline)
+    (frm_property_statement
+      (identifier)
+      (string_literal))
+    (newline)
+    (frm_begin_block
+      (identifier)
+      (identifier)
+      (newline)
+      (frm_property_statement
+        (identifier)
+        (string_literal))
+      (newline))
+    (newline))
+  (newline)
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (beep_statement)
+      (newline))
+    (end_sub_statement))
+  (newline))
+
+==================
+header keywords are case insensitive: upper
+==================
+VERSION 5.00
+BEGIN VB.FORM Form1 
+   CAPTION         =   "Form1"
+   BEGINPROPERTY Font 
+      NAME            =   "Arial"
+   ENDPROPERTY
+END
+ATTRIBUTE VB_Name = "Form1"
+
+---
+
+(source_file
+  (frm_version_statement
+    (number_literal))
+  (newline)
+  (frm_begin_block
+    (qualified_member_expression
+      (identifier)
+      (identifier))
+    (identifier)
+    (newline)
+    (frm_property_statement
+      (identifier)
+      (string_literal))
+    (newline)
+    (frm_begin_property_block
+      (identifier)
+      (newline)
+      (frm_property_statement
+        (identifier)
+        (string_literal))
+      (newline))
+    (newline))
+  (newline)
+  (attribute_statement
+    (identifier)
+    (string_literal))
+  (newline))
+
+==================
+header keywords are case insensitive: mixed
+==================
+VERSION 5.00
+Begin VB.Form Form1 
+   Caption         =   "Form1"
+   BeginProperty Font 
+      Name            =   "Arial"
+   EndProperty
+End
+Attribute VB_Name = "Form1"
+
+---
+
+(source_file
+  (frm_version_statement
+    (number_literal))
+  (newline)
+  (frm_begin_block
+    (qualified_member_expression
+      (identifier)
+      (identifier))
+    (identifier)
+    (newline)
+    (frm_property_statement
+      (identifier)
+      (string_literal))
+    (newline)
+    (frm_begin_property_block
+      (identifier)
+      (newline)
+      (frm_property_statement
+        (identifier)
+        (string_literal))
+      (newline))
+    (newline))
+  (newline)
+  (attribute_statement
+    (identifier)
+    (string_literal))
+  (newline))
+
+==================
+header keywords are case insensitive: lower
+==================
+version 5.00
+begin vb.form Form1 
+   caption         =   "Form1"
+   beginproperty Font 
+      name            =   "Arial"
+   endproperty
+end
+attribute VB_Name = "Form1"
+
+---
+
+(source_file
+  (frm_version_statement
+    (number_literal))
+  (newline)
+  (frm_begin_block
+    (qualified_member_expression
+      (identifier)
+      (identifier))
+    (identifier)
+    (newline)
+    (frm_property_statement
+      (identifier)
+      (string_literal))
+    (newline)
+    (frm_begin_property_block
+      (identifier)
+      (newline)
+      (frm_property_statement
+        (identifier)
+        (string_literal))
+      (newline))
+    (newline))
+  (newline)
+  (attribute_statement
+    (identifier)
+    (string_literal))
+  (newline))
+
+==================
+line continuation inside the header
+==================
+VERSION 5.00
+Begin VB.Form Form1 
+   Caption         =   _
+      "Form1"
+   ClientHeight    =   3195
+End
+
+---
+
+(source_file
+  (frm_version_statement
+    (number_literal))
+  (newline)
+  (frm_begin_block
+    (qualified_member_expression
+      (identifier)
+      (identifier))
+    (identifier)
+    (newline)
+    (frm_property_statement
+      (identifier)
+      (line_continuation)
+      (string_literal))
+    (newline)
+    (frm_property_statement
+      (identifier)
+      (number_literal))
+    (newline))
+  (newline))
