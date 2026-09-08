@@ -1,0 +1,6 @@
+{
+  "_comment": "Code page per corpus project for files that are not valid UTF-8; anything not listed decodes as windows-1252. Used by scripts/parse-corpus.mjs --transcode.",
+  "CoolWindValley__CoolWind2D-GameEngine-CHS": "gbk",
+  "MuTsunTsai__PlowColorIder": "big5",
+  "cdhigh__Vb6Tkinter": "gbk"
+}

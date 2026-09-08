@@ -24,3 +24,7 @@ yarn-debug.log*
 *.tgz
 
 tmp/
+
+# The VB6 acceptance corpus is not vendored. Reconstruct it with
+# scripts/fetch-corpus.mjs; provenance is in corpus/MANIFEST.md.
+corpus/*/
