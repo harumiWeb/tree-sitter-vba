@@ -36,6 +36,21 @@ build/browser-consumer/
     └── web-tree-sitter.wasm
 ```
 
+## Initialization state reporting
+
+The `#status` element publishes two attributes so an automated check can tell a
+failed load from a slow one:
+
+- `data-stage` names the last completed initialization step: `none`,
+  `assets-loaded`, `runtime-init`, `language-load`, `set-language`, then
+  `initial-parse`.
+- `data-init` is `pending` while initialization runs, then `ready` or `failed`.
+  When it is `failed`, `#status` holds the browser's own error text.
+
+The real-browser smoke test races these attributes against the clean-parse
+result, so a grammar artifact the browser refuses to instantiate is reported
+with the failing stage and the browser's explanation.
+
 ## Use from another web project
 
 Install the exact runtime version required by the artifact contract:

@@ -21,6 +21,10 @@ function setStatus(message, isError = false) {
   status.classList.toggle("error", isError);
 }
 
+function completeStage(stage) {
+  status.dataset.stage = stage;
+}
+
 function parseSource() {
   if (!parser) return;
 
@@ -53,16 +57,27 @@ function parseSource() {
 }
 
 async function initialize() {
+  completeStage("assets-loaded");
+
   try {
     await Parser.init({
       locateFile: () => new URL("./vendor/web-tree-sitter.wasm", import.meta.url).href,
     });
+    completeStage("runtime-init");
+
     const language = await Language.load(new URL("./tree-sitter-vba.wasm", import.meta.url).href);
+    completeStage("language-load");
+
     parser = new Parser();
     parser.setLanguage(language);
+    completeStage("set-language");
+
     sourceInput.value = defaultSource;
     parseSource();
+    completeStage("initial-parse");
+    status.dataset.init = "ready";
   } catch (error) {
+    status.dataset.init = "failed";
     setStatus(error instanceof Error ? error.message : String(error), true);
     treeOutput.textContent = "Parser failed to load.";
   }

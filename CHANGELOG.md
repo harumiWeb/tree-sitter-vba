@@ -13,6 +13,14 @@ All notable changes to tree-sitter-vba will be documented in this file.
   artifact's size on every run, and covers a further dialect artifact without
   further configuration.
 
+### Changed
+
+- Report browser consumer load failures from the browser's own error state.
+  The fixture page publishes the last completed initialization stage and
+  whether initialization failed, and the real-browser smoke test raises that
+  state, console errors, page errors, and failing asset requests as soon as
+  any of them appears.
+
 ### Documented
 
 - Define the browser loading size limit, the gate value, and why the gate sits
