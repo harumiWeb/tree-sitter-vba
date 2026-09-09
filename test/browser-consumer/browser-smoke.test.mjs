@@ -155,9 +155,9 @@ async function describeFailure(page, signals, description, cause) {
 
 // Resolves when `predicate` holds. Throws as soon as the page reports an initialization
 // failure or the browser emits a failure signal, so a broken page is never waited out.
-async function waitForPageState(page, signals, description, predicate) {
+async function waitForPageState(page, signals, description, predicate, options = {}) {
   const cause = await Promise.race([
-    page.waitForFunction(predicate).then(
+    page.waitForFunction(predicate, undefined, options).then(
       () => null,
       (error) => error.message,
     ),
@@ -257,15 +257,32 @@ test("browser consumer publishes a grammar load failure instead of hanging", asy
     const signals = collectBrowserSignals(page);
 
     await page.goto(started.url, { waitUntil: "load" });
-    await page.waitForFunction(reachedInitialParse, undefined, { timeout: 5000 });
+
+    // Exercised through waitForPageState so the race and the report are what is under
+    // test. The 5 s budget is the assertion: a page that stops publishing its failure
+    // state fails here by timing out instead of passing on a hand-built report.
+    await assert.rejects(
+      () =>
+        waitForPageState(page, signals, "initial parse", reachedInitialParse, {
+          timeout: 5000,
+        }),
+      (error) => {
+        assert.match(error.message, /^initial parse did not complete: /);
+        assert.doesNotMatch(error.message, /Timeout 5000ms exceeded/);
+        assert.match(error.message, /last completed stage: runtime-init/);
+        assert.match(error.message, /initialization: failed/);
+        assert.doesNotMatch(error.message, /reported status: Loading parser/);
+        // The browser's own diagnosis has to survive into the report. Chromium names the
+        // compile error on the console while web-tree-sitter puts a downstream error on
+        // #status, so the WebAssembly failure is asserted against the whole report rather
+        // than against the status line alone.
+        assert.match(error.message, /WebAssembly\.\w+\(\): expected magic word/);
+        return true;
+      },
+    );
 
     assert.equal(await readAttribute(page, "#status", "data-init"), "failed");
     assert.equal(await readAttribute(page, "#status", "data-stage"), "runtime-init");
-
-    const cause = "the page reported a failed load";
-    const report = await describeFailure(page, signals, "initial parse", cause);
-    assert.match(report, /last completed stage: runtime-init/);
-    assert.doesNotMatch(report, /reported status: Loading parser/);
   } finally {
     await page?.close();
     await browser?.close();
