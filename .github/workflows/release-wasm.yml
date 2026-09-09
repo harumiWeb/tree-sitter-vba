@@ -49,6 +49,9 @@ jobs:
       - name: Build and test WebAssembly parser
         run: pnpm test:wasm
 
+      - name: Check browser parser artifact size
+        run: pnpm check:wasm-size
+
       - name: Create checksum
         run: sha256sum build/wasm/tree-sitter-vba.wasm > build/wasm/tree-sitter-vba.wasm.sha256
 

@@ -42,6 +42,9 @@ jobs:
       - name: Test third-party metadata checker
         run: pnpm test:third-party
 
+      - name: Test browser parser artifact size checker
+        run: pnpm test:wasm-size
+
       - name: Check third-party fixture metadata
         run: pnpm check:third-party
 
@@ -53,6 +56,9 @@ jobs:
 
       - name: Test standalone WebAssembly build
         run: pnpm test:wasm
+
+      - name: Check browser parser artifact size
+        run: pnpm check:wasm-size
 
       - name: Test native and browser parser parity
         run: pnpm test:parity

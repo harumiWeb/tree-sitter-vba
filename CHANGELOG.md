@@ -4,6 +4,19 @@ All notable changes to tree-sitter-vba will be documented in this file.
 
 ## Unreleased
 
+### Added
+
+- Gate the built browser parser artifact at 7,864,320 bytes in CI and in the
+  release workflow, below the 8MB buffer above which Chromium refuses a
+  main-thread `WebAssembly.Instance` and `Language.load()` fails. The check
+  reports every artifact's size on every run, and covers a further dialect
+  artifact without further configuration.
+
+### Documented
+
+- Define the browser loading size limit, the gate value, and why the gate sits
+  below the limit in the browser artifact contract.
+
 ## [v0.13.0] - 2026-08-31
 
 ### Added
