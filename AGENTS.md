@@ -44,6 +44,7 @@ root: .   (shared grammar core in common/, dialect dirs vba/ and vb6/, VB6 corpu
 │   ├── build-playground.mjs
 │   ├── build-wasm.mjs
 │   ├── check-third-party-licenses.mjs
+│   ├── compare-cst.mjs   (vba tree diff over examples/ against a reference checkout)
 │   └── parse-examples.mjs
 ├── playground/
 │   ├── examples/
