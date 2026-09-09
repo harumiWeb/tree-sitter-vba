@@ -25,8 +25,11 @@ function completeStage(stage) {
   status.dataset.stage = stage;
 }
 
+// Reports whether a syntax tree was produced. `Parser.parse()` is specified to return
+// `null`, and recovery aggregation can throw, so neither failure reaches a caller as an
+// exception. Callers own the initialization state and need the outcome to publish it.
 function parseSource() {
-  if (!parser) return;
+  if (!parser) return false;
 
   const tree = parser.parse(sourceInput.value);
   if (!tree) {
@@ -34,7 +37,7 @@ function parseSource() {
     errorCount.textContent = "—";
     missingCount.textContent = "—";
     treeOutput.textContent = "";
-    return;
+    return false;
   }
 
   try {
@@ -48,9 +51,11 @@ function parseSource() {
         : "Recovery nodes detected",
       recovery.errorCount > 0 || recovery.missingCount > 0,
     );
+    return true;
   } catch (error) {
     setStatus(error instanceof Error ? error.message : String(error), true);
     treeOutput.textContent = "";
+    return false;
   } finally {
     tree.delete();
   }
@@ -73,16 +78,27 @@ async function initialize() {
     completeStage("set-language");
 
     sourceInput.value = defaultSource;
-    parseSource();
+    if (!parseSource()) {
+      // parseSource has already displayed the cause. Throwing routes it to the same
+      // handler as a load failure, so `data-init` cannot read "ready" after a parse
+      // the page itself reported as failed.
+      throw new Error(status.textContent || "the initial parse produced no syntax tree");
+    }
     completeStage("initial-parse");
     status.dataset.init = "ready";
   } catch (error) {
     status.dataset.init = "failed";
     setStatus(error instanceof Error ? error.message : String(error), true);
-    treeOutput.textContent = "Parser failed to load.";
+    treeOutput.textContent = parser ? "" : "Parser failed to load.";
   }
 }
 
-parseButton.addEventListener("click", parseSource);
+// A failed re-parse is the same hazard after initialization: without this the page keeps
+// advertising "ready" and a consumer waits out its timeout on a condition that cannot hold.
+parseButton.addEventListener("click", () => {
+  if (!parseSource()) {
+    status.dataset.init = "failed";
+  }
+});
 window.addEventListener("pagehide", () => parser?.delete());
 initialize();
