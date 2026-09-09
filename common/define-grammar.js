@@ -39,6 +39,19 @@ module.exports = function defineGrammar(dialect) {
     isVB6
       ? choice($._dot_immediate, $._dot_spaced, $._bang_immediate, $._bang_spaced)
       : choice(".", "!");
+  // VB6 anchors `#If` / `#ElseIf` to a following blank; VBA keeps the base's token.
+  const preprocessorKeyword = (word) =>
+    isVB6 ? token(seq(caseInsensitive(word), /[ \t]/)) : caseInsensitive(word);
+
+  // The vba grammar is the base grammar plus two documented changes: the
+  // bang_identifier node and unsplit omitted-argument lists. Everything the VB6
+  // corpus needed beyond that is behind isVB6, including constructs VBA also
+  // accepts (Let, GoSub, ReDim ... As, Global, On Local Error, octal literals).
+  // Each of those widens what the vba parser accepts and changes the CST that
+  // downstream consumers already handle, and together they grew the vba parse
+  // table from 15,236 to 21,995 states and the browser Wasm past Chromium's
+  // 8 MiB synchronous-instantiation limit. Un-gating one is a one-line change;
+  // measure its table cost first.
 
   return grammar({
     name: dialect,
@@ -81,8 +94,9 @@ module.exports = function defineGrammar(dialect) {
       [$._unparenthesized_print_output_expression, $._primary_expression],
       [$._unparenthesized_print_output_expression, $._expression],
       [$._unparenthesized_print_output_expression, $._print_output_call_operand],
-      // `a.b!` type suffix versus `a.b!c` bang member access; see _member_bang_suffixed_identifier.
-      [$._member_property, $._member_bang_suffixed_identifier],
+      // VB6 only. `a.b!` type suffix versus `a.b!c` bang member access; see
+      // _member_bang_suffixed_identifier.
+      ...(isVB6 ? [[$._member_property, $._member_bang_suffixed_identifier]] : []),
       // VB6 only. `Foo .Bar` with no further arguments is the same tree under the
       // spaced-first-argument alternative and the generic call; GLR keeps both and
       // the alternative's prec.dynamic 2 settles it.
@@ -150,7 +164,7 @@ module.exports = function defineGrammar(dialect) {
                 seq(caseInsensitive("Rem"), /(?:[^A-Za-z0-9_\r\n](?:[^\r\n]*[ \t]_[ \t]*\r?\n)*[^\r\n]*)?/),
               ),
             )
-          : token(choice(seq("'", /.*/), seq(caseInsensitive("Rem"), /([^A-Za-z0-9_\r\n].*)?/))),
+          : token(choice(seq("'", /.*/), seq(caseInsensitive("Rem"), /([ \t].*)?/))),
 
       frm_version_statement: ($) =>
         prec.right(seq(caseInsensitive("VERSION"), $.number_literal, optional($.identifier))),
@@ -161,22 +175,25 @@ module.exports = function defineGrammar(dialect) {
       frm_begin_block: ($) =>
         seq(
           caseInsensitive("Begin"),
-          optional(
-            choice(
-              seq(
-                field(
-                  "type",
+          // VB6 also allows a bare identifier as the type, so a type must be followed
+          // by a name or `Begin Foo` is ambiguous. VBA keeps the base's independent
+          // optionals.
+          ...(isVB6
+            ? [
+                optional(
                   choice(
-                    $.member_expression,
-                    $.guid_literal,
-                    ...(isVB6 ? [$.identifier] : []),
+                    seq(
+                      field("type", choice($.member_expression, $.guid_literal, $.identifier)),
+                      field("name", $.identifier),
+                    ),
+                    field("name", $.identifier),
                   ),
                 ),
-                field("name", $.identifier),
-              ),
-              field("name", $.identifier),
-            ),
-          ),
+              ]
+            : [
+                optional(field("type", choice($.member_expression, $.guid_literal))),
+                optional(field("name", $.identifier)),
+              ]),
           $._statement_separator,
           repeat(
             choice(
@@ -359,7 +376,7 @@ module.exports = function defineGrammar(dialect) {
             choice(
               $.identifier,
               $.bang_identifier,
-              alias(caseInsensitive("End"), $.identifier),
+              ...(isVB6 ? [alias(caseInsensitive("End"), $.identifier)] : []),
             ),
           ),
           optional(field("bounds", $.array_bounds)),
@@ -368,7 +385,7 @@ module.exports = function defineGrammar(dialect) {
 
       type_preprocessor_if: ($) =>
         seq(
-          token(seq(caseInsensitive("#If"), /[ \t]/)),
+          preprocessorKeyword("#If"),
           field("condition", $._condition_expression),
           caseInsensitive("Then"),
           $.newline,
@@ -384,7 +401,7 @@ module.exports = function defineGrammar(dialect) {
 
       type_preprocessor_elseif: ($) =>
         seq(
-          token(seq(caseInsensitive("#ElseIf"), /[ \t]/)),
+          preprocessorKeyword("#ElseIf"),
           field("condition", $._condition_expression),
           caseInsensitive("Then"),
           $.newline,
@@ -451,7 +468,7 @@ module.exports = function defineGrammar(dialect) {
       // `#` + identifier instead of `#If` + `ile`; the lexer has no lookahead.
       preprocessor_if: ($) =>
         seq(
-          token(seq(caseInsensitive("#If"), /[ \t]/)),
+          preprocessorKeyword("#If"),
           field("condition", $._condition_expression),
           caseInsensitive("Then"),
           $.newline,
@@ -486,7 +503,7 @@ module.exports = function defineGrammar(dialect) {
 
       preprocessor_elseif: ($) =>
         seq(
-          token(seq(caseInsensitive("#ElseIf"), /[ \t]/)),
+          preprocessorKeyword("#ElseIf"),
           field("condition", $._condition_expression),
           caseInsensitive("Then"),
           $.newline,
@@ -620,7 +637,7 @@ module.exports = function defineGrammar(dialect) {
 
       _conditional_sub_headers: ($) =>
         seq(
-          token(seq(caseInsensitive("#If"), /[ \t]/)),
+          preprocessorKeyword("#If"),
           field("condition", $._condition_expression),
           caseInsensitive("Then"),
           $.newline,
@@ -629,7 +646,7 @@ module.exports = function defineGrammar(dialect) {
           field("consequence_body", optional($.conditional_branch_body)),
           repeat(
             seq(
-              token(seq(caseInsensitive("#ElseIf"), /[ \t]/)),
+              preprocessorKeyword("#ElseIf"),
               field("condition", $._condition_expression),
               caseInsensitive("Then"),
               $.newline,
@@ -653,7 +670,7 @@ module.exports = function defineGrammar(dialect) {
 
       _conditional_function_headers: ($) =>
         seq(
-          token(seq(caseInsensitive("#If"), /[ \t]/)),
+          preprocessorKeyword("#If"),
           field("condition", $._condition_expression),
           caseInsensitive("Then"),
           $.newline,
@@ -662,7 +679,7 @@ module.exports = function defineGrammar(dialect) {
           field("consequence_body", optional($.conditional_branch_body)),
           repeat(
             seq(
-              token(seq(caseInsensitive("#ElseIf"), /[ \t]/)),
+              preprocessorKeyword("#ElseIf"),
               field("condition", $._condition_expression),
               caseInsensitive("Then"),
               $.newline,
@@ -686,7 +703,7 @@ module.exports = function defineGrammar(dialect) {
 
       _conditional_property_headers: ($) =>
         seq(
-          token(seq(caseInsensitive("#If"), /[ \t]/)),
+          preprocessorKeyword("#If"),
           field("condition", $._condition_expression),
           caseInsensitive("Then"),
           $.newline,
@@ -695,7 +712,7 @@ module.exports = function defineGrammar(dialect) {
           field("consequence_body", optional($.conditional_branch_body)),
           repeat(
             seq(
-              token(seq(caseInsensitive("#ElseIf"), /[ \t]/)),
+              preprocessorKeyword("#ElseIf"),
               field("condition", $._condition_expression),
               caseInsensitive("Then"),
               $.newline,
@@ -792,11 +809,18 @@ module.exports = function defineGrammar(dialect) {
           $.on_error_statement,
           $.resume_statement,
           $.goto_statement,
-          $.gosub_statement,
-          $.return_statement,
-          $.let_statement,
-          $.lset_statement,
-          $.rset_statement,
+          // VB6 only, per the note beside preprocessorKeyword. In the vba table these
+          // five cost 206 states and 3.3 MB of parser.c because every statement list
+          // (block, inline, numbered) carries them.
+          ...(isVB6
+            ? [
+                $.gosub_statement,
+                $.return_statement,
+                $.let_statement,
+                $.lset_statement,
+                $.rset_statement,
+              ]
+            : []),
           $.label_statement,
           $.line_number_statement,
           $.exit_statement,
@@ -839,7 +863,9 @@ module.exports = function defineGrammar(dialect) {
       variable_declaration: ($) =>
         choice(
           seq(
-            choice(field("visibility", $.visibility), $._dim_keyword),
+            isVB6
+              ? choice(field("visibility", $.visibility), $._dim_keyword)
+              : field("visibility", $.visibility),
             field("with_events_modifier", $.with_events_modifier),
             commaSep1($.variable_declarator),
           ),
@@ -968,7 +994,7 @@ module.exports = function defineGrammar(dialect) {
           caseInsensitive("Public"),
           caseInsensitive("Private"),
           caseInsensitive("Friend"),
-          caseInsensitive("Global"),
+          ...(isVB6 ? [caseInsensitive("Global")] : []),
         ),
 
       if_statement: ($) =>
@@ -1014,16 +1040,26 @@ module.exports = function defineGrammar(dialect) {
             optional(
               seq(
                 caseInsensitive("Else"),
-                optional(
-                  field("alternative", choice($.inline_statement_sequence, $._inline_statement)),
-                ),
+                isVB6
+                  ? optional(
+                      field(
+                        "alternative",
+                        choice($.inline_statement_sequence, $._inline_statement),
+                      ),
+                    )
+                  : field("alternative", choice($.inline_statement_sequence, $._inline_statement)),
               ),
             ),
           ),
         ),
 
       inline_statement_sequence: ($) =>
-        prec.left(seq($._inline_statement, repeat1(seq(":", repeat(":"), $._inline_statement)))),
+        prec.left(
+          seq(
+            $._inline_statement,
+            repeat1(seq(":", ...(isVB6 ? [repeat(":")] : []), $._inline_statement)),
+          ),
+        ),
 
       _inline_statement: ($) =>
         choice(
@@ -1042,11 +1078,18 @@ module.exports = function defineGrammar(dialect) {
           $.on_error_statement,
           $.resume_statement,
           $.goto_statement,
-          $.gosub_statement,
-          $.return_statement,
-          $.let_statement,
-          $.lset_statement,
-          $.rset_statement,
+          // VB6 only, per the note beside preprocessorKeyword. In the vba table these
+          // five cost 206 states and 3.3 MB of parser.c because every statement list
+          // (block, inline, numbered) carries them.
+          ...(isVB6
+            ? [
+                $.gosub_statement,
+                $.return_statement,
+                $.let_statement,
+                $.lset_statement,
+                $.rset_statement,
+              ]
+            : []),
           $.redim_statement,
           $.erase_statement,
           $.open_statement,
@@ -1084,10 +1127,13 @@ module.exports = function defineGrammar(dialect) {
           optional(field("start_line", $.line_number_prefix)),
           caseInsensitive("Select"),
           caseInsensitive("Case"),
-          field("value", choice($.comparison_expression, $._expression)),
-          optional(":"),
+          // VB6 only: a comparison as the selector, a `:` after it, and `#If` blocks
+          // between clauses. The `#If` form alone cost the vba table 3,247 states and
+          // 11.9 MB of parser.c, half of the growth that broke the browser artifact.
+          field("value", isVB6 ? choice($.comparison_expression, $._expression) : $._expression),
+          ...(isVB6 ? [optional(":")] : []),
           $.newline,
-          repeat(choice($.newline, $.case_clause, $.case_preprocessor_if)),
+          repeat(choice($.newline, $.case_clause, ...(isVB6 ? [$.case_preprocessor_if] : []))),
           optional(field("end_line", $.line_number_prefix)),
           caseInsensitive("End"),
           caseInsensitive("Select"),
@@ -1097,14 +1143,14 @@ module.exports = function defineGrammar(dialect) {
       // `Select Case`. Distinct from a `#If` inside a case body.
       case_preprocessor_if: ($) =>
         seq(
-          token(seq(caseInsensitive("#If"), /[ \t]/)),
+          preprocessorKeyword("#If"),
           field("condition", $._condition_expression),
           caseInsensitive("Then"),
           $.newline,
           repeat(choice($.newline, $.case_clause)),
           repeat(
             seq(
-              token(seq(caseInsensitive("#ElseIf"), /[ \t]/)),
+              preprocessorKeyword("#ElseIf"),
               field("condition", $._condition_expression),
               caseInsensitive("Then"),
               $.newline,
@@ -1129,7 +1175,7 @@ module.exports = function defineGrammar(dialect) {
         choice(
           seq(caseInsensitive("Is"), choice("<", "<=", ">", ">=", "=", "<>"), $._expression),
           seq($._expression, caseInsensitive("To"), $._expression),
-          $.comparison_expression,
+          ...(isVB6 ? [$.comparison_expression] : []),
           $._expression,
         ),
 
@@ -1147,7 +1193,7 @@ module.exports = function defineGrammar(dialect) {
         prec.right(
           choice(
             seq(
-              optional(":"),
+              ...(isVB6 ? [optional(":")] : []),
               $.newline,
               field(
                 "body",
@@ -1160,7 +1206,7 @@ module.exports = function defineGrammar(dialect) {
               ),
             ),
             seq(
-              optional(":"),
+              ...(isVB6 ? [optional(":")] : []),
               $.newline,
               field("body", optional($.block)),
               optional(field("end_line", $.line_number_prefix)),
@@ -1332,7 +1378,7 @@ module.exports = function defineGrammar(dialect) {
       on_error_statement: ($) =>
         seq(
           caseInsensitive("On"),
-          optional(caseInsensitive("Local")),
+          ...(isVB6 ? [optional(caseInsensitive("Local"))] : []),
           caseInsensitive("Error"),
           choice(
             seq(caseInsensitive("GoTo"), field("target", choice($.identifier, lineNumber($)))),
@@ -1430,11 +1476,18 @@ module.exports = function defineGrammar(dialect) {
           $.on_error_statement,
           $.resume_statement,
           $.goto_statement,
-          $.gosub_statement,
-          $.return_statement,
-          $.let_statement,
-          $.lset_statement,
-          $.rset_statement,
+          // VB6 only, per the note beside preprocessorKeyword. In the vba table these
+          // five cost 206 states and 3.3 MB of parser.c because every statement list
+          // (block, inline, numbered) carries them.
+          ...(isVB6
+            ? [
+                $.gosub_statement,
+                $.return_statement,
+                $.let_statement,
+                $.lset_statement,
+                $.rset_statement,
+              ]
+            : []),
           $.exit_statement,
           $.redim_statement,
           $.const_declaration,
@@ -1474,7 +1527,7 @@ module.exports = function defineGrammar(dialect) {
           seq(
             field("name", choice($.identifier, $.bang_identifier, $.member_expression)),
             $.array_bounds,
-            optional(field("type", $.as_type_clause)),
+            ...(isVB6 ? [optional(field("type", $.as_type_clause))] : []),
           ),
         ),
 
@@ -1532,7 +1585,7 @@ module.exports = function defineGrammar(dialect) {
           caseInsensitive("Input"),
           field("number", $.file_number),
           ",",
-          commaSep1(field("target", $._assignable_expression)),
+          commaSep1(field("target", isVB6 ? $._assignable_expression : $._callable_expression)),
         ),
 
       line_input_statement: ($) =>
@@ -1618,7 +1671,7 @@ module.exports = function defineGrammar(dialect) {
           alias(caseInsensitive("Line"), $.identifier),
           alias(caseInsensitive("Name"), $.identifier),
           $.identifier,
-          $.bang_identifier,
+          ...(isVB6 ? [$.bang_identifier] : []),
           $.new_expression,
           $.addressof_expression,
           $.type_of_expression,
@@ -1957,14 +2010,39 @@ module.exports = function defineGrammar(dialect) {
           field("right", choice($.comparison_expression, $._expression)),
         ),
 
-      assignment_statement: ($) =>
-        seq(
-          // `Load = True` inside `Property Get Load()`: Load is a statement keyword
-          // only when followed by a target, so a bare `Load =` is an assignment.
-          field("left", choice($._assignable_expression, alias(caseInsensitive("Load"), $.identifier))),
-          "=",
-          field("right", choice($.logical_value_expression, $.comparison_expression, $._expression)),
-        ),
+      // `arr(i) = x` is also readable as a call to `arr` with the comparison `(i) = x`
+      // as its argument, and GLR holds both to the end of the line. The base breaks
+      // that tie by tree shape, so vba keeps whatever it produced before. VB6 has no
+      // consumers to keep stable and takes the assignment, prec.dynamic 1, which the
+      // spaced-first-argument call (prec.dynamic 2) still outranks for `Foo .Bar = 1`.
+      // The bonus is confined to a call-shaped target: on a plain name it would also
+      // steer error recovery, turning `x = Foo(` from a MISSING `)` into an ERROR.
+      assignment_statement: ($) => {
+        const right = field(
+          "right",
+          choice($.logical_value_expression, $.comparison_expression, $._expression),
+        );
+        if (isVB6) {
+          return choice(
+            prec.dynamic(1, seq(field("left", $.call_expression), "=", right)),
+            seq(
+              // `Load = True` inside `Property Get Load()`: Load is a statement keyword
+              // only when followed by a target, so a bare `Load =` is an assignment.
+              field(
+                "left",
+                choice(
+                  $._callable_expression,
+                  alias(caseInsensitive("Line"), $.identifier),
+                  alias(caseInsensitive("Load"), $.identifier),
+                ),
+              ),
+              "=",
+              right,
+            ),
+          );
+        }
+        return seq(field("left", $._assignable_expression), "=", right);
+      },
 
       coordinate_pair: ($) =>
         prec(
@@ -2142,7 +2220,7 @@ module.exports = function defineGrammar(dialect) {
           field("start", $.coordinate_pair),
           optional(caseInsensitive("Step")),
           "-",
-          optional(caseInsensitive("Step")),
+          ...(isVB6 ? [optional(caseInsensitive("Step"))] : []),
           field("end", $.coordinate_pair),
           isVB6 ? optional($._graphics_argument_tail) : optional(seq(",", $.print_argument_sequence)),
         ),
@@ -2180,10 +2258,13 @@ module.exports = function defineGrammar(dialect) {
           ),
         ),
 
-      // prec.dynamic 1 per consumed item: when GLR holds both "argument list continues"
-      // and "list ended, the number starts a line-numbered statement", the longer list wins.
-      _omitted_argument_tail_item: ($) =>
-        prec.dynamic(1, prec.right(2, seq(",", optional($._argument)))),
+      // No dynamic precedence here. A per-item bonus rewards the reading that splits a
+      // bare call in two: `CallByName a, b, c, d` becomes the expression statement
+      // `CallByName` followed by a call to `a` whose omitted-first-argument list
+      // collects one bonus per comma, and it beats the correct reading, which has no
+      // omitted argument and scores nothing. Every bare call with three or more
+      // arguments split that way while still parsing without an ERROR node.
+      _omitted_argument_tail_item: ($) => prec.right(2, seq(",", optional($._argument))),
 
       _argument: ($) =>
         choice(
@@ -2224,11 +2305,11 @@ module.exports = function defineGrammar(dialect) {
           $.file_number_literal,
           $.call_expression,
           $.member_expression,
-          alias($._name_member_expression, $.qualified_member_expression),
+          ...(isVB6 ? [alias($._name_member_expression, $.qualified_member_expression)] : []),
           alias(caseInsensitive("Line"), $.identifier),
           alias(caseInsensitive("Name"), $.identifier),
           $.identifier,
-          $.bang_identifier,
+          ...(isVB6 ? [$.bang_identifier] : []),
           $.new_expression,
           $.addressof_expression,
           $.type_of_expression,
@@ -2252,12 +2333,17 @@ module.exports = function defineGrammar(dialect) {
 
       // A comparison may itself be the left operand (`a = b <> 0`, `x Is Nothing = False`);
       // prec.left 7 on comparison_expression makes the chain left-associative.
+      // VB6 only for the chained form `a = b > c`. Admitting it in vba makes the call
+      // reading of `arr(i) = x > 0` viable, callee `arr` with the single argument
+      // `(i) = x > 0`, and it then wins the tie against the assignment; the base
+      // grammar cannot parse the chain, so the call reading dies at `>` and the
+      // assignment is the only tree left. Keeping vba on the base rule keeps that.
       _comparison_operand: ($) =>
         choice(
           $._primary_expression,
           $._signed_unary_expression,
           $.binary_expression,
-          $.comparison_expression,
+          ...(isVB6 ? [$.comparison_expression] : []),
         ),
 
       logical_value_expression: ($) =>
@@ -2323,9 +2409,9 @@ module.exports = function defineGrammar(dialect) {
       _callable_expression: ($) =>
         choice(
           $.identifier,
-          $.bang_identifier,
+          ...(isVB6 ? [$.bang_identifier] : []),
           alias(caseInsensitive("Name"), $.identifier),
-          alias($._name_member_expression, $.qualified_member_expression),
+          ...(isVB6 ? [alias($._name_member_expression, $.qualified_member_expression)] : []),
           $.member_expression,
         ),
 
@@ -2337,6 +2423,11 @@ module.exports = function defineGrammar(dialect) {
       // identifier is the word token).
       // prec 2: prefer shifting the `!` over reducing the bare name, since a following
       // statement could otherwise begin with a bang implicit member (`!Field = 1`).
+      // In vba the node appears only where a declaration names something; in
+      // expression positions (`total! = 0#`, `Print x!`) it is VB6 only. There it
+      // competes with the bang member operator in every expression state and cost the
+      // vba table about 1,200 states, which is what pushed the browser artifact over
+      // the size gate.
       bang_identifier: ($) => prec(2, seq($.identifier, bang($))),
 
       _print_method_callee: ($) =>
@@ -2400,7 +2491,12 @@ module.exports = function defineGrammar(dialect) {
           caseInsensitive("AddressOf"),
           field(
             "target",
-            choice($.identifier, alias($._addressof_dotted_target, $.qualified_member_expression)),
+            isVB6
+              ? choice(
+                  $.identifier,
+                  alias($._addressof_dotted_target, $.qualified_member_expression),
+                )
+              : $.identifier,
           ),
         ),
 
@@ -2431,7 +2527,7 @@ module.exports = function defineGrammar(dialect) {
               "receiver",
               choice(
                 $.identifier,
-                alias($._name_member_expression, $.qualified_member_expression),
+                ...(isVB6 ? [alias($._name_member_expression, $.qualified_member_expression)] : []),
                 $.call_expression,
                 $.member_expression,
               ),
@@ -2464,7 +2560,7 @@ module.exports = function defineGrammar(dialect) {
       _member_property: ($) =>
         choice(
           prec(6, choice($.identifier, alias(caseInsensitive("Line"), $.identifier))),
-          alias($._member_bang_suffixed_identifier, $.bang_identifier),
+          ...(isVB6 ? [alias($._member_bang_suffixed_identifier, $.bang_identifier)] : []),
         ),
 
       // `rec.Total! = 0#` versus `Ctl.Properties!Text`: after `a.b` the `!` is either
@@ -2519,7 +2615,7 @@ module.exports = function defineGrammar(dialect) {
         token(
           choice(
             /-?&[Hh][0-9A-Fa-f]+[$%&!#@^]?/,
-            /-?&[Oo][0-7]+[$%&!#@^]?/,
+            ...(isVB6 ? [/-?&[Oo][0-7]+[$%&!#@^]?/] : []),
             /-?(?:\d+\.\d*|\.\d+|\d+)(?:[Ee][+-]?\d+)?[$%&!#@^]?/,
           ),
         ),
@@ -2533,7 +2629,7 @@ module.exports = function defineGrammar(dialect) {
       empty_literal: (_) => caseInsensitive("Empty"),
 
       // No `"` inside: otherwise `Print #1, "# ..."` lexes `#1, "#` as a date.
-      date_literal: (_) => token(/#[^#"\r\n]+#/),
+      date_literal: (_) => (isVB6 ? token(/#[^#"\r\n]+#/) : token(/#[^#\r\n]+#/)),
 
       guid_literal: (_) => token(/\{[0-9A-Fa-f-]+\}/),
 

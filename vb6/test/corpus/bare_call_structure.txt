@@ -1,0 +1,98 @@
+==================
+bare call with five arguments keeps its callee
+==================
+Sub Test()
+    CallByName mHost, "HandleDayButtonClick", VbMethod, mDateValue, x
+    Foo a, b, c, d
+    obj.Bar w, x, y, z
+End Sub
+
+---
+
+(source_file
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (call_statement
+        (identifier)
+        (unparenthesized_argument_list
+          (identifier)
+          (string_literal)
+          (identifier)
+          (identifier)
+          (identifier)))
+      (newline)
+      (call_statement
+        (identifier)
+        (unparenthesized_argument_list
+          (identifier)
+          (identifier)
+          (identifier)
+          (identifier)))
+      (newline)
+      (call_statement
+        (qualified_member_expression
+          (identifier)
+          (identifier))
+        (unparenthesized_argument_list
+          (identifier)
+          (identifier)
+          (identifier)
+          (identifier)))
+      (newline))
+    (end_sub_statement))
+  (newline))
+
+==================
+indexed assignment is an assignment whatever the right-hand side
+==================
+Sub Test()
+    arr(i) = x
+    arr(i) = x > 0
+    o.P(i) = f(x) > 0
+End Sub
+
+---
+
+(source_file
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (assignment_statement
+        (call_expression
+          (identifier)
+          (argument_list
+            (identifier)))
+        (identifier))
+      (newline)
+      (assignment_statement
+        (call_expression
+          (identifier)
+          (argument_list
+            (identifier)))
+        (comparison_expression
+          (identifier)
+          (comparison_operator)
+          (number_literal)))
+      (newline)
+      (assignment_statement
+        (call_expression
+          (qualified_member_expression
+            (identifier)
+            (identifier))
+          (argument_list
+            (identifier)))
+        (comparison_expression
+          (call_expression
+            (identifier)
+            (argument_list
+              (identifier)))
+          (comparison_operator)
+          (number_literal)))
+      (newline))
+    (end_sub_statement))
+  (newline))

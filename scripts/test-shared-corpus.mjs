@@ -59,6 +59,15 @@ const divergences = [
     pattern: /^\s*\w+;\s*\w+\s*$/m,
   },
   {
+    // `x = "abc` with no closing quote. VB6 gives an assignment whose target is a
+    // call-shaped expression dynamic precedence 1 (see assignment_statement), and
+    // that reshapes recovery here: the base folds the next line into the broken
+    // assignment's right-hand side, VB6 closes the damage at the line end and
+    // parses the next line on its own. Both contain ERROR.
+    reason: "error-recovery tree on an unterminated string differs; both contain ERROR",
+    pattern: /^(?:[^"\r\n]*"[^"\r\n]*")*[^"\r\n]*"[^"\r\n]*$/m,
+  },
+  {
     // `For i = 1 To 2: For j = 1 To 2: v = j: Next j: v = i: Next i`. The base pins a
     // CST in which `Next i` is a call statement; VB6 restructured single_line_block so
     // multi-statement inline loops parse, and gives the outer loop its own Next.

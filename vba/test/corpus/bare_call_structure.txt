@@ -1,0 +1,225 @@
+==================
+CallByName with four arguments keeps CallByName as the callee
+==================
+Sub Test()
+    CallByName mHost, "HandleDayButtonClick", VbMethod, mDateValue
+End Sub
+
+---
+
+(source_file
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (call_statement
+        (identifier)
+        (unparenthesized_argument_list
+          (identifier)
+          (string_literal)
+          (identifier)
+          (identifier)))
+      (newline))
+    (end_sub_statement))
+  (newline))
+
+==================
+procedure call with three arguments is one call
+==================
+Sub Test()
+    Foo a, b, c
+End Sub
+
+---
+
+(source_file
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (call_statement
+        (identifier)
+        (unparenthesized_argument_list
+          (identifier)
+          (identifier)
+          (identifier)))
+      (newline))
+    (end_sub_statement))
+  (newline))
+
+==================
+member call with three arguments is one call
+==================
+Sub Test()
+    obj.Bar x, y, z
+End Sub
+
+---
+
+(source_file
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (call_statement
+        (qualified_member_expression
+          (identifier)
+          (identifier))
+        (unparenthesized_argument_list
+          (identifier)
+          (identifier)
+          (identifier)))
+      (newline))
+    (end_sub_statement))
+  (newline))
+
+==================
+Err.Raise with three arguments is one call
+==================
+Sub Test()
+    Err.Raise 5, "src", "desc"
+End Sub
+
+---
+
+(source_file
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (call_statement
+        (qualified_member_expression
+          (identifier)
+          (identifier))
+        (unparenthesized_argument_list
+          (number_literal)
+          (string_literal)
+          (string_literal)))
+      (newline))
+    (end_sub_statement))
+  (newline))
+
+==================
+indexed assignment with a comparison on the right is an assignment
+==================
+Sub Test()
+    arr(i) = x > 0
+    With o
+        .ObjectStyle(A.B) = RHS > 0
+    End With
+End Sub
+
+---
+
+(source_file
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (assignment_statement
+        (call_expression
+          (identifier)
+          (argument_list
+            (identifier)))
+        (comparison_expression
+          (identifier)
+          (comparison_operator)
+          (number_literal)))
+      (newline)
+      (with_statement
+        (identifier)
+        (newline)
+        (block
+          (assignment_statement
+            (call_expression
+              (implicit_member_expression
+                (identifier))
+              (argument_list
+                (qualified_member_expression
+                  (identifier)
+                  (identifier))))
+            (comparison_expression
+              (identifier)
+              (comparison_operator)
+              (number_literal)))
+          (newline)))
+      (newline))
+    (end_sub_statement))
+  (newline))
+
+==================
+omitted arguments keep the trailing arguments under one callee
+==================
+Sub Test()
+    X.Y , , a
+    Foo a, b, , c, d
+    obj.M "s", , 10
+End Sub
+
+---
+
+(source_file
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (call_statement
+        (qualified_member_expression
+          (identifier)
+          (identifier))
+        (unparenthesized_argument_list
+          (identifier)))
+      (newline)
+      (call_statement
+        (identifier)
+        (unparenthesized_argument_list
+          (identifier)
+          (identifier)
+          (identifier)
+          (identifier)))
+      (newline)
+      (call_statement
+        (qualified_member_expression
+          (identifier)
+          (identifier))
+        (unparenthesized_argument_list
+          (string_literal)
+          (number_literal)))
+      (newline))
+    (end_sub_statement))
+  (newline))
+
+==================
+comma-led continuation lines stay in one argument list
+==================
+Sub Test()
+    Foo a _
+      , b _
+      , c
+End Sub
+
+---
+
+(source_file
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (call_statement
+        (identifier)
+        (unparenthesized_argument_list
+          (identifier)
+          (line_continuation)
+          (identifier)
+          (line_continuation)
+          (identifier)))
+      (newline))
+    (end_sub_statement))
+  (newline))

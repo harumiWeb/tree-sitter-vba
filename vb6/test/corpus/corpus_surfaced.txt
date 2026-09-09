@@ -44,21 +44,19 @@ End Sub
         (goto_statement
           (identifier)))
       (newline)
-      (call_statement
-        (bang_identifier
-          (identifier))
-        (unparenthesized_argument_list
-          (comparison_expression
-            (parenthesized_expression
+      (assignment_statement
+        (call_expression
+          (bang_identifier
+            (identifier))
+          (argument_list
+            (identifier)))
+        (binary_expression
+          (call_expression
+            (bang_identifier
               (identifier))
-            (comparison_operator)
-            (binary_expression
-              (call_expression
-                (bang_identifier
-                  (identifier))
-                (argument_list
-                  (identifier)))
-              (number_literal)))))
+            (argument_list
+              (identifier)))
+          (number_literal)))
       (newline)
       (label_statement
         (identifier))
@@ -337,11 +335,10 @@ End Sub
           (string_literal)
           (number_literal)))
       (newline)
-      (expression_statement
-        (identifier))
       (call_statement
         (identifier)
         (unparenthesized_argument_list
+          (identifier)
           (number_literal)
           (number_literal)
           (number_literal)

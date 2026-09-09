@@ -64,11 +64,11 @@ its generated parser, and its corpus tests:
 common/define-grammar.js   the whole grammar: defineGrammar("vba" | "vb6")
 vba/grammar.js             module.exports = require("../common/define-grammar")("vba")
 vba/src/                   generated vba parser; node-types.json is tracked, parser.c is generated
-vba/test/corpus/           240 VBA corpus cases
+vba/test/corpus/           247 VBA corpus cases
 vb6/grammar.js             module.exports = require("../common/define-grammar")("vb6")
 vb6/src/scanner.c          a four-token external scanner (see Design principles)
 vb6/src/                   generated vb6 parser
-vb6/test/corpus/           42 VB6 corpus cases
+vb6/test/corpus/           44 VB6 corpus cases
 corpus/                    provenance of the VB6 acceptance corpus; the source files are fetched, not vendored
 examples/                  481 VBA example files
 ```
@@ -207,11 +207,11 @@ The grammar currently supports:
 - apostrophe comments and `Rem` comments
 - string, integer, floating-point, boolean, date, `Nothing`, `Null`, and `Empty`
   literals
-- decimal, hexadecimal, and octal (`&O`) literals with common VBA type
-  characters, including Currency (`@`) and LongLong (`^`), exponent notation
-  such as `1E-3`, and abbreviated decimal forms such as `.5` and `1.`
+- decimal and hexadecimal literals with common VBA type characters, including
+  Currency (`@`) and LongLong (`^`), exponent notation such as `1E-3`, and
+  abbreviated decimal forms such as `.5` and `1.`
 - identifiers with common VBA type-declaration characters, including `@` and
-  `^`; the Single character `!` (`Dim X!`, `rec.Total! = 0#`) is supported as
+  `^`; in declarations the Single character `!` (`Dim X!`, `Const Y! = 1`) is
   a `bang_identifier` because it shares its token with the bang member operator
 - identifiers, simple type clauses, dotted type names, and array type suffixes
 - `Attribute` statements
@@ -220,14 +220,13 @@ The grammar currently supports:
 - `Sub`, `Function`, and `Property Get/Let/Set` procedures
 - `Event` declarations
 - `RaiseEvent` statements
-- `Dim`, `Static`, `WithEvents`, `Dim WithEvents`, `Global`, visibility-based
-  variable declarations, arrays, `ReDim` (including `ReDim x(n) As T`),
-  `Erase`, and `Const`
+- `Dim`, `Static`, `WithEvents`, visibility-based variable declarations,
+  arrays, `ReDim`, `Erase`, and `Const`
 - default type declaration statements such as `DefInt` and `DefStr`
 - `Type` and `Enum` declarations
 - external `Declare Function` and `Declare Sub` declarations, including
   `PtrSafe`, `Lib`, and `Alias`
-- simple assignments, `Let` assignments, `Set` assignments, and `LSet`/`RSet`
+- simple assignments and `Set` assignments
 - `Name oldPath As newPath` file rename statements
 - calls, named arguments, omitted arguments anywhere in an unparenthesized
   list, call-site `ByVal`, member access, bang member access, and leading-dot
@@ -237,18 +236,16 @@ The grammar currently supports:
   with trailing output-position controls
 - `New` expressions and `As New` declarations
 - fixed-length string declarations
-- `AddressOf` expressions, including `AddressOf Module.Procedure`
+- `AddressOf` expressions
 - common VBA operator precedence for arithmetic, concatenation, comparison, and
   logical operators; `=`, `<>`, `<`, `<=`, `>`, `>=`, `Is`, and `Like`
-  comparisons are represented as `comparison_expression`, and a comparison may
-  itself be the left operand of another (`a = b <> 0`, `x Is Nothing = False`)
-- block `If`, including colon-separated multi-statement single-line branches
-  and an empty `Else`; `Select Case`, including comparisons as the selector or
-  in `Case` clauses and `#If` around whole `Case` clauses; and nested single-line
-  `For`, `For Each`, `Do`, `While/Wend`, and `With`
+  comparisons are represented as `comparison_expression`
+- block `If`, including colon-separated multi-statement single-line branches;
+  `Select Case`; and nested single-line `For`, `For Each`, `Do`, `While/Wend`,
+  and `With`
 - `Next` counter lists such as `Next i` and `Next j, i`
-- `On Error`, `On Local Error`, computed `On ... GoTo`/`GoSub`, `Resume`,
-  `GoTo`, `GoSub`/`Return`, labels, standalone `End`, and `Exit` statements
+- `On Error`, computed `On ... GoTo`/`GoSub`, `Resume`, `GoTo`, labels,
+  standalone `End`, and `Exit` statements
 - common file I/O statements: `Open`, `Input #`, `Line Input #`, `Print #`,
   `Write #`, `Close`, `Get #`, `Put #`, `Lock`, `Unlock`, `Seek`, and `Reset`,
   including Print/Write output lists with trailing `;` or `,` and common
@@ -297,6 +294,21 @@ and adds:
 - calls whose first argument is an implicit member, `Foo .Bar, x`, read as a
   call with two arguments rather than a chain `Foo.Bar` with an omitted
   argument, through the external scanner described under Design principles
+- constructs VBA also has but the base VBA grammar never accepted; they are
+  `vb6` only so that the `vba` parser's trees and parse table stay those of the
+  base (see [ADR 0005](docs/adr/0005-vba-parser-stays-the-base-grammar.md)):
+  `Let`, `LSet`/`RSet`, `GoSub`/`Return`, `On Local Error`, `Global`,
+  `Dim WithEvents`, `ReDim x(n) As T`, octal `&O` literals,
+  `AddressOf Module.Procedure`, `Name.Member` receivers, a comparison as the
+  left operand of another (`a = b <> 0`, `x Is Nothing = False`), a comparison
+  as the `Select Case` selector or in a `Case` clause, `#If` around whole `Case`
+  clauses, an empty `Else` in a single-line `If`, `::` between inline
+  statements, a colon before a `For` body's line break, a `Type` member named
+  `End`, and the Single `!` suffix in expression positions (`total! = 0#`,
+  `rec.Percent! = 0#`)
+- an indexed or property target on the left of `=` is an assignment; the base
+  lets `arr(i) = x` fall to a call of `arr` with the comparison `(i) = x` as
+  its argument when tree shape happens to prefer it
 
 The VB6-only rules are gated by `isVB6` in the core and add these node types:
 `frm_object_reference`, `frm_shortcut_value`, `frm_locale_number`,
@@ -335,7 +347,9 @@ source-text scanning:
   `attribute_statement` exposes `name` and `value`.
 - a name written with the Single type character is a `bang_identifier` whose
   children are the `identifier` and the `!`; the other type characters stay
-  inside the `identifier` token.
+  inside the `identifier` token. In `vba` the node occurs where a declaration
+  names something (`Dim`, `Const`, `ReDim`, `Type` members, parameters,
+  `Function` names); `vb6` also produces it in expression positions.
 
 ## Expression node API
 
@@ -586,12 +600,30 @@ tests in the dialect the change affects. Do not weaken existing expectations
 just to make a grammar change pass. A shared change must leave the `vba` trees
 unchanged; `scripts/test-shared-corpus.mjs` then runs the VBA corpus under the
 `vb6` parser as well, so a `vb6` divergence shows up as a failure there and is
-either fixed or recorded in the script's skip list with its reason. The 21
+either fixed or recorded in the script's skip list with its reason. The 23
 skips today are the VBA7 constructs, the `.frx` offset node
 (`frm_blob_offset` in `vb6`, `number_literal` in `vba`), the pinned one-statement
 inline-loop shape, four cases where the `vba` parser emits an opaque
-`_ambiguous_call_statement` token that `vb6` parses with structure, and three
+`_ambiguous_call_statement` token that `vb6` parses with structure, and five
 error-recovery shapes on deliberately invalid input.
+
+A clean parse is not a stable tree. A bare call whose callee has been split
+into its own `expression_statement` still has zero `ERROR` nodes, so neither
+`pnpm parse:examples` nor the corpus can see that class of regression unless a
+case pins the exact shape. `scripts/compare-cst.mjs` closes that gap for the
+`vba` parser: it parses all 481 example files with a reference checkout and with
+this checkout, strips positions, and lists every differing file by the node
+types each hunk adds and removes. Point `--base` at a `main` worktree and name
+the intended differences with `--allow`:
+
+```text
+git worktree add /tmp/tree-sitter-vba-main main
+node scripts/compare-cst.mjs --base /tmp/tree-sitter-vba-main --allow bang_identifier
+```
+
+Run it before proposing any change to `common/define-grammar.js` that touches
+calls, arguments, or precedence, and explain every remaining hunk in the pull
+request.
 
 The repository also includes real-world exported VBA examples. These examples
 are parsed in CI to catch regressions against practical Excel/VBA code.
