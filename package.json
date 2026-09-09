@@ -62,11 +62,13 @@
     "test:playground": "pnpm build:playground && node --test test/playground/playground.test.mjs",
     "build:browser-consumer": "pnpm build:wasm && node scripts/build-browser-consumer.mjs build/wasm/tree-sitter-vba.wasm",
     "check:browser-artifact": "node scripts/check-browser-artifact-contract.mjs",
+    "check:wasm-size": "node scripts/check-wasm-size.mjs",
+    "test:wasm-size": "node --test test/wasm-size.test.mjs",
     "test:browser-consumer:node": "node --test test/browser-consumer/browser-consumer.test.mjs",
     "test:browser-consumer:browser": "node --test test/browser-consumer/browser-smoke.test.mjs",
     "test:browser-consumer": "pnpm build:browser-consumer && pnpm test:browser-consumer:node && pnpm test:browser-consumer:browser",
     "fmt": "oxfmt",
-    "check": "pnpm test && pnpm test:third-party && pnpm check:third-party && pnpm check:browser-artifact && pnpm check:go-parser && pnpm test:binding && pnpm parse:examples && pnpm query:examples && pnpm test:wasm && pnpm test:parity && pnpm test:playground && pnpm test:browser-consumer"
+    "check": "pnpm test && pnpm test:third-party && pnpm test:wasm-size && pnpm check:third-party && pnpm check:browser-artifact && pnpm check:go-parser && pnpm test:binding && pnpm parse:examples && pnpm query:examples && pnpm test:wasm && pnpm check:wasm-size && pnpm test:parity && pnpm test:playground && pnpm test:browser-consumer"
   },
   "dependencies": {
     "node-addon-api": "^8.8.0",

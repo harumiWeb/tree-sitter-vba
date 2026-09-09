@@ -52,6 +52,12 @@ jobs:
       - name: Build and test playground
         run: pnpm test:playground
 
+      # The playground loads the grammar through the URL form of `Language.load()`, the
+      # instantiation Chromium refuses above 8MB. Gating here is what keeps an artifact
+      # the browser cannot load out of the deployed site.
+      - name: Check browser parser artifact size
+        run: pnpm check:wasm-size
+
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
 

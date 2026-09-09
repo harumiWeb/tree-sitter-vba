@@ -49,6 +49,52 @@ Wasm linker, or compile the grammar. They download the published artifact and
 load it with the supported browser runtime. Local generation is only required
 when developing or intentionally rebuilding the grammar.
 
+## Browser loading size limit
+
+Chromium disallows a synchronous `WebAssembly.Instance` on the main thread when
+the buffer is larger than 8MB, and that is the instantiation `Language.load()`
+performs:
+
+```text
+WebAssembly.Instance is disallowed on the main thread, if the buffer size is
+larger than 8MB. Use WebAssembly.instantiate() instead.
+```
+
+Beyond that size the artifact is unloadable rather than slower. Asset loading
+and `Parser.init()` still succeed and the failure lands on `Language.load()`, so
+`parser.setLanguage()` and the first parse are never reached.
+
+CI gates the built artifact at 7,864,320 bytes (7.50 MiB), which is 524,288
+bytes under the limit:
+
+```text
+pnpm check:wasm-size
+```
+
+The gate sits under the limit rather than at it. An artifact at the limit is
+already broken for every browser consumer, so the margin is what makes the build
+fail on the commit that grows the parser. The reported 8MB also does not say
+whether it counts 8,000,000 or 8,388,608 bytes, and a gate below both readings
+does not need that resolved.
+
+Every `.wasm` file under `build/` and `playground/dist/` is checked, excluding
+the `vendor/` runtime copied from `web-tree-sitter`, whose size belongs to that
+package. The check reports each artifact's size on every run, so parser growth
+is visible in the build log before it reaches the gate. It is a file-size
+assertion and requires no browser or network access. The checker's own coverage,
+including that an oversized artifact fails and that the failure names the browser
+constraint, runs as `pnpm test:wasm-size`.
+
+The gate runs after the Wasm build in CI, again in CI once every generated
+artifact exists, in the release workflow before the artifact is published, and in
+the Pages workflow before `playground/dist` is uploaded. The deployed playground
+loads the grammar through the URL form of `Language.load()`, so the published site
+is the consumer that meets this limit first.
+
+Raising the gate is not a way to pass it. Either the generated parser becomes
+smaller, or grammar loading moves to an asynchronous instantiation path that
+supports a larger artifact.
+
 ## Release and versioning contract
 
 The browser artifact is published as a GitHub Release asset. A release tag
