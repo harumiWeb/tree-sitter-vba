@@ -85,6 +85,12 @@ assertion and requires no browser or network access. The checker's own coverage,
 including that an oversized artifact fails and that the failure names the browser
 constraint, runs as `pnpm test:wasm-size`.
 
+The gate runs after the Wasm build in CI, again in CI once every generated
+artifact exists, in the release workflow before the artifact is published, and in
+the Pages workflow before `playground/dist` is uploaded. The deployed playground
+loads the grammar through the URL form of `Language.load()`, so the published site
+is the consumer that meets this limit first.
+
 Raising the gate is not a way to pass it. Either the generated parser becomes
 smaller, or grammar loading moves to an asynchronous instantiation path that
 supports a larger artifact.

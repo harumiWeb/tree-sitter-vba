@@ -86,3 +86,9 @@ jobs:
 
       - name: Test browser consumer example
         run: pnpm test:browser-consumer
+
+      # Re-run once every generated artifact exists. The check above runs on `build/wasm`
+      # alone; `playground/dist` and `build/browser-consumer` are produced by the two
+      # steps before this one, and `playground/dist` is what the Pages workflow deploys.
+      - name: Check every generated browser parser artifact size
+        run: pnpm check:wasm-size
