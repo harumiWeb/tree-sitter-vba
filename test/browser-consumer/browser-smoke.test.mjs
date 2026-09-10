@@ -1,6 +1,8 @@
 import assert from "node:assert/strict";
 import { createServer } from "node:http";
+import { cpSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { readFile } from "node:fs/promises";
+import { tmpdir } from "node:os";
 import { extname, join, relative, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 import test from "node:test";
@@ -16,7 +18,7 @@ const contentTypes = new Map([
   [".wasm", "application/wasm"],
 ]);
 
-function resolveRequestPath(requestUrl) {
+function resolveRequestPath(requestUrl, documentRoot) {
   let pathname;
   try {
     pathname = decodeURIComponent(new URL(requestUrl ?? "/", "http://localhost").pathname);
@@ -25,15 +27,15 @@ function resolveRequestPath(requestUrl) {
   }
 
   const relativePath = pathname === "/" ? "index.html" : pathname.replace(/^\/+/, "");
-  const filePath = resolve(dist, relativePath);
-  const fileRelativeToDist = relative(dist, filePath);
-  if (fileRelativeToDist.startsWith(`..${sep}`) || fileRelativeToDist === "..") {
+  const filePath = resolve(documentRoot, relativePath);
+  const fileRelativeToRoot = relative(documentRoot, filePath);
+  if (fileRelativeToRoot.startsWith(`..${sep}`) || fileRelativeToRoot === "..") {
     return null;
   }
   return filePath;
 }
 
-async function startServer() {
+async function startServer(documentRoot = dist) {
   const server = createServer(async (request, response) => {
     if (request.method !== "GET" && request.method !== "HEAD") {
       response.writeHead(405, { Allow: "GET, HEAD" });
@@ -41,7 +43,7 @@ async function startServer() {
       return;
     }
 
-    const filePath = resolveRequestPath(request.url);
+    const filePath = resolveRequestPath(request.url, documentRoot);
     if (!filePath) {
       response.writeHead(400);
       response.end();
@@ -79,6 +81,123 @@ async function readPageValue(page, selector) {
   return page.locator(selector).textContent();
 }
 
+// The browser explains its own failures, so every failure signal the page can emit is
+// collected and raced against the success condition. `firstBrowserFailure` never settles
+// while the page is healthy.
+function collectBrowserSignals(page) {
+  const consoleErrors = [];
+  const pageErrors = [];
+  const failedRequests = [];
+  const assetErrors = [];
+  let reportBrowserFailure;
+  const firstBrowserFailure = new Promise((resolveFailure) => {
+    reportBrowserFailure = resolveFailure;
+  });
+
+  page.on("console", (message) => {
+    if (message.type() === "error") {
+      consoleErrors.push(message.text());
+      reportBrowserFailure("the browser logged a console error");
+    }
+  });
+  page.on("pageerror", (error) => {
+    pageErrors.push(error.message);
+    reportBrowserFailure("the page raised an uncaught error");
+  });
+  page.on("requestfailed", (request) => {
+    failedRequests.push(`${request.url()}: ${request.failure()?.errorText ?? "unknown error"}`);
+    reportBrowserFailure("a page request failed");
+  });
+  page.on("response", (response) => {
+    const pathname = new URL(response.url()).pathname;
+    if (response.status() >= 400 && /\.(?:js|mjs|wasm)$/i.test(pathname)) {
+      assetErrors.push(`${response.status()} ${response.url()}`);
+      reportBrowserFailure("an asset request returned an error status");
+    }
+  });
+
+  return { consoleErrors, pageErrors, failedRequests, assetErrors, firstBrowserFailure };
+}
+
+async function readAttribute(page, selector, attribute) {
+  try {
+    return (await page.locator(selector).getAttribute(attribute)) ?? "unset";
+  } catch {
+    return "unreadable";
+  }
+}
+
+async function readText(page, selector) {
+  try {
+    return ((await readPageValue(page, selector)) ?? "").split("\n", 1)[0].slice(0, 300);
+  } catch {
+    return "unreadable";
+  }
+}
+
+function formatList(entries) {
+  return entries.length === 0 ? "none" : `\n  - ${entries.join("\n  - ")}`;
+}
+
+async function describeFailure(page, signals, description, cause) {
+  return [
+    `${description} did not complete: ${cause}`,
+    `last completed stage: ${await readAttribute(page, "#status", "data-stage")}`,
+    `initialization: ${await readAttribute(page, "#status", "data-init")}`,
+    `last parse: ${await readAttribute(page, "#status", "data-parse")}`,
+    `reported status: ${await readText(page, "#status")}`,
+    `syntax tree: ${await readText(page, "#tree")}`,
+    `console errors: ${formatList(signals.consoleErrors)}`,
+    `page errors: ${formatList(signals.pageErrors)}`,
+    `failed requests: ${formatList(signals.failedRequests)}`,
+    `asset errors: ${formatList(signals.assetErrors)}`,
+  ].join("\n");
+}
+
+// The two failure states the page publishes about itself. `data-init` is written once by
+// initialization; `data-parse` describes the most recent parse attempt and is rewritten by
+// the next one, so a failed re-parse is reported when it happens and forgotten once a later
+// parse succeeds.
+const pageReportedFailure = () => {
+  const element = document.querySelector("#status");
+  if (element?.dataset.init === "failed") return "the page reported a failed load";
+  if (element?.dataset.parse === "failed") return "the page reported a failed parse";
+  return false;
+};
+
+// Resolves when `predicate` holds. Throws as soon as the page publishes a failure state or
+// the browser emits a failure signal, so a broken page is never waited out: every failure
+// is part of the race rather than read after it.
+async function waitForPageState(page, signals, description, predicate, options = {}) {
+  const cause = await Promise.race([
+    page.waitForFunction(predicate, undefined, options).then(
+      () => null,
+      (error) => error.message,
+    ),
+    page.waitForFunction(pageReportedFailure, undefined, options).then(
+      (handle) => handle.jsonValue(),
+      (error) => error.message,
+    ),
+    signals.firstBrowserFailure,
+  ]);
+
+  if (cause === null) {
+    return;
+  }
+  assert.fail(await describeFailure(page, signals, description, cause));
+}
+
+const initialParseIsClean = () => document.querySelector("#status")?.textContent === "Clean parse";
+
+// Predicates are serialized into the page, so each one is a closed literal.
+const missingNodeDetected = () =>
+  document.querySelector("#status")?.textContent === "Recovery nodes detected" &&
+  document.querySelector("#missing-count")?.textContent === "1";
+
+const errorNodeDetected = () =>
+  document.querySelector("#status")?.textContent === "Recovery nodes detected" &&
+  document.querySelector("#error-count")?.textContent === "1";
+
 test("generated browser consumer works in a real browser", async () => {
   const { server, url } = await startServer();
   let browser;
@@ -87,59 +206,160 @@ test("generated browser consumer works in a real browser", async () => {
   try {
     browser = await chromium.launch({ headless: true });
     page = await browser.newPage();
-    const consoleErrors = [];
-    const pageErrors = [];
-    const failedRequests = [];
-    const assetErrors = [];
-
-    page.on("console", (message) => {
-      if (message.type() === "error") {
-        consoleErrors.push(message.text());
-      }
-    });
-    page.on("pageerror", (error) => {
-      pageErrors.push(error.message);
-    });
-    page.on("requestfailed", (request) => {
-      failedRequests.push(`${request.url()}: ${request.failure()?.errorText ?? "unknown error"}`);
-    });
-    page.on("response", (response) => {
-      const pathname = new URL(response.url()).pathname;
-      if (response.status() >= 400 && /\.(?:js|mjs|wasm)$/i.test(pathname)) {
-        assetErrors.push(`${response.status()} ${response.url()}`);
-      }
-    });
+    const signals = collectBrowserSignals(page);
 
     await page.goto(url, { waitUntil: "load" });
-    await page.waitForFunction(
-      () => document.querySelector("#status")?.textContent === "Clean parse",
-    );
+    await waitForPageState(page, signals, "initial parse", initialParseIsClean);
 
     assert.deepEqual(
-      { consoleErrors, pageErrors, failedRequests, assetErrors },
+      {
+        consoleErrors: signals.consoleErrors,
+        pageErrors: signals.pageErrors,
+        failedRequests: signals.failedRequests,
+        assetErrors: signals.assetErrors,
+      },
       { consoleErrors: [], pageErrors: [], failedRequests: [], assetErrors: [] },
     );
+    assert.equal(await readAttribute(page, "#status", "data-stage"), "initial-parse");
     assert.equal(await readPageValue(page, "#error-count"), "0");
     assert.equal(await readPageValue(page, "#missing-count"), "0");
     assert.match((await readPageValue(page, "#tree")) ?? "", /^\(source_file/);
 
     await page.locator("#source").fill("Sub Test()\n    value = Foo(\nEnd Sub\n");
     await page.getByRole("button", { name: "Parse source" }).click();
-    await page.waitForFunction(
-      () =>
-        document.querySelector("#status")?.textContent === "Recovery nodes detected" &&
-        document.querySelector("#missing-count")?.textContent === "1",
-    );
+    await waitForPageState(page, signals, "missing-node recovery parse", missingNodeDetected);
     assert.equal(await readPageValue(page, "#error-count"), "0");
 
     await page.locator("#source").fill('Sub Test()\n    message = "unterminated\nEnd Sub\n');
     await page.getByRole("button", { name: "Parse source" }).click();
-    await page.waitForFunction(
-      () =>
-        document.querySelector("#status")?.textContent === "Recovery nodes detected" &&
-        document.querySelector("#error-count")?.textContent === "1",
-    );
+    await waitForPageState(page, signals, "error-node recovery parse", errorNodeDetected);
     assert.equal(await readPageValue(page, "#missing-count"), "0");
+    assert.equal(await readAttribute(page, "#status", "data-parse"), "ok");
+  } finally {
+    await page?.close();
+    await browser?.close();
+    await new Promise((resolveServer) => server.close(resolveServer));
+  }
+});
+
+// A grammar artifact the browser cannot instantiate is the failure this test exists to
+// report. The short wait is the assertion: the page must publish the failure instead of
+// leaving the success condition to time out.
+test("browser consumer publishes a grammar load failure instead of hanging", async () => {
+  const brokenDist = mkdtempSync(join(tmpdir(), "tree-sitter-vba-broken-"));
+  let browser;
+  let page;
+  let server;
+
+  try {
+    for (const entry of ["index.html", "app.js", "recovery.mjs", "vendor"]) {
+      cpSync(join(dist, entry), join(brokenDist, entry), { recursive: true });
+    }
+    writeFileSync(join(brokenDist, "tree-sitter-vba.wasm"), Buffer.from("not a wasm module"));
+
+    const started = await startServer(brokenDist);
+    server = started.server;
+
+    browser = await chromium.launch({ headless: true });
+    page = await browser.newPage();
+    const signals = collectBrowserSignals(page);
+
+    await page.goto(started.url, { waitUntil: "load" });
+
+    // Exercised through waitForPageState so the race and the report are what is under
+    // test. The 5 s budget is the assertion: a page that stops publishing its failure
+    // state fails here by timing out instead of passing on a hand-built report.
+    await assert.rejects(
+      () =>
+        waitForPageState(page, signals, "initial parse", initialParseIsClean, {
+          timeout: 5000,
+        }),
+      (error) => {
+        assert.match(error.message, /^initial parse did not complete: /);
+        assert.doesNotMatch(error.message, /Timeout 5000ms exceeded/);
+        assert.match(error.message, /last completed stage: runtime-init/);
+        assert.match(error.message, /initialization: failed/);
+        assert.doesNotMatch(error.message, /reported status: Loading parser/);
+        // The browser's own diagnosis has to survive into the report. Chromium names the
+        // compile error on the console while web-tree-sitter puts a downstream error on
+        // #status, so the WebAssembly failure is asserted against the whole report rather
+        // than against the status line alone.
+        assert.match(error.message, /WebAssembly\.\w+\(\): expected magic word/);
+        return true;
+      },
+    );
+
+    assert.equal(await readAttribute(page, "#status", "data-init"), "failed");
+    assert.equal(await readAttribute(page, "#status", "data-stage"), "runtime-init");
+  } finally {
+    await page?.close();
+    await browser?.close();
+    if (server) {
+      await new Promise((resolveServer) => server.close(resolveServer));
+    }
+    rmSync(brokenDist, { recursive: true, force: true });
+  }
+});
+
+// A re-parse that produces no tree emits no console, page or request error; the page's own
+// `data-parse` is the only signal, so this is the case that reaches the Playwright timeout
+// if that attribute is read after the wait instead of raced. The stub is installed on the
+// module the page already loaded, so the fixture under test is the built one.
+test("browser consumer reports a failed re-parse without waiting for the timeout", async () => {
+  const { server, url } = await startServer();
+  let browser;
+  let page;
+
+  try {
+    browser = await chromium.launch({ headless: true });
+    page = await browser.newPage();
+    const signals = collectBrowserSignals(page);
+
+    await page.goto(url, { waitUntil: "load" });
+    await waitForPageState(page, signals, "initial parse", initialParseIsClean);
+
+    await page.evaluate(async () => {
+      const { Parser } = await import("/vendor/web-tree-sitter.js");
+      const parse = Parser.prototype.parse;
+      Parser.prototype.parse = function () {
+        Parser.prototype.parse = parse;
+        return null;
+      };
+    });
+    await page.locator("#source").fill("Sub Test()\n    value = Foo(\nEnd Sub\n");
+    await page.getByRole("button", { name: "Parse source" }).click();
+
+    // The 5 s budget is the assertion: a wait that only notices the failed parse after its
+    // own timeout fails here with the timeout message instead of the page's report.
+    await assert.rejects(
+      () =>
+        waitForPageState(page, signals, "missing-node recovery parse", missingNodeDetected, {
+          timeout: 5000,
+        }),
+      (error) => {
+        assert.match(
+          error.message,
+          /^missing-node recovery parse did not complete: the page reported a failed parse/,
+        );
+        assert.doesNotMatch(error.message, /Timeout 5000ms exceeded/);
+        assert.match(error.message, /initialization: ready/);
+        assert.match(error.message, /last parse: failed/);
+        assert.match(error.message, /reported status: Parser did not return a syntax tree/);
+        return true;
+      },
+    );
+
+    // The stub restored itself, so the next click parses for real: a failed re-parse must
+    // not be reported against the successful one that follows it.
+    await page.getByRole("button", { name: "Parse source" }).click();
+    await waitForPageState(
+      page,
+      signals,
+      "recovery parse after a failed re-parse",
+      missingNodeDetected,
+    );
+    assert.equal(await readAttribute(page, "#status", "data-init"), "ready");
+    assert.equal(await readAttribute(page, "#status", "data-parse"), "ok");
   } finally {
     await page?.close();
     await browser?.close();
