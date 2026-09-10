@@ -25,9 +25,10 @@ function completeStage(stage) {
   status.dataset.stage = stage;
 }
 
-// Reports whether a syntax tree was produced. `Parser.parse()` is specified to return
-// `null`, and recovery aggregation can throw, so neither failure reaches a caller as an
-// exception. Callers own the initialization state and need the outcome to publish it.
+// Publishes the outcome of one parse attempt on `data-parse`. `Parser.parse()` is specified
+// to return `null`, and recovery aggregation can throw, so neither failure reaches a caller
+// as an exception; the attribute is what an automated check can race against. It is
+// rewritten on every attempt, so a failed parse never outlives the next successful one.
 function parseSource() {
   if (!parser) return false;
 
@@ -37,6 +38,7 @@ function parseSource() {
     errorCount.textContent = "—";
     missingCount.textContent = "—";
     treeOutput.textContent = "";
+    status.dataset.parse = "failed";
     return false;
   }
 
@@ -51,10 +53,12 @@ function parseSource() {
         : "Recovery nodes detected",
       recovery.errorCount > 0 || recovery.missingCount > 0,
     );
+    status.dataset.parse = "ok";
     return true;
   } catch (error) {
     setStatus(error instanceof Error ? error.message : String(error), true);
     treeOutput.textContent = "";
+    status.dataset.parse = "failed";
     return false;
   } finally {
     tree.delete();
@@ -93,12 +97,9 @@ async function initialize() {
   }
 }
 
-// A failed re-parse is the same hazard after initialization: without this the page keeps
-// advertising "ready" and a consumer waits out its timeout on a condition that cannot hold.
-parseButton.addEventListener("click", () => {
-  if (!parseSource()) {
-    status.dataset.init = "failed";
-  }
-});
+// `data-init` describes initialization and is written once by `initialize()`. A re-parse
+// reports through `data-parse` alone, so a failed click can neither mark a healthy
+// initialization as failed nor be hidden by it.
+parseButton.addEventListener("click", parseSource);
 window.addEventListener("pagehide", () => parser?.delete());
 initialize();

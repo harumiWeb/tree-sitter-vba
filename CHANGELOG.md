@@ -16,10 +16,10 @@ All notable changes to tree-sitter-vba will be documented in this file.
 ### Changed
 
 - Report browser consumer load failures from the browser's own error state.
-  The fixture page publishes the last completed initialization stage and
-  whether initialization failed, and the real-browser smoke test raises that
-  state, console errors, page errors, and failing asset requests as soon as
-  any of them appears.
+  The fixture page publishes the last completed initialization stage, whether
+  initialization failed, and the outcome of the most recent parse, and the
+  real-browser smoke test raises those states, console errors, page errors,
+  and failing asset requests as soon as any of them appears.
 
 ### Documented
 
