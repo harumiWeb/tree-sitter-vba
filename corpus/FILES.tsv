@@ -1,0 +1,1441 @@
+# Every source file in the VB6 acceptance corpus, one per line.
+# project<TAB>path-within-the-upstream-repository
+# Reconstruct with: node scripts/fetch-corpus.mjs
+# Paths are verbatim upstream paths. Some contain non-ASCII characters.
+
+AGenius__IRCDominator	Forms/MDIMain.frm
+AGenius__IRCDominator	Forms/Unlock.frm
+AGenius__IRCDominator	Forms/frmAbout.frm
+AGenius__IRCDominator	Forms/frmAdvanced.frm
+AGenius__IRCDominator	Forms/frmAdvertising.frm
+AGenius__IRCDominator	Forms/frmAutoPrefs.frm
+AGenius__IRCDominator	Forms/frmChat.frm
+AGenius__IRCDominator	Forms/frmCheckLatest.frm
+AGenius__IRCDominator	Forms/frmContact.frm
+AGenius__IRCDominator	Forms/frmEmailAdd.frm
+AGenius__IRCDominator	Forms/frmEmailPrefs.frm
+AGenius__IRCDominator	Forms/frmGuestBan.frm
+AGenius__IRCDominator	Forms/frmHostLists.frm
+AGenius__IRCDominator	Forms/frmInstalls.frm
+AGenius__IRCDominator	Forms/frmKickBan.frm
+AGenius__IRCDominator	Forms/frmLists.frm
+AGenius__IRCDominator	Forms/frmMOTD.frm
+AGenius__IRCDominator	Forms/frmMain.frm
+AGenius__IRCDominator	Forms/frmNewPrefs.frm
+AGenius__IRCDominator	Forms/frmNukeKick.frm
+AGenius__IRCDominator	Modules/RegBits.bas
+AGenius__IRCDominator	Modules/UserList.cls
+AGenius__IRCDominator	Modules/UsersList.cls
+AGenius__IRCDominator	Modules/WinReg32.bas
+AGenius__IRCDominator	Modules/cIniFile.cls
+AGenius__IRCDominator	Modules/cSpeedString.cls
+AGenius__IRCDominator	Modules/cTooltip.cls
+AGenius__IRCDominator	Modules/clsKickPrefs.cls
+AGenius__IRCDominator	Modules/clsPrefs.cls
+AGenius__IRCDominator	Modules/clsPrefsLists.cls
+AGenius__IRCDominator	Modules/clsUser.cls
+AGenius__IRCDominator	Modules/mdlAPI.bas
+AGenius__IRCDominator	Modules/modBits.bas
+AGenius__IRCDominator	Modules/modDO_Routines.bas
+AGenius__IRCDominator	Modules/modDeclares.bas
+AGenius__IRCDominator	Modules/modDecode.bas
+AGenius__IRCDominator	Modules/modFeatures.bas
+AGenius__IRCDominator	Modules/modFunctions.bas
+AGenius__IRCDominator	Progbar.ctl
+AGenius__IRCDominator	bevel.ctl
+Axiomedes__AxGraphics-Controls-Set	Form1.frm
+Axiomedes__AxGraphics-Controls-Set	MDIForm1.frm
+Axiomedes__AxGraphics-Controls-Set	ucBase/AxGButtonLabel.ctl
+Axiomedes__AxGraphics-Controls-Set	ucBase/AxGFrame.ctl
+Axiomedes__AxGraphics-Controls-Set	ucBase/AxGInfoPanel.ctl
+Axiomedes__AxGraphics-Controls-Set	ucBase/AxGLine.ctl
+Axiomedes__AxGraphics-Controls-Set	ucBase/AxGMessageBox.ctl
+Axiomedes__AxGraphics-Controls-Set	ucBase/AxGOption2.ctl
+Axiomedes__AxGraphics-Controls-Set	ucBase/AxGProgBar.ctl
+Axiomedes__AxGraphics-Controls-Set	ucBase/AxGSlider.ctl
+Axiomedes__AxGraphics-Controls-Set	ucBase/AxGTooltip.ctl
+Axiomedes__AxGraphics-Controls-Set	ucBase/ClsCommon.cls
+Axiomedes__AxGraphics-Controls-Set	ucBase/axTabControl.ctl
+Axiomedes__AxGraphics-Controls-Set	ucBase/cScrollBars.cls
+Axiomedes__AxGraphics-Controls-Set	ucBase/cSubClass.cls
+Axiomedes__AxGraphics-Controls-Set	ucBase/mIOleInPlaceActivate.bas
+Axiomedes__AxGraphics-Controls-Set	ucBase/mdModernSubclassing.bas
+Axiomedes__AxGraphics-Controls-Set	ucBase/mdlShaded.bas
+Axiomedes__AxGraphics-Controls-Set	ucBase/ucText.ctl
+CoolWindValley__CoolWind2D-GameEngine-CHS	BAS模块/VBDX9BAS.bas
+CoolWindValley__CoolWind2D-GameEngine-CHS	开发示例/0.初始化/0.1 初始化引擎/Form1.frm
+CoolWindValley__CoolWind2D-GameEngine-CHS	开发示例/1.图像/1.1 绘图/Form1.frm
+CoolWindValley__CoolWind2D-GameEngine-CHS	开发示例/1.图像/1.2 贴图/Form1.frm
+CoolWindValley__CoolWind2D-GameEngine-CHS	开发示例/1.图像/1.3 光照特效/Form1.frm
+CoolWindValley__CoolWind2D-GameEngine-CHS	开发示例/1.图像/1.4 画线扩展/Form1.frm
+CoolWindValley__CoolWind2D-GameEngine-CHS	开发示例/2.文字/2.1 显示文字/Form1.frm
+CoolWindValley__CoolWind2D-GameEngine-CHS	开发示例/2.文字/2.2 旋转文字/Form1.frm
+CoolWindValley__CoolWind2D-GameEngine-CHS	开发示例/3.输入设备/3.1 鼠标检测/Form1.frm
+CoolWindValley__CoolWind2D-GameEngine-CHS	开发示例/3.输入设备/3.2 键盘检测/Form1.frm
+CoolWindValley__CoolWind2D-GameEngine-CHS	开发示例/3.输入设备/3.3 手柄检测/Form1.frm
+CoolWindValley__CoolWind2D-GameEngine-CHS	开发示例/4.音频/4.1 播放声音/Form1.frm
+CoolWindValley__CoolWind2D-GameEngine-CHS	开发示例/4.音频/4.2 声音效果/Form1.frm
+CoolWindValley__CoolWind2D-GameEngine-CHS	开发示例/4.音频/4.2 声音效果/TabPage.ctl
+CoolWindValley__CoolWind2D-GameEngine-CHS	开发示例/4.音频/4.3 空间音效/Form1.frm
+CoolWindValley__CoolWind2D-GameEngine-CHS	开发示例/5.综合测试/5.1 综合测试1/Form1.frm
+CoolWindValley__CoolWind2D-GameEngine-CHS	开发示例/9.其他常用功能/9.1 全屏窗口切换/Form1.frm
+EduardoVB__ColorControls	control-source/CommonControls/CheckBoxW.ctl
+EduardoVB__ColorControls	control-source/CommonControls/ComCtlsBase.bas
+EduardoVB__ColorControls	control-source/CommonControls/ComboBoxW.ctl
+EduardoVB__ColorControls	control-source/CommonControls/CommandButtonW.ctl
+EduardoVB__ColorControls	control-source/CommonControls/Common.bas
+EduardoVB__ColorControls	control-source/CommonControls/ISubclass.cls
+EduardoVB__ColorControls	control-source/CommonControls/LabelW.ctl
+EduardoVB__ColorControls	control-source/CommonControls/TextBoxW.ctl
+EduardoVB__ColorControls	control-source/CommonControls/VTableHandle.bas
+EduardoVB__ColorControls	control-source/CommonControls/VisualStyles.bas
+EduardoVB__ColorControls	control-source/bas/mAuxFunctions.bas
+EduardoVB__ColorControls	control-source/bas/mMouseHook.bas
+EduardoVB__ColorControls	control-source/bas/mPropertyDefauls.bas
+EduardoVB__ColorControls	control-source/bas/mUILocalization.bas
+EduardoVB__ColorControls	control-source/cls/IEyeDropperNotification.cls
+EduardoVB__ColorControls	control-source/cls/cColorControlsConstants.cls
+EduardoVB__ColorControls	control-source/cls/cColorDialog.cls
+EduardoVB__ColorControls	control-source/cls/cDlg.cls
+EduardoVB__ColorControls	control-source/cls/cToolTipEx.cls
+EduardoVB__ColorControls	control-source/cls/cToolTipExCollection.cls
+EduardoVB__ColorControls	control-source/cls/cToolTipHandlerItem.cls
+EduardoVB__ColorControls	control-source/ctl/ctlColorDlg.ctl
+EduardoVB__ColorControls	control-source/ctl/ctlColorSelector.ctl
+EduardoVB__ColorControls	control-source/ctl/ctlEyeDropper.ctl
+EduardoVB__ColorControls	control-source/ctl/ctlToolTipHandler.ctl
+EduardoVB__ColorControls	control-source/frm/frmColorDialog.frm
+EduardoVB__ColorControls	control-source/frm/frmEyeDropper.frm
+EduardoVB__ColorControls	control-source/subclass/cIBSSubclass.cls
+EduardoVB__ColorControls	control-source/subclass/cTimer.cls
+EduardoVB__ColorControls	control-source/subclass/mBSPropsDB.bas
+EduardoVB__ColorControls	control-source/subclass/mBSSubclass.bas
+EduardoVB__ColorControls	control-source/subclass/mTimer.bas
+EduardoVB__ColorControls	test compiled ocx/frmDropDown.frm
+EduardoVB__ColorControls	test compiled ocx/frmTestConfigurations.frm
+EduardoVB__ColorControls	test compiled ocx/frmTestMain.frm
+EduardoVB__ColorControls	test compiled ocx/frmTestProperties.frm
+EduardoVB__ColorControls	test in source code/frmDropDown.frm
+EduardoVB__ColorControls	test in source code/frmTestConfigurations.frm
+EduardoVB__ColorControls	test in source code/frmTestMain.frm
+EduardoVB__ColorControls	test in source code/frmTestProperties.frm
+EduardoVB__ComponentDocumenter	source/bas/mBrowseForFolder.bas
+EduardoVB__ComponentDocumenter	source/bas/mGeneral.bas
+EduardoVB__ComponentDocumenter	source/bas/mOrderVector.bas
+EduardoVB__ComponentDocumenter	source/cls/cDlg.cls
+EduardoVB__ComponentDocumenter	source/cls/cSmartConcat.cls
+EduardoVB__ComponentDocumenter	source/frm/frmBlankFieldsOptions.frm
+EduardoVB__ComponentDocumenter	source/frm/frmComponentProperties.frm
+EduardoVB__ComponentDocumenter	source/frm/frmConfigureHTML.frm
+EduardoVB__ComponentDocumenter	source/frm/frmFieldsModifAlert.frm
+EduardoVB__ComponentDocumenter	source/frm/frmMain.frm
+EduardoVB__ComponentDocumenter	source/frm/frmMessage.frm
+EduardoVB__ComponentDocumenter	source/frm/frmPDFNote.frm
+EduardoVB__ComponentDocumenter	source/frm/frmPreferences.frm
+EduardoVB__ComponentDocumenter	source/frm/frmReportOptions.frm
+EduardoVB__ComponentDocumenter	source/frm/frmReportSelection.frm
+EduardoVB__ComponentDocumenter	source/frm/frmReportingOptions.frm
+EduardoVB__ComponentDocumenter	source/frm/frmSelectComponentDB.frm
+EduardoVB__ComponentDocumenter	source/frm/frmSelectItems.frm
+EduardoVB__ComponentDocumenter	source/frm/frmSelectMemberDefinition.frm
+EduardoVB__ComponentDocumenter	source/frm/frmSelectOrpahnMember.frm
+EduardoVB__ComponentDocumenter	source/frm/frmSelectPrinter.frm
+EduardoVB__DrawingControls	control-source/ctl/LineEx.ctl
+EduardoVB__DrawingControls	control-source/ctl/ShapeEx.ctl
+EduardoVB__DrawingControls	control-source/subclass/cIBSSubclass.cls
+EduardoVB__DrawingControls	control-source/subclass/cTimer.cls
+EduardoVB__DrawingControls	control-source/subclass/mBSPropsDB.bas
+EduardoVB__DrawingControls	control-source/subclass/mBSSubclass.bas
+EduardoVB__DrawingControls	control-source/subclass/mTimer.bas
+EduardoVB__DrawingControls	test compiled ocx/cDlg.cls
+EduardoVB__DrawingControls	test compiled ocx/frmTest.frm
+EduardoVB__DrawingControls	test compiled ocx/frmTestLineEx.frm
+EduardoVB__DrawingControls	test in source code/cDlg.cls
+EduardoVB__DrawingControls	test in source code/frmTest.frm
+EduardoVB__DrawingControls	test in source code/frmTestLineEx.frm
+EduardoVB__NewTab	control-source/bas/mNewTabDefaults.bas
+EduardoVB__NewTab	control-source/cls/cFontEventHandler.cls
+EduardoVB__NewTab	control-source/cls/cFontEventHandlers.cls
+EduardoVB__NewTab	control-source/cls/cNewTabThemes.cls
+EduardoVB__NewTab	control-source/cls/cPropertyData.cls
+EduardoVB__NewTab	control-source/cls/cTabColors.cls
+EduardoVB__NewTab	control-source/frm/frmNewTabSelectControl.frm
+EduardoVB__NewTab	test compiled ocx/TDIForms test/Form1.frm
+EduardoVB__NewTab	test compiled ocx/TDIForms test/Form2.frm
+EduardoVB__NewTab	test compiled ocx/TDIForms test/Form3Modal.frm
+EduardoVB__NewTab	test compiled ocx/TDIForms test/Form4.frm
+EduardoVB__NewTab	test compiled ocx/TDIForms test/frmTDIFormsTest.frm
+EduardoVB__NewTab	test compiled ocx/frmAllThemes.frm
+EduardoVB__NewTab	test compiled ocx/frmIcons.frm
+EduardoVB__NewTab	test compiled ocx/frmMain.frm
+EduardoVB__NewTab	test compiled ocx/frmTDIControlsTest.frm
+EduardoVB__NewTab	test in source code/TDIForms test/Form1.frm
+EduardoVB__NewTab	test in source code/TDIForms test/Form2.frm
+EduardoVB__NewTab	test in source code/TDIForms test/Form3Modal.frm
+EduardoVB__NewTab	test in source code/TDIForms test/Form4.frm
+EduardoVB__NewTab	test in source code/TDIForms test/frmTDIFormsTest.frm
+EduardoVB__NewTab	test in source code/frmIcons.frm
+EduardoVB__NewTab	test in source code/frmMain.frm
+EduardoVB__NewTab	test in source code/frmTDIControlsTest.frm
+EduardoVB__SSTabEx	control-source/ctl/ctlSSTabEx.ctl
+EduardoVB__SSTabEx	control-source/misc/cDlg.cls
+EduardoVB__SSTabEx	control-source/misc/frmSSTabExSelectControl.frm
+EduardoVB__SSTabEx	control-source/subclass/cIBSSubclass.cls
+EduardoVB__SSTabEx	control-source/subclass/mBSPropsDB.bas
+EduardoVB__SSTabEx	control-source/subclass/mBSSubclass.bas
+EduardoVB__SSTabEx	test project/cDlg.cls
+EduardoVB__SSTabEx	test project/frmTest.frm
+EduardoVB__ScrollableContainer	control-source/cScrollBars.cls
+EduardoVB__ScrollableContainer	control-source/ctlScrollableContainer.ctl
+EduardoVB__ScrollableContainer	control-source/subclass/cIBSSubclass.cls
+EduardoVB__ScrollableContainer	control-source/subclass/mBSPropsDB.bas
+EduardoVB__ScrollableContainer	control-source/subclass/mBSSubclass.bas
+EduardoVB__ScrollableContainer	test compiled ocx/Form1.frm
+EduardoVB__ScrollableContainer	test in source code/Form1.frm
+Gagniuc__Binary-metamorphosis	Binary metamorphosis V1.0/src/Bin_To_VB.frm
+Gagniuc__Binary-metamorphosis	Binary metamorphosis V1.0/src/cCommonDialog.cls
+Gagniuc__Binary-metamorphosis	Binary metamorphosis V2.0/src/Bin_To_VB.frm
+Gagniuc__Binary-metamorphosis	Binary metamorphosis V2.0/src/cCommonDialog.cls
+Gagniuc__Binary-metamorphosis	Binary metamorphosis V3.0/src/Bin_To_VB.frm
+Gagniuc__Binary-metamorphosis	Binary metamorphosis V3.0/src/cCommonDialog.cls
+Gagniuc__Binary-metamorphosis	tini/tini.frm
+Gagniuc__Diabetes-prediction-2.0	MCD_OS.bas
+Gagniuc__Diabetes-prediction-2.0	MCD_VU.bas
+Gagniuc__Diabetes-prediction-2.0	MCD_info.frm
+Gagniuc__Diabetes-prediction-2.0	MCD_main.frm
+Gagniuc__Markov-Chains-The-weather	OS.bas
+Gagniuc__Markov-Chains-The-weather	The weather.frm
+Gagniuc__Prototype-software-for-Photon-pixel-coupling	Vesta.frm
+Gagniuc__VB6-add-GUI-objects-at-runtime	Generate objects at runtime V1/Form1.frm
+Gagniuc__VB6-add-GUI-objects-at-runtime	Generate objects at runtime V2/Form1.frm
+Gagniuc__VB6-add-GUI-objects-at-runtime	Generate objects at runtime V3/Form1.frm
+Gagniuc__Visual-Sequence-Alignment-in-VB6	AlignDNA.frm
+KirillOsenkov__PolyhedronExplorerVB6	CCommonDialog.cls
+KirillOsenkov__PolyhedronExplorerVB6	CEdge.cls
+KirillOsenkov__PolyhedronExplorerVB6	CEdges.cls
+KirillOsenkov__PolyhedronExplorerVB6	CFacet.cls
+KirillOsenkov__PolyhedronExplorerVB6	CFacets.cls
+KirillOsenkov__PolyhedronExplorerVB6	CPoint.cls
+KirillOsenkov__PolyhedronExplorerVB6	CPolygon.cls
+KirillOsenkov__PolyhedronExplorerVB6	CPolyhedra.cls
+KirillOsenkov__PolyhedronExplorerVB6	CPolyhedron.cls
+KirillOsenkov__PolyhedronExplorerVB6	CVector.cls
+KirillOsenkov__PolyhedronExplorerVB6	CVertex.cls
+KirillOsenkov__PolyhedronExplorerVB6	CVertices.cls
+KirillOsenkov__PolyhedronExplorerVB6	ctlPolyInfo.ctl
+KirillOsenkov__PolyhedronExplorerVB6	ctlPolyViewer.ctl
+KirillOsenkov__PolyhedronExplorerVB6	frmInputMain.frm
+KirillOsenkov__PolyhedronExplorerVB6	frmMain.frm
+KirillOsenkov__PolyhedronExplorerVB6	frmMainMDI.frm
+KirillOsenkov__PolyhedronExplorerVB6	frmPolyViewerProps.frm
+KirillOsenkov__PolyhedronExplorerVB6	frmScanning.frm
+KirillOsenkov__PolyhedronExplorerVB6	frmSphericalImage.frm
+KirillOsenkov__PolyhedronExplorerVB6	frmStellate.frm
+KirillOsenkov__PolyhedronExplorerVB6	frmTruncate.frm
+KirillOsenkov__PolyhedronExplorerVB6	modCVector.bas
+KirillOsenkov__PolyhedronExplorerVB6	modInputMain.bas
+KirillOsenkov__PolyhedronExplorerVB6	modMath.bas
+KirillOsenkov__PolyhedronExplorerVB6	modMathFunctions.bas
+KirillOsenkov__PolyhedronExplorerVB6	modOldVectors.bas
+KirillOsenkov__PolyhedronExplorerVB6	modOpenGL.bas
+KirillOsenkov__PolyhedronExplorerVB6	modOutputMain.bas
+KirillOsenkov__PolyhedronExplorerVB6	modSystem.bas
+KirillOsenkov__PolyhedronExplorerVB6	modVolume.bas
+Kr00l__VBCCR	ActiveX Control Version/Builds/CoolBar/CbrBandProperties.cls
+Kr00l__VBCCR	ActiveX Control Version/Builds/StatusBar/SbrPanelProperties.cls
+Kr00l__VBCCR	ActiveX Control Version/Builds/ToolBar/TbrButtonProperties.cls
+Kr00l__VBCCR	Standard EXE Version/Builds/CoolBar/CbrBandProperties.cls
+Kr00l__VBCCR	Standard EXE Version/Builds/StatusBar/SbrPanelProperties.cls
+Kr00l__VBCCR	Standard EXE Version/Builds/ToolBar/TbrButtonProperties.cls
+Kr00l__VBCCR	Standard EXE Version/MainForm.frm
+Kr00l__VBCCR	Standard EXE Version/PagerForm.frm
+Kr00l__VBCCR	Standard EXE Version/VirtualControlsForm.frm
+Kr00l__VBFLXGRD	ActiveX Control Version/Builds/VBFlexGrid/IVBFlexDataSource.cls
+Kr00l__VBFLXGRD	ActiveX Control Version/Builds/VBFlexGrid/IVBFlexDataSource2.cls
+Kr00l__VBFLXGRD	Standard EXE Version/Builds/VBFlexGrid/IVBFlexDataSource.cls
+Kr00l__VBFLXGRD	Standard EXE Version/Builds/VBFlexGrid/IVBFlexDataSource2.cls
+Kr00l__VBFLXGRD	Standard EXE Version/InputForm.frm
+M2000Interpreter__Environment	ASF_RegexEngine.cls
+M2000Interpreter__Environment	ASMOpCodes.bas
+M2000Interpreter__Environment	ASMToken.cls
+M2000Interpreter__Environment	ActiveX.bas
+M2000Interpreter__Environment	AsyncCall.cls
+M2000Interpreter__Environment	Avi.frm
+M2000Interpreter__Environment	BaseCollection.cls
+M2000Interpreter__Environment	BigInteger.cls
+M2000Interpreter__Environment	CallBack2.cls
+M2000Interpreter__Environment	Class1.cls
+M2000Interpreter__Environment	ColorDialog.frm
+M2000Interpreter__Environment	ComEvents.cls
+M2000Interpreter__Environment	EduardoCircle.bas
+M2000Interpreter__Environment	Fcall.bas
+M2000Interpreter__Environment	FileSelectorDialog.frm
+M2000Interpreter__Environment	FontDialog.frm
+M2000Interpreter__Environment	FontDialog1.frm
+M2000Interpreter__Environment	GetAdaptsInfo.bas
+M2000Interpreter__Environment	GuiM2000.frm
+M2000Interpreter__Environment	IsPrinter.bas
+M2000Interpreter__Environment	LoadFile.frm
+M2000Interpreter__Environment	Mod_Text.bas
+M2000Interpreter__Environment	Mod_Util.bas
+M2000Interpreter__Environment	MyPopUp.frm
+M2000Interpreter__Environment	NeoMsgBox.frm
+M2000Interpreter__Environment	SMALL.frm
+M2000Interpreter__Environment	ShapeEx.ctl
+M2000Interpreter__Environment	TEST.frm
+M2000Interpreter__Environment	TextP0.frm
+M2000Interpreter__Environment	ctxNineButton.ctl
+M2000Interpreter__Environment	ctxWinsock.ctl
+M2000Interpreter__Environment	frmAbout.frm
+M2000Interpreter__Environment	glis4.ctl
+M2000Interpreter__Environment	help.frm
+M2000Interpreter__Environment	layer.frm
+M2000Interpreter__Environment	mForm1.frm
+M2000Interpreter__Environment	ucChartArea.ctl
+M2000Interpreter__Environment	ucChartBar.ctl
+M2000Interpreter__Environment	ucPieChart.ctl
+M2000Interpreter__Environment	ucRadialProgress.ctl
+MisterVector__BNET-to-IRC	Classes/cStringBuilder.cls
+MisterVector__BNET-to-IRC	Classes/clsPacketHandler.cls
+MisterVector__BNET-to-IRC	Forms/frmAbout.frm
+MisterVector__BNET-to-IRC	Forms/frmMain.frm
+MisterVector__BNET-to-IRC	Forms/frmSettings.frm
+MisterVector__BNET-to-IRC	Modules/BNCSutil.bas
+MisterVector__BNET-to-IRC	Modules/JSON.bas
+MisterVector__BNET-to-IRC	Modules/modBNET.bas
+MisterVector__BNET-to-IRC	Modules/modBNLS.bas
+MisterVector__BNET-to-IRC	Modules/modConfig.bas
+MisterVector__BNET-to-IRC	Modules/modDNS.bas
+MisterVector__BNET-to-IRC	Modules/modFileHandling.bas
+MisterVector__BNET-to-IRC	Modules/modGeneralAPI.bas
+MisterVector__BNET-to-IRC	Modules/modIRC.bas
+MisterVector__BNET-to-IRC	Modules/modMinimize.bas
+MisterVector__BNET-to-IRC	Modules/modOtherCode.bas
+MisterVector__BNET-to-IRC	Modules/modText.bas
+MisterVector__BNET-to-IRC	Modules/modVars.bas
+MisterVector__BNET-to-IRC	Modules/modVersionCheck.bas
+MuTsunTsai__PlowColorIder	src/About.frm
+MuTsunTsai__PlowColorIder	src/CDialogW.cls
+MuTsunTsai__PlowColorIder	src/ColorCMYK.cls
+MuTsunTsai__PlowColorIder	src/ColorHSL.cls
+MuTsunTsai__PlowColorIder	src/ColorHSV.cls
+MuTsunTsai__PlowColorIder	src/ColorInfo.cls
+MuTsunTsai__PlowColorIder	src/ColorLab.cls
+MuTsunTsai__PlowColorIder	src/ColorYUV.cls
+MuTsunTsai__PlowColorIder	src/FScreen.frm
+MuTsunTsai__PlowColorIder	src/Main.frm
+MuTsunTsai__PlowColorIder	src/MoreInfo.frm
+MuTsunTsai__PlowColorIder	src/PlowCButton.ctl
+MuTsunTsai__PlowColorIder	src/PlowCHand.ctl
+MuTsunTsai__PlowColorIder	src/PlowCMYK.ctl
+MuTsunTsai__PlowColorIder	src/PlowColor.bas
+MuTsunTsai__PlowColorIder	src/PlowColorB.ctl
+MuTsunTsai__PlowColorIder	src/PlowColorH.ctl
+MuTsunTsai__PlowColorIder	src/PlowFlatButton.ctl
+MuTsunTsai__PlowColorIder	src/PlowHand.ctl
+MuTsunTsai__PlowColorIder	src/PlowNumber.ctl
+MuTsunTsai__PlowColorIder	src/PlowPanel.ctl
+MuTsunTsai__PlowColorIder	src/PlowRGB.ctl
+MuTsunTsai__PlowColorIder	src/Weblink.ctl
+MuTsunTsai__PlowColorIder	src/c32bppDIB.cls
+MuTsunTsai__PlowColorIder	src/cBMPparser.cls
+MuTsunTsai__PlowColorIder	src/cCDECL.cls
+MuTsunTsai__PlowColorIder	src/cGDIPlus.cls
+MuTsunTsai__PlowColorIder	src/cGIFparser.cls
+MuTsunTsai__PlowColorIder	src/cICOparser.cls
+MuTsunTsai__PlowColorIder	src/cPNGparser.cls
+MuTsunTsai__PlowColorIder	src/cTGAparser.cls
+MuTsunTsai__PlowColorIder	src/modParsers.bas
+MuTsunTsai__PlowColorIder	test/1/ColorHSL.cls
+MuTsunTsai__PlowColorIder	test/1/ColorHSV.cls
+MuTsunTsai__PlowColorIder	test/1/DIBSection.cls
+MuTsunTsai__PlowColorIder	test/1/Form1.frm
+MuTsunTsai__PlowColorIder	test/1/Module1.bas
+MuTsunTsai__PlowColorIder	test/CCD.cls
+MuTsunTsai__PlowColorIder	test/cPNGwriter.cls
+Planet-Source-Code__reexre-convert-pic-to-toon__1-71920	Form1.frm
+Planet-Source-Code__reexre-convert-pic-to-toon__1-71920	Module1.bas
+Planet-Source-Code__reexre-convert-pic-to-toon__1-71920	SaveAsJPG.bas
+Planet-Source-Code__reexre-convert-pic-to-toon__1-71920	WMI_Find Process.bas
+Planet-Source-Code__reexre-convert-pic-to-toon__1-71920	cDIB.cls
+Planet-Source-Code__reexre-convert-pic-to-toon__1-71920	frmHISTO.frm
+Planet-Source-Code__reexre-convert-pic-to-toon__1-71920	modFreeImage.bas
+Planet-Source-Code__reexre-convert-pic-to-toon__1-71920	modProcessPriority.bas
+Planet-Source-Code__reexre-convert-pic-to-toon__1-71920	zColorDialog.bas
+Planet-Source-Code__stewart-scintilla-vb-activex-control-update-1-2__1-63712	apiTreeView/mIOIPAOTreeView.bas
+Planet-Source-Code__stewart-scintilla-vb-activex-control-update-1-2__1-63712	apiTreeView/ucTreeView.ctl
+Planet-Source-Code__stewart-scintilla-vb-activex-control-update-1-2__1-63712	ariel/ArielColorBox.ctl
+Planet-Source-Code__stewart-scintilla-vb-activex-control-update-1-2__1-63712	ariel/ArielLibColor.bas
+Planet-Source-Code__stewart-scintilla-vb-activex-control-update-1-2__1-63712	ariel/ArielTimer.cls
+Planet-Source-Code__stewart-scintilla-vb-activex-control-update-1-2__1-63712	class/cDirectSCI.cls
+Planet-Source-Code__stewart-scintilla-vb-activex-control-update-1-2__1-63712	ctlFrame/ctlFrame.ctl
+Planet-Source-Code__stewart-scintilla-vb-activex-control-update-1-2__1-63712	ctrltabs/ctlTabs.ctl
+Planet-Source-Code__stewart-scintilla-vb-activex-control-update-1-2__1-63712	demos/Basic/form/frmMain.frm
+Planet-Source-Code__stewart-scintilla-vb-activex-control-update-1-2__1-63712	demos/CallTips/Forms/frmMain.frm
+Planet-Source-Code__stewart-scintilla-vb-activex-control-update-1-2__1-63712	demos/MDIAPP/forms/frmDoc.frm
+Planet-Source-Code__stewart-scintilla-vb-activex-control-update-1-2__1-63712	demos/MDIAPP/forms/frmMain.frm
+Planet-Source-Code__stewart-scintilla-vb-activex-control-update-1-2__1-63712	demos/MDIAPP/module/modApp.bas
+Planet-Source-Code__stewart-scintilla-vb-activex-control-update-1-2__1-63712	demos/MDIAPP/usr/ucStatusbar.ctl
+Planet-Source-Code__stewart-scintilla-vb-activex-control-update-1-2__1-63712	demos/Macros/forms/frmMain.frm
+Planet-Source-Code__stewart-scintilla-vb-activex-control-update-1-2__1-63712	demos/SCIVBNote/form/frmMain.frm
+Planet-Source-Code__stewart-scintilla-vb-activex-control-update-1-2__1-63712	demos/SCIVBNote/module/ModCmnDlg.bas
+Planet-Source-Code__stewart-scintilla-vb-activex-control-update-1-2__1-63712	demos/SCIVBNote/module/modApp.bas
+Planet-Source-Code__stewart-scintilla-vb-activex-control-update-1-2__1-63712	demos/SCIVBNote/usr/ucStatusbar.ctl
+Planet-Source-Code__stewart-scintilla-vb-activex-control-update-1-2__1-63712	forms/frmAbout.frm
+Planet-Source-Code__stewart-scintilla-vb-activex-control-update-1-2__1-63712	forms/frmAddStyle.frm
+Planet-Source-Code__stewart-scintilla-vb-activex-control-update-1-2__1-63712	forms/frmFind.frm
+Planet-Source-Code__stewart-scintilla-vb-activex-control-update-1-2__1-63712	forms/frmGoto.frm
+Planet-Source-Code__stewart-scintilla-vb-activex-control-update-1-2__1-63712	forms/frmNewLang.frm
+Planet-Source-Code__stewart-scintilla-vb-activex-control-update-1-2__1-63712	forms/frmOptions.frm
+Planet-Source-Code__stewart-scintilla-vb-activex-control-update-1-2__1-63712	forms/frmReplace.frm
+Planet-Source-Code__stewart-scintilla-vb-activex-control-update-1-2__1-63712	groupbox/GroupBox.ctl
+Planet-Source-Code__stewart-scintilla-vb-activex-control-update-1-2__1-63712	module/ModAPI.bas
+Planet-Source-Code__stewart-scintilla-vb-activex-control-update-1-2__1-63712	module/ModConst.bas
+Planet-Source-Code__stewart-scintilla-vb-activex-control-update-1-2__1-63712	module/ModENUM.bas
+Planet-Source-Code__stewart-scintilla-vb-activex-control-update-1-2__1-63712	module/ModHighlighter.bas
+Planet-Source-Code__stewart-scintilla-vb-activex-control-update-1-2__1-63712	module/ModSCIConst.bas
+Planet-Source-Code__stewart-scintilla-vb-activex-control-update-1-2__1-63712	module/ModType.bas
+Planet-Source-Code__stewart-scintilla-vb-activex-control-update-1-2__1-63712	module/modActive.bas
+Planet-Source-Code__stewart-scintilla-vb-activex-control-update-1-2__1-63712	module/modArray.bas
+Planet-Source-Code__stewart-scintilla-vb-activex-control-update-1-2__1-63712	module/modCombo.bas
+Planet-Source-Code__stewart-scintilla-vb-activex-control-update-1-2__1-63712	sclass/cSubclass.cls
+Planet-Source-Code__stewart-scintilla-vb-activex-control-update-1-2__1-63712	sclass/iSubclass.cls
+Planet-Source-Code__stewart-scintilla-vb-activex-control-update-1-2__1-63712	usercontrols/SCIHighlighter.ctl
+Planet-Source-Code__stewart-scintilla-vb-activex-control-update-1-2__1-63712	usercontrols/SCIVB.ctl
+ProffiCV__ccyberx	cards/Modules/ModDB.bas
+ProffiCV__ccyberx	cards/Modules/card.bas
+ProffiCV__ccyberx	cards/Modules/modData.bas
+ProffiCV__ccyberx	cards/forms/frmPass.frm
+ProffiCV__ccyberx	cards/forms/frmPrint.frm
+ProffiCV__ccyberx	cards/forms/frmSup.frm
+ProffiCV__ccyberx	cards/forms/frmdet.frm
+ProffiCV__ccyberx	client/Classes/frmTip.frm
+ProffiCV__ccyberx	client/Classes/nvSniffer.cls
+ProffiCV__ccyberx	client/Classes/systray.cls
+ProffiCV__ccyberx	client/Forms/frmAgent.frm
+ProffiCV__ccyberx	client/Forms/frmCfg.frm
+ProffiCV__ccyberx	client/Forms/frmChgCrd.frm
+ProffiCV__ccyberx	client/Forms/frmCli.frm
+ProffiCV__ccyberx	client/Forms/frmIcon.frm
+ProffiCV__ccyberx	client/Forms/frmLogin.frm
+ProffiCV__ccyberx	client/Forms/frmLoginBmw.frm
+ProffiCV__ccyberx	client/Forms/frmMenu.frm
+ProffiCV__ccyberx	client/Forms/frmProvigi.frm
+ProffiCV__ccyberx	client/Forms/frmStart.frm
+ProffiCV__ccyberx	client/Forms/frmTip.frm
+ProffiCV__ccyberx	client/Forms/frmVersion.frm
+ProffiCV__ccyberx	client/Forms/frmjre.frm
+ProffiCV__ccyberx	client/Forms/frmttip.frm
+ProffiCV__ccyberx	client/Modules/PacketCapture.bas
+ProffiCV__ccyberx	client/Modules/apMini.bas
+ProffiCV__ccyberx	client/Modules/diver.bas
+ProffiCV__ccyberx	client/Modules/mdGeral.bas
+ProffiCV__ccyberx	client/Modules/mdUser.bas
+ProffiCV__ccyberx	client/Modules/modAdminRight.bas
+ProffiCV__ccyberx	client/Modules/modDesk.bas
+ProffiCV__ccyberx	client/Modules/modMerlin.bas
+ProffiCV__ccyberx	client/Modules/modMsn.bas
+ProffiCV__ccyberx	server/Forms/FRMsV2.frm
+ProffiCV__ccyberx	server/Forms/frmCfg.frm
+ProffiCV__ccyberx	server/Forms/frmLogin.frm
+ProffiCV__ccyberx	server/Forms/frmOldCards.frm
+ProffiCV__ccyberx	server/Forms/frmReduced.frm
+ProffiCV__ccyberx	server/Forms/frmReg.frm
+ProffiCV__ccyberx	server/Forms/frmServer.frm
+RZulu54__ChessBrainVB	ChessbrainVB_V4_10/Forms/DebugMain.frm
+RZulu54__ChessBrainVB	ChessbrainVB_V4_10/Forms/Main.frm
+RZulu54__ChessBrainVB	ChessbrainVB_V4_10/Modules/Board.bas
+RZulu54__ChessBrainVB	ChessbrainVB_V4_10/Modules/Book.bas
+RZulu54__ChessBrainVB	ChessbrainVB_V4_10/Modules/ChessBrainVB.bas
+RZulu54__ChessBrainVB	ChessbrainVB_V4_10/Modules/Const.bas
+RZulu54__ChessBrainVB	ChessbrainVB_V4_10/Modules/Debug.bas
+RZulu54__ChessBrainVB	ChessbrainVB_V4_10/Modules/EPD.bas
+RZulu54__ChessBrainVB	ChessbrainVB_V4_10/Modules/Eval.bas
+RZulu54__ChessBrainVB	ChessbrainVB_V4_10/Modules/Hash.bas
+RZulu54__ChessBrainVB	ChessbrainVB_V4_10/Modules/Process.bas
+RZulu54__ChessBrainVB	ChessbrainVB_V4_10/Modules/Search.bas
+RZulu54__ChessBrainVB	ChessbrainVB_V4_10/Modules/Time.bas
+RealityRipple__Random-BackGround	src/bas/modBase64.bas
+RealityRipple__Random-BackGround	src/bas/modGDIPlus.bas
+RealityRipple__Random-BackGround	src/bas/modIActiveDesktop.bas
+RealityRipple__Random-BackGround	src/bas/modINI.bas
+RealityRipple__Random-BackGround	src/bas/modMain.bas
+RealityRipple__Random-BackGround	src/bas/modRSA.bas
+RealityRipple__Random-BackGround	src/bas/modReg.bas
+RealityRipple__Random-BackGround	src/bas/modScreens.bas
+RealityRipple__Random-BackGround	src/bas/modZero.bas
+RealityRipple__Random-BackGround	src/cls/InfInt.cls
+RealityRipple__Random-BackGround	src/cls/clsCRC32.cls
+RealityRipple__Random-BackGround	src/cls/clsModPow.cls
+RealityRipple__Random-BackGround	src/ctl/ctlHTTP.ctl
+RealityRipple__Random-BackGround	src/frm/frmAbout.frm
+RealityRipple__Random-BackGround	src/frm/frmNotify.frm
+RealityRipple__Random-BackGround	src/frm/frmSet.frm
+RealityRipple__Random-BackGround	src/frm/frmSettings.frm
+SailorSat__isa-2-sega	PortIO/TVicLib.bas
+SailorSat__isa-2-sega	PortIO/Window.frm
+SailorSat__isa-2-sega	PortIO/cCOMM.cls
+SailorSat__isa-2-sega	PortIO/cM1COMM.cls
+SailorSat__isa-2-sega	PortIO/mCOMM.bas
+SailorSat__soft-15khz	TestSuite/Api.bas
+SailorSat__soft-15khz	TestSuite/Controller.frm
+SailorSat__soft-15khz	TestSuite/Grid.frm
+SailorSat__soft-15khz	edid/Form1.frm
+SailorSat__soft-15khz	edid/Module1.bas
+SailorSat__soft-15khz	generator/Core.bas
+SailorSat__soft-15khz	mledit/frmMain.frm
+SailorSat__soft-15khz	nt7_customdisplay/Form1.frm
+SailorSat__soft-15khz	psremote/MainForm.frm
+SailorSat__soft-15khz	psremote/Module1.bas
+SailorSat__soft-15khz	quickres/Window.frm
+SailorSat__soft-15khz	src/base_api.bas
+SailorSat__soft-15khz	src/base_gui.frm
+SailorSat__soft-15khz	src/base_main.bas
+SailorSat__soft-15khz	src/driver_ati.bas
+SailorSat__soft-15khz	src/driver_intel.bas
+SailorSat__soft-15khz	src/driver_matrox.bas
+SailorSat__soft-15khz	src/driver_nvidia.bas
+SailorSat__soft-15khz	src/driver_tdfx.bas
+SailorSat__soft-15khz	testgrid/GridForm.frm
+SailorSat__soft-15khz	testgrid2/Api.bas
+SailorSat__soft-15khz	testgrid2/GridForm.frm
+Sibra-Soft__audiostation	Source/Classes/clsDialogExtensions.cls
+Sibra-Soft__audiostation	Source/Classes/clsLogger.cls
+Sibra-Soft__audiostation	Source/Classes/clsSibraSoft.cls
+Sibra-Soft__audiostation	Source/Classes/clsSmartBuffer.cls
+Sibra-Soft__audiostation	Source/Classes/clsStringBuilder.cls
+Sibra-Soft__audiostation	Source/Classes/clsStringExtensions.cls
+Sibra-Soft__audiostation	Source/Classes/mdlVolumeChannel.cls
+Sibra-Soft__audiostation	Source/Controls/ButtonBig.ctl
+Sibra-Soft__audiostation	Source/Controls/Hyperlink.ctl
+Sibra-Soft__audiostation	Source/Controls/MixSlider.ctl
+Sibra-Soft__audiostation	Source/Controls/ShellPipe.ctl
+Sibra-Soft__audiostation	Source/Forms/Form_About.frm
+Sibra-Soft__audiostation	Source/Forms/Form_Busy.frm
+Sibra-Soft__audiostation	Source/Forms/Form_Init.frm
+Sibra-Soft__audiostation	Source/Forms/Form_Main.frm
+Sibra-Soft__audiostation	Source/Forms/Form_Midi.frm
+Sibra-Soft__audiostation	Source/Forms/Form_Normalize.frm
+Sibra-Soft__audiostation	Source/Forms/Form_OpenDialog.frm
+Sibra-Soft__audiostation	Source/Forms/Form_Playlist.frm
+Sibra-Soft__audiostation	Source/Forms/Form_Plugins.frm
+Sibra-Soft__audiostation	Source/Forms/Form_Settings_Record.frm
+Sibra-Soft__audiostation	Source/Forms/Form_Settings_Recorder.frm
+Sibra-Soft__audiostation	Source/Forms/Form_Streams.frm
+Sibra-Soft__audiostation	Source/Forms/Form_System.frm
+Sibra-Soft__audiostation	Source/Forms/Form_Track_Properties.frm
+Sibra-Soft__audiostation	Source/Modules/modArgs.bas
+Sibra-Soft__audiostation	Source/Modules/modEnums.bas
+Sibra-Soft__audiostation	Source/Modules/modLanguage.bas
+Sibra-Soft__audiostation	Source/Modules/modMain.bas
+Sibra-Soft__audiostation	Source/Modules/modMusPlayer.bas
+Sibra-Soft__audiostation	Source/Modules/modOS.bas
+Sibra-Soft__audiostation	Source/Modules/modSidPlayer.bas
+Sibra-Soft__audiostation	Source/Modules/modVolume.bas
+SweetIceLolly__SocketTester	frmClient.frm
+SweetIceLolly__SocketTester	frmMain.frm
+SweetIceLolly__SocketTester	frmServer.frm
+SweetIceLolly__SocketTester	frmUDP.frm
+Unicontsoft__UcsFiscalPrinters	contrib/InitFP/frmSetup.frm
+Unicontsoft__UcsFiscalPrinters	src/UcsFP20/Connectors/IDeviceConnector.cls
+Unicontsoft__UcsFiscalPrinters	src/UcsFP20/Connectors/cPortWrapper.cls
+Unicontsoft__UcsFiscalPrinters	src/UcsFP20/Connectors/cSerialPortConnector.cls
+Unicontsoft__UcsFiscalPrinters	src/UcsFP20/Connectors/cSocketConnector.cls
+Unicontsoft__UcsFiscalPrinters	src/UcsFP20/Connectors/cUsbConnector.cls
+Unicontsoft__UcsFiscalPrinters	src/UcsFP20/Protocols/IDeviceProtocol.cls
+Unicontsoft__UcsFiscalPrinters	src/UcsFP20/Protocols/cDatecsProtocol.cls
+Unicontsoft__UcsFiscalPrinters	src/UcsFP20/Protocols/cEscPosProtocol.cls
+Unicontsoft__UcsFiscalPrinters	src/UcsFP20/Protocols/cIslProtocol.cls
+Unicontsoft__UcsFiscalPrinters	src/UcsFP20/Protocols/cLabelProtocol.cls
+Unicontsoft__UcsFiscalPrinters	src/UcsFP20/Protocols/cProxyProtocol.cls
+Unicontsoft__UcsFiscalPrinters	src/UcsFP20/Protocols/cScalesProtocol.cls
+Unicontsoft__UcsFiscalPrinters	src/UcsFP20/Protocols/cTremolProtocol.cls
+Unicontsoft__UcsFiscalPrinters	src/UcsFP20/Protocols/mdImageConvert.bas
+Unicontsoft__UcsFiscalPrinters	src/UcsFP20/Protocols/mdProtocolPrintData.bas
+Unicontsoft__UcsFiscalPrinters	src/UcsFP20/Shared/cExec.cls
+Unicontsoft__UcsFiscalPrinters	src/UcsFP20/Shared/cFileLogger.cls
+Unicontsoft__UcsFiscalPrinters	src/UcsFP20/Shared/mdGlobals.bas
+Unicontsoft__UcsFiscalPrinters	src/UcsFP20/cFiscalPrinter.cls
+Unicontsoft__UcsFiscalPrinters	src/UcsFP20/cGlobals.cls
+Unicontsoft__UcsFiscalPrinters	src/UcsFPHub/IEndpoint.cls
+Unicontsoft__UcsFiscalPrinters	src/UcsFPHub/IQueue.cls
+Unicontsoft__UcsFiscalPrinters	src/UcsFPHub/Shared/AlphaBlendLabel.ctl
+Unicontsoft__UcsFiscalPrinters	src/UcsFPHub/Shared/AlphaBlendTabStrip.ctl
+Unicontsoft__UcsFiscalPrinters	src/UcsFPHub/Shared/cAsyncSocket.cls
+Unicontsoft__UcsFiscalPrinters	src/UcsFPHub/Shared/mdConsole.bas
+Unicontsoft__UcsFiscalPrinters	src/UcsFPHub/Shared/mdMST.bas
+Unicontsoft__UcsFiscalPrinters	src/UcsFPHub/Shared/mdNtService.bas
+Unicontsoft__UcsFiscalPrinters	src/UcsFPHub/cMssqlQueue.cls
+Unicontsoft__UcsFiscalPrinters	src/UcsFPHub/cMysqlQueue.cls
+Unicontsoft__UcsFiscalPrinters	src/UcsFPHub/cQueueEndpoint.cls
+Unicontsoft__UcsFiscalPrinters	src/UcsFPHub/cRestClient.cls
+Unicontsoft__UcsFiscalPrinters	src/UcsFPHub/frmLocalEndpoint.frm
+Unicontsoft__UcsFiscalPrinters	src/UcsFPHub/frmMain.frm
+Unicontsoft__UcsFiscalPrinters	src/UcsFPHub/frmSettings.frm
+Unicontsoft__UcsFiscalPrinters	src/UcsFPHub/mdGlobals.bas
+Unicontsoft__UcsFiscalPrinters	src/UcsFPHub/mdStartup.bas
+Unicontsoft__UcsFiscalPrinters	test/Basic/Form1.frm
+Unicontsoft__UcsFiscalPrinters	test/SerialPort/Form1.frm
+Zen-CODE__ZenKEY	Classes/clsAWT.cls
+Zen-CODE__ZenKEY	Classes/clsDynamicMenu.cls
+Zen-CODE__ZenKEY	Classes/clsFile.cls
+Zen-CODE__ZenKEY	Classes/clsFolder.cls
+Zen-CODE__ZenKEY	Classes/clsFolders.cls
+Zen-CODE__ZenKEY	Classes/clsHotkey.cls
+Zen-CODE__ZenKEY	Classes/clsIDT.cls
+Zen-CODE__ZenKEY	Classes/clsKeyStroke.cls
+Zen-CODE__ZenKEY	Classes/clsMedia.cls
+Zen-CODE__ZenKEY	Classes/clsMenu.cls
+Zen-CODE__ZenKEY	Forms/frmAbout.frm
+Zen-CODE__ZenKEY	Forms/frmAction.frm
+Zen-CODE__ZenKEY	Forms/frmDesktopMap.frm
+Zen-CODE__ZenKEY	Forms/frmDimmer.frm
+Zen-CODE__ZenKEY	Forms/frmIconify.frm
+Zen-CODE__ZenKEY	Forms/frmKeystrokes.frm
+Zen-CODE__ZenKEY	Forms/frmMB.frm
+Zen-CODE__ZenKEY	Forms/frmSearch.frm
+Zen-CODE__ZenKEY	Forms/frmSetHotkey.frm
+Zen-CODE__ZenKEY	Forms/frmSystray.frm
+Zen-CODE__ZenKEY	Forms/frmWindowCapture.frm
+Zen-CODE__ZenKEY	Forms/frmWizHotkey.frm
+Zen-CODE__ZenKEY	Forms/frmWizNCOptions.frm
+Zen-CODE__ZenKEY	Forms/frmWizNewConfigs.frm
+Zen-CODE__ZenKEY	Forms/frmWizNewItem.frm
+Zen-CODE__ZenKEY	Forms/frmWizSelectItem.frm
+Zen-CODE__ZenKEY	Forms/frmWizTemplate.frm
+Zen-CODE__ZenKEY	Forms/frmWizType.frm
+Zen-CODE__ZenKEY	Forms/frmZKCommon.frm
+Zen-CODE__ZenKEY	Forms/frmZKConfig.frm
+Zen-CODE__ZenKEY	Modules/modActDescrip.bas
+Zen-CODE__ZenKEY	Modules/modBalloon.bas
+Zen-CODE__ZenKEY	Modules/modCollection.bas
+Zen-CODE__ZenKEY	Modules/modDevice.bas
+Zen-CODE__ZenKEY	Modules/modFactory.bas
+Zen-CODE__ZenKEY	Modules/modFileBrowse.bas
+Zen-CODE__ZenKEY	Modules/modIcon.bas
+Zen-CODE__ZenKEY	Modules/modMenu.bas
+Zen-CODE__ZenKEY	Modules/modPropExtract.bas
+Zen-CODE__ZenKEY	Modules/modRegion.bas
+blistik__FireflyKalidasa	AI/Module1.bas
+blistik__FireflyKalidasa	AI/main.frm
+blistik__FireflyKalidasa	Board.frm
+blistik__FireflyKalidasa	Events.frm
+blistik__FireflyKalidasa	Main.frm
+blistik__FireflyKalidasa	Module1.bas
+blistik__FireflyKalidasa	Starter.frm
+blistik__FireflyKalidasa	Tools/Board.frm
+blistik__FireflyKalidasa	editBoard.frm
+blistik__FireflyKalidasa	frmAction.frm
+blistik__FireflyKalidasa	frmBarter.frm
+blistik__FireflyKalidasa	frmBoarded.frm
+blistik__FireflyKalidasa	frmBounty.frm
+blistik__FireflyKalidasa	frmCrewLst.frm
+blistik__FireflyKalidasa	frmCrews.frm
+blistik__FireflyKalidasa	frmDash.frm
+blistik__FireflyKalidasa	frmDeals.frm
+blistik__FireflyKalidasa	frmDiscardGear.frm
+blistik__FireflyKalidasa	frmGamble.frm
+blistik__FireflyKalidasa	frmGearView.frm
+blistik__FireflyKalidasa	frmGoals.frm
+blistik__FireflyKalidasa	frmHaven.frm
+blistik__FireflyKalidasa	frmInputBox.frm
+blistik__FireflyKalidasa	frmJob.frm
+blistik__FireflyKalidasa	frmJobEditor.frm
+blistik__FireflyKalidasa	frmJobSel.frm
+blistik__FireflyKalidasa	frmJobTasks.frm
+blistik__FireflyKalidasa	frmJobcard.frm
+blistik__FireflyKalidasa	frmJobs.frm
+blistik__FireflyKalidasa	frmKillCrew.frm
+blistik__FireflyKalidasa	frmMisbehave.frm
+blistik__FireflyKalidasa	frmNav.frm
+blistik__FireflyKalidasa	frmNavDecks.frm
+blistik__FireflyKalidasa	frmNavPeeks.frm
+blistik__FireflyKalidasa	frmPlanetGrp.frm
+blistik__FireflyKalidasa	frmPopup.frm
+blistik__FireflyKalidasa	frmSalvaging.frm
+blistik__FireflyKalidasa	frmScore.frm
+blistik__FireflyKalidasa	frmSeized.frm
+blistik__FireflyKalidasa	frmSeized2.frm
+cdhigh__Vb6Tkinter	Base64.bas
+cdhigh__Vb6Tkinter	Common.bas
+cdhigh__Vb6Tkinter	Connect.cls
+cdhigh__Vb6Tkinter	Dictionary.cls
+cdhigh__Vb6Tkinter	FileDlg.bas
+cdhigh__Vb6Tkinter	GridOcx.ctl
+cdhigh__Vb6Tkinter	MainForm.frm
+cdhigh__Vb6Tkinter	MultiLanguage.bas
+cdhigh__Vb6Tkinter	Resizer.bas
+cdhigh__Vb6Tkinter	Setup/Main.frm
+cdhigh__Vb6Tkinter	cStrBuilder.cls
+cdhigh__Vb6Tkinter	clsBaseControl.cls
+cdhigh__Vb6Tkinter	clsButton.cls
+cdhigh__Vb6Tkinter	clsCanvas.cls
+cdhigh__Vb6Tkinter	clsCheckbutton.cls
+cdhigh__Vb6Tkinter	clsCombobox.cls
+cdhigh__Vb6Tkinter	clsComboboxAdapter.cls
+cdhigh__Vb6Tkinter	clsEntry.cls
+cdhigh__Vb6Tkinter	clsForm.cls
+cdhigh__Vb6Tkinter	clsLabel.cls
+cdhigh__Vb6Tkinter	clsLabelFrame.cls
+cdhigh__Vb6Tkinter	clsListbox.cls
+cdhigh__Vb6Tkinter	clsMenu.cls
+cdhigh__Vb6Tkinter	clsMenuItem.cls
+cdhigh__Vb6Tkinter	clsNotebook.cls
+cdhigh__Vb6Tkinter	clsNotebookTab.cls
+cdhigh__Vb6Tkinter	clsOptionMenu.cls
+cdhigh__Vb6Tkinter	clsProgressBar.cls
+cdhigh__Vb6Tkinter	clsRadiobutton.cls
+cdhigh__Vb6Tkinter	clsScale.cls
+cdhigh__Vb6Tkinter	clsScrollbar.cls
+cdhigh__Vb6Tkinter	clsSeparator.cls
+cdhigh__Vb6Tkinter	frmAbout.frm
+cdhigh__Vb6Tkinter	frmEncodeAFile.frm
+cdhigh__Vb6Tkinter	frmNewVer.frm
+cdhigh__Vb6Tkinter	frmOption.frm
+cdhigh__Vb6Tkinter	http.bas
+cdhigh__Vb6Tkinter	modJson.bas
+cdhigh__Vb6Tkinter	utf8file.bas
+cdhigh__Vb6Tkinter	xpcmdbutton.ctl
+code-blooded-developer__On-Screen-Key-Board	Form1.frm
+code-blooded-developer__On-Screen-Key-Board	Form2.frm
+code-blooded-developer__On-Screen-Key-Board	Form3.frm
+dotcomboom__AutoSite-98	Form1.frm
+fafalone__D2DSamples	BasicDrawings/frmBasicDrawings.frm
+fafalone__D2DSamples	Clip/frmMain.frm
+fafalone__D2DSamples	CustomFont/CFontCollectionLoader.cls
+fafalone__D2DSamples	CustomFont/CFontFileEnumerator.cls
+fafalone__D2DSamples	CustomFont/CFontFileLoader.cls
+fafalone__D2DSamples	CustomFont/CFontFileStream.cls
+fafalone__D2DSamples	CustomFont/SourceExport/Sources/CFontFileEnumerator.cls
+fafalone__D2DSamples	CustomFont/frmMain.frm
+fafalone__D2DSamples	CustomRenderer/CColorEffect.cls
+fafalone__D2DSamples	CustomRenderer/CRenderer.cls
+fafalone__D2DSamples	CustomRenderer/SourceExport/Sources/CColorEffect.cls
+fafalone__D2DSamples	CustomRenderer/frmMain.frm
+fafalone__D2DSamples	Effects-Blur/frmMain.frm
+fafalone__D2DSamples	Effects-Convolve/frmMain.frm
+fafalone__D2DSamples	Effects-Overlay/frmMain.frm
+fafalone__D2DSamples	Effects-PerspectiveTransform/frmMain.frm
+fafalone__D2DSamples	Enumerate fonts/modMain.bas
+fafalone__D2DSamples	ImageDrawings/frmMain.frm
+fafalone__D2DSamples	InlineObject/CInlineObject.cls
+fafalone__D2DSamples	InlineObject/frmMain.frm
+fafalone__D2DSamples	Interpolation/frmMain.frm
+fafalone__D2DSamples	Modules/D2D1.bas
+fafalone__D2DSamples	Modules/D2D1Effects.bas
+fafalone__D2DSamples	Modules/DW.bas
+fafalone__D2DSamples	Modules/WIC.bas
+fafalone__D2DSamples	SaveImage/frmMain.frm
+fafalone__D2DSamples	Strokes/frmMain.frm
+fafalone__D2DSamples	Text/frmMain.frm
+fafalone__Lems64	VB6/cDIB08.cls
+fafalone__Lems64	VB6/cDIB32.cls
+fafalone__Lems64	VB6/fEdit.frm
+fafalone__Lems64	VB6/fLems.frm
+fafalone__Lems64	VB6/fLevel.frm
+fafalone__Lems64	VB6/mDialogColor.bas
+fafalone__Lems64	VB6/mDialogFile.bas
+fafalone__Lems64	VB6/mEdit.bas
+fafalone__Lems64	VB6/mEditRenderer.bas
+fafalone__Lems64	VB6/mFullScreen.bas
+fafalone__Lems64	VB6/mHook.bas
+fafalone__Lems64	VB6/mINI.bas
+fafalone__Lems64	VB6/mLems.bas
+fafalone__Lems64	VB6/mLemsRenderer.bas
+fafalone__Lems64	VB6/mLevel.bas
+fafalone__Lems64	VB6/mMain.bas
+fafalone__Lems64	VB6/mMisc.bas
+fafalone__Lems64	VB6/mMusic.bas
+fafalone__Lems64	VB6/mSettings.bas
+fafalone__Lems64	VB6/mSound.bas
+fafalone__Lems64	VB6/mTiming.bas
+fafalone__Lems64	VB6/ucCounter.ctl
+fafalone__Lems64	VB6/ucInfo.ctl
+fafalone__Lems64	VB6/ucProgress.ctl
+fafalone__Lems64	VB6/ucScreen08.ctl
+fafalone__Lems64	VB6/ucScreen32.ctl
+fafalone__Lems64	VB6/ucToolbar.ctl
+fafalone__Lems64	srcexp-64n/Sources/mLevel.bas
+fafalone__Lems64	srcexp-64n/Sources/mSettings.bas
+fafalone__Lems64	srcexp-64nxl/Sources/mLevel.bas
+fafalone__Lems64	srcexp-64nxl/Sources/mSettings.bas
+fafalone__Lems64	srcexp-impt/Sources/cDIB08.cls
+fafalone__Lems64	srcexp-impt/Sources/mDialogColor.bas
+fafalone__Lems64	srcexp-impt/Sources/mFullScreen.bas
+fafalone__Lems64	srcexp-impt/Sources/mHook.bas
+fafalone__Lems64	srcexp-impt/Sources/mINI.bas
+fafalone__Lems64	srcexp-impt/Sources/mLems.bas
+fafalone__Lems64	srcexp-impt/Sources/mLemsRenderer.bas
+fafalone__Lems64	srcexp-impt/Sources/mLevel.bas
+fafalone__Lems64	srcexp-impt/Sources/mMisc.bas
+fafalone__RunAsTrustedInstaller	VB6/Form1.frm
+fafalone__RunAsTrustedInstaller	VB6/modRunAsTI.bas
+fafalone__ShellControls	VB6/ucShellBrowse112/Demo/Form1.frm
+fafalone__ShellControls	VB6/ucShellBrowse112/Demo/frmDirOnly.frm
+fafalone__ShellControls	VB6/ucShellBrowse112/Demo2/Form1.frm
+fafalone__ShellControls	VB6/ucShellBrowse112/Demo3/Form1.frm
+fafalone__ShellControls	VB6/ucShellBrowse112/DemoEx/Form1.frm
+fafalone__ShellControls	VB6/ucShellBrowse112/DemoEx/frmSTA.frm
+fafalone__ShellControls	VB6/ucShellBrowse112/DemoFileProc/Form1.frm
+fafalone__ShellControls	VB6/ucShellBrowse112/DemoOpenDlg/frmOpen.frm
+fafalone__ShellControls	VB6/ucShellBrowse112/DemoThumbView/Form1.frm
+fafalone__ShellControls	VB6/ucShellBrowse112/DemoVB/Form1.frm
+fafalone__ShellControls	VB6/ucShellBrowse112/DemoVBDir/Form1.frm
+fafalone__ShellControls	VB6/ucShellBrowse112/ucShellBrowse.ctl
+fafalone__ShellControls	VB6/ucShellTree217/Demo/Form1.frm
+fafalone__ShellControls	VB6/ucShellTree217/DemoSB/Form1.frm
+fafalone__ShellControls	VB6/ucShellTree217/ucShellTree.ctl
+floresroquejosue__Vb6IconCreator	bas/Global.bas
+floresroquejosue__Vb6IconCreator	bas/mMnuImage.bas
+floresroquejosue__Vb6IconCreator	cls/cDialog.cls
+floresroquejosue__Vb6IconCreator	cls/cGDIPBitmap.cls
+floresroquejosue__Vb6IconCreator	cls/cIconEntry.cls
+floresroquejosue__Vb6IconCreator	frm/FrmAbout.frm
+floresroquejosue__Vb6IconCreator	frm/FrmCreate.frm
+floresroquejosue__Vb6IconCreator	frm/FrmImport.frm
+floresroquejosue__Vb6IconCreator	frm/FrmMain.frm
+floresroquejosue__Vb6IconCreator	uc/JImageListEx.ctl
+floresroquejosue__Vb6NotifyIcon	cls/cNotifyIcon.cls
+floresroquejosue__Vb6NotifyIcon	frm/Form1.frm
+floresroquejosue__Vb6NotifyIcon	frm/Form2.frm
+floresroquejosue__Vb6NotifyIcon	frm/Form3.frm
+floresroquejosue__Vb6NotifyIcon	uc/ucCommandLink.ctl
+gauss77__oldschool-visualbasic6	Animal Game/Game.frm
+gauss77__oldschool-visualbasic6	Animal Game/frmQuestion.frm
+gauss77__oldschool-visualbasic6	Charmed/frmCharmed.frm
+gauss77__oldschool-visualbasic6	Charmed/frmLyrics.frm
+gauss77__oldschool-visualbasic6	Cos Sine/frmCos.frm
+gauss77__oldschool-visualbasic6	Graphics Demo/frmChoice.frm
+gauss77__oldschool-visualbasic6	Graphics Demo/frmIntro.frm
+gauss77__oldschool-visualbasic6	Graphics Demo/frmStarfield.frm
+gauss77__oldschool-visualbasic6	Set & Destroy/Set & Destroy.frm
+gauss77__oldschool-visualbasic6	Set & Destroy/frmEnding.frm
+gauss77__oldschool-visualbasic6	Set & Destroy/frmGame.frm
+gauss77__oldschool-visualbasic6	Set & Destroy/frmHelp.frm
+gauss77__oldschool-visualbasic6	Shapes Screen Saver/Fun.frm
+happyqq__VideoConverter	SkinH.bas
+happyqq__VideoConverter	clsINI.cls
+happyqq__VideoConverter	clsMD5.cls
+happyqq__VideoConverter	frmAD.frm
+happyqq__VideoConverter	frmMain.frm
+happyqq__VideoConverter	frmMsg.frm
+happyqq__VideoConverter	frmReg.frm
+happyqq__VideoConverter	modAPI.bas
+happyqq__VideoConverter	modBrowse.bas
+happyqq__VideoConverter	modDialog.bas
+happyqq__VideoConverter	modExecute.bas
+happyqq__VideoConverter	modFile.bas
+happyqq__VideoConverter	modFileIO.bas
+happyqq__VideoConverter	modLink.bas
+happyqq__VideoConverter	modMD5.bas
+happyqq__VideoConverter	modNetAccess.bas
+happyqq__VideoConverter	modPrivate.bas
+happyqq__VideoConverter	modSound.bas
+happyqq__VideoConverter	modStatic.bas
+happyqq__VideoConverter	modTools.bas
+happyqq__VideoConverter	modUrl.bas
+happyqq__VideoConverter	ucLink.ctl
+huguesjohnson__powerups	Falcone/vb6/Falcone.frm
+huguesjohnson__powerups	Falcone/vb6/OpenFileDialog.bas
+huguesjohnson__powerups	Hilary/vb6/CFGEntry.bas
+huguesjohnson__powerups	Hilary/vb6/MainForm.frm
+huguesjohnson__powerups	Hilary/vb6/OpenFileDialog.bas
+huguesjohnson__powerups	Hilary/vb6/SuspensionForm.frm
+huguesjohnson__powerups	Luise/vb6/MainForm.frm
+huguesjohnson__powerups	Luise/vb6/OpenFileDialog.bas
+jcfieldsdev__genesis-rom-utility	project/About.frm
+jcfieldsdev__genesis-rom-utility	project/CRC32.bas
+jcfieldsdev__genesis-rom-utility	project/Main.frm
+jcfieldsdev__genesis-rom-utility	project/Patch.bas
+jcfieldsdev__genesis-rom-utility	project/Rom.bas
+junian__vb6-apps	UT BallGame/UT BallGame.frm
+junian__vb6-apps	UT DaTetiMe/Jam.frm
+junian__vb6-apps	UT Duel Of Dice virX/UTDice.frm
+junian__vb6-apps	UT FiRsT/ConBin.frm
+junian__vb6-apps	UT FiRsT/ConDec.frm
+junian__vb6-apps	UT FiRsT/ConHex.frm
+junian__vb6-apps	UT FiRsT/ConMeasurement.frm
+junian__vb6-apps	UT FiRsT/Faktorial.frm
+junian__vb6-apps	UT FiRsT/Hari-H.frm
+junian__vb6-apps	UT FiRsT/LinKua.frm
+junian__vb6-apps	UT FiRsT/Lucky Seven.frm
+junian__vb6-apps	UT FiRsT/MdlJayTech.bas
+junian__vb6-apps	UT FiRsT/PersKuadrat.frm
+junian__vb6-apps	UT FiRsT/Trigonometri.frm
+junian__vb6-apps	UT FiRsT/UltimaTech.frm
+kellyethridge__VBCorLib	Examples/Console Example/BouncingSquare/modMain.bas
+kellyethridge__VBCorLib	Examples/Console Example/ColoredSquare/modMain.bas
+kellyethridge__VBCorLib	Examples/Cryptography/FileEncryption/Form1.frm
+kellyethridge__VBCorLib	Examples/Cryptography/HashCodes/Form1.frm
+kellyethridge__VBCorLib	Examples/Cryptography/RealTimeDecryption/Form1.frm
+kellyethridge__VBCorLib	Examples/IO Examples/FileHexViewer/Form1.frm
+kellyethridge__VBCorLib	Examples/IO Examples/ResourceBrowser/Form1.frm
+kellyethridge__VBCorLib	Examples/IO Examples/SimpleBrowser/FileComparer.cls
+kellyethridge__VBCorLib	Examples/IO Examples/SimpleBrowser/Form1.frm
+kellyethridge__VBCorLib	Examples/IO Examples/SimpleBrowser2/Form1.frm
+kellyethridge__VBCorLib	Examples/IO Examples/SimpleBrowser2/Module1.bas
+kellyethridge__VBCorLib	Examples/IO Examples/SimpleINIFileBrowser/Form1.frm
+kellyethridge__VBCorLib	Examples/IO Examples/SimpleINIFileBrowser/INIEntryComparer.cls
+kellyethridge__VBCorLib	Examples/Misc/Base64 Encoding/Form1.frm
+kellyethridge__VBCorLib	Examples/Misc/SimpleTicker/Counter.cls
+kellyethridge__VBCorLib	Examples/Misc/SimpleTicker/Form1.frm
+kellyethridge__VBCorLib	Examples/Misc/SimpleTicker2/Counter.cls
+kellyethridge__VBCorLib	Examples/Misc/SimpleTicker2/Form1.frm
+kellyethridge__VBCorLib	Examples/Misc/SimpleTicker2/Module1.bas
+kellyethridge__VBCorLib	Examples/Misc/StaticClasses/Form1.frm
+kellyethridge__VBCorLib	Examples/NumberFormatting/Format Integer/Form1.frm
+kellyethridge__VBCorLib	Examples/Registry/SimpleRegistryBrowser/Form1.frm
+kellyethridge__VBCorLib	Source/CorLib/Cor/Conversion.cls
+kellyethridge__VBCorLib	Source/CorLib/Cor/ConversionMethods.bas
+kellyethridge__VBCorLib	Source/CorLib/Cor/Information.bas
+kellyethridge__VBCorLib	Source/CorLib/Cor/Interaction.bas
+kellyethridge__VBCorLib	Source/CorLib/Microsoft.Win32.SafeHandles/SafeFileHandle.cls
+kellyethridge__VBCorLib	Source/CorLib/Microsoft.Win32.SafeHandles/SafeFindHandle.cls
+kellyethridge__VBCorLib	Source/CorLib/Microsoft.Win32.SafeHandles/SafeHandle.cls
+kellyethridge__VBCorLib	Source/CorLib/Microsoft.Win32.SafeHandles/SafeMemoryMappedFileHandle.cls
+kellyethridge__VBCorLib	Source/CorLib/Microsoft.Win32/Registry.cls
+kellyethridge__VBCorLib	Source/CorLib/Microsoft.Win32/RegistryKey.cls
+kellyethridge__VBCorLib	Source/CorLib/Microsoft.Win32/RegistryKeyStatic.cls
+kellyethridge__VBCorLib	Source/CorLib/Microsoft.Win32/Win32Native.bas
+kellyethridge__VBCorLib	Source/CorLib/System.Collections/ArrayList.cls
+kellyethridge__VBCorLib	Source/CorLib/System.Collections/Enumeration.bas
+kellyethridge__VBCorLib	Source/CorLib/System.Collections/HashtableHelper.bas
+kellyethridge__VBCorLib	Source/CorLib/System.Globalization/GlobalizationConstants.bas
+kellyethridge__VBCorLib	Source/CorLib/System.Globalization/modCalendarHelpers.bas
+kellyethridge__VBCorLib	Source/Tests/frmSimplyVBUnitRunner.frm
+kroesner__swiftirc-client	Classes/CAutoJoinChannel.cls
+kroesner__swiftirc-client	Classes/CBlockBackColour.cls
+kroesner__swiftirc-client	Classes/CBlockBold.cls
+kroesner__swiftirc-client	Classes/CBlockForeColour.cls
+kroesner__swiftirc-client	Classes/CBlockImage.cls
+kroesner__swiftirc-client	Classes/CBlockItalic.cls
+kroesner__swiftirc-client	Classes/CBlockNormal.cls
+kroesner__swiftirc-client	Classes/CBlockReverse.cls
+kroesner__swiftirc-client	Controls/SwiftIrcClient.ctl
+kroesner__swiftirc-client	Controls/ctlButton.ctl
+kroesner__swiftirc-client	Controls/ctlCCBans.ctl
+kroesner__swiftirc-client	Controls/ctlCCModes.ctl
+kroesner__swiftirc-client	Controls/ctlCCTopic.ctl
+kroesner__swiftirc-client	Controls/ctlChannelList.ctl
+kroesner__swiftirc-client	Controls/ctlColourPalette.ctl
+kroesner__swiftirc-client	Controls/ctlColourSingleColourSelector.ctl
+kroesner__swiftirc-client	Forms/Form1.frm
+kroesner__swiftirc-client	Forms/frmChannelCentral.frm
+kroesner__swiftirc-client	Forms/frmColourSelector.frm
+kroesner__swiftirc-client	Forms/frmEditAddress.frm
+kroesner__swiftirc-client	Forms/frmEditAutoJoinChannel.frm
+kroesner__swiftirc-client	Forms/frmEditHighlight.frm
+kroesner__swiftirc-client	Forms/frmEditNicknameAppearance.frm
+kroesner__swiftirc-client	Forms/frmEditServer.frm
+kroesner__swiftirc-client	Forms/frmErrorReport.frm
+kroesner__swiftirc-client	Forms/frmFirstUseDisclaimer.frm
+kroesner__swiftirc-client	Forms/frmGenericInput.frm
+kroesner__swiftirc-client	Forms/frmIgnoreEditor.frm
+kroesner__swiftirc-client	Forms/frmIgnoreList.frm
+kroesner__swiftirc-client	Forms/frmOptions.frm
+kroesner__swiftirc-client	Forms/frmPeform.frm
+kroesner__swiftirc-client	Forms/frmPerform.frm
+kroesner__swiftirc-client	src/MessageHighlights.bas
+kroesner__swiftirc-client	src/modFormat.bas
+kroesner__swiftirc-client	src/modHacks.bas
+kroesner__swiftirc-client	src/modMain.bas
+kroesner__swiftirc-client	src/modMisc.bas
+kroesner__swiftirc-client	src/modNumerics.bas
+kroesner__swiftirc-client	src/modUI.bas
+kroesner__swiftirc-client	src/modUTF8.bas
+lvcabral__ActivePack	Source/ActiveCal/ActiveCal.cls
+lvcabral__ActivePack	Source/ActiveCal/ActiveCal.ctl
+lvcabral__ActivePack	Source/ActiveCal/Example/Form1.frm
+lvcabral__ActivePack	Source/ActiveCombo/ActiveCombo.ctl
+lvcabral__ActivePack	Source/ActiveCombo/CImageList.cls
+lvcabral__ActivePack	Source/ActiveCombo/ComboBoxEx.cls
+lvcabral__ActivePack	Source/ActiveCombo/Example/Form1.frm
+lvcabral__ActivePack	Source/ActiveDate/ActiveDate.bas
+lvcabral__ActivePack	Source/ActiveDate/ActiveDate.ctl
+lvcabral__ActivePack	Source/ActiveDate/ActiveDate.frm
+lvcabral__ActivePack	Source/ActiveDate/Example/Form1.frm
+lvcabral__ActivePack	Source/ActiveForm/ActiveForm.bas
+lvcabral__ActivePack	Source/ActiveForm/ActiveForm.ctl
+lvcabral__ActivePack	Source/ActiveForm/Example/Form1.frm
+lvcabral__ActivePack	Source/ActiveForm/cElastic.cls
+lvcabral__ActivePack	Source/ActiveLink/ActiveLink.ctl
+lvcabral__ActivePack	Source/ActiveLink/Example/Form1.frm
+lvcabral__ActivePack	Source/ActivePanel/ActiveLine.ctl
+lvcabral__ActivePack	Source/ActivePanel/ActivePanel.ctl
+lvcabral__ActivePack	Source/ActivePanel/Example/Form1.frm
+lvcabral__ActivePack	Source/ActiveScroll/ActiveScroll.ctl
+lvcabral__ActivePack	Source/ActiveScroll/Example/Form1.frm
+lvcabral__ActivePack	Source/ActiveScroll/cScrollBars.cls
+lvcabral__ActivePack	Source/ActiveStatus/ActiveStatus.bas
+lvcabral__ActivePack	Source/ActiveStatus/ActiveStatus.ctl
+lvcabral__ActivePack	Source/ActiveStatus/Example/Form1.frm
+lvcabral__ActivePack	Source/ActiveStatus/cPanel.cls
+lvcabral__ActivePack	Source/ActiveStatus/cPanels.cls
+lvcabral__ActivePack	Source/ActiveStatus/cStatusBar.cls
+lvcabral__ActivePack	Source/ActiveStatus/frmPicCache.frm
+lvcabral__ActivePack	Source/ActiveStatus/timer.bas
+lvcabral__ActivePack	Source/ActiveText/Example/Form1.frm
+lvcabral__ActivePack	Source/ActiveText/Global.bas
+lvcabral__ActivePack	Source/ActiveTools/APIFilesAndPaths.bas
+lvcabral__ActivePack	Source/ActiveTools/ActiveTools.bas
+lvcabral__ActivePack	Source/ActiveTools/ActiveTools.frm
+lvcabral__ActivePack	Source/ActiveTools/BrowseForFolder.bas
+lvcabral__ActivePack	Source/ActiveTools/FilesFilter.frm
+lvcabral__ActivePack	Source/ActiveTools/ObjBrowser.frm
+lvcabral__ActivePack	Source/Common/About.frm
+mcvendrell__SimpleAgenda	src/AcercaDeFrm.frm
+mcvendrell__SimpleAgenda	src/AgendaFrm.frm
+mcvendrell__SimpleAgenda	src/AgendaRepetirFrm.frm
+mcvendrell__SimpleAgenda	src/AvisoFrm.frm
+mcvendrell__SimpleAgenda	src/AyudaFrm.frm
+mcvendrell__SimpleAgenda	src/BuscarFrm.frm
+mcvendrell__SimpleAgenda	src/IconizarMod.bas
+mcvendrell__SimpleAgenda	src/ImpresionMod.bas
+mcvendrell__SimpleAgenda	src/TlfnsFrm.frm
+meyskens__mastodon-for-workgroups	Post.ctl
+meyskens__mastodon-for-workgroups	loginform.frm
+meyskens__mastodon-for-workgroups	main.frm
+meyskens__mastodon-for-workgroups	modConfig.bas
+meyskens__mastodon-for-workgroups	modURLUtils.bas
+meyskens__mastodon-for-workgroups	modWinInet.bas
+meyskens__mastodon-for-workgroups	newToot.frm
+mikechambers84__vbNES	source/frmAudioDbg.frm
+mikechambers84__vbNES	source/frmConfigInput.frm
+mikechambers84__vbNES	source/frmDirectPlay.frm
+mikechambers84__vbNES	source/frmMain.frm
+mikechambers84__vbNES	source/mod6502.bas
+mikechambers84__vbNES	source/modArrays.bas
+mikechambers84__vbNES	source/modAudio.bas
+mikechambers84__vbNES	source/modCart.bas
+mikechambers84__vbNES	source/modDirectPlay.bas
+mikechambers84__vbNES	source/modGenie.bas
+mikechambers84__vbNES	source/modInput.bas
+mikechambers84__vbNES	source/modMapper.bas
+mikechambers84__vbNES	source/modMemory.bas
+mikechambers84__vbNES	source/modNES.bas
+mikechambers84__vbNES	source/modNetplay.bas
+mikechambers84__vbNES	source/modPPU.bas
+mikechambers84__vbNES	source/modRender.bas
+mikechambers84__vbNES	source/modState.bas
+nithinmohantk__JewelBox-2004-Project	JewelBox VB MYSQL/Forms/frmAbout.frm
+nithinmohantk__JewelBox-2004-Project	JewelBox VB MYSQL/Forms/frmBill.frm
+nithinmohantk__JewelBox-2004-Project	JewelBox VB MYSQL/Forms/frmMain.frm
+nithinmohantk__JewelBox-2004-Project	JewelBox VB MYSQL/Forms/frmMsgBox.frm
+nithinmohantk__JewelBox-2004-Project	JewelBox VB MYSQL/Forms/frmOptions.frm
+nithinmohantk__JewelBox-2004-Project	JewelBox VB MYSQL/Forms/frmRate.frm
+nithinmohantk__JewelBox-2004-Project	JewelBox VB MYSQL/Forms/frmRegister.frm
+nithinmohantk__JewelBox-2004-Project	JewelBox VB MYSQL/Forms/frmReport.frm
+nithinmohantk__JewelBox-2004-Project	JewelBox VB MYSQL/Forms/frmSalesMan.frm
+nithinmohantk__JewelBox-2004-Project	JewelBox VB MYSQL/Forms/frmSettings.frm
+nithinmohantk__JewelBox-2004-Project	JewelBox VB MYSQL/Forms/frmSplash.frm
+nithinmohantk__JewelBox-2004-Project	JewelBox VB MYSQL/Forms/frmStock.frm
+nithinmohantk__JewelBox-2004-Project	JewelBox VB MYSQL/Forms/frmpassword.frm
+nithinmohantk__JewelBox-2004-Project	JewelBox VB MYSQL/Modules/modMain.bas
+nithinmohantk__JewelBox-2004-Project	JewelBox VB/Forms/frmAbout.frm
+nithinmohantk__JewelBox-2004-Project	JewelBox VB/Forms/frmBill.frm
+nithinmohantk__JewelBox-2004-Project	JewelBox VB/Forms/frmMain.frm
+nithinmohantk__JewelBox-2004-Project	JewelBox VB/Forms/frmMsgBox.frm
+nithinmohantk__JewelBox-2004-Project	JewelBox VB/Forms/frmOptions.frm
+nithinmohantk__JewelBox-2004-Project	JewelBox VB/Forms/frmRate.frm
+nithinmohantk__JewelBox-2004-Project	JewelBox VB/Forms/frmRegister.frm
+nithinmohantk__JewelBox-2004-Project	JewelBox VB/Forms/frmReport.frm
+nithinmohantk__JewelBox-2004-Project	JewelBox VB/Forms/frmSalesMan.frm
+nithinmohantk__JewelBox-2004-Project	JewelBox VB/Forms/frmSettings.frm
+nithinmohantk__JewelBox-2004-Project	JewelBox VB/Forms/frmSplash.frm
+nithinmohantk__JewelBox-2004-Project	JewelBox VB/Forms/frmStock.frm
+nithinmohantk__JewelBox-2004-Project	JewelBox VB/Forms/frmpassword.frm
+nithinmohantk__JewelBox-2004-Project	JewelBox VB/Modules/modMain.bas
+nithinmohantk__JewelBox-2004-Project	JewelBox VB_new/Forms/frmAbout.frm
+nithinmohantk__JewelBox-2004-Project	JewelBox VB_new/Forms/frmBill.frm
+nithinmohantk__JewelBox-2004-Project	JewelBox VB_new/Forms/frmChgPass.frm
+nithinmohantk__JewelBox-2004-Project	JewelBox VB_new/Forms/frmConfirmPass.frm
+nithinmohantk__JewelBox-2004-Project	JewelBox VB_new/Forms/frmCustomReport.frm
+nithinmohantk__JewelBox-2004-Project	JewelBox VB_new/Forms/frmDelUser.frm
+nithinmohantk__JewelBox-2004-Project	JewelBox VB_new/Forms/frmFind.frm
+nithinmohantk__JewelBox-2004-Project	JewelBox VB_new/Forms/frmMain.frm
+nithinmohantk__JewelBox-2004-Project	JewelBox VB_new/Forms/frmMsgBox.frm
+nithinmohantk__JewelBox-2004-Project	JewelBox VB_new/Modules/modMain.bas
+nithinmohantk__JewelBox-2004-Project	JewelBox VB_new/Modules/modRegister.bas
+nithinmohantk__JewelBox-2004-Project	JewelBox VB_new/Modules/modSub.bas
+openmicroanalysis__calczaf	about.frm
+openmicroanalysis__calczaf	absorb.bas
+openmicroanalysis__calczaf	absorb2.bas
+openmicroanalysis__calczaf	addstd.bas
+openmicroanalysis__calczaf	addstd.frm
+openmicroanalysis__calczaf	afactor.bas
+openmicroanalysis__calczaf	analyze3.bas
+openmicroanalysis__calczaf	analyze3.frm
+openmicroanalysis__calczaf	analyze3a.bas
+openmicroanalysis__calczaf	analyze4.bas
+openmicroanalysis__calczaf	analyze8.bas
+openmicroanalysis__calczaf	automate3.frm
+openmicroanalysis__calczaf	base64coder.bas
+openmicroanalysis__calczaf	base64reader.bas
+openmicroanalysis__calczaf	binary.frm
+openmicroanalysis__calczaf	bmp.bas
+openmicroanalysis__calczaf	bmp3.bas
+openmicroanalysis__calczaf	calcspec.frm
+openmicroanalysis__calczaf	calczaf.frm
+openmicroanalysis__calczaf	calmac.frm
+openmicroanalysis__calczaf	cl2.frm
+openmicroanalysis__calczaf	cldisplay.frm
+openmicroanalysis__calczaf	cond22.frm
+openmicroanalysis__calczaf	cond3.frm
+openmicroanalysis__calczaf	cunzip.cls
+openmicroanalysis__calczaf	detection.frm
+openmicroanalysis__calczaf	dynamicelements.frm
+openmicroanalysis__calczaf	editmac.frm
+openmicroanalysis__calczaf	editxray.frm
+openmicroanalysis__calczaf	edsdisplay3.frm
+openmicroanalysis__calczaf	effective.frm
+openmicroanalysis__calczaf	emp.frm
+openmicroanalysis__calczaf	exceloptions.frm
+openmicroanalysis__calczaf	fiduconf2.frm
+openmicroanalysis__calczaf	fileinfo.frm
+openmicroanalysis__calczaf	find.frm
+openmicroanalysis__calczaf	find2.frm
+openmicroanalysis__calczaf	formula.frm
+openmicroanalysis__calczaf	getcmp.frm
+openmicroanalysis__calczaf	pddib.cls
+opensoldat__polyworks	src/frmColor.frm
+opensoldat__polyworks	src/frmDisplay.frm
+opensoldat__polyworks	src/frmInfo.frm
+opensoldat__polyworks	src/frmMap.frm
+opensoldat__polyworks	src/frmOpenSoldatMapEditor.frm
+opensoldat__polyworks	src/frmPalette.frm
+opensoldat__polyworks	src/frmPreferences.frm
+opensoldat__polyworks	src/frmScenery.frm
+opensoldat__polyworks	src/frmTaskBar.frm
+opensoldat__polyworks	src/frmTexture.frm
+opensoldat__polyworks	src/frmTools.frm
+opensoldat__polyworks	src/frmWaypoints.frm
+opensoldat__polyworks	src/modConfig.bas
+opensoldat__polyworks	src/modGlobals.bas
+opensoldat__polyworks	src/modInput.bas
+opensoldat__polyworks	src/modOSME.bas
+opensoldat__polyworks	src/modOpenSoldatMap.bas
+opensoldat__polyworks	src/modRender.bas
+opensoldat__polyworks	src/modUtils.bas
+pyhoon__omelette-vb6	Classes/OmlDatabase.cls
+pyhoon__omelette-vb6	Classes/OmlSQLBuilder.cls
+pyhoon__omelette-vb6	Forms/frmCommandLine.frm
+pyhoon__omelette-vb6	Forms/frmFormImport.frm
+pyhoon__omelette-vb6	Forms/frmLiveApp.frm
+pyhoon__omelette-vb6	Forms/frmOptions.frm
+pyhoon__omelette-vb6	Forms/frmProjectManage.frm
+pyhoon__omelette-vb6	Forms/frmProjectNew.frm
+pyhoon__omelette-vb6	Forms/frmProjectOpen.frm
+pyhoon__omelette-vb6	Forms/frmSplash.frm
+pyhoon__omelette-vb6	Forms/frmUserAdmin.frm
+pyhoon__omelette-vb6	Forms/frmWindowProject.frm
+pyhoon__omelette-vb6	Forms/frmWindowProperties.frm
+pyhoon__omelette-vb6	Forms/mdiMain.frm
+pyhoon__omelette-vb6	Modules/modCommon.bas
+pyhoon__omelette-vb6	Modules/modProject.bas
+pyhoon__omelette-vb6	Modules/modSQLQuery.bas
+pyhoon__omelette-vb6	Modules/modScaffold.bas
+pyhoon__omelette-vb6	Modules/modSecurity.bas
+pyhoon__omelette-vb6	Modules/modSubMain.bas
+pyhoon__omelette-vb6	Modules/modTextFile.bas
+pyhoon__omelette-vb6	Modules/modVariable.bas
+pyhoon__omelette-vb6	Samples/HelloWorld/Form1.frm
+pyhoon__omelette-vb6	Templates/Forms/About Dialog.frm
+pyhoon__omelette-vb6	Templates/Forms/Dialog.frm
+pyhoon__omelette-vb6	Templates/Forms/Log in Dialog.frm
+pyhoon__omelette-vb6	Templates/Forms/ODBC Log In.frm
+pyhoon__omelette-vb6	Templates/Forms/Options Dialog.frm
+pyhoon__omelette-vb6	Templates/Forms/Splash Screen.frm
+pyhoon__omelette-vb6	Templates/Forms/Tip of the Day.frm
+pyhoon__omelette-vb6	Templates/Forms/Web Browser.frm
+pyhoon__star-hotel-vb6	Form/frmAdmin.frm
+pyhoon__star-hotel-vb6	Form/frmBooking.frm
+pyhoon__star-hotel-vb6	Form/frmDashboard.frm
+pyhoon__star-hotel-vb6	Form/frmDatabase.frm
+pyhoon__star-hotel-vb6	Form/frmDialog.frm
+pyhoon__star-hotel-vb6	Form/frmFindCustomer.frm
+pyhoon__star-hotel-vb6	Form/frmModuleAccess.frm
+pyhoon__star-hotel-vb6	Form/frmPrint.frm
+pyhoon__star-hotel-vb6	Form/frmReport.frm
+pyhoon__star-hotel-vb6	Form/frmReportMaintain.frm
+pyhoon__star-hotel-vb6	Form/frmRoomMaintain.frm
+pyhoon__star-hotel-vb6	Form/frmRoomTypeMaintain.frm
+pyhoon__star-hotel-vb6	Form/frmSplash.frm
+pyhoon__star-hotel-vb6	Form/frmUserChangePassword.frm
+pyhoon__star-hotel-vb6	Form/frmUserLogin.frm
+pyhoon__star-hotel-vb6	Form/frmUserMaintain.frm
+pyhoon__star-hotel-vb6	Module/modCommon.bas
+pyhoon__star-hotel-vb6	Module/modDatabase.bas
+pyhoon__star-hotel-vb6	Module/modEncryption.bas
+pyhoon__star-hotel-vb6	Module/modFunction.bas
+pyhoon__star-hotel-vb6	Module/modGlobal.bas
+pyhoon__star-hotel-vb6	Module/modMain.bas
+pyhoon__star-hotel-vb6	Module/modTextFile.bas
+rlktradewright__tradebuild-platform	src/AccountUtils/AccountUtils.cls
+rlktradewright__tradebuild-platform	src/AccountUtils/IAccountDataProvider.cls
+rlktradewright__tradebuild-platform	src/AccountUtils/IAccountValue.cls
+rlktradewright__tradebuild-platform	src/AccountUtils/IAccountValueListener.cls
+rlktradewright__tradebuild-platform	src/AccountUtils/IPortfolioValue.cls
+rlktradewright__tradebuild-platform	src/AccountUtils/IPortfolioValueListener.cls
+rlktradewright__tradebuild-platform	src/BarFormatters/BarFormatterLibManager.cls
+rlktradewright__tradebuild-platform	src/BarFormatters/BarFormatters.cls
+rlktradewright__tradebuild-platform	src/BarFormatters/Globals.bas
+rlktradewright__tradebuild-platform	src/BarUtils/BarsGlobals.bas
+rlktradewright__tradebuild-platform	src/BarUtils/GBarUtils.bas
+rlktradewright__tradebuild-platform	src/BarUtils/GBars.bas
+rlktradewright__tradebuild-platform	src/ChartDemo/ChartForm.frm
+rlktradewright__tradebuild-platform	src/ChartDemo/Globals.bas
+rlktradewright__tradebuild-platform	src/ChartDemo/MainModule.bas
+rlktradewright__tradebuild-platform	src/ChartSkil/ChartArea.ctl
+rlktradewright__tradebuild-platform	src/ChartSkil/ChartToolbar.ctl
+rlktradewright__tradebuild-platform	src/ChartSkil/GChart.bas
+rlktradewright__tradebuild-platform	src/ChartSkil/GFlags.bas
+rlktradewright__tradebuild-platform	src/DataCollector/ConfigViewer.ctl
+rlktradewright__tradebuild-platform	src/DataCollector/ContractsConfigurer.ctl
+rlktradewright__tradebuild-platform	src/DataCollector/fConfig.frm
+rlktradewright__tradebuild-platform	src/DataCollector/fContractSpec.frm
+rlktradewright__tradebuild-platform	src/DataCollector/fQuoteServerUI.frm
+rlktradewright__tradebuild-platform	src/IBAPI/IBAPILoadTester/MainForm.frm
+rlktradewright__tradebuild-platform	src/IBAPI/WinsockForm.frm
+rlktradewright__tradebuild-platform	src/IBAPIPreV100/IBAPILoadTester/MainForm.frm
+rlktradewright__tradebuild-platform	src/IBAPIPreV100/WinsockForm.frm
+rlktradewright__tradebuild-platform	src/IBEnhAPI/ContractDataTest1/Form1.frm
+rlktradewright__tradebuild-platform	src/IBEnhAPI/HistDataTest1/Form1.frm
+rlktradewright__tradebuild-platform	src/IBEnhAPI/IBOrdersTest1/Form1.frm
+rlktradewright__tradebuild-platform	src/IBEnhAPI/MarketDataTest1/Form1.frm
+rlktradewright__tradebuild-platform	src/OrderUtils/OrdersTest1/Form1.frm
+rlktradewright__tradebuild-platform	src/OrderUtils/OrdersTest1/PositionForm.frm
+rlktradewright__tradebuild-platform	src/StrategyHost/fModelessMessageBox.frm
+rlktradewright__tradebuild-platform	src/StrategyHost/fStrategyHost.frm
+rlktradewright__tradebuild-platform	src/StudiesUI/StudyConfigurer.ctl
+rlktradewright__tradebuild-platform	src/StudiesUI/StudyLibConfigurer.ctl
+rlktradewright__tradebuild-platform	src/StudiesUI/StudyPicker.ctl
+rlktradewright__tradebuild-platform	src/StudiesUI/StudyValueConfigurer.ctl
+sdomi__awsom	API.cls
+sdomi__awsom	HTTP.cls
+sdomi__awsom	PostView.ctl
+sdomi__awsom	awsom.frm
+sdomi__awsom	awsomPost.frm
+sdomi__awsom	awsomProfile.frm
+sdomi__awsom	loginform.frm
+steveohara__stockticker	visualbasic/src/main/vb6/JsonBag.cls
+steveohara__stockticker	visualbasic/src/main/vb6/frmAlarm.frm
+steveohara__stockticker	visualbasic/src/main/vb6/frmTooltip.frm
+steveohara__stockticker	visualbasic/src/main/vb6/psChart.cls
+steveohara__stockticker	visualbasic/src/main/vb6/psRegion.cls
+steveohara__stockticker	visualbasic/src/main/vb6/psRegistry.cls
+steveohara__stockticker	visualbasic/src/main/vb6/psdata.bas
+steveohara__stockticker	visualbasic/src/main/vb6/psgdiplus.bas
+steveohara__stockticker	visualbasic/src/main/vb6/psgen.bas
+steveohara__stockticker	visualbasic/src/main/vb6/psmain.bas
+steveohara__stockticker	visualbasic/src/main/vb6/psmain.frm
+steveohara__stockticker	visualbasic/src/main/vb6/psnetwork.bas
+steveohara__stockticker	visualbasic/src/main/vb6/pspreview.frm
+steveohara__stockticker	visualbasic/src/main/vb6/pssettings.frm
+steveohara__stockticker	visualbasic/src/main/vb6/psstock.cls
+steveohara__stockticker	visualbasic/src/main/vb6/pssymbol.cls
+steveohara__stockticker	visualbasic/src/main/vb6/pssymbols.frm
+tannerhelland__PhotoDemon	Classes/ISubclass.cls
+tannerhelland__PhotoDemon	Classes/cFileDialogVista.cls
+tannerhelland__PhotoDemon	Classes/cGoogleTranslate.cls
+tannerhelland__PhotoDemon	Classes/cUnicodeBrowseFolders.cls
+tannerhelland__PhotoDemon	Classes/clsMenuImage.cls
+tannerhelland__PhotoDemon	Classes/pd2DBrush.cls
+tannerhelland__PhotoDemon	Classes/pd2DGradient.cls
+tannerhelland__PhotoDemon	Classes/pd2DPath.cls
+tannerhelland__PhotoDemon	Controls/pdAccelerator.ctl
+tannerhelland__PhotoDemon	Controls/pdBrushSelector.ctl
+tannerhelland__PhotoDemon	Controls/pdButton.ctl
+tannerhelland__PhotoDemon	Controls/pdButtonStrip.ctl
+tannerhelland__PhotoDemon	Controls/pdButtonStripVertical.ctl
+tannerhelland__PhotoDemon	Controls/pdButtonToolbox.ctl
+tannerhelland__PhotoDemon	Controls/pdCanvas.ctl
+tannerhelland__PhotoDemon	Controls/pdCanvasView.ctl
+tannerhelland__PhotoDemon	Forms/Adjustments_BlackAndWhite.frm
+tannerhelland__PhotoDemon	Forms/Adjustments_BrightnessContrast.frm
+tannerhelland__PhotoDemon	Forms/Adjustments_Channel_ChannelMixer.frm
+tannerhelland__PhotoDemon	Forms/Adjustments_Channel_Rechannel.frm
+tannerhelland__PhotoDemon	Forms/Adjustments_ColorBalance.frm
+tannerhelland__PhotoDemon	Forms/Adjustments_Color_Colorize.frm
+tannerhelland__PhotoDemon	Forms/Adjustments_Color_Grayscale.frm
+tannerhelland__PhotoDemon	Forms/Adjustments_Color_HSL.frm
+tannerhelland__PhotoDemon	Forms/Adjustments_Color_Lookup.frm
+tannerhelland__PhotoDemon	Forms/Adjustments_Color_ReplaceColor.frm
+tannerhelland__PhotoDemon	Forms/Adjustments_Color_Sepia.frm
+tannerhelland__PhotoDemon	Forms/Adjustments_Color_Temperature.frm
+tannerhelland__PhotoDemon	Forms/Adjustments_Color_Tint.frm
+tannerhelland__PhotoDemon	Forms/Adjustments_Color_Vibrance.frm
+tannerhelland__PhotoDemon	Forms/Adjustments_Curves.frm
+tannerhelland__PhotoDemon	Forms/Adjustments_Histogram_DisplayHistogram.frm
+tannerhelland__PhotoDemon	Modules/Actions.bas
+tannerhelland__PhotoDemon	Modules/Animation.bas
+tannerhelland__PhotoDemon	Modules/AutosaveEngine.bas
+tannerhelland__PhotoDemon	Modules/BatchProcessor.bas
+tannerhelland__PhotoDemon	Modules/CanvasManager.bas
+tannerhelland__PhotoDemon	Modules/Clonestamp.bas
+tannerhelland__PhotoDemon	Modules/ColorManagement_ICM.bas
+tannerhelland__PhotoDemon	Modules/ColorPicker.bas
+tannerhelland__VBIDEUtils	ADOConnection.bas
+tannerhelland__VBIDEUtils	APIError.bas
+tannerhelland__VBIDEUtils	APIViewer/APIfrm.frm
+tannerhelland__VBIDEUtils	APIViewer/FINDfrm.frm
+tannerhelland__VBIDEUtils	APIViewer/VIEWfrm.frm
+tannerhelland__VBIDEUtils	APIViewer/modAPI.bas
+tannerhelland__VBIDEUtils	APIViewer/modREG.bas
+tannerhelland__VBIDEUtils	About/About.frm
+tannerhelland__VBIDEUtils	Accelerator.frm
+tannerhelland__VBIDEUtils	ActiveXDoc/Build/VBRichEdit.ctl
+tannerhelland__VBIDEUtils	ActiveXDoc/Build/cComDlg.cls
+tannerhelland__VBIDEUtils	ActiveXDoc/Build/cMRUFileList.cls
+tannerhelland__VBIDEUtils	ActiveXDoc/Build/cReBar.ctl
+tannerhelland__VBIDEUtils	ActiveXDoc/Build/cRegistry.cls
+tannerhelland__VBIDEUtils	ActiveXDoc/Build/cTabCtrl.ctl
+tannerhelland__VBIDEUtils	ActiveXDoc/Build/cToolTip.cls
+tannerhelland__VBIDEUtils	ActiveXDoc/Build/cToolbar.ctl
+tannerhelland__VBIDEUtils	ActiveXDoc/Build/fAbout.frm
+tannerhelland__VBIDEUtils	ActiveXDoc/Build/fDev.frm
+tannerhelland__VBIDEUtils	ActiveXDoc/Build/mComCtlGeneral.bas
+tannerhelland__VBIDEUtils	ActiveXDoc/Build/mMain.bas
+tannerhelland__VBIDEUtils	ActiveXDoc/Build/mRichEdit.bas
+tannerhelland__VBIDEUtils	ActiveXDoc/Build/mToolbar.bas
+tannerhelland__VBIDEUtils	ActiveXDoc/VBRichEdit.ctl
+tannerhelland__VBIDEUtils	ActiveXDoc/cComDlg.cls
+tannerhelland__VBIDEUtils	ActiveXDoc/cMRUFileList.cls
+tannerhelland__VBIDEUtils	ActiveXDoc/cReBar.ctl
+tannerhelland__VBIDEUtils	ActiveXDoc/cRegistry.cls
+tannerhelland__VBIDEUtils	ActiveXDoc/cTabCtrl.ctl
+tannerhelland__VBIDEUtils	ActiveXDoc/cToolTip.cls
+tannerhelland__VBIDEUtils	ActiveXDoc/cToolbar.ctl
+tannerhelland__VBIDEUtils	ActiveXDoc/fAbout.frm
+tannerhelland__VBIDEUtils	ActiveXDoc/fDev.frm
+tannerhelland__VBIDEUtils	AddProcedure.frm
+tannerhelland__VBIDEUtils	Associate OCX/Form1.frm
+tannerhelland__VBIDEUtils	CharPicker/CharPicker.frm
+tannerhelland__VBIDEUtils	CodeAnalyse/CodeAnalyse.frm
+tannerhelland__VBIDEUtils	ColorDialog.frm
+tannerhelland__VBIDEUtils	ColorPicker/frmColorPicker.frm
+tannerhelland__VBIDEUtils	DBCreator/DBCreator.frm
+tannerhelland__vb6-code	Artificial-life/Declarations.bas
+tannerhelland__vb6-code	Artificial-life/Organism.cls
+tannerhelland__vb6-code	Artificial-life/frmMain.frm
+tannerhelland__vb6-code	Artificial-life/pdOpenSaveDialog.cls
+tannerhelland__vb6-code	Blacklight-effect/Blacklight.frm
+tannerhelland__vb6-code	Blacklight-effect/FastDrawing.cls
+tannerhelland__vb6-code	Blacklight-effect/pdOpenSaveDialog.cls
+tannerhelland__vb6-code	Brightness-effect/Part 1 - Pure VB6/Brightness.frm
+tannerhelland__vb6-code	Brightness-effect/Part 2 - API - GetPixel and SetPixel/Brightness2.frm
+tannerhelland__vb6-code	Brightness-effect/Part 3 - DIBs/Brightness3.frm
+tannerhelland__vb6-code	Brightness-effect/Part 3 - DIBs/FastDrawing.cls
+tannerhelland__vb6-code	Brightness-effect/Part 4 - Even faster DIBs/Brightness.frm
+tannerhelland__vb6-code	Brightness-effect/Part 4 - Even faster DIBs/FastDrawing.cls
+tannerhelland__vb6-code	Color-shift-effect/FastDrawing.cls
+tannerhelland__vb6-code	Color-shift-effect/ShiftColors.frm
+tannerhelland__vb6-code	Color-shift-effect/pdOpenSaveDialog.cls
+tannerhelland__vb6-code	Colorize-effect/Colorize.frm
+tannerhelland__vb6-code	Colorize-effect/FastDrawing.cls
+tannerhelland__vb6-code	Colorize-effect/pdOpenSaveDialog.cls
+tannerhelland__vb6-code	Contrast-effect/Contrast.frm
+tannerhelland__vb6-code	Contrast-effect/FastDrawing.cls
+tannerhelland__vb6-code	Curves-effect/Curves.frm
+tannerhelland__vb6-code	Custom-image-filters/CustomFilters.frm
+tannerhelland__vb6-code	Diffuse-effect/Diffuse.frm
+tannerhelland__vb6-code	Edge-detection/EdgeDetection.frm
+tannerhelland__vb6-code	Emboss-engrave-effect/EmbossEngrave.frm
+tannerhelland__vb6-code	Fill-image-region/frmFill.frm
+tannerhelland__vb6-code	Fire-effect/frmFire.frm
+tannerhelland__vb6-code	Game-physics-basic/FormPhysics.frm
+tannerhelland__vb6-code	Game-physics-basic/Physics_Logic.bas
+tannerhelland__vb6-code	Gradient-2D/Gradient.frm
+tannerhelland__vb6-code	Grayscale-effect/Grayscale.frm
+tannerhelland__vb6-code	Hidden-Markov-model/frmHMM.frm
+tannerhelland__vb6-code	Histograms-advanced/Histogram.frm
+tannerhelland__vb6-code	Histograms-advanced/Main.frm
+tannerhelland__vb6-code	Histograms-advanced/mod_PublicVars.bas
+tannerhelland__vb6-code	Histograms-basic/mod_PublicVars.bas
+tannerhelland__vb6-code	Levels-effect/mod_PublicVars.bas
+tannerhelland__vb6-code	Map-editor-2D/Declarations.bas
+tannerhelland__vb6-code	Map-editor-2D/Subs.bas
+udzk__Visual-Basic-6.0-MQTT-3.1.1	frmMain.frm
+wqweto__NinePatch	contrib/GenAlpha/Module1.bas
+wqweto__NinePatch	contrib/GenAlpha/cDibSection.cls
+wqweto__NinePatch	contrib/TouchKeyboard/src/ctxTouchButton.ctl
+wqweto__NinePatch	contrib/TouchKeyboard/src/ctxTouchKeyboard.ctl
+wqweto__NinePatch	contrib/TouchKeyboard/src/mdTouchKeyboard.bas
+wqweto__NinePatch	contrib/TouchKeyboard/test/Form1.frm
+wqweto__NinePatch	contrib/TouchKeyboard/test/Module1.bas
+wqweto__NinePatch	src/cNinePatch.cls
+wqweto__NinePatch	src/ctxNineButton.ctl
+wqweto__NinePatch	test/Form1.frm
+wqweto__NinePatch	test/Form2.frm
+wqweto__NinePatch	test/Module1.bas
+wqweto__NinePatch	test/mdBlurBitmap.bas
+wqweto__NinePatch	test/mdRoundedRectangle.bas
+wqweto__VBD3D11	tutorials/01. Initialising Direct3D 11/Form1.frm
+wqweto__VBD3D11	tutorials/02. Drawing a Triangle/Form1.frm
+wqweto__VBD3D11	tutorials/03. Drawing a Textured Quad/Form1.frm
+wqweto__VBD3D11	tutorials/04. Using a Constant Buffer/Form1.frm
+wqweto__VBD3D11	tutorials/05. Measuring Elapsed Time/Form1.frm
+wqweto__VBD3D11	tutorials/06. Keyboard Input/Form1.frm
+wqweto__VBD3D11	tutorials/07. Virtual Camera/Form1.frm
+wqweto__VBD3D11	tutorials/07. Virtual Camera/md3DMaths.bas
+wqweto__VBD3D11	tutorials/08. Drawing a Cube/Form1.frm
+wqweto__VBD3D11	tutorials/08. Drawing a Cube/md3DMaths.bas
+wqweto__VBD3D11	tutorials/09. Loading a Wavefront .obj Mesh/Form1.frm
+wqweto__VBD3D11	tutorials/09. Loading a Wavefront .obj Mesh/md3DMaths.bas
+wqweto__VBD3D11	tutorials/09. Loading a Wavefront .obj Mesh/mdLoadPng.bas
+wqweto__VBD3D11	tutorials/09. Loading a Wavefront .obj Mesh/mdObjLoading.bas
+wqweto__VBD3D11	tutorials/10. Blinn-Phong Lighting/Form1.frm
+wqweto__VBD3D11	tutorials/10. Blinn-Phong Lighting/md3DMaths.bas
+wqweto__VBD3D11	tutorials/10. Blinn-Phong Lighting/mdLoadPng.bas
+wqweto__VBD3D11	tutorials/10. Blinn-Phong Lighting/mdObjLoading.bas
+wqweto__VbAsyncSocket	contrib/cHttpDownload.cls
+wqweto__VbAsyncSocket	contrib/cHttpRequest.cls
+wqweto__VbAsyncSocket	contrib/cRateLimiter.cls
+wqweto__VbAsyncSocket	contrib/cTlsRemaster.cls
+wqweto__VbAsyncSocket	contrib/ctxWinsock.ctl
+wqweto__VbAsyncSocket	contrib/obsolete/cTlsClient.cls
+wqweto__VbAsyncSocket	contrib/obsolete/cWinSockRequest.cls
+wqweto__VbAsyncSocket	lib/thunks/codegen/Form1.frm
+wqweto__VbAsyncSocket	lib/thunks/codegen/Module1.bas
+wqweto__VbAsyncSocket	samples/TlsSocketTest/TlsSocket.frm
+wqweto__VbAsyncSocket	samples/TlsSocketTest/cClientRequest.cls
+wqweto__VbAsyncSocket	samples/Winsock-simple/Client/Form1.frm
+wqweto__VbAsyncSocket	samples/Winsock-simple/Server/Form1.frm
+wqweto__VbAsyncSocket	src/cAsyncSocket.cls
+wqweto__VbAsyncSocket	src/cTlsSocket.cls
+wqweto__VbAsyncSocket	src/mdTlsNative.bas
+wqweto__VbAsyncSocket	src/mdTlsSodium.bas
+wqweto__VbAsyncSocket	src/mdTlsThunks.bas
+wqweto__VbAsyncSocket	test/BareboneTls/Form1.frm
+wqweto__VbAsyncSocket	test/BareboneTls/Form2.frm
+wqweto__VbAsyncSocket	test/BareboneTls/Module1.bas
+wqweto__VbAsyncSocket	test/BareboneTls/Module2.bas
+wqweto__VbAsyncSocket	test/Basic/Form1.frm
+wqweto__VbAsyncSocket	test/Basic/Module1.bas
+wqweto__VbAsyncSocket	test/Chat/cClientInfo.cls
+wqweto__VbAsyncSocket	test/Chat/frmClient.frm
+wqweto__VbAsyncSocket	test/Chat/frmMain.frm
+wqweto__VbAsyncSocket	test/Chat/frmServer.frm
+wqweto__VbAsyncSocket	test/Chat/mdGlobals.bas
+wqweto__VbAsyncSocket	test/Crypto/Form1.frm
+wqweto__VbAsyncSocket	test/Crypto/mdGlobals.bas
+wqweto__VbAsyncSocket	test/Secure/Form2.frm
+wqweto__VbAsyncSocket	test/Secure/cRequestHandler.cls
+wqweto__VbAsyncSocket	test/Secure/mdGlobals.bas
+wqweto__VbAsyncSocket	test/Winsock/Form1.frm
+wqweto__VbAsyncSocket	test/Winsock/Form2.frm
+wqweto__VbAsyncSocket	test/Winsock/Form3.frm
+wqweto__VbAsyncSocket	test/Winsock/cClientCallback.cls
+wqweto__VbAsyncSocket	test/Winsock/frmRemaster.frm
+wqweto__VbQRCodegen	test/Form1.frm
+wqweto__VbVncServer	src/cVncServer.cls
+wqweto__VbVncServer	test/Form1.frm
+wqweto__VbVncServer	test/Form2.frm
+wqweto__VbVncServer	test/mdGlobals.bas
+wqweto__ZipArchive	lib/codegen/Form1.frm
+wqweto__ZipArchive	lib/codegen/Module1.bas
+wqweto__ZipArchive	test/basic/Form1.frm
+wqweto__ZipArchive	test/basic/cBufferStream.cls
+wqweto__ZipArchive	test/basic/cMemoryStream.cls
+wqweto__ZipArchive	test/vbzip/cDummyStream.cls
+wqweto__ZipArchive	test/vbzip/cVbZip.cls
+wqweto__ZipArchive	test/vbzip/mdGlobals.bas

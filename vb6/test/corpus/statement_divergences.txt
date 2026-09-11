@@ -1,0 +1,473 @@
+==================
+option base and option compare
+==================
+Option Base 1
+Option Compare Binary
+Option Compare Text
+
+---
+
+(source_file
+  (option_statement
+    (number_literal))
+  (newline)
+  (option_statement)
+  (newline)
+  (option_statement)
+  (newline))
+
+==================
+option private module is accepted and ignored by vb6
+==================
+Option Private Module
+
+---
+
+(source_file
+  (option_statement)
+  (newline))
+
+==================
+friend procedures
+==================
+Friend Sub Notify()
+End Sub
+
+Friend Function Total() As Long
+End Function
+
+Friend Property Get Count() As Long
+End Property
+
+---
+
+(source_file
+  (sub_declaration
+    (visibility)
+    (identifier)
+    (parameter_list)
+    (newline)
+    (end_sub_statement))
+  (newline)
+  (newline)
+  (function_declaration
+    (visibility)
+    (identifier)
+    (parameter_list)
+    (as_type_clause
+      (type_expression))
+    (newline)
+    (end_function_statement))
+  (newline)
+  (newline)
+  (property_get_declaration
+    (visibility)
+    (get_accessor)
+    (identifier)
+    (parameter_list)
+    (as_type_clause
+      (type_expression))
+    (newline)
+    (end_property_statement))
+  (newline))
+
+==================
+implements with interface members
+==================
+Implements IComparer
+
+Private Function IComparer_Compare(ByVal a As Variant, ByVal b As Variant) As Long
+End Function
+
+---
+
+(source_file
+  (implements_statement
+    (type_expression
+      (identifier)))
+  (newline)
+  (newline)
+  (function_declaration
+    (visibility)
+    (identifier)
+    (parameter_list
+      (parameter
+        (byval_modifier)
+        (identifier)
+        (as_type_clause
+          (type_expression)))
+      (parameter
+        (byval_modifier)
+        (identifier)
+        (as_type_clause
+          (type_expression))))
+    (as_type_clause
+      (type_expression))
+    (newline)
+    (end_function_statement))
+  (newline))
+
+==================
+enum without explicit type
+==================
+Public Enum Colors
+    Red
+    Green = 2
+    Blue
+End Enum
+
+---
+
+(source_file
+  (enum_declaration
+    (visibility)
+    (identifier)
+    (newline)
+    (enum_member
+      (identifier))
+    (newline)
+    (enum_member
+      (identifier)
+      (number_literal))
+    (newline)
+    (enum_member
+      (identifier))
+    (newline))
+  (newline))
+
+==================
+type with fixed length string members
+==================
+Private Type Employee
+    Name As String * 30
+    Code As String * 4
+    Salary As Currency
+    Tags(1 To 4) As String * 8
+End Type
+
+---
+
+(source_file
+  (type_declaration
+    (visibility)
+    (identifier)
+    (newline)
+    (type_member
+      (identifier)
+      (as_type_clause
+        (type_expression)
+        (fixed_string_length
+          (number_literal))))
+    (newline)
+    (type_member
+      (identifier)
+      (as_type_clause
+        (type_expression)
+        (fixed_string_length
+          (number_literal))))
+    (newline)
+    (type_member
+      (identifier)
+      (as_type_clause
+        (type_expression)))
+    (newline)
+    (type_member
+      (identifier)
+      (array_bounds
+        (array_bound
+          (number_literal)
+          (number_literal)))
+      (as_type_clause
+        (type_expression)
+        (fixed_string_length
+          (number_literal))))
+    (newline))
+  (newline))
+
+==================
+on error goto zero versus resume next
+==================
+Sub Test()
+    On Error Resume Next
+    On Error GoTo 0
+    On Error GoTo Handler
+    Exit Sub
+Handler:
+    Resume Next
+End Sub
+
+---
+
+(source_file
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (on_error_statement)
+      (newline)
+      (on_error_statement
+        (line_number_literal))
+      (newline)
+      (on_error_statement
+        (identifier))
+      (newline)
+      (exit_statement)
+      (newline)
+      (label_statement
+        (identifier))
+      (newline)
+      (resume_statement)
+      (newline))
+    (end_sub_statement))
+  (newline))
+
+==================
+gosub and return
+==================
+Sub Test()
+    GoSub Cleanup
+    GoSub 100
+    Exit Sub
+Cleanup:
+    Return
+100 Return
+End Sub
+
+---
+
+(source_file
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (gosub_statement
+        (identifier))
+      (newline)
+      (gosub_statement
+        (line_number_literal))
+      (newline)
+      (exit_statement)
+      (newline)
+      (label_statement
+        (identifier))
+      (newline)
+      (return_statement)
+      (newline)
+      (line_number_statement
+        (line_number_literal)
+        (return_statement))
+      (newline))
+    (end_sub_statement))
+  (newline))
+
+==================
+deftype statements
+==================
+DefInt A-Z
+DefLng I, J
+DefStr S
+DefDbl D-F, X
+
+---
+
+(source_file
+  (def_type_statement
+    (letter_range
+      (identifier)
+      (identifier)))
+  (newline)
+  (def_type_statement
+    (letter_range
+      (identifier))
+    (letter_range
+      (identifier)))
+  (newline)
+  (def_type_statement
+    (letter_range
+      (identifier)))
+  (newline)
+  (def_type_statement
+    (letter_range
+      (identifier)
+      (identifier))
+    (letter_range
+      (identifier)))
+  (newline))
+
+==================
+line numbers as statement labels
+==================
+Sub Test()
+10 On Error GoTo 900
+20 x = 1
+30 GoTo 50
+40 Resume
+50 Exit Sub
+900 Resume 40
+End Sub
+
+---
+
+(source_file
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (line_number_statement
+        (line_number_literal)
+        (on_error_statement
+          (line_number_literal)))
+      (newline)
+      (line_number_statement
+        (line_number_literal)
+        (assignment_statement
+          (identifier)
+          (number_literal)))
+      (newline)
+      (line_number_statement
+        (line_number_literal)
+        (goto_statement
+          (line_number_literal)))
+      (newline)
+      (line_number_statement
+        (line_number_literal)
+        (resume_statement))
+      (newline)
+      (line_number_statement
+        (line_number_literal)
+        (exit_statement))
+      (newline)
+      (line_number_statement
+        (line_number_literal)
+        (resume_statement
+          (line_number_literal)))
+      (newline))
+    (end_sub_statement))
+  (newline))
+
+==================
+global declarations
+==================
+Global gCount As Long
+Global Const MAX_ITEMS = 10
+
+---
+
+(source_file
+  (variable_declaration
+    (visibility)
+    (variable_declarator
+      (identifier)
+      (as_type_clause
+        (type_expression))))
+  (newline)
+  (const_declaration
+    (visibility)
+    (const_declarator
+      (identifier)
+      (initializer
+        (number_literal))))
+  (newline))
+
+==================
+let and lset rset assignments
+==================
+Sub Test()
+    Let x = 5
+    Let obj.Value = x + 1
+    LSet a = b
+    RSet s = t
+End Sub
+
+---
+
+(source_file
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (let_statement
+        (identifier)
+        (number_literal))
+      (newline)
+      (let_statement
+        (qualified_member_expression
+          (identifier)
+          (identifier))
+        (binary_expression
+          (identifier)
+          (number_literal)))
+      (newline)
+      (lset_statement
+        (identifier)
+        (identifier))
+      (newline)
+      (rset_statement
+        (identifier)
+        (identifier))
+      (newline))
+    (end_sub_statement))
+  (newline))
+
+==================
+declare without ptrsafe
+==================
+Private Declare Function GetTickCount Lib "kernel32" () As Long
+Public Declare Sub Sleep Lib "kernel32" (ByVal dwMilliseconds As Long)
+Private Declare Function SendMessage Lib "user32" Alias "SendMessageA" (ByVal hWnd As Long, ByVal wMsg As Long, ByVal wParam As Long, lParam As Any) As Long
+
+---
+
+(source_file
+  (declare_function_statement
+    (visibility)
+    (identifier)
+    (string_literal)
+    (parameter_list)
+    (as_type_clause
+      (type_expression)))
+  (newline)
+  (declare_sub_statement
+    (visibility)
+    (identifier)
+    (string_literal)
+    (parameter_list
+      (parameter
+        (byval_modifier)
+        (identifier)
+        (as_type_clause
+          (type_expression)))))
+  (newline)
+  (declare_function_statement
+    (visibility)
+    (identifier)
+    (string_literal)
+    (string_literal)
+    (parameter_list
+      (parameter
+        (byval_modifier)
+        (identifier)
+        (as_type_clause
+          (type_expression)))
+      (parameter
+        (byval_modifier)
+        (identifier)
+        (as_type_clause
+          (type_expression)))
+      (parameter
+        (byval_modifier)
+        (identifier)
+        (as_type_clause
+          (type_expression)))
+      (parameter
+        (identifier)
+        (as_type_clause
+          (type_expression
+            (identifier)))))
+    (as_type_clause
+      (type_expression)))
+  (newline))

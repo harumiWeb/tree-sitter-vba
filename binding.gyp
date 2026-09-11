@@ -6,18 +6,18 @@
         "<!(node -p \"require('node-addon-api').targets\"):node_addon_api_except"
       ],
       "include_dirs": [
-        "src"
+        "vba/src"
       ],
       "sources": [
         "bindings/node/binding.cc",
-        "src/parser.c"
+        "vba/src/parser.c"
       ],
       "variables": {
-        "has_scanner": "<!(node -p \"fs.existsSync('src/scanner.c')\")"
+        "has_scanner": "<!(node -p \"fs.existsSync('vba/src/scanner.c')\")"
       },
       "conditions": [
         ["has_scanner=='true'", {
-          "sources+": ["src/scanner.c"]
+          "sources+": ["vba/src/scanner.c"]
         }],
         ["OS!='win'", {
           "cflags_c": [

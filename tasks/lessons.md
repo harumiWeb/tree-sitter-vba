@@ -1,3 +1,10 @@
+## Clean parses hide structural regressions
+
+- `ERROR = 0` and `MISSING = 0` say nothing about which node is the callee. A bare call split into an expression statement plus a call to its first argument parses clean; 131 of 481 example files regressed that way and every acceptance check passed. Before changing calls, arguments or precedence in `common/define-grammar.js`, run `scripts/compare-cst.mjs` against a `main` worktree and account for every hunk.
+- Never put `prec.dynamic` on a repeated item. GLR sums it once per repetition, so the reading that consumes more repetitions wins whatever it does to the rest of the tree; a bonus meant to keep `Foo a, , 10` in one list handed every three-argument call to the split reading.
+- A construct that is valid in both dialects still belongs behind `isVB6` if the base `vba` grammar never accepted it. Widening `vba` changes trees downstream consumers already handle and costs parse states, and the browser artifact sits at 89% of Chromium's 8 MiB synchronous-instantiation limit before any addition. Measure the state delta and the artifact size before un-gating anything.
+- When a corpus test expectation looks wrong, check the test before the grammar: the split call was baked into a `vb6` expectation and `tree-sitter test` was green.
+
 ## Call syntax whitespace
 
 - VBA call forms such as `Foo (x)` and `Foo(x)` can be semantically different, but this grammar treats whitespace as `extras`; document that limitation whenever call syntax behavior is changed.

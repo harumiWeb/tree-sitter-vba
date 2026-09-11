@@ -1,0 +1,864 @@
+==================
+single type suffix on identifiers and members
+==================
+Sub Test()
+    Dim rcos!, rsin!, X!
+    total! = 0#
+    If rec.Percent! = 0# Then GoTo Skip
+    arr!(i%) = other!(j%) * 0.5!
+Skip:
+End Sub
+
+---
+
+(source_file
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (variable_declaration
+        (variable_declarator
+          (bang_identifier
+            (identifier)))
+        (variable_declarator
+          (bang_identifier
+            (identifier)))
+        (variable_declarator
+          (bang_identifier
+            (identifier))))
+      (newline)
+      (assignment_statement
+        (bang_identifier
+          (identifier))
+        (number_literal))
+      (newline)
+      (single_line_if_statement
+        (comparison_expression
+          (qualified_member_expression
+            (identifier)
+            (bang_identifier
+              (identifier)))
+          (comparison_operator)
+          (number_literal))
+        (goto_statement
+          (identifier)))
+      (newline)
+      (assignment_statement
+        (call_expression
+          (bang_identifier
+            (identifier))
+          (argument_list
+            (identifier)))
+        (binary_expression
+          (call_expression
+            (bang_identifier
+              (identifier))
+            (argument_list
+              (identifier)))
+          (number_literal)))
+      (newline)
+      (label_statement
+        (identifier))
+      (newline))
+    (end_sub_statement))
+  (newline))
+
+==================
+bang member access survives beside the type suffix
+==================
+Sub Test()
+    value = rst!FileData
+    value = Ctl.Properties!Text
+End Sub
+
+---
+
+(source_file
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (assignment_statement
+        (identifier)
+        (qualified_member_expression
+          (identifier)
+          (identifier)))
+      (newline)
+      (assignment_statement
+        (identifier)
+        (qualified_member_expression
+          (qualified_member_expression
+            (identifier)
+            (identifier))
+          (identifier)))
+      (newline))
+    (end_sub_statement))
+  (newline))
+
+==================
+graphics statements
+==================
+Sub Test()
+    Line (0, 0)-(ScaleWidth - 1, ScaleHeight - 1), &HE0FFFF, BF
+    Me.Line (0, 0)-Step(10, 10), , B
+    PSet (x, y), vbRed
+    Picture1.Circle (50, 50), r / 2, RGB(1, 2, 3), , , 1.5
+    Form1.Scale (0, 0)-(100, 100)
+End Sub
+
+---
+
+(source_file
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (line_statement
+        (coordinate_pair
+          (number_literal)
+          (number_literal))
+        (coordinate_pair
+          (binary_expression
+            (identifier)
+            (number_literal))
+          (binary_expression
+            (identifier)
+            (number_literal)))
+        (number_literal)
+        (identifier))
+      (newline)
+      (call_statement
+        (qualified_member_expression
+          (identifier)
+          (identifier))
+        (line_range_argument_list
+          (coordinate_pair
+            (number_literal)
+            (number_literal))
+          (coordinate_pair
+            (number_literal)
+            (number_literal))
+          (identifier)))
+      (newline)
+      (pset_statement
+        (identifier)
+        (coordinate_pair
+          (identifier)
+          (identifier))
+        (identifier))
+      (newline)
+      (circle_statement
+        (qualified_member_expression
+          (identifier)
+          (identifier))
+        (coordinate_pair
+          (number_literal)
+          (number_literal))
+        (binary_expression
+          (identifier)
+          (number_literal))
+        (call_expression
+          (identifier)
+          (argument_list
+            (number_literal)
+            (number_literal)
+            (number_literal)))
+        (number_literal))
+      (newline)
+      (scale_statement
+        (qualified_member_expression
+          (identifier)
+          (identifier))
+        (coordinate_pair
+          (number_literal)
+          (number_literal))
+        (coordinate_pair
+          (number_literal)
+          (number_literal)))
+      (newline))
+    (end_sub_statement))
+  (newline))
+
+==================
+call with an implicit member first argument
+==================
+Sub Test()
+    With frm
+        .AddString .hDC, "Test", 60
+        SetCaretPos .ScaleX(x1, 1, 3), .ScaleY(y1, 1, 3) + 1
+        pvBufferWriteArray .SendBuffer, 0
+        mm.Line2 .curPos * .Xt - DXP, .currow, mycolor(c), , True
+    End With
+End Sub
+
+---
+
+(source_file
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (with_statement
+        (identifier)
+        (newline)
+        (block
+          (call_statement
+            (implicit_member_expression
+              (identifier))
+            (unparenthesized_argument_list
+              (implicit_member_expression
+                (identifier))
+              (string_literal)
+              (number_literal)))
+          (newline)
+          (call_statement
+            (identifier)
+            (unparenthesized_argument_list
+              (call_expression
+                (implicit_member_expression
+                  (identifier))
+                (argument_list
+                  (identifier)
+                  (number_literal)
+                  (number_literal)))
+              (binary_expression
+                (call_expression
+                  (implicit_member_expression
+                    (identifier))
+                  (argument_list
+                    (identifier)
+                    (number_literal)
+                    (number_literal)))
+                (number_literal))))
+          (newline)
+          (call_statement
+            (identifier)
+            (unparenthesized_argument_list
+              (implicit_member_expression
+                (identifier))
+              (number_literal)))
+          (newline)
+          (call_statement
+            (qualified_member_expression
+              (identifier)
+              (identifier))
+            (unparenthesized_argument_list
+              (binary_expression
+                (binary_expression
+                  (implicit_member_expression
+                    (identifier))
+                  (implicit_member_expression
+                    (identifier)))
+                (identifier))
+              (implicit_member_expression
+                (identifier))
+              (call_expression
+                (identifier)
+                (argument_list
+                  (identifier)))
+              (boolean_literal)))
+          (newline)))
+      (newline))
+    (end_sub_statement))
+  (newline))
+
+==================
+chain after a line continuation stays a chain
+==================
+Sub Test()
+    Set s = Sim.NewTestSuite("x") _
+        .Add(New Foo, "a") _
+        .Add(New Bar, "b")
+End Sub
+
+---
+
+(source_file
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (set_statement
+        (identifier)
+        (call_expression
+          (qualified_member_expression
+            (call_expression
+              (qualified_member_expression
+                (call_expression
+                  (qualified_member_expression
+                    (identifier)
+                    (identifier))
+                  (argument_list
+                    (string_literal)))
+                (identifier))
+              (argument_list
+                (new_expression
+                  (identifier))
+                (string_literal)))
+            (identifier))
+          (argument_list
+            (new_expression
+              (identifier))
+            (string_literal))))
+      (newline))
+    (end_sub_statement))
+  (newline))
+
+==================
+omitted arguments anywhere in an unparenthesized list
+==================
+Sub Test()
+    .ColumnHeaders.Add , , "Port", 4.4
+    Foo a, 1, 2, , , 3, 4
+    ImageCombo1.ComboItems.Add , , "Arnold", Image, , 0
+End Sub
+
+---
+
+(source_file
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (call_statement
+        (qualified_member_expression
+          (implicit_member_expression
+            (identifier))
+          (identifier))
+        (unparenthesized_argument_list
+          (string_literal)
+          (number_literal)))
+      (newline)
+      (call_statement
+        (identifier)
+        (unparenthesized_argument_list
+          (identifier)
+          (number_literal)
+          (number_literal)
+          (number_literal)
+          (number_literal)))
+      (newline)
+      (call_statement
+        (qualified_member_expression
+          (qualified_member_expression
+            (identifier)
+            (identifier))
+          (identifier))
+        (unparenthesized_argument_list
+          (string_literal)
+          (identifier)
+          (number_literal)))
+      (newline))
+    (end_sub_statement))
+  (newline))
+
+==================
+on local error
+==================
+Sub Test()
+    On Local Error Resume Next
+    On Local Error GoTo Handler
+Handler:
+End Sub
+
+---
+
+(source_file
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (on_error_statement)
+      (newline)
+      (on_error_statement
+        (identifier))
+      (newline)
+      (label_statement
+        (identifier))
+      (newline))
+    (end_sub_statement))
+  (newline))
+
+==================
+comment continued by a trailing underscore
+==================
+' Private Declare Function VarPtrArray Lib "msvbvm60.dll" Alias "VarPtr" ( _
+ByRef Ptr() As Any) As Long
+Dim x As Long
+
+---
+
+(source_file
+  (comment)
+  (newline)
+  (variable_declaration
+    (variable_declarator
+      (identifier)
+      (as_type_clause
+        (type_expression))))
+  (newline))
+
+==================
+select case with comparison and conditional case clauses
+==================
+Sub Test()
+    Select Case GetAsyncKeyState(k) < 0
+    Case True
+    End Select
+    Select Case eBulk:
+#If ImplLibSodium Then
+    Case 1
+        x = 1
+#End If
+    Case Else
+    End Select
+    Select Case s
+    Case Left$(s, 7) = "http://", InStr(s, "x") > 0
+    End Select
+End Sub
+
+---
+
+(source_file
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (select_statement
+        (comparison_expression
+          (call_expression
+            (identifier)
+            (argument_list
+              (identifier)))
+          (comparison_operator)
+          (number_literal))
+        (newline)
+        (case_clause
+          (case_expression
+            (boolean_literal))
+          (newline)))
+      (newline)
+      (select_statement
+        (identifier)
+        (newline)
+        (case_preprocessor_if
+          (identifier)
+          (newline)
+          (case_clause
+            (case_expression
+              (number_literal))
+            (newline)
+            (block
+              (assignment_statement
+                (identifier)
+                (number_literal))
+              (newline))))
+        (newline)
+        (case_clause
+          (newline)))
+      (newline)
+      (select_statement
+        (identifier)
+        (newline)
+        (case_clause
+          (case_expression
+            (comparison_expression
+              (call_expression
+                (identifier)
+                (argument_list
+                  (identifier)
+                  (number_literal)))
+              (comparison_operator)
+              (string_literal)))
+          (case_expression
+            (comparison_expression
+              (call_expression
+                (identifier)
+                (argument_list
+                  (identifier)
+                  (string_literal)))
+              (comparison_operator)
+              (number_literal)))
+          (newline)))
+      (newline))
+    (end_sub_statement))
+  (newline))
+
+==================
+octal literal, chained comparison, addressof module member
+==================
+Sub Test()
+    General = &O17
+    If UCase(a) = "X" <> 0 Then x = 1
+    If (si Is Nothing = False) Then x = 1
+    r = f(AddressOf Module2.ExtCall)
+End Sub
+
+---
+
+(source_file
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (assignment_statement
+        (identifier)
+        (number_literal))
+      (newline)
+      (single_line_if_statement
+        (comparison_expression
+          (comparison_expression
+            (call_expression
+              (identifier)
+              (argument_list
+                (identifier)))
+            (comparison_operator)
+            (string_literal))
+          (comparison_operator)
+          (number_literal))
+        (assignment_statement
+          (identifier)
+          (number_literal)))
+      (newline)
+      (single_line_if_statement
+        (parenthesized_condition_expression
+          (comparison_expression
+            (comparison_expression
+              (identifier)
+              (comparison_operator)
+              (nothing_literal))
+            (comparison_operator)
+            (boolean_literal)))
+        (assignment_statement
+          (identifier)
+          (number_literal)))
+      (newline)
+      (assignment_statement
+        (identifier)
+        (call_expression
+          (identifier)
+          (argument_list
+            (addressof_expression
+              (qualified_member_expression
+                (identifier)
+                (identifier))))))
+      (newline))
+    (end_sub_statement))
+  (newline))
+
+==================
+redim with type, type member named end, inline loops with several statements
+==================
+Sub Test()
+    ReDim wout(1 To n) As Single, rout(1 To n) As Single
+    For i = 0 To 99: PlyScore(i) = 0: MovesList(i).From = 0: Next i
+    For c = 1 To 2: Map1(i) = c: i = i + 1: Next
+    For i = 1 To Len(Name):
+    Next
+End Sub
+
+Private Type Keys
+    Home As Integer
+    End As Integer
+End Type
+
+---
+
+(source_file
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (redim_statement
+        (redim_declarator
+          (identifier)
+          (array_bounds
+            (array_bound
+              (number_literal)
+              (identifier)))
+          (as_type_clause
+            (type_expression)))
+        (redim_declarator
+          (identifier)
+          (array_bounds
+            (array_bound
+              (number_literal)
+              (identifier)))
+          (as_type_clause
+            (type_expression))))
+      (newline)
+      (for_statement
+        (identifier)
+        (number_literal)
+        (number_literal)
+        (single_line_block
+          (assignment_statement
+            (call_expression
+              (identifier)
+              (argument_list
+                (identifier)))
+            (number_literal))
+          (assignment_statement
+            (qualified_member_expression
+              (call_expression
+                (identifier)
+                (argument_list
+                  (identifier)))
+              (identifier))
+            (number_literal)))
+        (next_variable_list
+          (identifier)))
+      (newline)
+      (for_statement
+        (identifier)
+        (number_literal)
+        (number_literal)
+        (single_line_block
+          (assignment_statement
+            (call_expression
+              (identifier)
+              (argument_list
+                (identifier)))
+            (identifier))
+          (assignment_statement
+            (identifier)
+            (binary_expression
+              (identifier)
+              (number_literal)))))
+      (newline)
+      (for_statement
+        (identifier)
+        (number_literal)
+        (call_expression
+          (identifier)
+          (argument_list
+            (identifier)))
+        (newline))
+      (newline))
+    (end_sub_statement))
+  (newline)
+  (newline)
+  (type_declaration
+    (visibility)
+    (identifier)
+    (newline)
+    (type_member
+      (identifier)
+      (as_type_clause
+        (type_expression)))
+    (newline)
+    (type_member
+      (identifier)
+      (as_type_clause
+        (type_expression)))
+    (newline))
+  (newline))
+
+==================
+form header with indexed property names, locale decimals and hex offsets
+==================
+VERSION 5.00
+Begin VB.Form Form1 
+   Begin TabDlg.SSTab SSTab1 
+      TabCaption(0)   =   "HEAD"
+      TabPicture(0)   =   "frm.frx":001C
+      Tab(0).ControlCount=   2
+      Tab(0).Control(0)=   "txt(0)"
+      Tab(0).Control(0).Enabled=   0   'False
+   End
+   Begin Foo.LineEx LineEx1 
+      mY2             =   9122,833
+      Angle           =   143,073
+      FontSize        =   2,28347e-38
+   End
+End
+Attribute VB_Name = "Form1"
+
+---
+
+(source_file
+  (frm_version_statement
+    (number_literal))
+  (newline)
+  (frm_begin_block
+    (qualified_member_expression
+      (identifier)
+      (identifier))
+    (identifier)
+    (newline)
+    (frm_begin_block
+      (qualified_member_expression
+        (identifier)
+        (identifier))
+      (identifier)
+      (newline)
+      (frm_property_statement
+        (frm_property_name
+          (identifier)
+          (frm_property_index
+            (number_literal)))
+        (string_literal))
+      (newline)
+      (frm_property_statement
+        (frm_property_name
+          (identifier)
+          (frm_property_index
+            (number_literal)))
+        (frm_blob_reference
+          (string_literal)
+          (frm_blob_offset)))
+      (newline)
+      (frm_property_statement
+        (frm_property_name
+          (identifier)
+          (frm_property_index
+            (number_literal))
+          (identifier))
+        (number_literal))
+      (newline)
+      (frm_property_statement
+        (frm_property_name
+          (identifier)
+          (frm_property_index
+            (number_literal))
+          (identifier)
+          (frm_property_index
+            (number_literal)))
+        (string_literal))
+      (newline)
+      (frm_property_statement
+        (frm_property_name
+          (identifier)
+          (frm_property_index
+            (number_literal))
+          (identifier)
+          (frm_property_index
+            (number_literal))
+          (identifier))
+        (number_literal))
+      (comment)
+      (newline))
+    (newline)
+    (frm_begin_block
+      (qualified_member_expression
+        (identifier)
+        (identifier))
+      (identifier)
+      (newline)
+      (frm_property_statement
+        (identifier)
+        (frm_locale_number))
+      (newline)
+      (frm_property_statement
+        (identifier)
+        (frm_locale_number))
+      (newline)
+      (frm_property_statement
+        (identifier)
+        (frm_locale_number))
+      (newline))
+    (newline))
+  (newline)
+  (attribute_statement
+    (identifier)
+    (string_literal))
+  (newline))
+
+==================
+dim withevents, let, lset, global, load as a property name
+==================
+Dim WithEvents tmrHover As ArielTimer
+Global gCount As Long
+
+Property Get Load() As Boolean
+    Load = True
+End Property
+
+Sub Test()
+    Let x = 5
+    LSet a = b
+    RSet a = b
+    With Name.fmtid
+    End With
+    n = nls_check(Name.Address, 1)
+End Sub
+
+---
+
+(source_file
+  (variable_declaration
+    (with_events_modifier)
+    (variable_declarator
+      (identifier)
+      (as_type_clause
+        (type_expression
+          (identifier)))))
+  (newline)
+  (variable_declaration
+    (visibility)
+    (variable_declarator
+      (identifier)
+      (as_type_clause
+        (type_expression))))
+  (newline)
+  (newline)
+  (property_get_declaration
+    (get_accessor)
+    (identifier)
+    (parameter_list)
+    (as_type_clause
+      (type_expression))
+    (newline)
+    (block
+      (assignment_statement
+        (identifier)
+        (boolean_literal))
+      (newline))
+    (end_property_statement))
+  (newline)
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (let_statement
+        (identifier)
+        (number_literal))
+      (newline)
+      (lset_statement
+        (identifier)
+        (identifier))
+      (newline)
+      (rset_statement
+        (identifier)
+        (identifier))
+      (newline)
+      (with_statement
+        (qualified_member_expression
+          (identifier)
+          (identifier))
+        (newline))
+      (newline)
+      (assignment_statement
+        (identifier)
+        (call_expression
+          (identifier)
+          (argument_list
+            (qualified_member_expression
+              (identifier)
+              (identifier))
+            (number_literal))))
+      (newline))
+    (end_sub_statement))
+  (newline))

@@ -1,0 +1,96 @@
+===============================================================
+community report #21: inline ElseIf (fixed in #21)
+===============================================================
+
+Sub Test()
+    If a Then
+        x = 1
+    ElseIf b Then x = 2
+    Else
+        x = 3
+    End If
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (if_statement
+        (identifier))
+      (newline)
+      (assignment_statement
+        (identifier)
+        (number_literal))
+      (newline)
+      (elseif_fragment
+        (identifier))
+      (assignment_statement
+        (identifier)
+        (number_literal))
+      (newline)
+      (else_fragment)
+      (newline)
+      (assignment_statement
+        (identifier)
+        (number_literal))
+      (newline)
+      (end_if_fragment)
+      (newline))
+    (end_sub_statement))
+  (newline))
+
+=======================================================================
+community report #22: mixed inline Call and Exit Sub ElseIf branches
+=======================================================================
+
+Sub Test()
+    If a Then
+        x = 1
+    ElseIf b Then Call Foo()
+    ElseIf c Then Exit Sub
+    Else
+        x = 4
+    End If
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (if_statement
+        (identifier))
+      (newline)
+      (assignment_statement
+        (identifier)
+        (number_literal))
+      (newline)
+      (elseif_fragment
+        (identifier))
+      (call_statement
+        (identifier)
+        (argument_list))
+      (newline)
+      (elseif_fragment
+        (identifier))
+      (exit_statement)
+      (newline)
+      (else_fragment)
+      (newline)
+      (assignment_statement
+        (identifier)
+        (number_literal))
+      (newline)
+      (end_if_fragment)
+      (newline))
+    (end_sub_statement))
+  (newline))

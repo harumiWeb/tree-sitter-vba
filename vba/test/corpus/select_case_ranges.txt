@@ -1,0 +1,140 @@
+==================
+case range list
+==================
+
+Sub Test()
+    Select Case codePoint
+      Case 45, 46, 95, 126, 48 To 57, 65 To 90, 97 To 122
+        encoded = encoded & currentChar
+    End Select
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (select_statement
+        (identifier)
+        (newline)
+        (case_clause
+          (case_expression
+            (number_literal))
+          (case_expression
+            (number_literal))
+          (case_expression
+            (number_literal))
+          (case_expression
+            (number_literal))
+          (case_expression
+            (number_literal)
+            (number_literal))
+          (case_expression
+            (number_literal)
+            (number_literal))
+          (case_expression
+            (number_literal)
+            (number_literal))
+          (newline)
+          (block
+            (assignment_statement
+              (identifier)
+              (binary_expression
+                (identifier)
+                (identifier)))
+            (newline))))
+      (newline))
+    (end_sub_statement))
+  (newline))
+
+==================
+case after comment only line
+==================
+
+Sub Test()
+    Select Case codePoint
+        ' Look for digits
+        Case 48 To 57
+            matched = True
+        Case Else
+            matched = False
+    End Select
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (select_statement
+        (identifier)
+        (newline)
+        (comment)
+        (newline)
+        (case_clause
+          (case_expression
+            (number_literal)
+            (number_literal))
+          (newline)
+          (block
+            (assignment_statement
+              (identifier)
+              (boolean_literal))
+            (newline)))
+        (case_clause
+          (newline)
+          (block
+            (assignment_statement
+              (identifier)
+              (boolean_literal))))
+        (newline))
+      (newline))
+    (end_sub_statement))
+  (newline))
+
+==================
+case is comparison
+==================
+
+Sub Test()
+    Select Case value
+      Case Is <= 0
+        Debug.Print value
+    End Select
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (select_statement
+        (identifier)
+        (newline)
+        (case_clause
+          (case_expression
+            (number_literal))
+          (newline)
+          (block
+            (call_statement
+              (qualified_member_expression
+                (identifier)
+                (identifier))
+              (output_list
+                (identifier)))
+            (newline))))
+      (newline))
+    (end_sub_statement))
+  (newline))

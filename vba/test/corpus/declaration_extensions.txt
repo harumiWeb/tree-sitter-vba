@@ -1,0 +1,57 @@
+==================
+as new declaration
+==================
+
+Dim items As New Collection
+Private dictionary As New Scripting.Dictionary
+
+---
+
+(source_file
+  (newline)
+  (variable_declaration
+    (variable_declarator
+      (identifier)
+      (as_type_clause
+        (type_expression
+          (identifier)))))
+  (newline)
+  (variable_declaration
+    (visibility)
+    (variable_declarator
+      (identifier)
+      (as_type_clause
+        (type_expression
+          (dotted_type_expression
+            (identifier)
+            (identifier))))))
+  (newline))
+
+==================
+fixed length strings
+==================
+
+Dim name As String * 50
+Private code As String * MAX_CODE_LENGTH
+
+---
+
+(source_file
+  (newline)
+  (variable_declaration
+    (variable_declarator
+      (identifier)
+      (as_type_clause
+        (type_expression)
+        (fixed_string_length
+          (number_literal)))))
+  (newline)
+  (variable_declaration
+    (visibility)
+    (variable_declarator
+      (identifier)
+      (as_type_clause
+        (type_expression)
+        (fixed_string_length
+          (identifier)))))
+  (newline))

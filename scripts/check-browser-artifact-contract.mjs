@@ -75,7 +75,7 @@ assertIncludes(
   "build/wasm/tree-sitter-vba.wasm",
   "browser-consumer artifact input",
 );
-assertIncludes(packageJson.files.join("\n"), "src/**", "npm parser source inclusion");
+assertIncludes(packageJson.files.join("\n"), "vba/src/**", "npm parser source inclusion");
 if (packageJson.files.some((entry) => /(?:^|[\\/])build(?:[\\/]|$)|\.wasm$/i.test(entry))) {
   fail("npm package file list must not publish the standalone browser artifact");
 }

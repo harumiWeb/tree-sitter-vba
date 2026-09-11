@@ -1,0 +1,6 @@
+{
+  "_comment": "Corpus files that VB6 itself would reject. They are real code and stay in the corpus, but scripts/parse-corpus.mjs reports them separately instead of counting them against the grammar. Each entry names the defect and where it is.",
+  "Zen-CODE__ZenKEY/Forms/frmZKCommon.frm": "Listbox_Init (lines 806-818): `For k = 0 To ObjectTypeCount - 1` whose `Next k` is commented out, so the For is never closed inside the With block",
+  "wqweto__VbAsyncSocket/contrib/obsolete/cWinSockRequest.cls": "line 127: `Property Get StatusText()` is closed by `End Function`; the file sits in an obsolete/ folder",
+  "kroesner__swiftirc-client/Forms/frmEditNicknameAppearance.frm": "line 54: `set m_checkmatchmysql = addcheckbox(controls,` is a truncated statement with an unterminated argument list"
+}

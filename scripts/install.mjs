@@ -1,8 +1,8 @@
 import { existsSync } from "node:fs";
 import { spawnSync } from "node:child_process";
 
-if (!existsSync("src/parser.c")) {
-  console.log("Skipping native binding build: src/parser.c is generated during development.");
+if (!existsSync("vba/src/parser.c")) {
+  console.log("Skipping native binding build: vba/src/parser.c is generated during development.");
   process.exit(0);
 }
 

@@ -80,3 +80,9 @@ GitHub Pages receives only the generated static artifact uploaded by its
 workflow. No generated playground asset is committed, published in the npm
 package, or manually maintained. Standalone Wasm release assets follow the
 same generated-artifact policy and are rebuilt from the tagged source by CI.
+
+## Addendum (2026-09)
+
+The repository now generates two parsers from one grammar core. The paths above
+read `vba/src/...` and `vb6/src/...`; the rule is unchanged for both dialects,
+and `bindings/go/parser.c` remains the tracked copy of the `vba` parser.

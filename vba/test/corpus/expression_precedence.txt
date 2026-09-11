@@ -1,0 +1,149 @@
+==================
+multiplication before addition
+==================
+
+Sub Test()
+    x = a + b * c
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (assignment_statement
+        (identifier)
+        (binary_expression
+          (identifier)
+          (binary_expression
+            (identifier)
+            (identifier))))
+      (newline))
+    (end_sub_statement))
+  (newline))
+
+==================
+power is right associative
+==================
+
+Sub Test()
+    x = a ^ b ^ c
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (assignment_statement
+        (identifier)
+        (binary_expression
+          (identifier)
+          (binary_expression
+            (identifier)
+            (identifier))))
+      (newline))
+    (end_sub_statement))
+  (newline))
+
+==================
+arithmetic before concatenation
+==================
+
+Sub Test()
+    x = a & b + c
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (assignment_statement
+        (identifier)
+        (binary_expression
+          (identifier)
+          (binary_expression
+            (identifier)
+            (identifier))))
+      (newline))
+    (end_sub_statement))
+  (newline))
+
+==================
+comparison before not
+==================
+
+Sub Test()
+    If Not value Is Nothing Then
+        Debug.Print value
+    End If
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (if_statement
+        (unary_expression
+          (comparison_expression
+            (identifier)
+            (comparison_operator)
+            (nothing_literal))))
+      (newline)
+      (call_statement
+        (qualified_member_expression
+          (identifier)
+          (identifier))
+        (output_list
+          (identifier)))
+      (newline)
+      (end_if_fragment)
+      (newline))
+    (end_sub_statement))
+  (newline))
+
+==================
+and before or
+==================
+
+Sub Test()
+    x = a Or b And c
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (assignment_statement
+        (identifier)
+        (binary_expression
+          (identifier)
+          (binary_expression
+            (identifier)
+            (identifier))))
+      (newline))
+    (end_sub_statement))
+  (newline))

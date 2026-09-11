@@ -12,6 +12,20 @@ All notable changes to tree-sitter-vba will be documented in this file.
   `WebAssembly.Instance` and `Language.load()` fails. The check reports every
   artifact's size on every run, and covers a further dialect artifact without
   further configuration.
+- A `vb6` parser generated from the same grammar core as `vba`. The statement
+  grammar lives once in `common/define-grammar.js`; `vba/grammar.js` and
+  `vb6/grammar.js` are thin entry points and generated sources move to
+  `vba/src/` and `vb6/src/`. `vb6` adds the `.frm`/`.ctl`/`.cls` headers as
+  written by the VB6 IDE, graphics statements, VB6-only comment continuation,
+  and an external scanner distinguishing a spaced from an immediate member
+  operator. The npm addon, the Go module and the Wasm artifact remain the
+  `vba` parser.
+- The provenance of a 1,436-file VB6 acceptance corpus (`corpus/MANIFEST.md`,
+  `corpus/FILES.tsv`, `scripts/fetch-corpus.mjs`) and `scripts/parse-corpus.mjs`
+  to measure it. The corpus is fetched, not vendored.
+- `scripts/compare-cst.mjs` diffs the trees of all 481 example files between a
+  reference checkout and the working tree, positions stripped, and classifies
+  every differing hunk by node type.
 
 ### Changed
 
@@ -20,6 +34,31 @@ All notable changes to tree-sitter-vba will be documented in this file.
   initialization failed, and the outcome of the most recent parse, and the
   real-browser smoke test raises those states, console errors, page errors,
   and failing asset requests as soon as any of them appears.
+- The `vba` grammar is the base grammar plus the `bang_identifier` node in
+  declarations and the omitted-argument fix below. Constructs the VB6 corpus
+  needed and VBA also accepts (`Let`, `LSet`/`RSet`, `GoSub`/`Return`,
+  `On Local Error`, `Global`, `Dim WithEvents`, `ReDim x(n) As T`, octal
+  literals, `AddressOf Module.Procedure`, chained comparisons, `#If` around
+  `Case` clauses, and the Single `!` suffix in expression positions) are `vb6`
+  only; see ADR 0005. The `vba` parse table returns to 15,317 states from
+  21,995 and the browser artifact to 7.57 MB from 11.28 MB.
+- In `vb6`, an indexed or property target on the left of `=` is an assignment.
+
+### Fixed
+
+- Bare calls with three or more arguments keep their callee. A per-item dynamic
+  precedence on omitted-argument lists rewarded the reading that split
+  `CallByName a, b, c, d` into the expression statement `CallByName` followed
+  by a call to `a`, in 131 of the 481 example files, while every file still
+  parsed without `ERROR`. Regression cases pin `CallByName`, procedure calls,
+  member calls and `Err.Raise` structurally.
+- `arr(i) = x > 0` and `.Prop(x) = y > 0` are assignments again in `vba`.
+  Admitting chained comparisons made the call reading viable and it won the
+  tie; the chain is now `vb6` only.
+- An omitted-argument list, or a list continued on a line that begins with a
+  comma, stays under one callee (`X , , a`, `Foo a, b, , c, d`,
+  `obj.M "s", , 10`, `Foo a _ / , b`). The base ended the call at the comma and
+  parsed the rest as a separate statement. Six example files change shape.
 
 ### Documented
 
@@ -396,3 +435,4 @@ Subsequent changes will be documented in CHANGELOG.md.
 
 - I have implemented the MVP.
 - I have published it as an npm package.
+

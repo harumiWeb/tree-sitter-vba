@@ -1,0 +1,62 @@
+==================
+factored expression and assignable alternatives
+==================
+
+Sub ParserSizeRegression()
+    target = obj.Value + values(0)
+    obj.Value = target
+    Set values(0) = obj.Value
+    If obj.Value = values(0) Then target = 1
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (assignment_statement
+        (identifier)
+        (binary_expression
+          (qualified_member_expression
+            (identifier)
+            (identifier))
+          (call_expression
+            (identifier)
+            (argument_list
+              (number_literal)))))
+      (newline)
+      (assignment_statement
+        (qualified_member_expression
+          (identifier)
+          (identifier))
+        (identifier))
+      (newline)
+      (set_statement
+        (call_expression
+          (identifier)
+          (argument_list
+            (number_literal)))
+        (qualified_member_expression
+          (identifier)
+          (identifier)))
+      (newline)
+      (single_line_if_statement
+        (comparison_expression
+          (qualified_member_expression
+            (identifier)
+            (identifier))
+          (comparison_operator)
+          (call_expression
+            (identifier)
+            (argument_list
+              (number_literal))))
+        (assignment_statement
+          (identifier)
+          (number_literal)))
+      (newline))
+    (end_sub_statement))
+  (newline))

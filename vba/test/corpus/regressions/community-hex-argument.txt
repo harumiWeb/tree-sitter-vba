@@ -1,0 +1,34 @@
+===================================================================
+community report #21: hexadecimal ChrW arguments (supported before #21)
+===================================================================
+
+Sub Test()
+    x = ChrW(&H2010)
+    x = ChrW(&H2010&)
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (assignment_statement
+        (identifier)
+        (call_expression
+          (identifier)
+          (argument_list
+            (number_literal))))
+      (newline)
+      (assignment_statement
+        (identifier)
+        (call_expression
+          (identifier)
+          (argument_list
+            (number_literal))))
+      (newline))
+    (end_sub_statement))
+  (newline))

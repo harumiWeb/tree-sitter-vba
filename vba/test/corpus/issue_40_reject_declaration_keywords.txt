@@ -1,0 +1,190 @@
+==================
+reject Dim as a comma-separated declarator
+==================
+
+Sub Test()
+  Dim x As Double, Dim i As Long
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (variable_declaration
+        (variable_declarator
+          (identifier)
+          (as_type_clause
+            (type_expression)))
+        (ERROR)
+        (variable_declarator
+          (identifier)
+          (as_type_clause
+            (type_expression))))
+      (newline))
+    (end_sub_statement))
+  (newline))
+
+==================
+reject mixed-case Dim as a comma-separated declarator
+==================
+
+Sub Test()
+  dIm x As Double, dIm i As Long
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (variable_declaration
+        (variable_declarator
+          (identifier)
+          (as_type_clause
+            (type_expression)))
+        (ERROR)
+        (variable_declarator
+          (identifier)
+          (as_type_clause
+            (type_expression))))
+      (newline))
+    (end_sub_statement))
+  (newline))
+
+==================
+reject ReDim as a comma-separated declarator
+==================
+
+Sub Test()
+  Dim b() As Byte, ReDim b(10)
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (variable_declaration
+        (variable_declarator
+          (identifier)
+          (array_bounds)
+          (as_type_clause
+            (type_expression)))
+        (ERROR)
+        (variable_declarator
+          (identifier)
+          (array_bounds
+            (array_bound
+              (number_literal)))))
+      (newline))
+    (end_sub_statement))
+  (newline))
+
+==================
+reject mixed-case ReDim as a comma-separated declarator
+==================
+
+Sub Test()
+  Dim b() As Byte, rEdIm b(10)
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (variable_declaration
+        (variable_declarator
+          (identifier)
+          (array_bounds)
+          (as_type_clause
+            (type_expression)))
+        (ERROR)
+        (variable_declarator
+          (identifier)
+          (array_bounds
+            (array_bound
+              (number_literal)))))
+      (newline))
+    (end_sub_statement))
+  (newline))
+
+==================
+preserve valid multiple variable declarators
+==================
+
+Sub Test()
+  Dim x As Double, i As Long
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (variable_declaration
+        (variable_declarator
+          (identifier)
+          (as_type_clause
+            (type_expression)))
+        (variable_declarator
+          (identifier)
+          (as_type_clause
+            (type_expression))))
+      (newline))
+    (end_sub_statement))
+  (newline))
+
+==================
+preserve colon-separated Dim and ReDim statements
+==================
+
+Sub Test()
+  Dim b() As Byte: ReDim b(10)
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (variable_declaration
+        (variable_declarator
+          (identifier)
+          (array_bounds)
+          (as_type_clause
+            (type_expression))))
+      (redim_statement
+        (redim_declarator
+          (identifier)
+          (array_bounds
+            (array_bound
+              (number_literal)))))
+      (newline))
+    (end_sub_statement))
+  (newline))

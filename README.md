@@ -4,15 +4,18 @@
 [![npm downloads](https://img.shields.io/npm/dm/tree-sitter-vba.svg)](https://www.npmjs.com/package/tree-sitter-vba)
 [![CI](https://github.com/harumiWeb/tree-sitter-vba/actions/workflows/ci.yml/badge.svg)](https://github.com/harumiWeb/tree-sitter-vba/actions/workflows/ci.yml)
 
-A Tree-sitter grammar for Visual Basic for Applications (VBA), targeting
-exported Excel/VBA source files such as `.bas`, `.cls`, and `.frm`.
+Tree-sitter grammars for Visual Basic for Applications (VBA) and Visual Basic 6
+(VB6), targeting exported Excel/VBA source files such as `.bas`, `.cls`, and
+`.frm`, and VB6 project sources including `.frm` forms and `.ctl` user
+controls. Two parsers, `vba` and `vb6`, are generated from one shared grammar
+core.
 
 [Try tree-sitter-vba online](https://harumiweb.github.io/tree-sitter-vba/)
 
-The playground runs this parser through WebAssembly entirely in your browser.
-Use it to test parser compatibility, inspect synchronized concrete syntax trees,
-and see the official `highlights.scm` query in action; source code is not
-uploaded or sent to a parsing service.
+The playground runs the `vba` parser through WebAssembly entirely in your
+browser. Use it to test parser compatibility, inspect synchronized concrete
+syntax trees, and see the official `highlights.scm` query in action; source
+code is not uploaded or sent to a parsing service.
 
 This grammar is designed as a parsing foundation for editor and tooling use
 cases, including syntax highlighting, folding, tags, outline extraction, symbol
@@ -33,23 +36,64 @@ This project focuses on practical Excel/VBA source compatibility:
 - editor queries for highlights, folds, and tags
 - permissive MIT licensing
 
+VB6 shares its statement grammar with VBA, so the `vb6` parser reuses all of
+the above and adds what is VB6's own: the `.frm`/`.ctl` form header and `.cls`
+class header as the VB6 IDE writes them, and the constructs that predate VBA.
+
 ## Status
 
 This is a `v0.x` public release.
 
 The grammar is already usable for syntax-aware tooling such as highlighting,
 folding, tags, outline extraction, and initial symbol analysis. The current test
-suite covers 229 focused corpus cases, generated `Select Case` stress coverage
-through 500 clauses, and 481 checked-in VBA example files without `ERROR` or
-`MISSING` recovery nodes.
+suite covers 240 focused VBA corpus cases, 42 VB6 corpus cases, generated
+`Select Case` stress coverage through 500 clauses, and 481 checked-in VBA
+example files without `ERROR` or `MISSING` recovery nodes. The `vb6` parser is
+additionally measured against 1,436 real VB6 source files from 71 public
+projects; see [Testing](#testing) for the numbers.
 
 It is not yet a complete VBA grammar. Node names and tree shapes may still change before `v1.0.0`.
+
+## Two parsers from one grammar
+
+The statement grammar is written once, in `common/define-grammar.js`, as a
+function of the dialect. Each dialect directory holds a one-line entry point,
+its generated parser, and its corpus tests:
+
+```text
+common/define-grammar.js   the whole grammar: defineGrammar("vba" | "vb6")
+vba/grammar.js             module.exports = require("../common/define-grammar")("vba")
+vba/src/                   generated vba parser; node-types.json is tracked, parser.c is generated
+vba/test/corpus/           247 VBA corpus cases
+vb6/grammar.js             module.exports = require("../common/define-grammar")("vb6")
+vb6/src/scanner.c          a four-token external scanner (see Design principles)
+vb6/src/                   generated vb6 parser
+vb6/test/corpus/           44 VB6 corpus cases
+corpus/                    provenance of the VB6 acceptance corpus; the source files are fetched, not vendored
+examples/                  481 VBA example files
+```
+
+Everything dialect-specific is an `isVB6` / `isVBA` branch inside the core;
+`grep -n "isVB6\|isVBA" common/define-grammar.js` lists the complete delta.
+This is the layout `tree-sitter-typescript` uses for TypeScript and TSX, and
+the reason both grammars live in subdirectories: with more than one grammar in
+`tree-sitter.json`, the CLI picks the grammar from the working directory.
+
+Generated artifacts follow [ADR 0002](docs/adr/0002-generated-parser-artifacts.md):
+`src/parser.c` and `src/grammar.json` are not tracked in either dialect
+directory, `src/node-types.json` is, and `bindings/go/parser.c` is a tracked copy
+of the `vba` parser.
 
 ## Installation
 
 ```bash
 npm install tree-sitter tree-sitter-vba
 ```
+
+The npm package's native addon is the `vba` parser. The `vb6` parser ships as
+generated C source (`vb6/src/parser.c` and `vb6/src/scanner.c`) for the
+tree-sitter CLI and for direct embedding; Node.js and Go bindings for it are
+not provided yet.
 
 ## Usage
 
@@ -69,10 +113,21 @@ End Sub
 console.log(tree.rootNode.toString());
 ```
 
+To parse VB6 from the command line, run the CLI inside the `vb6` directory,
+which is how it selects the grammar:
+
+```bash
+cd vb6 && tree-sitter parse /path/to/Form1.frm
+```
+
+`scripts/run-tree-sitter.mjs --cwd vb6 parse <file>` does the same from the
+repository root.
+
 ## Go Usage
 
 The Go binding is self-contained when installed through Go modules; its package
-directory includes the generated C parser needed by cgo.
+directory includes the generated C parser needed by cgo. It exposes the `vba`
+parser.
 
 ```go
 package main
@@ -156,7 +211,8 @@ The grammar currently supports:
   Currency (`@`) and LongLong (`^`), exponent notation such as `1E-3`, and
   abbreviated decimal forms such as `.5` and `1.`
 - identifiers with common VBA type-declaration characters, including `@` and
-  `^`
+  `^`; in declarations the Single character `!` (`Dim X!`, `Const Y! = 1`) is
+  a `bang_identifier` because it shares its token with the bang member operator
 - identifiers, simple type clauses, dotted type names, and array type suffixes
 - `Attribute` statements
 - `Option Explicit`, `Option Private Module`, `Option Compare`, and `Option Base`
@@ -172,8 +228,9 @@ The grammar currently supports:
   `PtrSafe`, `Lib`, and `Alias`
 - simple assignments and `Set` assignments
 - `Name oldPath As newPath` file rename statements
-- calls, named arguments, omitted arguments, call-site `ByVal`, member access,
-  bang member access, and leading-dot member access
+- calls, named arguments, omitted arguments anywhere in an unparenthesized
+  list, call-site `ByVal`, member access, bang member access, and leading-dot
+  member access
 - `Debug.Print`, unparenthesized `Print` methods, and `? expr` Debug.Print
   shorthand statements, including comma- and semicolon-separated output lists
   with trailing output-position controls
@@ -208,6 +265,58 @@ The grammar currently supports:
   `.frx` blob references
 - initial `highlights.scm`, `folds.scm`, and `tags.scm` queries
 
+### VB6 additions
+
+The `vb6` parser accepts everything above except the VBA7-only constructs
+(`PtrSafe`, `LongPtr`, `LongLong`, `DefLngPtr`, `DefLngLng`: `PtrSafe` on a
+`Declare` is an error, `LongPtr` and `LongLong` are ordinary user type names),
+and adds:
+
+- the `.frm`/`.ctl` header as the VB6 IDE writes it: `Object = "{GUID}#2.0#0"; "X.OCX"`
+  component references, nested `Begin Lib.Class Name ... End` blocks to any
+  depth, `BeginProperty` blocks with the OCX GUID and indexed names
+  (`BeginProperty ColumnHeader(1) {...}`), property values as strings, numbers,
+  negative numbers, hex literals, annotated booleans (`-1  'True`), `.frx`/`.ctx`
+  resource references with hexadecimal offsets and the `$` string prefix, menu
+  shortcuts (`^O`, `{F5}`, `+{DEL}`), indexed property-bag names
+  (`Tab(0).Control(1) = "txt(1)"`), and Single values written with a decimal
+  comma by IDEs on European locales (`FontSize = 8,25`); VB3-era
+  `Begin Form Form1` headers parse too
+- the `.cls` header, `VERSION 1.0 CLASS` / `BEGIN ... END`, and two-valued
+  `Attribute VB_Ext_KEY = "A" ,"B"` lines written by Class Builder
+- form and PictureBox graphics statements with coordinate pairs, bare or
+  `obj.`-qualified: `Line (x1, y1)-(x2, y2), color, BF`, `PSet (x, y), c`,
+  `Circle (x, y), r, , , , aspect`, and `Scale (0, 0)-(w, h)`, with any
+  trailing argument omitted
+- a comment whose line ends in ` _` continuing onto the next line, which
+  compiled VB6 projects rely on
+- multi-statement single-line loops, `For i = 1 To n: a = 1: b = 2: Next`
+- calls whose first argument is an implicit member, `Foo .Bar, x`, read as a
+  call with two arguments rather than a chain `Foo.Bar` with an omitted
+  argument, through the external scanner described under Design principles
+- constructs VBA also has but the base VBA grammar never accepted; they are
+  `vb6` only so that the `vba` parser's trees and parse table stay those of the
+  base (see [ADR 0005](docs/adr/0005-vba-parser-stays-the-base-grammar.md)):
+  `Let`, `LSet`/`RSet`, `GoSub`/`Return`, `On Local Error`, `Global`,
+  `Dim WithEvents`, `ReDim x(n) As T`, octal `&O` literals,
+  `AddressOf Module.Procedure`, `Name.Member` receivers, a comparison as the
+  left operand of another (`a = b <> 0`, `x Is Nothing = False`), a comparison
+  as the `Select Case` selector or in a `Case` clause, `#If` around whole `Case`
+  clauses, an empty `Else` in a single-line `If`, `::` between inline
+  statements, a colon before a `For` body's line break, a `Type` member named
+  `End`, and the Single `!` suffix in expression positions (`total! = 0#`,
+  `rec.Percent! = 0#`)
+- an indexed or property target on the left of `=` is an assignment; the base
+  lets `arr(i) = x` fall to a call of `arr` with the comparison `(i) = x` as
+  its argument when tree shape happens to prefer it
+
+The VB6-only rules are gated by `isVB6` in the core and add these node types:
+`frm_object_reference`, `frm_shortcut_value`, `frm_locale_number`,
+`frm_property_index`, `frm_property_name`, `frm_blob_offset`, `line_statement`,
+`pset_statement`, `circle_statement`, and `scale_statement`. The rest of the
+additions in the list above are shared by both dialects; the `vba` tree shapes
+pinned by the VBA corpus are unchanged.
+
 ## Declaration node API
 
 This release line is still pre-`1.0.0`, and declaration node shapes may change
@@ -236,6 +345,11 @@ source-text scanning:
   explicit modifier nodes.
 - `implements_statement` exposes its target as `name`, and
   `attribute_statement` exposes `name` and `value`.
+- a name written with the Single type character is a `bang_identifier` whose
+  children are the `identifier` and the `!`; the other type characters stay
+  inside the `identifier` token. In `vba` the node occurs where a declaration
+  names something (`Dim`, `Const`, `ReDim`, `Type` members, parameters,
+  `Function` names); `vb6` also produces it in expression positions.
 
 ## Expression node API
 
@@ -254,6 +368,16 @@ Member access and calls expose stable fields for analysis tools:
   unparenthesized `Print` methods. Output expressions use the `value` field;
   `;` and `,` output-position controls use the `position` field containing a
   `char_position` node. A position may follow the final output expression.
+- in the `vb6` parser, `line_statement` and `scale_statement` use `start` and
+  `end` (each a `coordinate_pair` with `x` and `y`), `pset_statement` uses
+  `point`, `circle_statement` uses `center` and `radius`, the qualified forms
+  expose the receiver through `method`, and trailing graphics arguments use
+  `argument`.
+- in the `vb6` parser, form header nodes expose `frm_property_statement` as
+  `name` and `value`, `frm_begin_block` as `type` and `name`,
+  `frm_begin_property_block` as `name`, `index`, and `guid`,
+  `frm_blob_reference` as `offset`, and `frm_object_reference` as `class` and
+  `file`.
 
 ## Control-flow node API
 
@@ -266,10 +390,13 @@ Member access and calls expose stable fields for analysis tools:
   `inline_statement_sequence`; one-statement branches keep their direct child.
 - `shared_next_for_body` represents an enclosing loop whose nested loop is
   closed by the same `Next ...` counter list.
+- In the `vb6` parser, `single_line_block` owns the colon after each of its
+  statements, so an inline loop may hold several statements before its `Next`,
+  `Loop`, or `End With`. The `vba` parser keeps its current shape.
 
 ## Known limitations
 
-This grammar parses VBA syntax only.
+This grammar parses VBA and VB6 syntax only.
 
 It does not currently provide:
 
@@ -291,6 +418,26 @@ downstream tools.
 General expression-level `=` comparison is still context-limited to avoid
 ambiguity with assignment.
 
+For the `vb6` parser:
+
+- Input must be UTF-8 (or UTF-16 through the C API). VB6 source is stored in the
+  machine's code page, and bytes above 0x7F fed in raw never match the
+  identifier class, so identifiers such as `BtnAñadir` or a Big5 library name
+  in a `Begin` line are errors until the file is transcoded. Comments and
+  strings survive raw bytes; identifiers do not. Nine of the 1,436 corpus files
+  fail this way without transcoding.
+- `Debug.Assert (a >= b And c <= d) Or e = 0`, a call statement whose single
+  unparenthesized argument is a parenthesized condition followed by `Or` and a
+  comparison, parses as `Debug.Assert(...) Or e` with an orphaned `= 0` and two
+  `MISSING` nodes. The same shape with plain identifiers inside the parentheses
+  parses correctly; the comparisons inside the parentheses tip a GLR fork. One
+  corpus file, one line.
+- `.vbp` project files, `.dsr` designers, and `.pag` property pages are not
+  parsed; `.frx`/`.ctx` binaries are referenced, not read. VBA7 constructs are
+  rejected, and `#If VBA7` blocks are left to the conditional-compilation rules.
+- There are no Node.js or Go bindings for the `vb6` parser yet; the npm addon,
+  the Go module, and the Wasm artifact are the `vba` parser.
+
 ## Queries
 
 This package includes initial Tree-sitter queries for:
@@ -302,7 +449,9 @@ queries/tags.scm
 ```
 
 These queries are intended as a starting point for editor integrations and
-tooling. They may evolve as the grammar stabilizes.
+tooling. They may evolve as the grammar stabilizes. Both grammars in
+`tree-sitter.json` point at the same query files; the VB6-only node types are
+not yet highlighted.
 
 ## Development
 
@@ -312,16 +461,18 @@ Install dependencies:
 pnpm install
 ```
 
-Generate the parser:
+Generate both parsers, or one of them:
 
 ```bash
 pnpm generate
+pnpm generate:vba
+pnpm generate:vb6
 ```
 
 After grammar changes, keep the Go module artifact in sync:
 
 ```bash
-cp src/parser.c bindings/go/parser.c
+cp vba/src/parser.c bindings/go/parser.c
 pnpm check:go-parser
 ```
 
@@ -331,14 +482,33 @@ Run corpus tests:
 pnpm test
 ```
 
+`pnpm test:corpus` runs the VBA corpus under the `vba` parser, the VB6 corpus
+under the `vb6` parser, and then the VBA corpus under the `vb6` parser through
+`scripts/test-shared-corpus.mjs`, which skips the cases whose expectations differ
+between the dialects by design and prints the reason for each. `pnpm
+test:corpus:vba` and `pnpm test:corpus:vb6` run one side.
+
+The tree-sitter CLI selects the grammar from the working directory, so run it
+inside `vba/` or `vb6/`; `scripts/run-tree-sitter.mjs --cwd vb6 <args>` does
+that from the repository root.
+
 Parse example files:
 
 ```bash
 pnpm parse:examples
 ```
 
-This recursively parses the checked-in VBA examples and fails if any parse tree
-contains an `ERROR` or `MISSING` node.
+This recursively parses the checked-in VBA examples with the `vba` parser and
+fails if any parse tree contains an `ERROR` or `MISSING` node.
+
+Parse the VB6 acceptance corpus:
+
+```bash
+node scripts/fetch-corpus.mjs
+pnpm parse:corpus -- --transcode
+```
+
+See [Testing](#testing) for what the corpus is and how it is measured.
 
 Run queries against the example files:
 
@@ -365,7 +535,7 @@ Run the full local check:
 pnpm check
 ```
 
-Build and test the standalone browser parser:
+Build and test the standalone browser parser (the `vba` parser):
 
 ```bash
 pnpm build:wasm
@@ -417,15 +587,43 @@ assets and `ERROR` / `MISSING` reporting, see
 Tree-sitter grammar behavior is tested with corpus files under:
 
 ```text
-test/corpus/
+vba/test/corpus/
+vb6/test/corpus/
 ```
 
 Community-reported production syntax regressions are kept permanently under
-`test/corpus/regressions/`; each fixture records whether it was already
+`vba/test/corpus/regressions/`; each fixture records whether it was already
 supported or required a grammar change.
 
-When changing `grammar.js`, always add or update focused corpus tests. Do not
-weaken existing expectations just to make a grammar change pass.
+When changing `common/define-grammar.js`, always add or update focused corpus
+tests in the dialect the change affects. Do not weaken existing expectations
+just to make a grammar change pass. A shared change must leave the `vba` trees
+unchanged; `scripts/test-shared-corpus.mjs` then runs the VBA corpus under the
+`vb6` parser as well, so a `vb6` divergence shows up as a failure there and is
+either fixed or recorded in the script's skip list with its reason. The 23
+skips today are the VBA7 constructs, the `.frx` offset node
+(`frm_blob_offset` in `vb6`, `number_literal` in `vba`), the pinned one-statement
+inline-loop shape, four cases where the `vba` parser emits an opaque
+`_ambiguous_call_statement` token that `vb6` parses with structure, and five
+error-recovery shapes on deliberately invalid input.
+
+A clean parse is not a stable tree. A bare call whose callee has been split
+into its own `expression_statement` still has zero `ERROR` nodes, so neither
+`pnpm parse:examples` nor the corpus can see that class of regression unless a
+case pins the exact shape. `scripts/compare-cst.mjs` closes that gap for the
+`vba` parser: it parses all 481 example files with a reference checkout and with
+this checkout, strips positions, and lists every differing file by the node
+types each hunk adds and removes. Point `--base` at a `main` worktree and name
+the intended differences with `--allow`:
+
+```text
+git worktree add /tmp/tree-sitter-vba-main main
+node scripts/compare-cst.mjs --base /tmp/tree-sitter-vba-main --allow bang_identifier
+```
+
+Run it before proposing any change to `common/define-grammar.js` that touches
+calls, arguments, or precedence, and explain every remaining hunk in the pull
+request.
 
 The repository also includes real-world exported VBA examples. These examples
 are parsed in CI to catch regressions against practical Excel/VBA code.
@@ -437,12 +635,45 @@ examples/broken/
 ```
 
 These fixtures are intentionally excluded from `pnpm parse:examples`. Add
-focused recovery expectations under `test/corpus/recovery.txt` when the
+focused recovery expectations under `vba/test/corpus/recovery.txt` when the
 surrounding tree shape should remain stable.
+
+### VB6 acceptance corpus
+
+The `vb6` parser is measured against 1,436 real VB6 source files (647 `.frm`,
+382 `.bas`, 283 `.cls`, 124 `.ctl`) from 71 public GitHub projects, including
+code from the late 1990s. The files are not vendored: `corpus/MANIFEST.md` pins
+every project to a full commit SHA with its licence and file counts,
+`corpus/FILES.tsv` lists every file, and `scripts/fetch-corpus.mjs` clones each
+project at its pinned SHA and copies exactly those paths, so the set is
+byte-identical to the one measured:
+
+```bash
+node scripts/fetch-corpus.mjs          # all 71 projects
+node scripts/fetch-corpus.mjs --only <owner__repo>
+pnpm parse:corpus -- --transcode
+```
+
+Files are copied as raw bytes; most are Windows-1252 with CRLF and must not be
+re-encoded, so the runner transcodes at read time per `corpus/ENCODINGS.json`
+(180 files via Windows-1252, 56 via GBK, 22 via Big5). Keeping the source out of
+the tree also means this repository redistributes nobody else's code; five of
+the 71 projects are copyleft and are marked as such in the manifest.
+
+Measured on 2026-09-08 with tree-sitter CLI 0.26.9:
+
+| Check | Result |
+| --- | --- |
+| VB6 corpus, transcoded | 1,432 of 1,436 files parse with zero `ERROR` and zero `MISSING`. Three files carry syntax errors VB6 itself rejects and are listed with the defect in `corpus/EXCLUDED.json`; the runner reports them separately. One file keeps two `MISSING` nodes on the `Debug.Assert` shape described under Known limitations |
+| VB6 corpus, raw bytes | nine further files fail on non-ASCII identifiers in legacy code pages |
+| VBA corpus under `vba` | 240 of 240 cases; 481 of 481 example files without `ERROR` or `MISSING` |
+| VB6 corpus cases under `vb6` | 42 of 42 |
+| VBA corpus under `vb6` | 219 of 219 cases run, 21 skipped by design as listed above |
+| Parse time | the largest corpus file, a 2.2 MB module, parses in about 410 ms (5.4 MB/s); a 500 KB `.frm` in 97 ms |
 
 ## Design principles
 
-This repository parses VBA syntax only.
+This repository parses VBA and VB6 syntax only.
 
 It does not validate whether identifiers, types, members, procedures, workbook
 objects, or references are semantically valid. Those concerns belong in
@@ -452,6 +683,25 @@ analysis tools.
 Node names should remain stable once introduced because downstream query files
 and integrations may depend on them. However, because this is a `v0.x` release,
 node names and tree shapes may still change before `v1.0.0`.
+
+Over-acceptance is preferred to ambiguity: where a choice exists between
+rejecting invalid code and keeping the tree unambiguous, the grammar keeps the
+tree and leaves validation to downstream tools.
+
+### Why the `vb6` parser has an external scanner
+
+VB6 reads whitespace before a member operator at statement level: `Foo .Bar, x`
+is a call to `Foo` with two arguments, `Foo.Bar , x` a call to `Foo.Bar` with an
+omitted first argument. A context-free grammar never sees the space. The `vba`
+parser works around one shape with whole-line regex tokens
+(`_ambiguous_call_statement`), which keep the tree free of errors but hide the
+statement's structure, and `token.immediate(".")` cannot share a lexer state
+with a regular `"."`. The scanner in [vb6/src/scanner.c](vb6/src/scanner.c)
+emits `_dot_immediate` / `_dot_spaced` / `_bang_immediate` / `_bang_spaced`:
+member chains use the immediate kind only, an implicit member may start with
+either, a dot after a line continuation counts as immediate (`x("y") _`
+followed by `.Add(...)` is a chain), and a dot followed by a digit is left to
+the internal lexer (`.5`). It carries no state. The `vba` parser has no scanner.
 
 ## Versioning
 
@@ -478,3 +728,7 @@ their original licenses. These files are provided for parser coverage only and
 are not licensed under this repository's MIT license unless explicitly stated.
 See [THIRD_PARTY_LICENSE.md](THIRD_PARTY_LICENSE.md) for the project inventory,
 upstream sources, acknowledgements, and local license records.
+
+The VB6 acceptance corpus is not part of this repository; `corpus/MANIFEST.md`
+records the repository, commit, and licence of every project it is fetched
+from.

@@ -1,7 +1,7 @@
 {
   "name": "tree-sitter-vba",
   "version": "0.13.0",
-  "description": "Tree-sitter grammar for Visual Basic for Applications (VBA).",
+  "description": "Tree-sitter grammars for Visual Basic for Applications (vba) and Visual Basic 6 (vb6) sharing one grammar core.",
   "keywords": [
     "excel",
     "excel-vba",
@@ -9,8 +9,10 @@
     "parser",
     "tree-sitter",
     "tree-sitter-grammar",
+    "vb6",
     "vba",
     "visual-basic",
+    "visual-basic-6",
     "visual-basic-for-applications"
   ],
   "homepage": "https://github.com/harumiWeb/tree-sitter-vba#readme",
@@ -24,12 +26,15 @@
     "url": "git+https://github.com/harumiWeb/tree-sitter-vba.git"
   },
   "files": [
-    "grammar.js",
+    "common/define-grammar.js",
+    "vba/grammar.js",
+    "vb6/grammar.js",
     "tree-sitter.json",
     "binding.gyp",
     "bindings/node/*",
     "bindings/go/*.go",
-    "src/**",
+    "vba/src/**",
+    "vb6/src/**",
     "queries/*",
     "scripts/install.mjs",
     "README.md",
@@ -42,12 +47,12 @@
   },
   "scripts": {
     "install": "node scripts/install.mjs",
-    "generate": "tree-sitter generate --abi 15",
+    "generate": "node scripts/run-tree-sitter.mjs generate --abi 15 --output vba/src vba/grammar.js && node scripts/run-tree-sitter.mjs generate --abi 15 --output vb6/src vb6/grammar.js",
     "prepack": "pnpm generate",
     "build:binding": "node-gyp rebuild",
     "build:wasm": "pnpm generate && node scripts/build-wasm.mjs",
     "build:playground": "pnpm generate && node scripts/build-playground.mjs",
-    "test:corpus": "pnpm generate && node scripts/run-tree-sitter.mjs test",
+    "test:corpus": "pnpm generate && node scripts/run-tree-sitter.mjs --cwd vba test && node scripts/run-tree-sitter.mjs --cwd vb6 test && node scripts/test-shared-corpus.mjs",
     "test:stress": "pnpm generate && node scripts/ensure-binding.mjs && node scripts/stress-select-case.mjs",
     "test": "pnpm test:corpus && pnpm test:stress",
     "test:binding": "node scripts/ensure-binding.mjs && node --test bindings/node/*_test.js",
@@ -68,7 +73,12 @@
     "test:browser-consumer:browser": "node --test test/browser-consumer/browser-smoke.test.mjs",
     "test:browser-consumer": "pnpm build:browser-consumer && pnpm test:browser-consumer:node && pnpm test:browser-consumer:browser",
     "fmt": "oxfmt",
-    "check": "pnpm test && pnpm test:third-party && pnpm test:wasm-size && pnpm check:third-party && pnpm check:browser-artifact && pnpm check:go-parser && pnpm test:binding && pnpm parse:examples && pnpm query:examples && pnpm test:wasm && pnpm check:wasm-size && pnpm test:parity && pnpm test:playground && pnpm test:browser-consumer"
+    "check": "pnpm test && pnpm test:third-party && pnpm test:wasm-size && pnpm check:third-party && pnpm check:browser-artifact && pnpm check:go-parser && pnpm test:binding && pnpm parse:examples && pnpm query:examples && pnpm test:wasm && pnpm check:wasm-size && pnpm test:parity && pnpm test:playground && pnpm test:browser-consumer",
+    "generate:vba": "node scripts/run-tree-sitter.mjs generate --abi 15 --output vba/src vba/grammar.js",
+    "generate:vb6": "node scripts/run-tree-sitter.mjs generate --abi 15 --output vb6/src vb6/grammar.js",
+    "test:corpus:vba": "pnpm generate:vba && node scripts/run-tree-sitter.mjs --cwd vba test",
+    "test:corpus:vb6": "pnpm generate:vb6 && node scripts/run-tree-sitter.mjs --cwd vb6 test && node scripts/test-shared-corpus.mjs",
+    "parse:corpus": "node scripts/parse-corpus.mjs"
   },
   "dependencies": {
     "node-addon-api": "^8.8.0",

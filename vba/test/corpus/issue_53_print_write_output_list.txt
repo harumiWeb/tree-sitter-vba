@@ -1,0 +1,618 @@
+==================
+print method output lists
+==================
+
+Sub TestPrintMethods()
+    Debug.Print "foo";
+    Debug.Print "foo",
+    Debug.Print "foo"; "bar", value;
+    Debug.Print values(0)
+    Debug.Print values("key")
+    Debug.Print ws.Range("A1:J100").Value = 1
+    Debug.Print rs.Fields("name") & " DONE."
+    Debug.Print Foo("x").Bar.Baz;
+    Debug.Print Foo(1).Bar(2);
+    Debug.Print obj.Foo(1).Bar.Baz;
+    Debug.Print Spc(2); Tab(3),
+    rpt.Print "foo";
+    rpt.Print "foo",
+    Print "foo";
+    Print "foo",
+    With rpt
+        .Print "foo"; "bar"
+        .Print "foo",
+    End With
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (call_statement
+        (qualified_member_expression
+          (identifier)
+          (identifier))
+        (output_list
+          (string_literal)
+          (char_position)))
+      (newline)
+      (call_statement
+        (qualified_member_expression
+          (identifier)
+          (identifier))
+        (output_list
+          (string_literal)
+          (char_position)))
+      (newline)
+      (call_statement
+        (qualified_member_expression
+          (identifier)
+          (identifier))
+        (output_list
+          (string_literal)
+          (char_position)
+          (string_literal)
+          (char_position)
+          (identifier)
+          (char_position)))
+      (newline)
+      (call_statement
+        (qualified_member_expression
+          (identifier)
+          (identifier))
+        (output_list
+          (call_expression
+            (identifier)
+            (argument_list
+              (number_literal)))))
+      (newline)
+      (call_statement
+        (qualified_member_expression
+          (identifier)
+          (identifier))
+        (output_list
+          (call_expression
+            (identifier)
+            (argument_list
+              (string_literal)))))
+      (newline)
+      (call_statement
+        (qualified_member_expression
+          (identifier)
+          (identifier))
+        (output_list
+          (comparison_expression
+            (qualified_member_expression
+              (call_expression
+                (qualified_member_expression
+                  (identifier)
+                  (identifier))
+                (argument_list
+                  (string_literal)))
+              (identifier))
+            (comparison_operator)
+            (number_literal))))
+      (newline)
+      (call_statement
+        (qualified_member_expression
+          (identifier)
+          (identifier))
+        (output_list
+          (binary_expression
+            (call_expression
+              (qualified_member_expression
+                (identifier)
+                (identifier))
+              (argument_list
+                (string_literal)))
+            (string_literal))))
+      (newline)
+      (call_statement
+        (qualified_member_expression
+          (identifier)
+          (identifier))
+        (output_list
+          (qualified_member_expression
+            (qualified_member_expression
+              (call_expression
+                (identifier)
+                (argument_list
+                  (string_literal)))
+              (identifier))
+            (identifier))
+          (char_position)))
+      (newline)
+      (call_statement
+        (qualified_member_expression
+          (identifier)
+          (identifier))
+        (output_list
+          (call_expression
+            (qualified_member_expression
+              (call_expression
+                (identifier)
+                (argument_list
+                  (number_literal)))
+              (identifier))
+            (argument_list
+              (number_literal)))
+          (char_position)))
+      (newline)
+      (call_statement
+        (qualified_member_expression
+          (identifier)
+          (identifier))
+        (output_list
+          (qualified_member_expression
+            (qualified_member_expression
+              (call_expression
+                (qualified_member_expression
+                  (identifier)
+                  (identifier))
+                (argument_list
+                  (number_literal)))
+              (identifier))
+            (identifier))
+          (char_position)))
+      (newline)
+      (call_statement
+        (qualified_member_expression
+          (identifier)
+          (identifier))
+        (output_list
+          (call_expression
+            (identifier)
+            (argument_list
+              (number_literal)))
+          (char_position)
+          (call_expression
+            (identifier)
+            (argument_list
+              (number_literal)))
+          (char_position)))
+      (newline)
+      (call_statement
+        (qualified_member_expression
+          (identifier)
+          (identifier))
+        (output_list
+          (string_literal)
+          (char_position)))
+      (newline)
+      (call_statement
+        (qualified_member_expression
+          (identifier)
+          (identifier))
+        (output_list
+          (string_literal)
+          (char_position)))
+      (newline)
+      (call_statement
+        (identifier)
+        (output_list
+          (string_literal)
+          (char_position)))
+      (newline)
+      (call_statement
+        (identifier)
+        (output_list
+          (string_literal)
+          (char_position)))
+      (newline)
+      (with_statement
+        (identifier)
+        (newline)
+        (block
+          (call_statement
+            (implicit_member_expression
+              (identifier))
+            (output_list
+              (string_literal)
+              (char_position)
+              (string_literal)))
+          (newline)
+          (call_statement
+            (implicit_member_expression
+              (identifier))
+            (output_list
+              (string_literal)
+              (char_position)))
+          (newline)))
+      (newline))
+    (end_sub_statement))
+  (newline))
+
+==================
+print method neighboring call forms
+==================
+
+Sub TestPrintCallForms()
+    Debug.Print
+    Debug.Print ("foo")
+    rpt.Print
+    rpt.Print("foo")
+    Print
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (call_statement
+        (qualified_member_expression
+          (identifier)
+          (identifier)))
+      (newline)
+      (call_statement
+        (call_expression
+          (qualified_member_expression
+            (identifier)
+            (identifier))
+          (argument_list
+            (string_literal))))
+      (newline)
+      (call_statement
+        (qualified_member_expression
+          (identifier)
+          (identifier)))
+      (newline)
+      (call_statement
+        (call_expression
+          (qualified_member_expression
+            (identifier)
+            (identifier))
+          (argument_list
+            (string_literal))))
+      (newline)
+      (call_statement
+        (identifier))
+      (newline))
+    (end_sub_statement))
+  (newline))
+
+==================
+debug print shorthand output lists
+==================
+
+Sub TestDebugPrintShorthand()
+    ? "foo";
+    ? "foo",
+    ? "foo"; "bar", value;
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (debug_print_statement
+        (output_list
+          (string_literal)
+          (char_position)))
+      (newline)
+      (debug_print_statement
+        (output_list
+          (string_literal)
+          (char_position)))
+      (newline)
+      (debug_print_statement
+        (output_list
+          (string_literal)
+          (char_position)
+          (string_literal)
+          (char_position)
+          (identifier)
+          (char_position)))
+      (newline))
+    (end_sub_statement))
+  (newline))
+
+==================
+print file output lists
+==================
+
+Sub TestPrintFile()
+    Print #1,
+    Print #1, "foo";
+    Print #1, "foo",
+    Print #1, "foo"; "bar", value;
+    Print #1, values(0); obj.Value,
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (print_statement
+        (file_number
+          (file_number_literal
+            (number_literal))))
+      (newline)
+      (print_statement
+        (file_number
+          (file_number_literal
+            (number_literal)))
+        (output_list
+          (string_literal)
+          (char_position)))
+      (newline)
+      (print_statement
+        (file_number
+          (file_number_literal
+            (number_literal)))
+        (output_list
+          (string_literal)
+          (char_position)))
+      (newline)
+      (print_statement
+        (file_number
+          (file_number_literal
+            (number_literal)))
+        (output_list
+          (string_literal)
+          (char_position)
+          (string_literal)
+          (char_position)
+          (identifier)
+          (char_position)))
+      (newline)
+      (print_statement
+        (file_number
+          (file_number_literal
+            (number_literal)))
+        (output_list
+          (call_expression
+            (identifier)
+            (argument_list
+              (number_literal)))
+          (char_position)
+          (qualified_member_expression
+            (identifier)
+            (identifier))
+          (char_position)))
+      (newline))
+    (end_sub_statement))
+  (newline))
+
+==================
+write file output lists
+==================
+
+Sub TestWriteFile()
+    Write #1,
+    Write #1, "foo";
+    Write #1, "foo",
+    Write #1, "foo"; "bar", value;
+    Write #1, values(0); obj.Value,
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (write_statement
+        (file_number
+          (file_number_literal
+            (number_literal))))
+      (newline)
+      (write_statement
+        (file_number
+          (file_number_literal
+            (number_literal)))
+        (output_list
+          (string_literal)
+          (char_position)))
+      (newline)
+      (write_statement
+        (file_number
+          (file_number_literal
+            (number_literal)))
+        (output_list
+          (string_literal)
+          (char_position)))
+      (newline)
+      (write_statement
+        (file_number
+          (file_number_literal
+            (number_literal)))
+        (output_list
+          (string_literal)
+          (char_position)
+          (string_literal)
+          (char_position)
+          (identifier)
+          (char_position)))
+      (newline)
+      (write_statement
+        (file_number
+          (file_number_literal
+            (number_literal)))
+        (output_list
+          (call_expression
+            (identifier)
+            (argument_list
+              (number_literal)))
+          (char_position)
+          (qualified_member_expression
+            (identifier)
+            (identifier))
+          (char_position)))
+      (newline))
+    (end_sub_statement))
+  (newline))
+
+==================
+semicolons remain invalid statement separators
+==================
+
+Sub TestInvalidSemicolonSeparators()
+    Foo; Bar
+    x = 1; y = 2
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (expression_statement
+        (identifier))
+      (ERROR)
+      (call_statement
+        (identifier))
+      (newline)
+      (assignment_statement
+        (identifier)
+        (number_literal))
+      (ERROR)
+      (assignment_statement
+        (identifier)
+        (number_literal))
+      (newline))
+    (end_sub_statement))
+  (newline))
+
+==================
+trailing output controls remain invalid for ordinary calls
+==================
+
+Sub TestInvalidCallOutputControls()
+    Foo "x";
+    object.Other "x";
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (call_statement
+        (identifier)
+        (unparenthesized_argument_list
+          (string_literal)))
+      (ERROR)
+      (newline)
+      (call_statement
+        (qualified_member_expression
+          (identifier)
+          (identifier))
+        (unparenthesized_argument_list
+          (string_literal)))
+      (ERROR)
+      (newline))
+    (end_sub_statement))
+  (newline))
+
+==================
+parenthesized Debug Print is not an output list
+==================
+
+Sub TestInvalidParenthesizedDebugPrint()
+    Debug.Print("foo");
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (call_statement
+        (qualified_member_expression
+          (identifier)
+          (identifier)))
+      (ERROR
+        (parenthesized_expression
+          (string_literal)))
+      (newline))
+    (end_sub_statement))
+  (newline))
+
+==================
+parenthesized object Print is not an output list
+==================
+
+Sub TestInvalidParenthesizedObjectPrint()
+    rpt.Print("foo");
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (call_statement
+        (qualified_member_expression
+          (identifier)
+          (identifier)))
+      (ERROR
+        (parenthesized_expression
+          (string_literal)))
+      (newline))
+    (end_sub_statement))
+  (newline))
+
+==================
+parenthesized unqualified Print is not an output list
+==================
+
+Sub TestInvalidParenthesizedPrint()
+    Print("foo");
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (call_statement
+        (identifier))
+      (ERROR
+        (parenthesized_expression
+          (string_literal)))
+      (newline))
+    (end_sub_statement))
+  (newline))

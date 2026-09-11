@@ -4,9 +4,28 @@
       "name": "vba",
       "camelcase": "Vba",
       "scope": "source.vba",
-      "path": ".",
-      "file-types": ["bas", "cls", "frm"],
+      "path": "vba",
+      "file-types": [
+        "bas",
+        "cls",
+        "frm"
+      ],
       "injection-regex": "^vba$",
+      "highlights": "queries/highlights.scm",
+      "tags": "queries/tags.scm"
+    },
+    {
+      "name": "vb6",
+      "camelcase": "Vb6",
+      "scope": "source.vb6",
+      "path": "vb6",
+      "file-types": [
+        "bas",
+        "cls",
+        "frm",
+        "ctl"
+      ],
+      "injection-regex": "^vb6$",
       "highlights": "queries/highlights.scm",
       "tags": "queries/tags.scm"
     }
@@ -14,7 +33,7 @@
   "metadata": {
     "version": "0.13.0",
     "license": "MIT",
-    "description": "Tree-sitter grammar for Visual Basic for Applications",
+    "description": "Tree-sitter grammars for Visual Basic for Applications (vba) and Visual Basic 6 (vb6) on a shared core",
     "authors": [
       {
         "name": "harumiWeb"
