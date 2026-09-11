@@ -4,6 +4,8 @@ All notable changes to tree-sitter-vba will be documented in this file.
 
 ## Unreleased
 
+## [v0.14.0] - 2026-09-11
+
 ### Added
 
 - Gate the built browser parser artifact at 7,864,320 bytes in CI, in the

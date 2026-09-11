@@ -46,7 +46,7 @@ This is a `v0.x` public release.
 
 The grammar is already usable for syntax-aware tooling such as highlighting,
 folding, tags, outline extraction, and initial symbol analysis. The current test
-suite covers 240 focused VBA corpus cases, 42 VB6 corpus cases, generated
+suite covers 247 focused VBA corpus cases, 44 VB6 corpus cases, generated
 `Select Case` stress coverage through 500 clauses, and 481 checked-in VBA
 example files without `ERROR` or `MISSING` recovery nodes. The `vb6` parser is
 additionally measured against 1,436 real VB6 source files from 71 public
@@ -666,9 +666,9 @@ Measured on 2026-09-08 with tree-sitter CLI 0.26.9:
 | --- | --- |
 | VB6 corpus, transcoded | 1,432 of 1,436 files parse with zero `ERROR` and zero `MISSING`. Three files carry syntax errors VB6 itself rejects and are listed with the defect in `corpus/EXCLUDED.json`; the runner reports them separately. One file keeps two `MISSING` nodes on the `Debug.Assert` shape described under Known limitations |
 | VB6 corpus, raw bytes | nine further files fail on non-ASCII identifiers in legacy code pages |
-| VBA corpus under `vba` | 240 of 240 cases; 481 of 481 example files without `ERROR` or `MISSING` |
-| VB6 corpus cases under `vb6` | 42 of 42 |
-| VBA corpus under `vb6` | 219 of 219 cases run, 21 skipped by design as listed above |
+| VBA corpus under `vba` | 247 of 247 cases; 481 of 481 example files without `ERROR` or `MISSING` |
+| VB6 corpus cases under `vb6` | 44 of 44 |
+| VBA corpus under `vb6` | 224 of 224 cases run, 23 skipped by design as listed above |
 | Parse time | the largest corpus file, a 2.2 MB module, parses in about 410 ms (5.4 MB/s); a 500 KB `.frm` in 97 ms |
 
 ## Design principles
