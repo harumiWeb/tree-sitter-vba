@@ -31,7 +31,7 @@
     }
   ],
   "metadata": {
-    "version": "0.13.0",
+    "version": "0.14.0",
     "license": "MIT",
     "description": "Tree-sitter grammars for Visual Basic for Applications (vba) and Visual Basic 6 (vb6) on a shared core",
     "authors": [

@@ -1,6 +1,6 @@
 {
   "name": "tree-sitter-vba",
-  "version": "0.13.0",
+  "version": "0.14.0",
   "description": "Tree-sitter grammars for Visual Basic for Applications (vba) and Visual Basic 6 (vb6) sharing one grammar core.",
   "keywords": [
     "excel",
