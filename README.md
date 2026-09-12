@@ -240,6 +240,8 @@ The grammar currently supports:
 - common VBA operator precedence for arithmetic, concatenation, comparison, and
   logical operators; `=`, `<>`, `<`, `<=`, `>`, `>=`, `Is`, and `Like`
   comparisons are represented as `comparison_expression`
+- comparison expressions in `Case` clauses, including object identity forms
+  such as `Case obj Is Nothing` and condition lists such as `Case x = 1, y = 2`
 - block `If`, including colon-separated multi-statement single-line branches;
   `Select Case`; and nested single-line `For`, `For Each`, `Do`, `While/Wend`,
   and `With`
@@ -294,15 +296,15 @@ and adds:
 - calls whose first argument is an implicit member, `Foo .Bar, x`, read as a
   call with two arguments rather than a chain `Foo.Bar` with an omitted
   argument, through the external scanner described under Design principles
-- constructs VBA also has but the base VBA grammar never accepted; they are
+- constructs VBA also has but the base VBA grammar never accepted; most remain
   `vb6` only so that the `vba` parser's trees and parse table stay those of the
   base (see [ADR 0005](docs/adr/0005-vba-parser-stays-the-base-grammar.md)):
   `Let`, `LSet`/`RSet`, `GoSub`/`Return`, `On Local Error`, `Global`,
   `Dim WithEvents`, `ReDim x(n) As T`, octal `&O` literals,
   `AddressOf Module.Procedure`, `Name.Member` receivers, a comparison as the
   left operand of another (`a = b <> 0`, `x Is Nothing = False`), a comparison
-  as the `Select Case` selector or in a `Case` clause, `#If` around whole `Case`
-  clauses, an empty `Else` in a single-line `If`, `::` between inline
+  as the `Select Case` selector, `#If` around whole `Case` clauses, an empty
+  `Else` in a single-line `If`, `::` between inline
   statements, a colon before a `For` body's line break, a `Type` member named
   `End`, and the Single `!` suffix in expression positions (`total! = 0#`,
   `rec.Percent! = 0#`)

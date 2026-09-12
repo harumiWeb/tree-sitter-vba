@@ -1,0 +1,104 @@
+==================
+issue #61: object identity comparisons in Case expressions
+==================
+
+Sub Test()
+    Select Case True
+        Case obj Is Nothing
+    End Select
+
+    Select Case False
+        Case viaWebSocket Is Nothing
+    End Select
+
+    Select Case True
+        Case obj1 Is obj2
+        Case Not obj Is Nothing
+        Case obj Is Nothing, other = 1
+    End Select
+
+    Select Case value
+        Case Is > 10
+        Case Is <= 0
+    End Select
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (select_statement
+        (boolean_literal)
+        (newline)
+        (case_clause
+          (case_expression
+            (comparison_expression
+              (identifier)
+              (comparison_operator)
+              (nothing_literal)))
+          (newline)))
+      (newline)
+      (newline)
+      (select_statement
+        (boolean_literal)
+        (newline)
+        (case_clause
+          (case_expression
+            (comparison_expression
+              (identifier)
+              (comparison_operator)
+              (nothing_literal)))
+          (newline)))
+      (newline)
+      (newline)
+      (select_statement
+        (boolean_literal)
+        (newline)
+        (case_clause
+          (case_expression
+            (comparison_expression
+              (identifier)
+              (comparison_operator)
+              (identifier)))
+          (newline))
+        (case_clause
+          (case_expression
+            (unary_expression
+              (comparison_expression
+                (identifier)
+                (comparison_operator)
+                (nothing_literal))))
+          (newline))
+        (case_clause
+          (case_expression
+            (comparison_expression
+              (identifier)
+              (comparison_operator)
+              (nothing_literal)))
+          (case_expression
+            (comparison_expression
+              (identifier)
+              (comparison_operator)
+              (number_literal)))
+          (newline)))
+      (newline)
+      (newline)
+      (select_statement
+        (identifier)
+        (newline)
+        (case_clause
+          (case_expression
+            (number_literal))
+          (newline))
+        (case_clause
+          (case_expression
+            (number_literal))
+          (newline)))
+      (newline))
+    (end_sub_statement))
+  (newline))

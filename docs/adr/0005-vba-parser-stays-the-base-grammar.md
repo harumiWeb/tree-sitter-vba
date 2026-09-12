@@ -42,8 +42,12 @@ acceptance corpus count `ERROR` and `MISSING` nodes; a wrong callee has neither.
 
 The `vba` grammar is the base grammar plus two documented changes: the
 `bang_identifier` node where a declaration names something, and
-omitted-argument lists that stay under one callee. Everything else the VB6
-corpus needed is behind `isVB6`, including constructs VBA also accepts.
+omitted-argument lists that stay under one callee. It also shares comparison
+expressions in `Case` clauses because VBA permits condition-oriented forms
+such as `Select Case True: Case obj Is Nothing` and `Case x = 1`. The distinct
+leading-`Is` form (`Case Is > 10`) remains the first `case_expression`
+alternative, so it keeps its existing CST. Everything else the VB6 corpus
+needed is behind `isVB6`, including constructs VBA also accepts.
 
 Un-gating one of them for `vba` is a one-line change and is welcome, but it is
 its own change with its own measurement: the parse-table delta from
@@ -62,10 +66,15 @@ pull request carries the `compare-cst.mjs` result.
   omitted-argument or comma-led continuation lists the base had split at a
   comma. No example uses the Single suffix, so `bang_identifier` changes none of
   them.
-- The `vba` table is 15,317 states and the browser artifact 7.57 MB. The base
-  is 15,236 states and 7.47 MB on the same toolchain, so the remaining headroom
-  under the 7.5 MiB gate is about 290 KB and any `vba` addition has to be
-  measured.
+- The `vba` table is 15,318 states and the browser artifact is 7,573,786 bytes
+  (7.22 MiB), still below the 7,864,320-byte gate. The base is 15,236 states
+  and 7.47 MB on the same toolchain, so the remaining headroom under the 7.5
+  MiB gate is about 290 KB and any `vba` addition has to be measured.
+- Issue #61 is the first scoped exception to the `isVB6` boundary for a
+  comparison context: `case_expression` now admits the existing
+  `comparison_expression` rule in both dialects. The selector remains
+  expression-only in VBA, and VB6-only `#If` wrapping of whole `Case` clauses
+  remains gated.
 - `vb6` keeps every construct it had; its `grammar.json` is byte-identical
   before and after the gating, apart from the assignment precedence.
 - `scripts/test-shared-corpus.mjs` skips two more cases: the VB6 assignment

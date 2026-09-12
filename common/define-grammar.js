@@ -1175,7 +1175,10 @@ module.exports = function defineGrammar(dialect) {
         choice(
           seq(caseInsensitive("Is"), choice("<", "<=", ">", ">=", "=", "<>"), $._expression),
           seq($._expression, caseInsensitive("To"), $._expression),
-          ...(isVB6 ? [$.comparison_expression] : []),
+          // `Case Is ...` above is the distinct leading-`Is` range/comparison
+          // form. A comparison beginning with an expression is also a valid
+          // case value, notably `obj Is Nothing` in `Select Case True/False`.
+          $.comparison_expression,
           $._expression,
         ),
 
