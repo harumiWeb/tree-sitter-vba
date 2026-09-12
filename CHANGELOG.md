@@ -4,6 +4,14 @@ All notable changes to tree-sitter-vba will be documented in this file.
 
 ## Unreleased
 
+## [v0.14.1] - 2026-09-12
+
+### Fixed
+
+- Parse comparison expressions in `Case` clauses, including object identity
+  checks such as `Case obj Is Nothing`, while preserving the distinct
+  `Case Is <comparison-operator> <expression>` syntax.
+
 ## [v0.14.0] - 2026-09-11
 
 ### Added

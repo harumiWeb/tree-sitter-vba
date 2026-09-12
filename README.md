@@ -46,7 +46,7 @@ This is a `v0.x` public release.
 
 The grammar is already usable for syntax-aware tooling such as highlighting,
 folding, tags, outline extraction, and initial symbol analysis. The current test
-suite covers 247 focused VBA corpus cases, 44 VB6 corpus cases, generated
+suite covers 248 focused VBA corpus cases, 44 VB6 corpus cases, generated
 `Select Case` stress coverage through 500 clauses, and 481 checked-in VBA
 example files without `ERROR` or `MISSING` recovery nodes. The `vb6` parser is
 additionally measured against 1,436 real VB6 source files from 71 public
@@ -64,7 +64,7 @@ its generated parser, and its corpus tests:
 common/define-grammar.js   the whole grammar: defineGrammar("vba" | "vb6")
 vba/grammar.js             module.exports = require("../common/define-grammar")("vba")
 vba/src/                   generated vba parser; node-types.json is tracked, parser.c is generated
-vba/test/corpus/           247 VBA corpus cases
+vba/test/corpus/           248 VBA corpus cases
 vb6/grammar.js             module.exports = require("../common/define-grammar")("vb6")
 vb6/src/scanner.c          a four-token external scanner (see Design principles)
 vb6/src/                   generated vb6 parser
@@ -662,15 +662,15 @@ re-encoded, so the runner transcodes at read time per `corpus/ENCODINGS.json`
 the tree also means this repository redistributes nobody else's code; five of
 the 71 projects are copyleft and are marked as such in the manifest.
 
-Measured on 2026-09-08 with tree-sitter CLI 0.26.9:
+Measured on 2026-09-12 with tree-sitter CLI 0.26.9:
 
 | Check | Result |
 | --- | --- |
 | VB6 corpus, transcoded | 1,432 of 1,436 files parse with zero `ERROR` and zero `MISSING`. Three files carry syntax errors VB6 itself rejects and are listed with the defect in `corpus/EXCLUDED.json`; the runner reports them separately. One file keeps two `MISSING` nodes on the `Debug.Assert` shape described under Known limitations |
 | VB6 corpus, raw bytes | nine further files fail on non-ASCII identifiers in legacy code pages |
-| VBA corpus under `vba` | 247 of 247 cases; 481 of 481 example files without `ERROR` or `MISSING` |
+| VBA corpus under `vba` | 248 of 248 cases; 481 of 481 example files without `ERROR` or `MISSING` |
 | VB6 corpus cases under `vb6` | 44 of 44 |
-| VBA corpus under `vb6` | 224 of 224 cases run, 23 skipped by design as listed above |
+| VBA corpus under `vb6` | 225 of 225 cases run, 23 skipped by design as listed above |
 | Parse time | the largest corpus file, a 2.2 MB module, parses in about 410 ms (5.4 MB/s); a 500 KB `.frm` in 97 ms |
 
 ## Design principles
