@@ -662,7 +662,7 @@ re-encoded, so the runner transcodes at read time per `corpus/ENCODINGS.json`
 the tree also means this repository redistributes nobody else's code; five of
 the 71 projects are copyleft and are marked as such in the manifest.
 
-Measured on 2026-09-12 with tree-sitter CLI 0.26.9:
+Measured on 2026-09-08 with tree-sitter CLI 0.26.9:
 
 | Check | Result |
 | --- | --- |
