@@ -4,6 +4,8 @@ All notable changes to tree-sitter-vba will be documented in this file.
 
 ## Unreleased
 
+## [v0.14.2] - 2026-09-22
+
 ### Fixed
 
 - Nested multiline `For`/`For Each` loops inside a flat multiline `If` branch
