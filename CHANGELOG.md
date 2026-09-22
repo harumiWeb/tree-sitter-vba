@@ -4,6 +4,16 @@ All notable changes to tree-sitter-vba will be documented in this file.
 
 ## Unreleased
 
+### Fixed
+
+- Nested multiline `For`/`For Each` loops inside a flat multiline `If` branch
+  now keep each loop's own `Next` terminator. GLR previously preferred the
+  shared-`Next` shorthand tail for the outer loop, ended the outer
+  `for_statement` at the inner `Next j`, and reparsed the outer `Next i` as a
+  `call_statement` with no `ERROR` node. The explicit `Next` tail now carries
+  dynamic precedence over the shorthand alternative, so each loop owns its
+  terminator while `Next j, i` shared closers keep their existing tree shape.
+
 ## [v0.14.1] - 2026-09-12
 
 ### Fixed
