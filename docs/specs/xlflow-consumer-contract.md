@@ -22,6 +22,14 @@ Multiline `If` constructs are a flat sequence:
 The nodes may be separated by ordinary statements or conditional compilation
 regions. Consumers must not expect the opening node to own branch bodies.
 
+A `for_statement` or `for_each_statement` inside such a flat `If` body owns its
+own `Next` terminator: the `next_variables` field holds the loop's `Next`
+variable list even when the loop body is itself a nested loop. The nested-for
+shorthand body (a `body` field containing a `for_statement` directly, without
+an intervening `block`) is reserved for shared closers such as `Next j, i`,
+where the inner loop's `next_variable_list` names the outer counters. A bare
+`Next <var>` line following a nested loop is never a `call_statement`.
+
 ## Ambiguous statement calls
 
 A `call_statement` normally exposes `callee` and optional `arguments` fields.

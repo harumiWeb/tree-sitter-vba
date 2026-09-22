@@ -1208,13 +1208,20 @@ module.exports = function defineGrammar(dialect) {
                 ),
               ),
             ),
-            seq(
-              ...(isVB6 ? [optional(":")] : []),
-              $.newline,
-              field("body", optional($.block)),
-              optional(field("end_line", $.line_number_prefix)),
-              caseInsensitive("Next"),
-              optional(field("next_variables", $.next_variable_list)),
+            // Prefer the explicit `Next` tail over the nested-for shorthand
+            // when both parse: inside a flat if-branch GLR otherwise ends the
+            // outer For at the inner `Next j` and reparses `Next i` as a
+            // call_statement.
+            prec.dynamic(
+              1,
+              seq(
+                ...(isVB6 ? [optional(":")] : []),
+                $.newline,
+                field("body", optional($.block)),
+                optional(field("end_line", $.line_number_prefix)),
+                caseInsensitive("Next"),
+                optional(field("next_variables", $.next_variable_list)),
+              ),
             ),
           ),
         ),

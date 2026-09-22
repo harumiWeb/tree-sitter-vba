@@ -169,3 +169,116 @@ End Sub
       (newline))
     (end_sub_statement))
   (newline))
+
+==========================================================
+nested for inside if keeps each loop's own Next statement
+==========================================================
+
+Sub Test()
+    If a Then
+        For i = 1 To 2
+            For j = 1 To 2
+                y = 1
+            Next j
+        Next i
+    End If
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (if_statement
+        (identifier))
+      (newline)
+      (for_statement
+        (identifier)
+        (number_literal)
+        (number_literal)
+        (newline)
+        (block
+          (for_statement
+            (identifier)
+            (number_literal)
+            (number_literal)
+            (newline)
+            (block
+              (assignment_statement
+                (identifier)
+                (number_literal))
+              (newline))
+            (next_variable_list
+              (identifier)))
+          (newline))
+        (next_variable_list
+          (identifier)))
+      (newline)
+      (end_if_fragment)
+      (newline))
+    (end_sub_statement))
+  (newline))
+
+==========================================================
+for and for each inside else branch keep separate Next
+==========================================================
+
+Sub Test()
+    If a Then
+        x = 1
+    Else
+        For i = 1 To 2
+            For Each v In w
+                y = v
+            Next v
+        Next i
+    End If
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (if_statement
+        (identifier))
+      (newline)
+      (assignment_statement
+        (identifier)
+        (number_literal))
+      (newline)
+      (else_fragment)
+      (newline)
+      (for_statement
+        (identifier)
+        (number_literal)
+        (number_literal)
+        (newline)
+        (block
+          (for_each_statement
+            (identifier)
+            (identifier)
+            (newline)
+            (block
+              (assignment_statement
+                (identifier)
+                (identifier))
+              (newline))
+            (next_variable_list
+              (identifier)))
+          (newline))
+        (next_variable_list
+          (identifier)))
+      (newline)
+      (end_if_fragment)
+      (newline))
+    (end_sub_statement))
+  (newline))
