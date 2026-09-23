@@ -4,6 +4,18 @@ All notable changes to tree-sitter-vba will be documented in this file.
 
 ## Unreleased
 
+## [v0.14.3] - 2026-09-23
+
+### Fixed
+
+- A parenthesis-less call whose first argument is a call expression, such as
+  `Foo GetName("x"), True`, no longer splits into an `expression_statement` plus
+  a bogus `call_statement` when a comment appears earlier in the same block.
+  `expression_statement` now carries the same `prec.dynamic(-1)` the `vb6`
+  dialect already had, so the single-statement reading wins the GLR tie; the
+  spaced-parenthesis variant `Foo GetName ("x"), True` is covered by the same
+  fix. (#64)
+
 ## [v0.14.2] - 2026-09-22
 
 ### Fixed

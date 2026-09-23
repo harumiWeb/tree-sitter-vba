@@ -483,11 +483,11 @@ End Sub
     (parameter_list)
     (newline)
     (block
-      (expression_statement
-        (identifier))
-      (ERROR)
       (call_statement
-        (identifier))
+        (identifier)
+        (ERROR)
+        (unparenthesized_argument_list
+          (identifier)))
       (newline)
       (assignment_statement
         (identifier)

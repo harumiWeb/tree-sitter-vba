@@ -2140,11 +2140,12 @@ module.exports = function defineGrammar(dialect) {
           ),
         ),
 
-      // VB6: prec.dynamic -1 so that when GLR ties a longer statement against the same
+      // prec.dynamic -1 so that when GLR ties a longer statement against the same
       // text split into a statement plus a trailing expression statement (`GetIndex` +
-      // `Key, , x`, or `pointers` + `(0)`), the split loses. Unambiguous expression
-      // statements are unaffected.
-      expression_statement: ($) => (isVB6 ? prec.dynamic(-1, $._expression) : $._expression),
+      // `Key, , x`, or `pointers` + `(0)` in VB6; `Foo` + `GetName("x"), True`
+      // in VBA, where `GetName ("x"), True` is a conceivable but invalid call), the
+      // split loses. Unambiguous expression statements are unaffected.
+      expression_statement: ($) => prec.dynamic(-1, $._expression),
 
       ...(isVB6
         ? {
