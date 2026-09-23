@@ -1,0 +1,81 @@
+==================
+issue #64: comment in block before implicit call with call-expression first argument
+==================
+
+Sub Test()
+    Dim x As Long
+    ' comment
+    Foo GetName("x"), True
+    Foo GetName ("x"), True
+    web_Http.Open WebHelpers.MethodToName(Request.Method), Me.GetFullUrl(Request), Async
+    InternalFillFromRange RequireSourceTable("Refresh"), True, "Refresh"
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    name: (identifier)
+    parameters: (parameter_list)
+    (newline)
+    body: (block
+      (variable_declaration
+        (variable_declarator
+          name: (identifier)
+          type: (as_type_clause
+            type: (type_expression))))
+      (newline)
+      (comment)
+      (newline)
+      (call_statement
+        callee: (identifier)
+        arguments: (unparenthesized_argument_list
+          (call_expression
+            function: (identifier)
+            arguments: (argument_list
+              (string_literal)))
+          (boolean_literal)))
+      (newline)
+      (call_statement
+        callee: (identifier)
+        arguments: (unparenthesized_argument_list
+          (call_expression
+            function: (identifier)
+            arguments: (argument_list
+              (string_literal)))
+          (boolean_literal)))
+      (newline)
+      (call_statement
+        callee: (qualified_member_expression
+          receiver: (identifier)
+          member: (identifier))
+        arguments: (unparenthesized_argument_list
+          (call_expression
+            function: (qualified_member_expression
+              receiver: (identifier)
+              member: (identifier))
+            arguments: (argument_list
+              (qualified_member_expression
+                receiver: (identifier)
+                member: (identifier))))
+          (call_expression
+            function: (qualified_member_expression
+              receiver: (identifier)
+              member: (identifier))
+            arguments: (argument_list
+              (identifier)))
+          (identifier)))
+      (newline)
+      (call_statement
+        callee: (identifier)
+        arguments: (unparenthesized_argument_list
+          (call_expression
+            function: (identifier)
+            arguments: (argument_list
+              (string_literal)))
+          (boolean_literal)
+          (string_literal)))
+      (newline))
+    end: (end_sub_statement))
+  (newline))
