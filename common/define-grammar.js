@@ -1595,7 +1595,7 @@ module.exports = function defineGrammar(dialect) {
           caseInsensitive("Input"),
           field("number", $.file_number),
           ",",
-          commaSep1(field("target", isVB6 ? $._assignable_expression : $._callable_expression)),
+          commaSep1(field("target", $._assignable_expression)),
         ),
 
       line_input_statement: ($) =>
@@ -1606,10 +1606,7 @@ module.exports = function defineGrammar(dialect) {
             caseInsensitive("Input"),
             field("number", $.file_number),
             ",",
-            field(
-              "target",
-              choice($._callable_expression, alias(caseInsensitive("Line"), $.identifier)),
-            ),
+            field("target", $._assignable_expression),
           ),
         ),
 
