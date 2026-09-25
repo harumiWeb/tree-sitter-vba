@@ -15,6 +15,9 @@ branches.
   while placing `Next` on a later physical line. The combined body remains the
   loop's `body: block`; two or more header-line statements use an
   `inline_statement_sequence` inside that block.
+- A colon-prefixed loop body may end its header line with a trailing colon.
+  A nested `For` or `For Each` on that line keeps its own `Next`, and the outer
+  loop retains the following terminator.
 - Procedure statements already valid inline, including declarations, calls,
   assignments, and runtime statements, remain valid in those bodies.
 - `Next i` and `Next j, i` are represented by

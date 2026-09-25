@@ -87,8 +87,8 @@ module.exports = function defineGrammar(dialect) {
       [$._statement, $._multiline_for_tail],
       [$._inline_statement, $.shared_next_for_body],
       ...(isVB6
-        ? [[$.inline_statement_sequence, $.single_line_block]]
-        : [[$.inline_statement_sequence]]),
+        ? [[$.single_line_block, $._colon_for_inline_statement_sequence]]
+        : [[$._colon_prefixed_for_block, $._colon_for_inline_statement_sequence]]),
       [$.goto_statement],
       [$._statement_separator, $._conditional_sub_headers],
       [$._statement_separator, $._conditional_function_headers],
@@ -1237,7 +1237,7 @@ module.exports = function defineGrammar(dialect) {
       _inline_for_tail: ($) =>
         prec.right(
           choice(
-            prec.dynamic(3, field("body", $.shared_next_for_body)),
+            field("body", $.shared_next_for_body),
             isVB6
               ? seq(
                   ":",
@@ -1368,9 +1368,27 @@ module.exports = function defineGrammar(dialect) {
         prec.right(
           seq(
             ":",
-            choice(prec(1, $.inline_statement_sequence), $._inline_statement),
+            choice(
+              alias(
+                $._colon_for_inline_statement_sequence,
+                $.inline_statement_sequence,
+              ),
+              seq($._inline_statement, ":"),
+              $._inline_statement,
+            ),
             $.newline,
             repeat(choice($._statement_separator, $._statement)),
+          ),
+        ),
+
+      _colon_for_inline_statement_sequence: ($) =>
+        prec.left(
+          seq(
+            $._inline_statement,
+            repeat1(
+              seq(":", ...(isVB6 ? [repeat(":")] : []), $._inline_statement),
+            ),
+            optional(":"),
           ),
         ),
 
@@ -1379,9 +1397,9 @@ module.exports = function defineGrammar(dialect) {
           ":",
           choice(
             $.for_statement,
-            alias($._inline_for_statement, $.for_statement),
+            prec.dynamic(3, alias($._inline_for_statement, $.for_statement)),
             $.for_each_statement,
-            alias($._inline_for_each_statement, $.for_each_statement),
+            prec.dynamic(3, alias($._inline_for_each_statement, $.for_each_statement)),
           ),
         ),
 

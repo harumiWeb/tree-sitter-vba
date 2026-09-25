@@ -53,6 +53,169 @@ End Sub
     (end_sub_statement))
   (newline))
 
+=========================================================
+review: colon-prefixed nested For keeps both terminators
+=========================================================
+
+Sub Test()
+    For i = 1 To 2: For j = 1 To 2
+        value = j
+    Next j
+    Next i
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (for_statement
+        (identifier)
+        (number_literal)
+        (number_literal)
+        (block
+          (for_statement
+            (identifier)
+            (number_literal)
+            (number_literal)
+            (newline)
+            (block
+              (assignment_statement
+                (identifier)
+                (identifier))
+              (newline))
+            (next_variable_list
+              (identifier)))
+          (newline))
+        (next_variable_list
+          (identifier)))
+      (newline))
+    (end_sub_statement))
+  (newline))
+
+==============================================================
+review: colon-prefixed nested For Each keeps both terminators
+==============================================================
+
+Sub Test(items As Object)
+    For Each outer In items: For Each inner In outer
+        value = inner
+    Next inner
+    Next outer
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list
+      (parameter
+        (identifier)
+        (as_type_clause
+          (type_expression))))
+    (newline)
+    (block
+      (for_each_statement
+        (identifier)
+        (identifier)
+        (block
+          (for_each_statement
+            (identifier)
+            (identifier)
+            (newline)
+            (block
+              (assignment_statement
+                (identifier)
+                (identifier))
+              (newline))
+            (next_variable_list
+              (identifier)))
+          (newline))
+        (next_variable_list
+          (identifier)))
+      (newline))
+    (end_sub_statement))
+  (newline))
+
+================================================
+review: colon-prefixed For accepts trailing colon
+================================================
+
+Sub Test()
+    For i = 1 To 3: total = total + i:
+    Next i
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (for_statement
+        (identifier)
+        (number_literal)
+        (number_literal)
+        (block
+          (assignment_statement
+            (identifier)
+            (binary_expression
+              (identifier)
+              (identifier)))
+          (newline))
+        (next_variable_list
+          (identifier)))
+      (newline))
+    (end_sub_statement))
+  (newline))
+
+=====================================================
+review: colon-prefixed For Each accepts trailing colon
+=====================================================
+
+Sub Test(items As Object)
+    For Each item In items: total = total + item:
+    Next item
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list
+      (parameter
+        (identifier)
+        (as_type_clause
+          (type_expression))))
+    (newline)
+    (block
+      (for_each_statement
+        (identifier)
+        (identifier)
+        (block
+          (assignment_statement
+            (identifier)
+            (binary_expression
+              (identifier)
+              (identifier)))
+          (newline))
+        (next_variable_list
+          (identifier)))
+      (newline))
+    (end_sub_statement))
+  (newline))
+
 ====================================================
 issue #68: For Each body starts after one colon
 ====================================================
