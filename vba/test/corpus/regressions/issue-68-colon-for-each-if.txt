@@ -1,0 +1,311 @@
+====================================================
+issue #68: multiline For Each body
+====================================================
+
+Sub Test(books As Object)
+    Dim k As Variant, wb As Workbook
+    For Each k In books.Keys
+        Set wb = books(k)
+    Next k
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list
+      (parameter
+        (identifier)
+        (as_type_clause
+          (type_expression))))
+    (newline)
+    (block
+      (variable_declaration
+        (variable_declarator
+          (identifier)
+          (as_type_clause
+            (type_expression)))
+        (variable_declarator
+          (identifier)
+          (as_type_clause
+            (type_expression
+              (identifier)))))
+      (newline)
+      (for_each_statement
+        (identifier)
+        (qualified_member_expression
+          (identifier)
+          (identifier))
+        (newline)
+        (block
+          (set_statement
+            (identifier)
+            (call_expression
+              (identifier)
+              (argument_list
+                (identifier))))
+          (newline))
+        (next_variable_list
+          (identifier)))
+      (newline))
+    (end_sub_statement))
+  (newline))
+
+====================================================
+issue #68: For Each body starts after one colon
+====================================================
+
+Sub Test(books As Object)
+    Dim k As Variant, wb As Workbook
+    For Each k In books.Keys: Set wb = books(k)
+    Next k
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list
+      (parameter
+        (identifier)
+        (as_type_clause
+          (type_expression))))
+    (newline)
+    (block
+      (variable_declaration
+        (variable_declarator
+          (identifier)
+          (as_type_clause
+            (type_expression)))
+        (variable_declarator
+          (identifier)
+          (as_type_clause
+            (type_expression
+              (identifier)))))
+      (newline)
+      (for_each_statement
+        (identifier)
+        (qualified_member_expression
+          (identifier)
+          (identifier))
+        (block
+          (set_statement
+            (identifier)
+            (call_expression
+              (identifier)
+              (argument_list
+                (identifier))))
+          (newline))
+        (next_variable_list
+          (identifier)))
+      (newline))
+    (end_sub_statement))
+  (newline))
+
+====================================================
+issue #68: For Each body has multiple colon-separated statements
+====================================================
+
+Sub Test(books As Object)
+    Dim k As Variant, wb As Workbook
+    For Each k In books.Keys: Set wb = books(k): wb.Save
+    Next k
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list
+      (parameter
+        (identifier)
+        (as_type_clause
+          (type_expression))))
+    (newline)
+    (block
+      (variable_declaration
+        (variable_declarator
+          (identifier)
+          (as_type_clause
+            (type_expression)))
+        (variable_declarator
+          (identifier)
+          (as_type_clause
+            (type_expression
+              (identifier)))))
+      (newline)
+      (for_each_statement
+        (identifier)
+        (qualified_member_expression
+          (identifier)
+          (identifier))
+        (block
+          (inline_statement_sequence
+            (set_statement
+              (identifier)
+              (call_expression
+                (identifier)
+                (argument_list
+                  (identifier))))
+            (call_statement
+              (qualified_member_expression
+                (identifier)
+                (identifier))))
+          (newline))
+        (next_variable_list
+          (identifier)))
+      (newline))
+    (end_sub_statement))
+  (newline))
+
+====================================================
+issue #68: For Each body ends with a single-line If
+====================================================
+
+Private Sub ブック保存終了(ByVal books As Object, ByVal opened As Object)
+    Dim k As Variant, wb As Workbook
+    For Each k In books.Keys: Set wb = books(k): wb.Save: If opened(k) Then wb.Close SaveChanges:=True
+    Next k
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (visibility)
+    (identifier)
+    (parameter_list
+      (parameter
+        (byval_modifier)
+        (identifier)
+        (as_type_clause
+          (type_expression)))
+      (parameter
+        (byval_modifier)
+        (identifier)
+        (as_type_clause
+          (type_expression))))
+    (newline)
+    (block
+      (variable_declaration
+        (variable_declarator
+          (identifier)
+          (as_type_clause
+            (type_expression)))
+        (variable_declarator
+          (identifier)
+          (as_type_clause
+            (type_expression
+              (identifier)))))
+      (newline)
+      (for_each_statement
+        (identifier)
+        (qualified_member_expression
+          (identifier)
+          (identifier))
+        (block
+          (inline_statement_sequence
+            (set_statement
+              (identifier)
+              (call_expression
+                (identifier)
+                (argument_list
+                  (identifier))))
+            (call_statement
+              (qualified_member_expression
+                (identifier)
+                (identifier)))
+            (single_line_if_statement
+              (call_expression
+                (identifier)
+                (argument_list
+                  (identifier)))
+              (call_statement
+                (qualified_member_expression
+                  (identifier)
+                  (identifier))
+                (unparenthesized_argument_list
+                  (named_argument
+                    (identifier)
+                    (boolean_literal))))))
+          (newline))
+        (next_variable_list
+          (identifier)))
+      (newline))
+    (end_sub_statement))
+  (newline))
+
+====================================================
+issue #68: For body ends with a single-line If
+====================================================
+
+Sub Test(items As Object)
+    Dim i As Long, value As Variant
+    For i = 1 To 3: Set value = items(i): value.Save: If value.Ready Then value.Close SaveChanges:=True
+    Next i
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list
+      (parameter
+        (identifier)
+        (as_type_clause
+          (type_expression))))
+    (newline)
+    (block
+      (variable_declaration
+        (variable_declarator
+          (identifier)
+          (as_type_clause
+            (type_expression)))
+        (variable_declarator
+          (identifier)
+          (as_type_clause
+            (type_expression))))
+      (newline)
+      (for_statement
+        (identifier)
+        (number_literal)
+        (number_literal)
+        (block
+          (inline_statement_sequence
+            (set_statement
+              (identifier)
+              (call_expression
+                (identifier)
+                (argument_list
+                  (identifier))))
+            (call_statement
+              (qualified_member_expression
+                (identifier)
+                (identifier)))
+            (single_line_if_statement
+              (qualified_member_expression
+                (identifier)
+                (identifier))
+              (call_statement
+                (qualified_member_expression
+                  (identifier)
+                  (identifier))
+                (unparenthesized_argument_list
+                  (named_argument
+                    (identifier)
+                    (boolean_literal))))))
+          (newline))
+        (next_variable_list
+          (identifier)))
+      (newline))
+    (end_sub_statement))
+  (newline))

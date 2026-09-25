@@ -1,10 +1,9 @@
-# Real-world example clean parse
+# Issue #68: colon-separated For/For Each body ending in single-line If
 
-- [x] Reproduce and classify remaining failures.
-- [x] Parse branch-local statements in conditional procedure declarations.
-- [x] Add focused corpus coverage and preserve existing conditional-header CSTs.
-- [x] Record the public CST contract in ADR 0003.
-- [x] Represent directive-split `If` constructs with the CST v2 flat fragment model.
-- [x] Accept whitespace-sensitive implicit member calls as field-optional `call_statement` nodes.
-- [x] Confirm remaining `ReDim` examples parse cleanly after removing the surrounding recovery cascades.
-- [x] Reach a clean parse across all imported examples.
+- [x] Reproduce all four reduced cases and identify the ownership conflict.
+- [x] Add VBA corpus coverage for `For` and `For Each`, including the reported Japanese procedure.
+- [x] Preserve `body: block` while admitting a colon-prefixed first-line sequence.
+- [x] Regenerate and test VBA, VB6, and the shared corpus; run the stress suite through a short Windows drive path.
+- [x] Synchronize `bindings/go/parser.c` and pass the generated Go parser check.
+- [x] Parse all 481 examples and compare their CSTs with `main` (0 differences).
+- [x] Review generated parser impact: VBA states 15,318 -> 15,899; VB6 states 22,387 -> 22,569.

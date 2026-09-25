@@ -86,6 +86,9 @@ module.exports = function defineGrammar(dialect) {
       [$.property_set_declaration, $._property_header],
       [$._statement, $._multiline_for_tail],
       [$._inline_statement, $.shared_next_for_body],
+      ...(isVB6
+        ? [[$.inline_statement_sequence, $.single_line_block]]
+        : [[$.inline_statement_sequence]]),
       [$.goto_statement],
       [$._statement_separator, $._conditional_sub_headers],
       [$._statement_separator, $._conditional_function_headers],
@@ -1215,9 +1218,14 @@ module.exports = function defineGrammar(dialect) {
             prec.dynamic(
               1,
               seq(
-                ...(isVB6 ? [optional(":")] : []),
-                $.newline,
-                field("body", optional($.block)),
+                choice(
+                  seq(
+                    ...(isVB6 ? [optional(":")] : []),
+                    $.newline,
+                    field("body", optional($.block)),
+                  ),
+                  field("body", alias($._colon_prefixed_for_block, $.block)),
+                ),
                 optional(field("end_line", $.line_number_prefix)),
                 caseInsensitive("Next"),
                 optional(field("next_variables", $.next_variable_list)),
@@ -1229,7 +1237,7 @@ module.exports = function defineGrammar(dialect) {
       _inline_for_tail: ($) =>
         prec.right(
           choice(
-            field("body", $.shared_next_for_body),
+            prec.dynamic(3, field("body", $.shared_next_for_body)),
             isVB6
               ? seq(
                   ":",
@@ -1238,12 +1246,15 @@ module.exports = function defineGrammar(dialect) {
                   caseInsensitive("Next"),
                   optional(field("next_variables", $.next_variable_list)),
                 )
-              : seq(
-                  field("body", optional($.single_line_block)),
-                  optional(field("end_line", $.line_number_prefix)),
-                  ":",
-                  caseInsensitive("Next"),
-                  optional(field("next_variables", $.next_variable_list)),
+              : prec.dynamic(
+                  2,
+                  seq(
+                    field("body", optional($.single_line_block)),
+                    optional(field("end_line", $.line_number_prefix)),
+                    ":",
+                    caseInsensitive("Next"),
+                    optional(field("next_variables", $.next_variable_list)),
+                  ),
                 ),
           ),
         ),
@@ -1349,6 +1360,19 @@ module.exports = function defineGrammar(dialect) {
         isVB6
           ? prec.left(repeat1(seq($._inline_statement, ":", repeat(":"))))
           : prec.left(repeat1(seq(":", $._inline_statement))),
+
+      // A For header may begin its body after a colon and still place Next
+      // on a later physical line. Alias the combined body to block so the public
+      // body field keeps the same node type as every other multiline loop.
+      _colon_prefixed_for_block: ($) =>
+        prec.right(
+          seq(
+            ":",
+            choice(prec(1, $.inline_statement_sequence), $._inline_statement),
+            $.newline,
+            repeat(choice($._statement_separator, $._statement)),
+          ),
+        ),
 
       shared_next_for_body: ($) =>
         seq(
