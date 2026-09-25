@@ -780,6 +780,10 @@
           "named": true
         },
         {
+          "type": "inline_statement_sequence",
+          "named": true
+        },
+        {
           "type": "input_statement",
           "named": true
         },

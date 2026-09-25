@@ -4,6 +4,18 @@ All notable changes to tree-sitter-vba will be documented in this file.
 
 ## Unreleased
 
+## [v0.14.4] - 2026-09-25
+
+### Fixed
+
+- `Input #` and `Line Input #` now accept indexed and member-expression
+  targets such as `values(i)` and `state.Current`, matching the assignable
+  targets accepted by other input statements. (#66, #67)
+- Multiline `For` and `For Each` loops can begin their body after a colon on
+  the header line, including multiple statements ending in a single-line
+  `If`, nested loops with separate `Next` terminators, and a trailing colon
+  before the newline. (#68, #69)
+
 ## [v0.14.3] - 2026-09-23
 
 ### Fixed
