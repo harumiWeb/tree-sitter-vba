@@ -40,14 +40,14 @@ acceptance corpus count `ERROR` and `MISSING` nodes; a wrong callee has neither.
 
 ## Decision
 
-The `vba` grammar is the base grammar plus two documented changes: the
+The `vba` grammar began as the base grammar plus two documented changes: the
 `bang_identifier` node where a declaration names something, and
 omitted-argument lists that stay under one callee. It also shares comparison
 expressions in `Case` clauses because VBA permits condition-oriented forms
 such as `Select Case True: Case obj Is Nothing` and `Case x = 1`. The distinct
 leading-`Is` form (`Case Is > 10`) remains the first `case_expression`
-alternative, so it keeps its existing CST. Everything else the VB6 corpus
-needed is behind `isVB6`, including constructs VBA also accepts.
+alternative, so it keeps its existing CST. Other VB6-originated constructs
+remain behind `isVB6` until their VBA compatibility and size cost are measured.
 
 Un-gating one of them for `vba` is a one-line change and is welcome, but it is
 its own change with its own measurement: the parse-table delta from
@@ -60,13 +60,20 @@ Structural regressions get structural tests. A change to calls, arguments or
 precedence adds corpus cases that pin the callee and the argument list, and the
 pull request carries the `compare-cst.mjs` result.
 
+VBA `Global`, `Let`, and `On Local Error` are scoped exceptions to the
+`isVB6` boundary because VBE accepts them and xlflow needs their syntax for
+opt-in maintainability diagnostics. The existing call-statement form already
+parses `Error n`, so it does not require a new parser state or CST node.
+
 ## Consequences
 
-- `vba` trees for the 481 examples differ from the base in six files, all
+- At the initial gating, `vba` trees for the 481 examples differed from the
+  base in six files, all
   omitted-argument or comma-led continuation lists the base had split at a
   comma. No example uses the Single suffix, so `bang_identifier` changes none of
   them.
-- The `vba` table is 15,318 states and the browser artifact is 7,573,786 bytes
+- At the initial gating, the `vba` table was 15,318 states and the browser
+  artifact was 7,573,786 bytes
   (7.22 MiB), still below the 7,864,320-byte gate. The base is 15,236 states
   and 7.47 MB on the same toolchain, so the remaining headroom under the 7.5
   MiB gate is about 290 KB and any `vba` addition has to be measured.
@@ -75,6 +82,12 @@ pull request carries the `compare-cst.mjs` result.
   `comparison_expression` rule in both dialects. The selector remains
   expression-only in VBA, and VB6-only `#If` wrapping of whole `Case` clauses
   remains gated.
+- The v0.14.5 exceptions for `Global`, `Let`, and `On Local Error` add 126
+  VBA parse states over v0.14.4 (15,903 to 16,029). Across 481 example files,
+  11 CSTs change: each previously read an explicit `Let` assignment as a call
+  with a comparison argument. The new `let_statement` owns the same source
+  statement and exposes its left and right operands. The browser Wasm artifact
+  remains below the 7,864,320-byte gate.
 - `vb6` keeps every construct it had; its `grammar.json` is byte-identical
   before and after the gating, apart from the assignment precedence.
 - `scripts/test-shared-corpus.mjs` skips two more cases: the VB6 assignment

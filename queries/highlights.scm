@@ -64,6 +64,7 @@
 (debug_print_statement) @keyword
 (close_statement) @keyword
 (set_statement) @keyword
+(let_statement) @keyword
 (new_expression) @keyword
 (addressof_expression) @keyword
 (condition_binary_expression) @operator

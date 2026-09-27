@@ -43,15 +43,10 @@ module.exports = function defineGrammar(dialect) {
   const preprocessorKeyword = (word) =>
     isVB6 ? token(seq(caseInsensitive(word), /[ \t]/)) : caseInsensitive(word);
 
-  // The vba grammar is the base grammar plus two documented changes: the
-  // bang_identifier node and unsplit omitted-argument lists. Everything the VB6
-  // corpus needed beyond that is behind isVB6, including constructs VBA also
-  // accepts (Let, GoSub, ReDim ... As, Global, On Local Error, octal literals).
-  // Each of those widens what the vba parser accepts and changes the CST that
-  // downstream consumers already handle, and together they grew the vba parse
-  // table from 15,236 to 21,995 states and the browser Wasm past Chromium's
-  // 8 MiB synchronous-instantiation limit. Un-gating one is a one-line change;
-  // measure its table cost first.
+  // The vba grammar retains the bang_identifier node and unsplit omitted-argument
+  // lists. VB6-specific syntax remains behind isVB6 where its parse-table cost
+  // would otherwise push the browser Wasm beyond the size gate. VBA accepts
+  // Global, Let, and On Local Error, so those forms are shared by both dialects.
 
   return grammar({
     name: dialect,
@@ -810,16 +805,14 @@ module.exports = function defineGrammar(dialect) {
           alias($._inline_with_statement, $.with_statement),
           $.on_goto_statement,
           $.on_error_statement,
+          $.let_statement,
           $.resume_statement,
           $.goto_statement,
-          // VB6 only, per the note beside preprocessorKeyword. In the vba table these
-          // five cost 206 states and 3.3 MB of parser.c because every statement list
-          // (block, inline, numbered) carries them.
+          // VB6-only forms expand every VBA statement-list parse table.
           ...(isVB6
             ? [
                 $.gosub_statement,
                 $.return_statement,
-                $.let_statement,
                 $.lset_statement,
                 $.rset_statement,
               ]
@@ -997,7 +990,7 @@ module.exports = function defineGrammar(dialect) {
           caseInsensitive("Public"),
           caseInsensitive("Private"),
           caseInsensitive("Friend"),
-          ...(isVB6 ? [caseInsensitive("Global")] : []),
+          caseInsensitive("Global"),
         ),
 
       if_statement: ($) =>
@@ -1079,16 +1072,14 @@ module.exports = function defineGrammar(dialect) {
           $.exit_statement,
           $.end_statement,
           $.on_error_statement,
+          $.let_statement,
           $.resume_statement,
           $.goto_statement,
-          // VB6 only, per the note beside preprocessorKeyword. In the vba table these
-          // five cost 206 states and 3.3 MB of parser.c because every statement list
-          // (block, inline, numbered) carries them.
+          // VB6-only forms expand every VBA statement-list parse table.
           ...(isVB6
             ? [
                 $.gosub_statement,
                 $.return_statement,
-                $.let_statement,
                 $.lset_statement,
                 $.rset_statement,
               ]
@@ -1430,7 +1421,7 @@ module.exports = function defineGrammar(dialect) {
       on_error_statement: ($) =>
         seq(
           caseInsensitive("On"),
-          ...(isVB6 ? [optional(caseInsensitive("Local"))] : []),
+          optional(caseInsensitive("Local")),
           caseInsensitive("Error"),
           choice(
             seq(caseInsensitive("GoTo"), field("target", choice($.identifier, lineNumber($)))),
@@ -1526,16 +1517,14 @@ module.exports = function defineGrammar(dialect) {
         choice(
           $.single_line_if_statement,
           $.on_error_statement,
+          $.let_statement,
           $.resume_statement,
           $.goto_statement,
-          // VB6 only, per the note beside preprocessorKeyword. In the vba table these
-          // five cost 206 states and 3.3 MB of parser.c because every statement list
-          // (block, inline, numbered) carries them.
+          // VB6-only forms expand every VBA statement-list parse table.
           ...(isVB6
             ? [
                 $.gosub_statement,
                 $.return_statement,
-                $.let_statement,
                 $.lset_statement,
                 $.rset_statement,
               ]

@@ -4,6 +4,20 @@ All notable changes to tree-sitter-vba will be documented in this file.
 
 ## Unreleased
 
+## [v0.14.5] - 2026-09-27
+
+### Added
+
+- Accept VBE-supported `Global` declarations, `Let` assignments, and
+  `On Local Error` statements in the VBA parser. The VB6 parser retains
+  these forms, and `Error n` continues to parse as a call statement.
+  This enables the opt-in maintainability diagnostics in xlflow
+  ([xlflow #828](https://github.com/harumiWeb/xlflow/issues/828)).
+
+### Fixed
+
+- Highlight explicit `Let` assignments as keywords in both VBA and VB6.
+
 ## [v0.14.4] - 2026-09-25
 
 ### Fixed
