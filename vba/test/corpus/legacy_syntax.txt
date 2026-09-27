@@ -1,0 +1,67 @@
+==================
+legacy VBA syntax
+==================
+
+Global value As Long
+Sub Work()
+    Let value = 1
+    Error 11
+    On Local Error Resume Next
+End Sub
+
+Sub LabelDemo()
+    GoTo Error
+Error:
+    Debug.Print 1
+End Sub
+
+---
+
+(source_file
+  (newline)
+  (variable_declaration
+    (visibility)
+    (variable_declarator
+      (identifier)
+      (as_type_clause
+        (type_expression))))
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (let_statement
+        (identifier)
+        (number_literal))
+      (newline)
+      (call_statement
+        (identifier)
+        (unparenthesized_argument_list
+          (number_literal)))
+      (newline)
+      (on_error_statement)
+      (newline))
+    (end_sub_statement))
+  (newline)
+  (newline)
+  (sub_declaration
+    (identifier)
+    (parameter_list)
+    (newline)
+    (block
+      (goto_statement
+        (identifier))
+      (newline)
+      (label_statement
+        (identifier))
+      (newline)
+      (call_statement
+        (qualified_member_expression
+          (identifier)
+          (identifier))
+        (output_list
+          (number_literal)))
+      (newline))
+    (end_sub_statement))
+  (newline))

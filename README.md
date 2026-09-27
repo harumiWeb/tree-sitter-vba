@@ -297,9 +297,11 @@ and adds:
   call with two arguments rather than a chain `Foo.Bar` with an omitted
   argument, through the external scanner described under Design principles
 - constructs VBA also has but the base VBA grammar never accepted; most remain
-  `vb6` only so that the `vba` parser's trees and parse table stay those of the
-  base (see [ADR 0005](docs/adr/0005-vba-parser-stays-the-base-grammar.md)):
-  `Let`, `LSet`/`RSet`, `GoSub`/`Return`, `On Local Error`, `Global`,
+  `vb6` only so that the `vba` parser's trees and parse table stay within
+  the measured size and CST contract (see
+  [ADR 0005](docs/adr/0005-vba-parser-stays-the-base-grammar.md)).
+  Since v0.14.5, VBA also accepts `Let`, `On Local Error`, and `Global`;
+  the remaining `vb6`-only forms include `LSet`/`RSet`, `GoSub`/`Return`,
   `Dim WithEvents`, `ReDim x(n) As T`, octal `&O` literals,
   `AddressOf Module.Procedure`, `Name.Member` receivers, a comparison as the
   left operand of another (`a = b <> 0`, `x Is Nothing = False`), a comparison
