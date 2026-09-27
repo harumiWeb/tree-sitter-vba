@@ -14,6 +14,10 @@ All notable changes to tree-sitter-vba will be documented in this file.
   This enables the opt-in maintainability diagnostics in xlflow
   ([xlflow #828](https://github.com/harumiWeb/xlflow/issues/828)).
 
+### Fixed
+
+- Highlight explicit `Let` assignments as keywords in both VBA and VB6.
+
 ## [v0.14.4] - 2026-09-25
 
 ### Fixed
